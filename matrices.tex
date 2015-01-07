@@ -1,0 +1,246 @@
+\chapter{Abstract Matrices}
+
+
+\section{Oriented Intervals}
+
+\begin{definition}
+	Given a totally ordered set $(X, \leq)$ \emph{(and with an implied strict ordering $<$)}, 
+	for any $a,b \in X$, an \textbf{interval between $\boldsymbol{a}$ and $\boldsymbol{b}$} 
+	is the set of elements in $X$ between $a$ and $b$, up to inclusion of $a$ and $b$ themselves. 
+	Formally:
+	\begin{align}
+		[a,b] = \{ x \in X \;|\; a \leq x \leq b \} \\
+		[a,b) = \{ x \in X \;|\; a \leq x < b \} \\
+		(a,b] = \{ x \in X \;|\; a < x \leq b \} \\
+		(a,b) = \{ x \in X \;|\; a < x < b \}
+	\end{align}
+\end{definition}
+
+It should be noted that for $b<a$, $[b,a]$ is the empty set. 
+Also, the interval $[a,a]$ contains a single point while $(a,a)$, $(a,a]$, and $[a,a)$ are all empty.
+As intervals are simply sets, they can naturally be interpreted as hybrid sets.
+If $a \leq b \leq c$, for intervals $[a,b)$ and $[b,c)$ using the hybrid set operator $\oplus$, one has
+$[a,b) \oplus [b,c) = [a,c)$
+In this case, $\oplus$ behaves like concatenation but this is not always true.
+When $a \leq c \leq b$ then $[a,b) \oplus [b,c) = [a,b)$.
+When working with intervals, a case-based approach to consider relative ordering of endpoints easily becomes quite cumbersome.
+Thus we turn to oriented intervals.
+
+\begin{definition}
+	We define \textbf{oriented intervals} with $a,b\in X$, a totally ordered set, 
+	using hybrid set point-wise subtraction as follows:
+	\begin{align}
+		[\![ a,b )\!) = [a,b) \ominus [b,a) \\
+		(\!( a,b ]\!] = (a,b] \ominus (b,a] \\
+		[\![ a,b ]\!] = [a,b] \ominus (b,a) \\
+		(\!( a,b )\!) = (a,b) \ominus [b,a]
+	\end{align}
+\end{definition}
+
+For any oriented interval, at most one interval term will be non-empty.
+However when using symbolic terms, 
+
+Several results follow immediately from this definition.
+
+\begin{theorem} For all $a,b,c \in \mathbb{R}$, 
+	\begin{align}
+		[\![a,b)\!) &= \ominus [\![b,a)\!) \\
+		(\!(a,b]\!] &= \ominus (\!(b,a]\!] \\
+		[\![a,b]\!] &= \ominus (\!(a,b)\!)
+	\end{align}
+\end{theorem}
+
+Like their unoriented analogues, the oriented intervals $[\![ a,a )\!)$ and $(\!( a,a ]\!]$ are both empty and $[\![a,a]\!]$ contains a single point (with multiplicity 1).
+However, unlike traditional intervals $(\!(a,a)\!)$ is \emph{not} empty but is equivalent to but rather, $(\!(a,a)\!) = \ominus [\![a,a]\!] = \hset{a^{-1}}$.
+
+\begin{theorem}
+	For all $a,b,c \in \mathbb{R}$ (regardless of relative ordering),
+	\begin{equation}
+		[\![ a,b )\!) \oplus [\![ b,c )\!) = [\![ a,c )\!)
+	\end{equation}
+\end{theorem}
+
+\begin{proof}
+	$[\![a,b)\!) \oplus [\![ b,c )\!)$ 
+
+	$= \left( [a,b) \ominus [b,a) \right) \oplus \left( [b,c) \ominus [c,b) \right)$ 
+
+	$= \left( [a,b) \oplus [b,c) \right) \ominus \left( [c,b) \oplus [b,a) \right)$
+
+	If $a \geq c$ then $[c,a) = \emptyset$ and so $[\![a,c)\!) = [a,c)$. 
+	\begin{description}
+		\item[Case 1: $a \leq b \leq c$] then $[c,b) = [b,a) = \emptyset$ and $[a,b) \oplus [b,c) = [a,c)$
+		\item[Case 2: $b \leq a \leq c$] then $[b,c) \ominus [b,a) = [b,a) \oplus [a,c) \ominus [b,a) = [a,c)$
+		\item[Case 3: $a \leq c \leq b$] then $[a,b) \ominus [c,b) = ([a,c) \oplus [c,b)) \ominus [c,b) = [a,c)$
+	\end{description}
+	Similar arguments will show that when $c \geq a$, that $[\![a,b)\!) \oplus [\![ b,c )\!) = \ominus [a,c)$.
+	
+\end{proof}
+
+This sort of reasoning is routine but a constant annoyance when dealing with intervals and is exactly the reason we want to be working with oriented intervals.
+Many similar formulations such as $[\![ a,b ]\!] \oplus (\!( b,c )\!) = [\![a,c)\!)$ are also valid for any ordering of $a,b,c$.
+We will not enumerate all possible cases here.
+
+
+\newpage
+
+\section{Symbolic Vector Algebra}
+
+We will use the following $n$-dimensional vectors as a running example in this section:
+
+\begin{align}
+	U^T &= [ u_1, u_2, \ldots, u_{k}, u'_1, u'_2, \ldots, u_{n-k} ] \\
+	V^T &= [ v_1, v_2, \ldots, v_{\ell}, v'_1, v'_2, \ldots, v_{n-\ell} ]
+\end{align}
+
+Using intervals, these vectors can be represented by hybrid functions over their indices.
+
+For example
+\begin{align}
+	U^T &= (i \mapsto u_i)^{[\![1, k]\!]} \oplus (i \mapsto u_{i-k})^{(\!(k,n]\!]} \\
+	V^T &= (i \mapsto v_i)^{[\![1, \ell]\!]} \oplus (i \mapsto v_{i-\ell})^{(\!(\ell,n]\!]}
+\end{align}
+Although for clarity and succinctness we will use $(u_i)$ instead of $(i \mapsto u_i)$.
+
+However we are more interested in performing arithmetic with these vectors.
+
+\subsection{Vector Addition}
+
+Consider pointwise vector addition $U^T + V^T$:
+\begin{align}
+	U^T + V^T 
+	&= \left( (u_i)^{[\![1, k]\!]} \oplus (u'_{i-k})^{(\!(k,n]\!]} \right) 
+		\hjoin[+] 
+		\left( (v_i)^{[\![1, \ell]\!]} \oplus (v'_{i-\ell})^{(\!(\ell,n]\!]} \right) \\
+	&= \left( (u_i)^{[\![1, k]\!]} \oplus (u'_{i-k})^{(\!(k,\ell]\!]} \oplus (u'_{i-k})^{(\!(\ell,n]\!]} \right) 
+		\hjoin[+]
+		\left( (v_i)^{[\![1, k]\!]} \oplus (v_i)^{(\!(k, \ell]\!]} \oplus (v'_{i-\ell})^{(\!(\ell,n]\!]} \right) \\
+	&= \left( (u_i + v_i)^{[\![1, k]\!]} 
+		\hjoin[+] (u'_{i-k} + v_i)^{(\!(k,\ell]\!]} 
+		\hjoin[+] (u'_{i-k}+v'_{i-\ell})^{(\!(\ell,n]\!]} \right)
+\end{align}
+
+This formulation is not unique.
+
+The choice to partition $[\![1,n]\!]$ into $[\![1,k]\!] \oplus (\!(k,\ell]\!] \oplus (\!(\ell, n]\!]$ was arbitrary.
+
+We can just as easily partition $[\![1,n]\!]$ into $[\![1,\ell]\!] \oplus (\!(\ell, k]\!] \oplus (\!(k, n]\!]$ to get the equivalent expression:
+
+\begin{equation}
+	U^T + V^T = \left( (u_i + v_i)^{[\![1, \ell]\!]} 
+		\hjoin[+] (u_{i} + v'_{i-\ell})^{(\!(\ell,k]\!]} 
+		\hjoin[+] (u'_{i-k}+v'_{i-\ell})^{(\!(k,n]\!]} \right)
+\end{equation}
+
+We must be careful while evaluating these expressions to not forget that $(u'_{i-k} + v_i)$ is actually shorthand for the function:
+\begin{equation*}
+	i \mapsto u'_{i-k} + v_i
+\end{equation*}
+
+For example, consider the concrete example where $n=5$, $k=4$ and $\ell = 1$ so that
+$U^T = [ u_1, u_2, u_3, u_4, u'_1 ]$ and
+$V^T = [ v_1, v'_1, v'_2, v'_3, v'_4 ]$.
+
+We will also only assume that the functions $u_i, u'_i, v_i$ and $v'_i$ are defined only on the intervals in which they appear (e.g. $u_5$ is undefined, as is $v'_1$).
+
+Then the expression in (3.19) becomes:
+\begin{equation}
+(u_i + v_i)^{[\![1,4]\!]} \hjoin[+] (u'_{i-4} + v_i)^{(\!(4,1]\!]} \hjoin[+] (u'_{i-4} + v'_{i-1})^{(\!(1,5]\!]}
+\end{equation}
+
+None of the individual subterms cannot be evaluated directly.
+
+In the first term, $v_i$ is not totally defined over the interval $[\![1,4]\!]$.
+
+In the third term, on the interval $(\!(1,5]\!]$, $u'_{i-4}$ would even evaluated on negative indices.
+
+However, these unevaluable terms also appear in the middle term however the interval $(\!(4,1]\!]$ is a negatively oriented interval and the offending points cancel!
+
+\subsection{Inner Product}
+
+The inner product or dot product of two vectors is given by:
+\begin{equation}
+A \cdot B = \sum_i A_i B_i
+\end{equation}
+
+Returning to the running example of $U^T$ and $V^T$, as defined in (3.13) and (3.14) respectively, we will consider $U^T \cdot V^T$.
+
+\begin{definition}
+	Let $X = \hset{x_1^{m_1}, x_2^{m_2}, \ldots , x_n^{m_n} }$ be a hybrid set with elements $x_i$ in a $\mathbb{Z}$-module.
+	Given a hybrid function over $X$,  $f^X$, we define the \textbf{sum over $\boldsymbol{f^X}$}, denoted with $\sum$, as
+	\begin{equation}
+		\sum \! \left( f^X \right)  := \sum_{i=1}^n \left( m_i \cdot f(x_i) \right)
+	\end{equation}
+	The \textbf{product over $\boldsymbol{f^X}$}, denoted with $\prod$ is defined similarly.
+\end{definition}
+
+Then the dot product of $U^T$ and $V^T$ becomes very familiar:
+\begin{equation}
+	U^T \cdot V^T = \sum \left( (u_i v_i)^{[\![1, k]\!]} 
+		\hjoin[\times] (u'_{i-k} v_i)^{(\!(k,\ell]\!]} 
+		\hjoin[\times] (u'_{i-k} v'_{i-\ell})^{(\!(\ell,n]\!]} \right)
+\end{equation}
+
+The inner expression is identical to $U^T + V^T$ except for a replacement of $+$ with $\times$.
+
+\subsection{Outer Product}
+
+\todo[inline]{Does this even work?}
+
+
+
+
+
+
+\newpage
+
+
+It is common practice in mathematics to represent matrices symbolically with sub-matrices such as:
+\begin{equation}
+	A = \left[
+		\begin{array}{ccc}
+			A_1 & A_2 \\
+			A_3 & A_4 \\
+		\end{array}
+	\right]
+\end{equation}
+If $A$ is an $n \times n$ matrix then $A_1, A_2, A_3, A_4$ are not entries but $(k \times \ell)$, $(n-k \times \ell)$, $(k \times n - \ell)$ and $(n-k \times n - \ell)$ matrices respectively.
+Ellipses are also routinely used for interpolating over regions of a matrix, as in:
+\begin{equation}
+	M = \left[
+		\begin{array}{ccc}
+			x_{11} & \ldots & x_{1n} \\
+			& \ddots & \vdots \\
+			0 & & x_{nn}
+		\end{array}
+	\right]
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

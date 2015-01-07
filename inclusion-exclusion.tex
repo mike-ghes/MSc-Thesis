@@ -1,0 +1,87 @@
+\chapter{Domain Decomposition}
+\doublespacing
+\section{Minimal Generalized Partition}
+
+\begin{definition}
+Minimal generalized partition
+\end{definition}
+
+Using linear algebra to decompose.
+
+(3 pages)
+
+\begin{example}{Matrix Addition} (2 pages)
+\end{example}
+
+\begin{example}{Higher dimension example} (greatly reduce number of needed partitions) (2 pages)
+\end{example}
+
+\newpage \addtocounter{page}{6}
+
+\section{Computing the support}
+
+\begin{definition}
+Principle of Inclusion-Exclusion
+\end{definition}
+
+Compute $\mathrm{supp}$ of a hybrid set. 
+
+\begin{equation}
+\mathrm{supp}\{\!| X_i ^{m_i} |\!\}_{i=1..n} = \bigoplus_{S \subseteq [n]} \bigoplus_{R \subseteq S} (-1)^{|S|+|R|} [\Sigma m_R = 0] \left\{\!\left| \cap_{i \in S} X_i^1 \right|\!\right\}
+\end{equation}
+
+(to be simplified)
+
+Also need to define intersect on functions: 
+
+$(x,f) \cap (x,f) \mapsto (x,f)$
+
+$(x,f) \cap (x,g) \mapsto (x,\bot)$
+
+but careful with $\bot$
+
+%First take a hybrid set $\{\!| A_1^{m_1}, A_2^{m_2}, ...A_n^{m_n} |\!\}$, map $m_i \to \{0,1\}$ and remove any unnecessary pieces (hard!).
+
+%To make $\{\!| A_1^1, A_2^1, ...A_n^1 |\!\}$ reducible, iterate using gray code on $n$ bits. Let $G_k[i] \in \{ 0, 1 \}$ be the $i$-th bit of $G_k$: the gray code for $k$. Then we calculate the sum:
+
+%\begin{equation} 
+%\bigcup_{i=1}^n A_i = \sum_{k=1}^{2^n} (-1)^{k+1} \bigcap_{ i=0 }^n G_k[i] * A_i
+%\end{equation}
+
+%This iterates over all $2^n$ pieces with only 1 intersection if $|G_k| > |G_{k-1}|$. For the decreasing cases (e.g. $011 \mapsto 010$), for which I'm not immediately seeing any efficient method. 
+
+%Traditional binary ordering might actually work the best. $0..010..0$ is trivially computed  and with backtracking can always have exactly one intersection per iteration. This would require an additional $O(n)$ (?) memory to maintain a stack.
+\begin{example}
+Set intersection (tikZ diagrams to accompany)
+
+(a) $\mathrm{supp} \{\!| A^1, B^{-1} |\!\} = \{\!| A^1, B^1, (A \cap B)^{-2} |\!\}$
+
+(b) $\mathrm{supp} \{\!| A^0, B^{-2} |\!\} = \{\!| B^1 |\!\}$
+
+(c) $\mathrm{supp} \{\!| A^{-1}, B^{-1}, C^2 |\!\} = \{\!| A^1, B^1, C^1, (A \cap B)^{-1}, (B \cap C)^{-1}, (C \cap A)^{-1}, (A \cap B \cap C)^{0} |\!\}$
+\end{example}
+
+Present algorithm with reordered terms and short circuit to minimize number of intersections that need to be computed:
+\begin{equation*}
+0001 \to 0011 \to 0111 \to 1111, (0011) \to 1011, (0001) \to 0101 \to 1101, (0001) \to 1001, ...
+\end{equation*}
+
+(7-10 pages)
+
+\newpage \addtocounter{page}{9}
+
+
+\section{Linear Operators}
+
+\begin{definition}
+$L(f^P)$
+\end{definition}
+
+Related work on other approaches to oriented sum (1 pages)
+
+\begin{example}{oriented summation} (1 page)
+\end{example}
+
+lead into integration (1 page)
+
+\newpage \addtocounter{page}{2}

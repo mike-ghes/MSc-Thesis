@@ -1,0 +1,158 @@
+\chapter{Integration} \label{integration}
+\doublespacing
+
+
+\section{Lebesgue Integration on $\mathbb{R}^n$}
+
+3-4 pages
+
+\newpage \addtocounter{page}{2} 
+
+\section{Differential Forms}
+
+\begin{definition}
+A $k$-form $\beta$ on the open set $\Omega \subset \mathbb{R}^n$ has the form:
+\todo[inline]{open set or Lebesgue measurable sets??}
+\begin{equation}
+\beta = \sum_j b_j(x) \; \text{d} x_{j_1} \wedge ... \wedge \text{d} x_{j_k}
+\end{equation}
+where $j=(j_1, ..., j_k)$ is a $k$ dimensional multi-index. We say that $\beta \in \Lambda^k(\Omega)$
+\end{definition}
+
+We have not yet defined the $\wedge$ operator.
+
+Anti-commutative: $\text{d} x \wedge \text{d} y = - \text{d}y \wedge \text{d} x$. 
+Which implies for any permutation $\sigma$ of $\{1,...,k\}$:
+\begin{equation}
+dx_1 \wedge ... \wedge dx_k = \text{sgn}(\sigma) \; dx_{\sigma(1)} \wedge ... \wedge dx_{\sigma(k)}
+\end{equation}
+
+Anti-commutativity additionally implies that for all $x_i$, $dx_i \wedge dx_i = 0$. 
+
+(algebra of differential forms)
+
+
+\begin{definition}
+Let $\alpha$ be a $k$-form on $\Omega \subset \mathbb{R}^n$ of the form $\alpha = A(x) \; \text{d}x_1 \wedge ... \wedge \text{d} x_n$.
+If $A \in \mathcal{L}^1 (\Omega , \text{d}x)$ then we define:
+\begin{equation}
+\int_\Omega \alpha = \int_\Omega A(x) \; \text{d}x
+\end{equation}
+Where the left-hand side is the integral of a $k$-form and the right-hand side is a Lebesgue integral.
+For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the sum of integrals.
+\end{definition}
+\todo[inline]{Define $dx$ from $x_1 , ... , x_n$. Need to lift sign change from permutations}
+
+
+\section{Pull-backs}
+
+Benefit of differential forms is how cleanly they handle changes in coordinates.
+
+\begin{definition}
+
+\end{definition}
+
+
+\section{Differential Forms}
+\begin{definition}
+Manifold
+\end{definition}
+
+\begin{definition}
+Atlas
+\end{definition}
+
+\begin{definition}
+Differential $k$-form
+\end{definition}
+
+Differential form algebra ( $\wedge, \cdot, +$ )
+
+Forms are linear over integrals.
+
+\begin{example}
+Simple, concrete example. ``My First Differential Form''
+\end{example}
+
+(no hybrid sets in this section) (4 pages)
+
+(Still need to find a spot in this chapter for Lebesgue integrals/Integration of measures)
+
+\newpage \addtocounter{page}{3}
+
+\section{Domains of Integration}
+
+Note on equivalence of $k$-simplices and $k$-rectangles.
+
+\begin{definition}
+$k$-rectangle
+\end{definition}
+
+\begin{definition}
+(singular) $k$-chain as a hybrid set (function) over the $k$-rectangles (with $f$ a differentiable map)
+\end{definition}
+
+(2 pages) (+example?)
+
+\newpage \addtocounter{page}{1}
+
+\section{Integrating over $p$-Chains}
+\begin{definition}
+Integral on a chain
+\end{definition}
+
+\begin{example}
+Integrate an atlas with overlapping charts (using inclusion-exclusion)
+\end{example}
+
+(4 pages)
+
+\newpage \addtocounter{page}{3}
+
+\section{The Boundary Function}
+
+\begin{definition}
+$\partial$
+\end{definition}
+
+\begin{example}
+Boundary of a rectangle
+\end{example}
+
+\begin{example}
+Boundary of a boundary
+\end{example}
+
+\begin{theorem}
+$\partial^2 = 0$
+\end{theorem}
+
+(3 pages)
+
+\newpage \addtocounter{page}{2}
+
+\section{Stokes' Theorem}
+\begin{proof}
+(4 pages)
+\end{proof}
+
+
+\newpage \addtocounter{page}{3}
+
+\section{A non-trivial example}
+\begin{example}{Tricky Integration}
+Using Stokes' theorem and Inclusion/Exclusion to evaluate a tricky theorem like:
+
+\begin{equation}
+f(z) = \frac{z^2}{(z^2 + 2z + 2)}
+\end{equation}
+
+% http://en.wikipedia.org/wiki/Methods_of_contour_integration
+
+ (2-3 pages)
+
+
+\end{example}
+
+\newpage \addtocounter{page}{2}
+

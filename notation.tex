@@ -1,6 +1,8 @@
 
-\def\fjoin{\bar{\varobar}}
+\newcommand{\fjoin}{\,\bar{\varobar}\,}
 
-\def\hset[#1]{ \left\{ \! \left| \; #1 \; \right| \! \right\} }
+\newcommand{\hset}[1]{ \left\{ \! \left| \; #1 \; \right| \! \right\} }
 
-\def\hjoin[#1]{\varobar^{#1}}
+\newcommand{\hjoin}[1][]{\varobar^{#1}}
+
+\newcommand{\restrict}[2]{#1|_{#2}}
