@@ -27,13 +27,14 @@ since at least one of $[a,b)$ or $[b,a)$ will be always be empty.
 Although this notation generally appears in context of Lebesgue integrals, 
 Riemann integrals (which generally use $\int_a^b ...$ instead) simply hide this mis-use of intervals.
 For example, 
-\todo[inline]{Find one that's not wikipedia!}
+\todo[inline]{Find one that's not wikipedia!
 
 - tagged partition given as a series $x_i$ such that $a = x_1 < x_2 < ... < x_n = b$ which we say is the integral $\int_a^b$
 
 - Unintentionally we are claiming that $\int_1^0 f(x) \; dx = \int_{[1,0]}= \int_{\emptyset} f(x) \; dx = 0$
 
 We will put off formal definitions until the next chapter.
+}
 
 If oriented intervals are used instead of traditional intervals, then the identity from equation (4.1) can instead just be a result of \emph{bi-linearity}.
 \begin{equation}
@@ -48,13 +49,14 @@ If oriented intervals are used instead of traditional intervals, then the identi
 	\end{equation}
 \end{definition}
 
-By linearity we also have:
+\todo[inline]{ By linearity we also have:
 
 $\partial (\!(a,b)\!) = \partial ( \; \ominus [\![b,a]\!] \; )= \ominus \partial ( \; [\![b,a]\!] \; ) = \ominus \hset{ b^1, a^{-1} } = \hset{ a^1, b^{-1}}$.
 
-Using this we also have:
+Using this we also have:}
 
 $\partial [\![a,b)\!) = \partial ( [\![a,c]\!] \oplus (\!(c,b)\!) ) = \partial [\![a,c]\!] \oplus \partial (\!(c,b)\!) =  \hset{ a^1, c^{-1} } \oplus \hset{ c^1, b^{-1} } = \hset{a^1, b^{-1} }$
+
 
 And by a similar proof for $\partial (\!(a,c]\!]$, we conclude that:
 \begin{equation}
@@ -62,7 +64,7 @@ And by a similar proof for $\partial (\!(a,c]\!]$, we conclude that:
 \end{equation}
 
 
-Informally, isolated points do not affect the boundary of an oriented interval.
+Isolated points do not affect the boundary of an oriented interval.
 This should have been obvious from the definition to begin with.
 The interval $[\![ a,a ]\!]$ is a hybrid set which contains only the element $a$ with multiplicity one.
 From equation XX,
@@ -79,9 +81,11 @@ Although simple arguments resolve this issue, by using left-closed, right-open o
 	\int_{[\![a,b)\!)} f(x) \; dx + \int_{[\![b,c)\!)} f(x) \; dx = \int_{[\![a,c)\!)} f(x) \; dx
 \end{equation}
 
+\todo[inline]{
 Somewhere in this section:
 
 - ``For now we will ignore the underlying integration mechanics and focus on the intuition of using oriented intervals. In chapter X we will return to this topic from a measure theoretic perspective to establish the Lesbegue integral.''
+}
 
 \section{Higher dimension intervals}
 
@@ -159,6 +163,62 @@ For any $i$ where $a_i = b_i$, the corresponding term: $[\![ a_i, b_i ]\!]$ will
 The orientation of $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ is based on the number of negatively oriented intervals $[\![a_i,b_i]\!]$.
 Should there be an odd number of indices $i$ such that $a_i > b_i$ then $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ will also be negatively oriented.
 Otherwise, it will be positively oriented. 
+
+\section{Riemann Integral on $n$-cubes}
+
+Now that we have oriented $n$-dimensional cubes, we would like to define the integral over one.
+For now, the Riemann integral will suffice, for more complex domains we will introduce the Lebesgue integral in Chapter 5.
+
+\todo{image instead of tikz?}
+\begin{figure}[h]
+\caption[Riemann Integral]{Riemann Integral visual example.}
+\centering
+\begin{tikzpicture}[scale=1.7, domain=0:5]
+
+	\draw[<->] (0,2) -- (0,0) -- (5,0);
+	
+	\draw[smooth,samples=20, domain=0.0:5.0] plot(\x, {(\x^3 - 6 * \x^2 + 4 * \x + 18)/10});
+	
+\end{tikzpicture}
+\end{figure}
+
+Given an $n$-cube $[\![\boldsymbol{a}, \boldsymbol{b})\!)$ we must cut each $[\![a_i, b_i)\!)$ into partitions.
+Previously we used generalized partitions and did not mind if pieces overlapped or exceeded the original range.
+In this case, however we are only interested in partitions in the traditional sense.
+
+\begin{definition}
+	Given an interval $[\![a,b)\!)$ of the real line, we denote $\mathcal{P}[\![a,b)\!)$ to be the the set of partitions $\{P_i\}$, of $[\![a,b)\!)$ such that for each partition $P_i$ are intervals and mutually disjoint.
+\end{definition}
+
+This greatly restricts the types of partitions we can have.
+For every element of $\mathcal{P}[\![a,b)\!)$ will not only --- up to boundary behavior  (i.e. ``$[\![$'' compared to ``$(\!($'') --- be of the form:
+\begin{equation}
+	\Big\{ \; [\![a,x_1)\!), \; [\![x_1, x_2)\!), \; [\![x_2, x_3)\!),\; \ldots,\; [\![x_{n-1}, b)\!) \; \Big\}
+\end{equation}
+but also that $x_i$ is a monotone sequence.
+In this way we can choose a partition $P_j \in \mathcal{P}[\![a_j,b_j)\!)$ for each dimension of $[\![a,b)\!)$.
+
+
+
+\todo[inline]{
+- For an $n$-cube we can take $i_j \in \mathcal{P}[\![a_j,b_j]\!]$ for each side.
+
+- $I_{i_1, \ldots, i_n} = i_1 \times \ldots \times i_n$ and some point $x_{i_1, \ldots, i_n}$ in $I_{i_1, \ldots, i_n}$
+
+then $f_P = \sum_{i_1} \ldots \sum_{i_n} f(t_{i_1, \ldots, i_n}) \text{vol} (I_{i_1,\ldots,i_n})$
+
+$\text{vol}[\![a,b]\!] = (b_1 - a_1) \cdot \ldots \cdot (b_n - a_n)$
+
+(easily shown that $\text{vol}\ominus[\![a,b]\!] = - \text{vol}[\![a,b]\!]$)
+
+volume of a $k$-cube in $\mathbb{R}^n$ with $k<n$ is 0.
+
+- Recall discussion of refinements from Chapter 2.
+
+- We can induce a partial ordering on $\mathcal{P}[\![a,b]\!]$ by saying $P \leq P'$ if $P'$ is a refinement of $P$.
+
+$\int_{[\![a,b]\!]} f(x) \; dx = f_{\sup \{ \mathcal{P} [\![a,b]\!] \}}$ where P is $\sup \{ \mathcal{P} [\![a,b]\!] \}$.
+}
 
 \section{Boundary Operator}
 
@@ -263,50 +323,65 @@ Omitting the intermediate step, we find the boundary of $[\![ \boldsymbol{a}, \b
 \end{align*}
 
 This may not be the most enlightening expression on its own.
-In figure 4.2 below the 3-rectangle given by $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ can be seen as a cube in three dimensions.
+In Figure 4.3 below, the 3-rectangle given by $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ can be seen as a cube in three dimensions.
 Physically, the 3-rectangle is a solid cube and includes all interior points.
-The boundary meanwhile are just the outer faces.
-The six terms in the sum are shown in Figure 4.2 with arrows to six corresponding faces.
-Clearly, each face is itself an axis aligned 2-rectangle!
+The boundary meanwhile are just the rectangular outer faces, which conveniently,
+ there are also six to match the six terms of $\partial[\![\boldsymbol{a},\boldsymbol{b}]\!]$.
 
 \begin{figure}[h]
-\caption[Unit cube with boundary]{The unit cube given as the 3-rectangle: $[\![(0,0,0), (1,1,1) ]\!]$ and the 6 faces in its boundary. 
+\caption[Unit cube with boundary]{The unit cube in $\mathbb{R}^3$ with positive orientation can be represented as the 3-rectangle: $[\![(0,0,0), (1,1,1) ]\!]$ is shown as a wire-frame. 
+The six faces that make up its boundary are shaded and labeled with their corresponding terms.
 %Now with 100% more right-handed
 }
 \centering
-\begin{tikzpicture}[y=1cm, x=2.5cm]	
+\begin{tikzpicture}[y=1.5cm, x=3cm]	
  	%axis
+ 	
+ 	%left
+	\draw[color=black, dashed, <-] (0.35, 1.35) --++ (-0.7, 0) node[anchor=east, black] {$\ominus \hset{0} \times [\![0,1]\!] \times [\![0,1]\!]$};
+	%back
+	\draw[color=black, dashed, <-] (1.2,1.7) --++ (1,1) node[anchor=west, black] {$\ominus \; [\![0,1]\!] \times \hset{1} \times [\![0,1]\!]$};
+	%bottom
+	\draw[color=black, dashed, <-] (0.85,0.35) --++ (0,-1) node[anchor=north, black] {$\ominus \; [\![0,1]\!] \times [\![0,1]\!] \times \hset{0}$};
+ 	
+ 	\filldraw[fill=black!20] (0,-0.2) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
+	\filldraw[fill=black!20] (0.77,0.77) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
+	\filldraw[fill=black!20] (-0.1,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
+ 	
 	\draw[->] (-1,0) -- coordinate (x axis mid) (3,0) node[anchor=north] {$x$};
     	\draw[->] (0,-1) -- coordinate (y axis mid) (0,4) node[anchor=east] {$z$};
 	\draw[->] (-0.7,-0.7) node[anchor=north] {$y$} --++ (2.7,2.7) ;
 	
-	\draw (0,0) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0.7, 0.7) --++ (1,0) --++ (-0.7,-0.7);
-	\draw (1,0) --++ (0.7, 0.7) --++ (-1,0) --++ (0,2) --++ (1,0) --++ (0,-2);
+	\draw[very thick] (0,0) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
+	\draw[very thick] (0.7,0.7) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
+	\draw[very thick] (0,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
+	\draw[very thick] (0,2) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
+	\draw[very thick] (0,0) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
+	\draw[very thick] (1,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
 	
-	%left
-	\draw[color=black!40, dashed, <-] (0.35, 1.35) --++ (-0.7, 0) node[anchor=east, black] {$\ominus \hset{0} \times [\![0,1]\!] \times [\![0,1]\!]$};
+	\filldraw[fill=black!40] (0,2.2) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
+	\filldraw[fill=black!40] (-0.07,-0.07) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
+	\filldraw[fill=black!40] (1.1,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
+
 	%right
-	\draw[color=black!40, dashed, <-] (1.35, 1.35) --++ (0.7, 0) node[anchor=west, black] {$\hset{1} \times [\![0,1]\!] \times [\![0,1]\!]$};
+	\draw[color=black, dashed, <-] (1.35+0.1, 1.35) --++ (0.7, 0) node[anchor=west, black] {$\hset{1} \times [\![0,1]\!] \times [\![0,1]\!]$};
 	%front
-	\draw[color=black!40, dashed, <-] (0.5,1) --++ (-0.7,-0.7) node[anchor=east, black] {$[\![0,1]\!] \times \hset{0} \times [\![0,1]\!]$};
-	%back
-	\draw[color=black!40, dashed, <-] (1.2,1.7) --++ (0.7,0.7) node[anchor=west, black] {$\ominus \; [\![0,1]\!] \times \hset{1} \times [\![0,1]\!]$};
-	%bottom
-	\draw[color=black!40, dashed, <-] (0.85,0.35) --++ (0,-1) node[anchor=north, black] {$\ominus \; [\![0,1]\!] \times [\![0,1]\!] \times \hset{0}$};
+	\draw[color=black, dashed, <-] (0.5-0.07,1-0.07) --++ (-0.7,-0.7) node[anchor=east, black] {$[\![0,1]\!] \times \hset{0} \times [\![0,1]\!]$};
 	%top
-	\draw[color=black!40, dashed, <-] (0.85,2.35) --++ (0,1) node[anchor=south, black] {$[\![0,1]\!] \times [\![0,1]\!] \times \hset{1}$};
+	\draw[color=black, dashed, <-] (0.85,2.35+0.2) --++ (0,1) node[anchor=south, black] {$[\![0,1]\!] \times [\![0,1]\!] \times \hset{1}$};
+	
 	
 \end{tikzpicture}
 \end{figure}
-\todo[inline]{float faces off of cube + fill}
 
 There are several ways to interpret and visualize the $\oplus$ and $\ominus$ sign associated with each face.
 Most naturally in $\mathbb{R}^3$ for 2-rectangles is to give each a front and back side with the sign determining which to use.
 Alternatively, a 2-rectangle has a boundary formed by 1-rectangles which when drawn as arrows, will all meet head-to-tail.
 This induces a clockwise or counter-clockwise cycle around the edge of the rectangle and so $\circlearrowright$ and $\circlearrowleft$ are also commonly used.
-This can be seen in Figure 4.3.
-
-These are all conceptual tools, subtraction may not have any physical interpretation (as we will see later with manifold points?).
+This can be seen in Figure 4.4.
+One may even notice that the normals produced by both are the same and choose to use that.
+These are all conceptual tools, which are convenient to use particularly in $\mathbb{R}^2$ and $\mathbb{R}^3$.
+There may not be such a nice physical interpretation in other spaces.
 
 
 \begin{figure}[h]
@@ -362,39 +437,31 @@ These are all conceptual tools, subtraction may not have any physical interpreta
 \end{tikzpicture}
 \end{figure}
 
-\section{Integrating $n$-cubes}
-
-
-
 
 \section{Chains}
 
+\todo[inline]{
 We have already seen chains without mentioning them explicitly.
 
 To form the boundary, of a $k$-cube we took the sum of $(k-1)$-cubes.
 
-These sums are commonly known as chains.
+These sums are commonly known as chains.}
 
 \begin{definition}
 	$C_k$ is the Abelian group generated by $k$-cubes with $\oplus$ hybrid set addition.
 \end{definition}
 
+\todo[inline]{
 Since $k$-chains are linear sums of $k$-cubes.
 
 It is natural to extend the boundary linearly to chains as well
 
 And so $\partial_k$ becomes a map from $k$-chains to $(k-1)$-chains.
 
-Sometimes expressed as
+At which point it becomes natural to ask ``what does $\partial \partial$ look like?''
+}
 
-\begin{equation}
-	\ldots \xleftarrow{\partial_{k-1}} C_{k-1} \xleftarrow{\partial_{k}} C_k \xleftarrow{\partial_{k+1}} C_{k+1} \xleftarrow{\partial_{k+2}} ...
-\end{equation}
-
-
-
-
-\subsection{Example: \emph{Boundary of a boundary}}
+\subsection{Example: \emph{Boundary of a boundary (of a 2-cube)}}
 Let $\boldsymbol{a} =(a_1,a_2)$ and $\boldsymbol{b}= (b_1,b_2)$.
 We wish to compute $\partial_1 ( \partial_2 ( \; [\![\boldsymbol{a}, \boldsymbol{b} ]\!] \; ) )$
 
@@ -408,9 +475,53 @@ We wish to compute $\partial_1 ( \partial_2 ( \; [\![\boldsymbol{a}, \boldsymbol
 \end{align}
 
 When moving from (4.16) to (4.17), in addition to applying $\partial_1$ we used the reduction, $\hset{x} \times \hset{y} = \hset{ (x,y) }$.
-This is not unique to $2$-cubes but holds for higher dimensions as well.
+The identity ``$\partial \partial = 0$'' is not unique to $2$-cubes but holds for higher dimensions as well.
+In fact it is one of the primary conditions for boundary operators in general.
+For now we will simply prove for $n$-cubes.
+
+
+\begin{figure}[h]
+\caption[Boundary of a boundary (of a 2-cube)]{asdfasdfasdf }
+\centering
+\begin{tikzpicture}
+
+	\draw (1,2.5) node {$C_2$};
+	\filldraw[fill=black!40] (0,0) rectangle (2,2);
+	\draw (1,1) node {$\;\circlearrowleft^+$};
+	
+	\draw[very thick, ->] (2.5,2.5) --++ (0.5,0) node[anchor=south] {$\partial_2$} --++ (0.5,0);
+	
+	\draw (4+1,2.5) node {$C_1$};
+	\draw[thick, ->] (4+0,0) --++ (2,0);
+	\draw[thick, ->] (4+2,0) --++ (0,2);
+	\draw[thick, ->] (4+2,2) --++ (-2,0);
+	\draw[thick, ->] (4+0,2) --++ (0,-2);
+	
+	\draw[very thick, ->] (6.5,2.5) --++ (0.5,0) node[anchor=south] {$\partial_1$} --++ (0.5,0);
+	
+	\draw (8+1,2.5) node {$C_0$};
+	\draw[dashed] (8+0,0) --++ (0,2) --++ (2,0) --++ (0,-2) --++ (-2,0);
+	\fill (8,0) node[anchor=north] {$-$} node[anchor=east] {$+$} circle (2pt);
+	\fill (8+2,0) node[anchor=west] {$-$} node[anchor=north] {$+$}  circle (2pt);
+	\fill (8+2,2) node[anchor=south] {$-$} node[anchor=west] {$+$} circle (2pt);
+	\fill (8,2) node[anchor=east] {$-$} node[anchor=south] {$+$} circle (2pt);
+	
+\end{tikzpicture}
+\end{figure}
+
 Let $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ be a $k$-rectangle in $\mathbb{R}^n$.
  
+Proof of $\partial \partial = 0$
 
-\section{Homology??}
 
+
+\section{Chain Complexes}
+
+\todo[inline]{??}
+
+
+\begin{equation}
+	\ldots \xleftarrow{\partial_{k-1}} C_{k-1} \xleftarrow{\partial_{k}} C_k \xleftarrow{\partial_{k+1}} C_{k+1} \xleftarrow{\partial_{k+2}} ...
+\end{equation}
+
+\section{Stokes' Theorem on $n$-cubes}

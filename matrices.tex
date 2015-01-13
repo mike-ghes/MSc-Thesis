@@ -1,5 +1,8 @@
-\chapter{Abstract Matrices}
+\chapter{Symbolic Linear Algebra}
 
+\todo[inline]{
+Common practice to use ``$\ldots$'' in vectors and matrices.
+}
 
 \section{Oriented Intervals}
 
@@ -37,10 +40,12 @@ Thus we turn to oriented intervals.
 	\end{align}
 \end{definition}
 
+\todo[inline]{
 For any oriented interval, at most one interval term will be non-empty.
 However when using symbolic terms, 
 
 Several results follow immediately from this definition.
+}
 
 \begin{theorem} For all $a,b,c \in \mathbb{R}$, 
 	\begin{align}
@@ -52,6 +57,8 @@ Several results follow immediately from this definition.
 
 Like their unoriented analogues, the oriented intervals $[\![ a,a )\!)$ and $(\!( a,a ]\!]$ are both empty and $[\![a,a]\!]$ contains a single point (with multiplicity 1).
 However, unlike traditional intervals $(\!(a,a)\!)$ is \emph{not} empty but is equivalent to but rather, $(\!(a,a)\!) = \ominus [\![a,a]\!] = \hset{a^{-1}}$.
+
+\todo[inline]{more}
 
 \begin{theorem}
 	For all $a,b,c \in \mathbb{R}$ (regardless of relative ordering),
@@ -81,10 +88,13 @@ This sort of reasoning is routine but a constant annoyance when dealing with int
 Many similar formulations such as $[\![ a,b ]\!] \oplus (\!( b,c )\!) = [\![a,c)\!)$ are also valid for any ordering of $a,b,c$.
 We will not enumerate all possible cases here.
 
+\todo[inline]{Note about partitions}
 
 \newpage
 
-\section{Symbolic Vector Algebra}
+\section{Symbolic Vectors}
+
+\todo[inline]{Vectors as hybrid functions}
 
 We will use the following $n$-dimensional vectors as a running example in this section:
 
@@ -185,7 +195,7 @@ The inner expression is identical to $U^T + V^T$ except for a replacement of $+$
 
 \subsection{Outer Product}
 
-\todo[inline]{Does this even work?}
+\todo[inline]{$U\cdot V^T$ instead of $U^T \cdot V$. But should be part of matrix multiplication?}
 
 
 
@@ -194,6 +204,7 @@ The inner expression is identical to $U^T + V^T$ except for a replacement of $+$
 
 \newpage
 
+\section{Abstract Matrices}
 
 It is common practice in mathematics to represent matrices symbolically with sub-matrices such as:
 \begin{equation}
