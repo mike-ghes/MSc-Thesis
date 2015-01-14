@@ -1,0 +1,151 @@
+\chapter{Integration II}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% DIFFERENTIAL FORMS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Differential Forms}
+
+\begin{definition}
+A $k$-form $\beta$ on the open set $\Omega \subset \mathbb{R}^n$ has the form:
+\todo[inline]{open set or Lebesgue measurable sets??}
+\begin{equation}
+\beta = \sum_j b_j(x) \; \text{d} x_{j_1} \wedge ... \wedge \text{d} x_{j_k}
+\end{equation}
+where $j=(j_1, ..., j_k)$ is a $k$ dimensional multi-index. We say that $\beta \in \Lambda^k(\Omega)$
+\end{definition}
+
+We have not yet defined the $\wedge$ operator.
+
+Anti-commutative: $\text{d} x \wedge \text{d} y = - \text{d}y \wedge \text{d} x$. 
+Which implies for any permutation $\sigma$ of $\{1,...,k\}$:
+\begin{equation}
+dx_1 \wedge ... \wedge dx_k = \text{sgn}(\sigma) \; dx_{\sigma(1)} \wedge ... \wedge dx_{\sigma(k)}
+\end{equation}
+
+Anti-commutativity additionally implies that for all $x_i$, $dx_i \wedge dx_i = 0$. 
+
+Let $\alpha = \sum_i a_i(x) \; dx_{i_1} \wedge ... \wedge dx_{i_\ell} \in \Lambda^\ell(\Omega)$ and
+$\beta = \sum_j b_j(x) \; \text{d} x_{j_1} \wedge ... \wedge \text{d} x_{j_k} \in \Lambda^k(\Omega)$ then define:
+
+\begin{equation}
+\alpha \wedge \beta  := \sum_{i,j} a_i(x) b_j(x) \; dx_{i_1} \wedge ... \wedge dx_{i_\ell} \wedge dx_{j_1} \wedge ... \wedge dx_{j_k}
+\end{equation}
+
+Thus we can think of $\wedge$ as mapping a $k$-form and an $\ell$-form to a $(k+\ell)$-form, $\wedge : \Lambda^\ell(\Omega) \times \Lambda^k (\Omega) \to \Lambda^{k+\ell} (\Omega)$. By anti-commutativity we have:
+
+\begin{equation}
+\alpha \wedge \beta = (-1)^{k \ell} \beta \wedge \alpha
+\end{equation}
+
+
+\begin{definition}
+Let $\alpha$ be a $k$-form on $\Omega \subset \mathbb{R}^n$ of the form $\alpha = A(x) \; \text{d}x_1 \wedge ... \wedge \text{d} x_n$.
+If $A \in \mathcal{L}^1 (\Omega , \text{d}x)$ then we define:
+\begin{equation}
+\int_\Omega \alpha = \int_\Omega A(x) \; \text{d}x
+\end{equation}
+Where the left-hand side is the integral of a $k$-form and the right-hand side is a Lebesgue integral.
+For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the sum of integrals.
+\end{definition}
+\todo[inline]{Define $dx$ from $x_1 , ... , x_n$. Need to lift sign change from permutations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% PULL-BACKS (or coordinate changes)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Pull-backs}
+
+Benefit of differential forms is how cleanly they handle changes in coordinates.
+
+\begin{definition}
+$F: X \to \Omega$
+Define the pullback $F^* \beta$
+\begin{equation}
+F^* \beta = \sum_j  b_j ( F(x)) (F^* \text{d}x_{j_1}) \wedge ... \wedge (F^* \text{d} x_{j_k})
+\end{equation}
+and
+\begin{equation}
+F^* \text{d}x_j = \sum_\ell \frac{\partial F^j}{\partial x_\ell} \; \text{d} x_\ell
+\end{equation}
+\end{definition}
+
+Which can be reduced by:
+\begin{align}
+F^ * \beta & = \sum_j  b_j ( F(x)) (F^* \text{d}x_{j_1}) \wedge ... \wedge (F^* \text{d} x_{j_k}) \\
+& = \sum_j  b_j ( F(x))  
+\left( \sum_\ell \frac{\partial F^{j_1}}{\partial x_\ell} \; \text{d} x_\ell \right)
+\wedge ... \wedge  
+\left( \sum_\ell \frac{\partial F^{j_k}}{\partial x_\ell} \; \text{d} x_\ell \right) \\
+& = ... \\
+& = \sum_j b_j ( F(x)) \; \text{det}\left( J_F \right) \; \text{d}x_{j_1} \wedge ... \wedge \text{d} x_{j_k}
+\end{align}
+
+Which is significant given the change of variable formula for integration:
+
+\begin{equation}
+\int_{\phi(U)} \! f(v) \; dv = \int_U \! f(\phi(u)) \; |\text{det}\phi'(u)| \; du
+\end{equation}
+
+\begin{theorem}
+Let $F : X  \to \Omega$ be an (orientation-preserving diffeomorphism) and $\alpha$ an integrable $n$-form on $\Omega$ then
+\begin{equation}
+\int_\Omega \alpha = \int_X F^* \alpha
+\end{equation}
+\end{theorem}
+
+More algebra of differential forms
+
+\begin{equation}
+F^* (\alpha \wedge \beta ) = (F^* \alpha) \wedge (F^* \beta)
+\end{equation}
+
+\begin{definition}
+Exterior derivative
+\end{definition}
+
+...
+
+\begin{equation}
+d(\alpha \wedge \beta) = (d \alpha) \wedge \beta + (-1)^j \alpha \wedge ( d \beta)
+\end{equation}
+
+...
+
+\begin{equation}
+F^* (d \beta ) = dF^* \beta
+\end{equation}
+
+\section{Integration over Manifolds}
+
+\begin{example}
+Integrate an atlas with overlapping charts (using inclusion-exclusion)
+\end{example}
+
+
+\section{Stokes' Theorem}
+
+\newpage
+
+\section{A non-trivial example}
+\todo[inline]{??????????}
+\begin{example}{Tricky Integration}
+Using Stokes' theorem and Inclusion/Exclusion to evaluate a tricky theorem like:
+
+\begin{equation}
+f(z) = \frac{z^2}{(z^2 + 2z + 2)}
+\end{equation}
+
+% http://en.wikipedia.org/wiki/Methods_of_contour_integration
+
+ (2-3 pages)
+
+
+\end{example}
+
+\newpage

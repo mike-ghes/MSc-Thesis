@@ -4,6 +4,12 @@ In this chapter we will present an introduce integration over oriented intervals
 For the time being, we will focus on the intuition behind this and only worry about axis-aligned $n$-cubes.
 Following this, in the next chapter, we will delve more deeply from a measure theoretic perspective and integration over more general shapes.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% SINGLE VARIABLE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Single variable integration}
 
 Given a function $f$ with real variable $x$ and an interval $[a,b)$ on the (extended) real line, 
@@ -32,8 +38,6 @@ For example,
 - tagged partition given as a series $x_i$ such that $a = x_1 < x_2 < ... < x_n = b$ which we say is the integral $\int_a^b$
 
 - Unintentionally we are claiming that $\int_1^0 f(x) \; dx = \int_{[1,0]}= \int_{\emptyset} f(x) \; dx = 0$
-
-We will put off formal definitions until the next chapter.
 }
 
 If oriented intervals are used instead of traditional intervals, then the identity from equation (4.1) can instead just be a result of \emph{bi-linearity}.
@@ -81,21 +85,24 @@ Although simple arguments resolve this issue, by using left-closed, right-open o
 	\int_{[\![a,b)\!)} f(x) \; dx + \int_{[\![b,c)\!)} f(x) \; dx = \int_{[\![a,c)\!)} f(x) \; dx
 \end{equation}
 
-\todo[inline]{
-Somewhere in this section:
-
-- ``For now we will ignore the underlying integration mechanics and focus on the intuition of using oriented intervals. In chapter X we will return to this topic from a measure theoretic perspective to establish the Lesbegue integral.''
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% N-CUBES
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Higher dimension intervals}
 
 For now, we will concern ourselves only with oriented, $n$-dimensional, axis-aligned rectangles in $\mathbb{R}^n$.
-In one dimension, the previously discussed oriented intervals cover most obvious shapes.
-Moving to two dimensions, there are many more obvious shapes to consider but we will temporarily ignore triangles, circles and even rectangles that are tilted.
-First we must introduce some notation to describe these and higher dimension rectangles. 
+In one dimension, the previously discussed oriented intervals cover most of the ``obvious shapes'' one would be interested in.
+Moving to two dimensions, there are many more ``obvious shapes'' to consider but we will temporarily ignore triangles, circles and even rectangles that are tilted.
+We could also use triangles instead of rectangles as our primitive of choice. 
+This would generalize to $n$-simplexes in higher dimensions.
+Since $n$-simplexes and $n$-cubes end up b\cite{choquetanalysis}
+But, first we must introduce some notation to describe these and higher dimension rectangles. 
 
 At the moment the only rectangles we have defined are the one-dimensional ``oriented interval''.
-Hence we will also refer to this as a 1-rectangle.
+Hence we will also refer to this as a 1-cube.
 We construct higher dimensional $n$ rectangles using the Cartesian product.
 \begin{definition}
 	Let $X = \hset{ x_1^{m_1}, ... , x_k^{m_k} }$ and $Y= \hset{ y_1^{n_1}, ... , y_\ell^{n_\ell} }$ be hybrid sets.
@@ -146,7 +153,7 @@ For example $[\![a,b]\!] \times [\![c,d]\!] \times \hset{e^1}$ is the product of
 Specifically, it is the 2-rectangle $[\![a,b]\!] \times [\![c,d]\!]$ on the plane $z=3$.
 This also illustrates the principle that given a $k$-rectangle in $\mathbb{R}^n$ where $n>k$ we can always find a $k$ dimensional subspace which also contains the rectangle.
 We will re-use the interval notation from earlier although one should be careful to ``type-check'' while interpreting.
-When $a$ and $b$ are real numbers then we continue to use the definition $[\![a,b)\!) = [a,b) \ominus [b,a)$.
+When $a$ and $b$ are real numbers then we continue to use the definition $[\![a,b]\!] = [a,b) \ominus [b,a)$.
 However, when $\boldsymbol{a}$ and $\boldsymbol{b}$ are $n$-tuples (for example, coordinates in $\mathbb{R}^n$ then this is \emph{not} the oriented line interval $[\boldsymbol{a}, \boldsymbol{b}) \ominus [\boldsymbol{b}, \boldsymbol{a})$.
 
 \begin{definition}
@@ -164,61 +171,109 @@ The orientation of $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ is based on the nu
 Should there be an odd number of indices $i$ such that $a_i > b_i$ then $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ will also be negatively oriented.
 Otherwise, it will be positively oriented. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% RIEMANN
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Riemann Integral on $n$-cubes}
 
 Now that we have oriented $n$-dimensional cubes, we would like to define the integral over one.
-For now, the Riemann integral will suffice, for more complex domains we will introduce the Lebesgue integral in Chapter 5.
+For now, we will content ourselves with the Riemann integral and Euclidean volume.
+More complex domains and other metrics will be handled in later chapters with push-backs and the Lebesgue integral.
+The volume of an oriented $n$-cube in $\mathbb{R}^n$ we define to be the product of its side lengths.
+Formally,
+
+\begin{definition}
+	Let $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ be a $k$-cube in $\mathbb{R}^n$ again with $\boldsymbol{a}=(a_1,\ldots, a_n)$ and $\boldsymbol{b}=(b_1,\ldots, b_n)$. 
+	We denote the \textbf{volume of $\boldsymbol{[\![a,b]\!]}$} with $\text{vol}$ and define it as:
+	\begin{equation}
+		\text{vol}(\; [\![\boldsymbol{a}, \boldsymbol{b} ]\!] \;) = (b_1 - a_1) \cdot (b_2 - a_2) \cdot \ldots \cdot (b_n - a_n)
+	\end{equation}
+\end{definition}
+
+For any $k<n$, a $k$-cube will have volume zero.
+In at least one dimension, the cube will be degenerate (i.e. $a_i = b_i$) and so will contribute zero to the product.
+Additionally, one can also observe that $\text{vol}( \ominus [\![\boldsymbol{a}, \boldsymbol{b} ]\!]) = - \text{vol}( [\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$.
+
 
 \todo{image instead of tikz?}
 \begin{figure}[h]
 \caption[Riemann Integral]{Riemann Integral visual example.}
 \centering
-\begin{tikzpicture}[scale=1.7, domain=0:5]
-
+\begin{tikzpicture}[scale=2, domain=0:5]
 	\draw[<->] (0,2) -- (0,0) -- (5,0);
-	
 	\draw[smooth,samples=20, domain=0.0:5.0] plot(\x, {(\x^3 - 6 * \x^2 + 4 * \x + 18)/10});
-	
 \end{tikzpicture}
 \end{figure}
 
-Given an $n$-cube $[\![\boldsymbol{a}, \boldsymbol{b})\!)$ we must cut each $[\![a_i, b_i)\!)$ into partitions.
+Given an $n$-cube $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ we must cut each $[\![a_i, b_i]\!]$ into partitions.
 Previously we used generalized partitions and did not mind if pieces overlapped or exceeded the original range.
-In this case, however we are only interested in partitions in the traditional sense.
+However, for building our Riemann sums, we are only interested in partitions in the traditional, non-intersecting sense.
 
 \begin{definition}
-	Given an interval $[\![a,b)\!)$ of the real line, we denote $\mathcal{P}[\![a,b)\!)$ to be the the set of partitions $\{P_i\}$, of $[\![a,b)\!)$ such that for each partition $P_i$ are intervals and mutually disjoint.
+	Given an oriented interval $[\![a,b]\!]$ of the real line, we say that a partition of $[\![a,b]\!]$, $\{P_i\}_{i=1}^n$
+	is an \textbf{interval partition of $\boldsymbol{[\![a,b]\!]}$} if its pieces are:
+	\begin{enumerate}
+		\item \emph{Oriented intervals}: $P_i$ is an oriented interval of the real line for all $i$.
+		\item \emph{Disjoint}: $P_i \otimes P_j = \emptyset$ for all $i,j$
+	\end{enumerate}
+	We denote the set of all such partition as $\mathcal{P}[\![a,b]\!]$.
 \end{definition}
 
-This greatly restricts the types of partitions we can have.
-For every element of $\mathcal{P}[\![a,b)\!)$ will not only --- up to boundary behavior  (i.e. ``$[\![$'' compared to ``$(\!($'') --- be of the form:
+This greatly restricts the types of partitions we have access to.
+Every interval partition will be --- up to substitution of ``$]\!], (\!($'' in place of ``$)\!), [\![$'' --- of the form:
 \begin{equation}
-	\Big\{ \; [\![a,x_1)\!), \; [\![x_1, x_2)\!), \; [\![x_2, x_3)\!),\; \ldots,\; [\![x_{n-1}, b)\!) \; \Big\}
+	\Big\{ \; [\![a,x_1)\!), \; [\![x_1, x_2)\!), \; [\![x_2, x_3)\!),\; \ldots,\; [\![x_{n-1}, b]\!] \; \Big\}
 \end{equation}
-but also that $x_i$ is a monotone sequence.
-In this way we can choose a partition $P_j \in \mathcal{P}[\![a_j,b_j)\!)$ for each dimension of $[\![a,b)\!)$.
+where $x_i$ is a monotone sequence (that is, either non-increasing or non-decreasing).
+This is not to say that $P_i = [\![x_{i-1}, x_i )\!)$ as the pieces of $P$ may not be given in this order.
+Regardless of the ordering, we select partitions $P^j \in \mathcal{P}[\![a^j,b^j)\!)$ for each dimension of $[\![a,b)\!)$.
+To build our mesh, we construct smaller $n$-cubes $I_{i_1, \ldots, i_n}$ using the Cartesian product of pieces:
+\begin{equation}
+	I_{i_1, \ldots, i_n} = i_1 \times \ldots \times i_n
+\end{equation}
+where each $i_j$ is taken from $P^j$.
+We are now ready to construct Riemann sums.
 
+\begin{definition}
+	Given $P=\{ P_j \}_{j=1}^n$ where $P_j \in \mathcal{P}[\![a_j, b_j]\!]$,
+	and $f:[\![\boldsymbol{a}, \boldsymbol{b}]\!] \to \mathcal{R}$ then we define a Riemann sum $f_P$ to be:
+	\begin{equation}
+		f_P = \sum_{i_1 \in P_1} \ldots \sum_{i_n \in P_n} f(x_{i_1, \ldots, i_n}) \text{vol}(I_{i_1, \ldots, i_n})
+	\end{equation}
+	where $x_{i_1, \ldots, i_n}$ is any point chosen from $I_{i_1, \ldots, i_n}$.
+\end{definition}
 
+\todo[inline]{``a'' not ``the''. left, right, trapezoidal,upper, lower,...}
 
-\todo[inline]{
-- For an $n$-cube we can take $i_j \in \mathcal{P}[\![a_j,b_j]\!]$ for each side.
+Recall our discussion of refinements from Chapter 2.
+Given 2 partitions $P$ and $P'$ of the same set then we say $P \preceq P'$ if $P'$ is a refinement of $P$.
+In this way we can induce a partial ordering on $\mathcal{P}[\![a,b]\!]$.
+There is a unique smallest element in this partial ordering which is $[\![a,b]\!]$ itself; 
+every partition by definition will refine $[\![a,b]\!]$.
 
-- $I_{i_1, \ldots, i_n} = i_1 \times \ldots \times i_n$ and some point $x_{i_1, \ldots, i_n}$ in $I_{i_1, \ldots, i_n}$
+\todo[inline]{Given $P$ and $P'$ can always find $Q$ such that $P \preceq Q$ and $P' \preceq Q$}
 
-then $f_P = \sum_{i_1} \ldots \sum_{i_n} f(t_{i_1, \ldots, i_n}) \text{vol} (I_{i_1,\ldots,i_n})$
+As we go up in our ordering, our mesh becomes increasingly fine.
+Taking the Riemann sum of the suprema of this poset gives us the Riemann integral.
 
-$\text{vol}[\![a,b]\!] = (b_1 - a_1) \cdot \ldots \cdot (b_n - a_n)$
+\begin{definition}
+The Riemann integral of a function $f:\mathbb{R}^n \to \mathbb{R}$ over a $k$-cube $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$
+where P is $\sup \{ \mathcal{P} [\![a,b]\!] \}$
+	\begin{equation}
+		\int_{[\![a,b]\!]} f(x) \; dx = f_{\sup \{ \mathcal{P} [\![a,b]\!] \}}
+	\end{equation} 
+\end{definition}
 
-(easily shown that $\text{vol}\ominus[\![a,b]\!] = - \text{vol}[\![a,b]\!]$)
+\todo[inline]{Riemann integrable. upper and lower approach}
 
-volume of a $k$-cube in $\mathbb{R}^n$ with $k<n$ is 0.
-
-- Recall discussion of refinements from Chapter 2.
-
-- We can induce a partial ordering on $\mathcal{P}[\![a,b]\!]$ by saying $P \leq P'$ if $P'$ is a refinement of $P$.
-
-$\int_{[\![a,b]\!]} f(x) \; dx = f_{\sup \{ \mathcal{P} [\![a,b]\!] \}}$ where P is $\sup \{ \mathcal{P} [\![a,b]\!] \}$.
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% BOUNDARY
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Boundary Operator}
 
@@ -437,6 +492,11 @@ There may not be such a nice physical interpretation in other spaces.
 \end{tikzpicture}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CHAINS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Chains}
 
@@ -515,13 +575,14 @@ Proof of $\partial \partial = 0$
 
 
 
-\section{Chain Complexes}
-
-\todo[inline]{??}
-
+\todo[inline]{
+- Chain complex
+}
 
 \begin{equation}
 	\ldots \xleftarrow{\partial_{k-1}} C_{k-1} \xleftarrow{\partial_{k}} C_k \xleftarrow{\partial_{k+1}} C_{k+1} \xleftarrow{\partial_{k+2}} ...
 \end{equation}
 
-\section{Stokes' Theorem on $n$-cubes}
+$dd=0$
+
+But we are getting ahead of ourselves... lets look at differential forms.
