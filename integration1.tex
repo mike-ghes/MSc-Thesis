@@ -32,11 +32,9 @@ We can't translate equation (4.1) to an identity along the lines of:
 since at least one of $[a,b)$ or $[b,a)$ will be always be empty.
 Although this notation generally appears in context of Lebesgue integrals, 
 Riemann integrals (which generally use $\int_a^b ...$ instead) simply hide this mis-use of intervals.
-For example, 
+For example, it is typically glossed over that when doing the formal Riemann sum for an integral $\int_a^b f(x) \; dx$, one would use the tagged partition given as a series $x_i$ such that $a = x_1 < x_2 < ... < x_n = b$.
+
 \todo[inline]{Find one that's not wikipedia!
-
-- tagged partition given as a series $x_i$ such that $a = x_1 < x_2 < ... < x_n = b$ which we say is the integral $\int_a^b$
-
 - Unintentionally we are claiming that $\int_1^0 f(x) \; dx = \int_{[1,0]}= \int_{\emptyset} f(x) \; dx = 0$
 }
 
@@ -246,16 +244,24 @@ We are now ready to construct Riemann sums.
 	where $x_{i_1, \ldots, i_n}$ is any point chosen from $I_{i_1, \ldots, i_n}$.
 \end{definition}
 
-\todo[inline]{``a'' not ``the''. left, right, trapezoidal,upper, lower,...}
+Note that we specify \emph{a} Riemann sum, not \emph{the} Riemann sum.
+There are several ways to choose $x_{i_1,\ldots,i_n} \in I_{i_1, \ldots, i_n}$ and different samplings can lead to different Riemann sums for the same partition and same function.
+In $\mathbb{R}^1$, several common ways to sample include the left and right Riemann sums (which sample at the left and right boundaries), the trapezoidal Riemann sum (which averages the left and right) the upper Riemann sum (which samples at $\max(f(x_{i_1, \ldots, i_n}))$) and the lower Riemann sum (which samples at $\min(f(x_{i_1,\ldots,i_n}))$).
 
 Recall our discussion of refinements from Chapter 2.
 Given 2 partitions $P$ and $P'$ of the same set then we say $P \preceq P'$ if $P'$ is a refinement of $P$.
 In this way we can induce a partial ordering on $\mathcal{P}[\![a,b]\!]$.
 There is a unique smallest element in this partial ordering which is $[\![a,b]\!]$ itself; 
 every partition by definition will refine $[\![a,b]\!]$.
-
-\todo[inline]{Given $P$ and $P'$ can always find $Q$ such that $P \preceq Q$ and $P' \preceq Q$}
-
+Additionally, given $P,P' \in \mathcal{P}[\![a,b]\!]$ then propose that we can always find $Q$ that simultaneously refines both.
+If $P=P'$ then trivially $Q=P$ is a common refinement.
+Otherwise, we take:
+\begin{equation}
+	Q= [\![a,b]\!] \otimes \bigoplus_{p\in P} \bigoplus_{p' \in P} p \otimes p'
+\end{equation}
+The heavy lifting here is done by the fact that every point in $[\![a,b]\!]$ is covered by exactly one $p\in P$ and exactly one $p' \in P$.
+The product of any two partition pieces will then be the smallest common interval with multiplicity 1.
+Multiplying the entire thing by $[\![a,b]\!]$ is done to correct the sign.
 As we go up in our ordering, our mesh becomes increasingly fine.
 Taking the Riemann sum of the suprema of this poset gives us the Riemann integral.
 
@@ -265,9 +271,9 @@ where P is $\sup \{ \mathcal{P} [\![a,b]\!] \}$
 	\begin{equation}
 		\int_{[\![a,b]\!]} f(x) \; dx = f_{\sup \{ \mathcal{P} [\![a,b]\!] \}}
 	\end{equation} 
+	We say that a function is \textbf{Riemann integrable} if the upper and lower Riemann sums converge.
 \end{definition}
 
-\todo[inline]{Riemann integrable. upper and lower approach}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -440,7 +446,10 @@ There may not be such a nice physical interpretation in other spaces.
 
 
 \begin{figure}[h]
-\caption[Orientations of 2-rectangles]{asdfasdfasdf }
+\caption[Orientations of 2-rectangles]{One way of visualizing the orientation of 2-rectangles using clockwise and counter-clockwise cycles of arrows for 1-rectangles. 
+The boundary of $[\![a,b]\!] \times [\![c,d]\!]$ becomes the cycle: 
+$(a,c) \to (b,c) \to (b,d) \to (a,d) \to (a,c)$.
+Showing the relationship between $[\![a,b]\!] \times [\![c,d]\!]$ and $[\![b,a]\!] \times [\![d,c]\!]$ }
 \centering
 \begin{tikzpicture}
 
@@ -545,7 +554,7 @@ When moving from (4.21) to (4.22), in addition to applying $\partial_1$ we also 
 The identity ``$\partial \partial = 0$'' is not unique to $2$-cubes but holds for higher dimensions as well.
 
 \begin{figure}[h]
-\caption[Boundary of a boundary (of a 2-cube)]{asdfasdfasdf }
+\caption[Boundary of a boundary (of a 2-cube)]{The boundary of 2-cube gives a cycle of oriented edges. Taking the boundary of again, at each corner, the negative boundary of one edge will be canceled by the positive boundary of the preceding edge.}
 \centering
 \begin{tikzpicture}
 
@@ -579,53 +588,90 @@ Then we have:
 		\partial_k \partial_{k-1} \left( [\![ \boldsymbol{a}, \boldsymbol{b} ]\!] \right) 
 		= \bigoplus_{j=1}^k (-1)^j 
 			& \;  \left( \; \partial_{n-1} \left(	
-			[\![ \boldsymbol{a}^{[\![1,i_j)\!)}, \boldsymbol{b}^{[\![1,i_j)\!)} ]\!]
-			\times \hset{a_{i_j}} \times
-			[\![ \boldsymbol{a}^{(\!(i_j,n]\!]}, \boldsymbol{b}^{(\!(i_j,n]\!]} ]\!] 
-			\right) \right. \notag\\
-			& \ominus \; \! \partial_{n-1} 
-			\left. \! \left(
-			[\![ \boldsymbol{a}^{[\![1,i_j)\!)}, \boldsymbol{b}^{[\![1,i_j)\!)} ]\!]
-			\times \hset{b_{i_j}} \times
-			[\![ \boldsymbol{a}^{(\!(i_j,n]\!]}, \boldsymbol{b}^{(\!(i_j,n]\!]} ]\!]
-			\right) \; \right)
+				[\![ 	\boldsymbol{a}^{[\![1,n]\!]}, \;\;
+					\boldsymbol{b}^{[\![1,i_j)\!)}
+						\oplus \boldsymbol{a}^{[\![i_j]\!]}
+						\oplus \boldsymbol{b}^{(\!(i_j,n]\!]} 
+				]\!] 
+			\right) \right. \notag\\[-1em]
+			& \ominus \; \left. \! \partial_{n-1} \left(
+				[\![ 	\boldsymbol{a}^{[\![1,i_j)\!)}
+						\oplus \boldsymbol{b}^{[\![i_j]\!]}
+						\oplus \boldsymbol{a}^{(\!(i_j,n]\!]} , \;\;
+					\boldsymbol{b}^{[\![1,n]\!]}
+				]\!] 
+			\right)\right) \\[1em]
+		= \bigoplus_{j=1}^k \bigoplus_{\ell=1}^{k-1} (-1)^{j+\ell}
+			\;&
+				[\![ 	(\boldsymbol{a}^{[\![1,n]\!]}), \;\;
+					(\boldsymbol{b}^{[\![1,i_j)\!) \;\oplus\; (\!(i_j,i_{j,\ell})\!) \;\oplus\; (\!(i_{j,\ell},n]\!]}
+						\oplus \boldsymbol{a}^{[\![i_j]\!] \;\oplus\; [\![i_{j,\ell}]\!]})
+				]\!] \notag\\[-1em]
+			\ominus \;&
+				[\![ 	(\boldsymbol{a}^{[\![1,i_{j,\ell})\!) \;\oplus\; (\!(i_{j,\ell},n]\!]}
+						\oplus \boldsymbol{b}^{[\![i_{j,\ell}]\!]}), \;\;
+					(\boldsymbol{b}^{[\![1,i_j)\!) \;\oplus\; (\!(i_j,n]\!]}
+						\oplus \boldsymbol{a}^{[\![i_j]\!]})
+				]\!] \notag\\
+			\ominus \; &
+				[\![ 	(\boldsymbol{a}^{[\![1,i_j)\!) \;\oplus\; (\!(i_j,n]\!]}
+						\oplus \boldsymbol{b}^{[\![i_j]\!]}), \;\;
+					(\boldsymbol{b}^{[\![1,i_{j,\ell})\!) \;\oplus\; (\!(i_{j,\ell},n]\!]}
+						\oplus \boldsymbol{a}^{[\![i_{j,\ell}]\!]})
+				]\!] \notag\\
+			\oplus \;&
+				[\![ 	(\boldsymbol{a}^{[\![1,i_j)\!) \;\oplus\; (\!(i_j,i_{j,\ell})\!) \;\oplus\; (\!(i_{j,\ell},n]\!]}
+						\oplus \boldsymbol{b}^{[\![i_j]\!] \;\oplus\; [\![i_{j,\ell}]\!]}), \;\;
+					(\boldsymbol{b}^{[\![1,n]\!]})
+				]\!] 
 \end{align}
-
-After applying the $\partial_{n-1}$ we will be left with the sum of terms (ignoring sign coefficients) that are of the form:
+Note that we have $i_j$ and $i'_\ell$; after applying the first boundary operator, one dimension of the $k$-cube is degenerate.
+Hence for each sequence: $\{i_j\}_{j=1}^k$ we construct $\{i_{j,\ell}\}_{\ell=1}^{k-1}$ given by:
 \begin{equation}
-	[\![\boldsymbol{a}, \boldsymbol{b}]\!]^{[\![1,j)\!)}
-		\times
-	\hset{x_\ell}
-		\times
-	[\![\boldsymbol{a}, \boldsymbol{b}]\!]^{(\!(j,\ell)\!)}
-		\times
-	\hset{x_{\ell'}}
-		\times
-	[\![\boldsymbol{a}, \boldsymbol{b}]\!]^{(\!(\ell,n]\!]}
+	i_{j,1} , \ldots, i_{j,k-1} = i_1, \ldots, \widehat{i_j}, \ldots, i_k
 \end{equation}
-
-Where $x$ is either $a$ or $b$ and $\ell < \ell'$.
-When applying $\partial_{n-1}$ to each term, the sequence of non-degenerate dimensions $i_1, \ldots, i_k$, 
-is not the same as it was when we applied $\partial_n$.
-Rather our new sequence of $i'_j$ is:
+The double sum iterates over all pairs but $\oplus$ commutes so the $(k-2)$-cube with degenerate dimensions $[\![i_j]\!] \oplus [\![i_{j,\ell}]\!]$ will be iterated over twice. 
+The sequences depend on one another so it is not as simple as simply swapping $\ell$ and $j$:
 \begin{equation}
-	i'_1 , \ldots, i'_{k-1} = i_1, \ldots, \widehat{i_j}, \ldots, i_k
+   [\![i_j]\!] \oplus [\![i_{j,\ell}]\!] =
+     \begin{cases}
+       [\![i_\ell]\!] \oplus [\![i_{\ell,j-1}]\!] & j > \ell \\
+       [\![i_{\ell+1}]\!] \oplus [\![i_{\ell+1,j}]\!] & j \leq \ell
+     \end{cases}
 \end{equation}
-If $x_\ell$ was 
+So each term representing a $(k-2)$-cube will occur twice in the sum.
+Once with the iteration $(j,\ell)$ and once with $(\ell, j-1)$ or $(\ell+1, j)$.
+In either case, $(-1)^{j+\ell}$ is inverted meaning the two cubes will cancel.
+Leaving us with the boundary of a boundary being empty.
+By linearity this extends to all chains as well as the sum of empty sets is of course still empty.
 
-By linearity this extends to all chains as well. 
-
-
-
-
-\todo[inline]{
-- Chain complex
-}
-
+\begin{definition}
+A \textbf{chain complex} is a sequence of Abelian groups $\ldots, A_2, A_1, A_0, A_{-1}, A_{-2}, \ldots$ which are connected by homomorphisms $d_n:A_n \to A_{n-1}$ such that $d_n \circ d_{n+1} = 0$ for all $n$. Typically written out as:
 \begin{equation}
-	\ldots \xleftarrow{\partial_{k-1}} C_{k-1} \xleftarrow{\partial_{k}} C_k \xleftarrow{\partial_{k+1}} C_{k+1} \xleftarrow{\partial_{k+2}} ...
+	\ldots \xleftarrow{d_{k-1}} A_{k-1} \xleftarrow{d_{k}} A_k \xleftarrow{d_{k+1}} A_{k+1} \xleftarrow{d_{k+2}} \ldots
 \end{equation}
+A \textbf{cochain complex} is a sequence of Abelian groups $\ldots, A^{-2}, A^{-1}, A^0, A^{1}, A^{2}, \ldots$ which are connected by homomorphisms $d^n:A^n \to A^{n+1}$ such that $d^n \circ d^{n-1} = 0$ for all $n$. Typically written out as:
+\begin{equation}
+	\ldots \xrightarrow{d^{k-1}} A^{k-1} \xrightarrow{d^{k}} A^k \xrightarrow{d^{k+1}} A^{k+1} \xrightarrow{d^{k+2}} \ldots
+\end{equation}
+\end{definition}
 
-$dd=0$
+$(C_\bullet, \partial_\bullet)$ is just one instance of a chain complex known as the \emph{``cubic homology''}.
+In the next chapter we will look at the more general \emph{``cubic singular homology''}.
+As well as the related cochain complex: the \emph{``De Rham cohomology''} and how the two relate.
 
-But we are getting ahead of ourselves... lets look at differential forms.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
