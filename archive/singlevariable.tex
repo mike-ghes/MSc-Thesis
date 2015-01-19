@@ -1,0 +1,52 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% SINGLE VARIABLE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Single variable integration}
+
+From the fundamental theorem of calculus, if $F'(x) = f(x)$ then we have:
+\begin{equation}
+	\int_a^b f(x) \; dx = F(b) - F(a)
+\end{equation}
+
+
+\begin{definition}
+	Let $[\![ a,b ]\!]$ be an interval on $\mathbb{R}$ then the boundary function $\partial$ is the linear map such that:
+	\begin{equation}
+		\partial( \;[\![a,b]\!]\; ) = \hset{ a^1, b^{-1} }
+	\end{equation}
+\end{definition}
+
+\todo[inline]{ By linearity we also have:
+
+$\partial (\!(a,b)\!) = \partial ( \; \ominus [\![b,a]\!] \; )= \ominus \partial ( \; [\![b,a]\!] \; ) = \ominus \hset{ b^1, a^{-1} } = \hset{ a^1, b^{-1}}$.
+
+Using this we also have:}
+
+$\partial [\![a,b)\!) = \partial ( [\![a,c]\!] \oplus (\!(c,b)\!) ) = \partial [\![a,c]\!] \oplus \partial (\!(c,b)\!) =  \hset{ a^1, c^{-1} } \oplus \hset{ c^1, b^{-1} } = \hset{a^1, b^{-1} }$
+
+
+And by a similar proof for $\partial (\!(a,c]\!]$, we conclude that:
+\begin{equation}
+	\partial [\![a,b]\!] = \partial [\![a,b)\!) = \partial (\!(a,b]\!] = \partial (\!(a,b)\!)
+\end{equation}
+
+
+Isolated points do not affect the boundary of an oriented interval.
+This should have been obvious from the definition to begin with.
+The interval $[\![ a,a ]\!]$ is a hybrid set which contains only the element $a$ with multiplicity one.
+From equation XX,
+\begin{equation}
+	\partial [\![ a,a ]\!] = \hset{a^1, a^{-1}} = \emptyset
+\end{equation}
+
+So whether we use $\int_a^b$ to denote the integral over the intervals $[\![a,b]\!]$, $[\![a,b)\!)$ or  $(\!(a,b)\!)$ the boundary is unchanged and so the integral will evaluate identically.
+
+The hybrid sets $[\![a,b]\!] \oplus [\![b,c]\!]$ and $(\!(a,b)\!) \oplus (\!(b,c)\!)$ have identical multiplicities almost everywhere.
+At $b$, they will differ by 2. 
+Although simple arguments resolve this issue, by using left-closed, right-open oriented intervals we can bypass these arguments altogether when showing
+\begin{equation}
+	\int_{[\![a,b)\!)} f(x) \; dx + \int_{[\![b,c)\!)} f(x) \; dx = \int_{[\![a,c)\!)} f(x) \; dx
+\end{equation}
