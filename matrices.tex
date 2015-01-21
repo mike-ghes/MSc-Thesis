@@ -1,8 +1,41 @@
 \chapter{Symbolic Linear Algebra}
 
-\todo[inline]{
-Common practice to use ``$\ldots$'' in vectors and matrices.
-}
+In mathematics literature, is common practice to use ellipses: ``$\ldots$'' in matrices.
+For example:
+\begin{equation}
+	\left[
+		\begin{array}{cccc}
+			A_{1,1} & A_{1,2}	& \ldots 	& A_{1,n} \\
+			0		& A_{2,2}	& \ldots	& A_{2,n} \\
+ 			\vdots 	& \ddots 	& \ddots & \vdots \\
+			0		& \ldots 		& 0 		& A_{n,n} \\
+		\end{array}
+	\right]
+\end{equation}
+and symbolic blocks as in
+\begin{equation}
+	\left[
+		\begin{array}{c|c}
+			A & B \\
+			\hline
+			C & D \\
+		\end{array}
+	\right]
+\end{equation}
+where $A,B,C,D$ are sub matrices.
+
+Computer algebra has unsatisfactory structures to represent these  
+
+\todo[inline]{more}
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% INTERVALS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Oriented Intervals}
 
@@ -28,9 +61,10 @@ In this case, $\oplus$ behaves like concatenation but this is not always true.
 When $a \leq c \leq b$ then $[a,b) \oplus [b,c) = [a,b)$.
 When working with intervals, a case-based approach to consider relative ordering of endpoints easily becomes quite cumbersome.
 Thus we turn to oriented intervals.
+\todo[inline]{1 more line}
 
 \begin{definition}
-	We define \textbf{oriented intervals} with $a,b\in X$, a totally ordered set, 
+	We define \textbf{oriented intervals} with $a,b\in X$, where $X$ is a totally ordered set, 
 	using hybrid set point-wise subtraction as follows:
 	\begin{align}
 		[\![ a,b )\!) = [a,b) \ominus [b,a) \\
@@ -40,23 +74,24 @@ Thus we turn to oriented intervals.
 	\end{align}
 \end{definition}
 
-\todo[inline]{
-For any oriented interval, at most one interval term will be non-empty.
-However when using symbolic terms, 
-
+For any choice of distinct $a$ and $b$, exactly one term will be empty.
+Unlike traditional interviews where $[a,b)$ would be empty if $b < a$,  
+the oriented interval $[\![a,b)\!)$ simply has elements with negative multiplicity.
 Several results follow immediately from this definition.
-}
 
 \begin{theorem} For all $a,b,c \in \mathbb{R}$, 
 	\begin{align}
 		[\![a,b)\!) &= \ominus [\![b,a)\!) \\
 		(\!(a,b]\!] &= \ominus (\!(b,a]\!] \\
-		[\![a,b]\!] &= \ominus (\!(a,b)\!)
+		[\![a,b]\!] &= \ominus (\!(a,b)\!) \\
+		(\!(a,b)\!) &= \ominus [\![a,b]\!]
 	\end{align}
 \end{theorem}
 
-Like their unoriented analogues, the oriented intervals $[\![ a,a )\!)$ and $(\!( a,a ]\!]$ are both empty and $[\![a,a]\!]$ contains a single point (with multiplicity 1).
-However, unlike traditional intervals $(\!(a,a)\!)$ is \emph{not} empty but is equivalent to but rather, $(\!(a,a)\!) = \ominus [\![a,a]\!] = \hset{a^{-1}}$.
+We should make a note here how oriented intervals behave when $a=b$.
+Like their unoriented analogues, the oriented intervals $[\![ a,a )\!)$ and $(\!( a,a ]\!]$ are both empty 
+while $[\![a,a]\!]$ contains the point at $a$ (with multiplicity 1).
+However, unlike traditional intervals $(\!(a,a)\!)$ is \emph{not} empty but rather, $(\!(a,a)\!) = \ominus [\![a,a]\!] = \hset{a^{-1}}$.
 
 \todo[inline]{more}
 
@@ -92,6 +127,15 @@ We will not enumerate all possible cases here.
 
 \newpage
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% VECTORS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Symbolic Vectors}
 
 \todo[inline]{Vectors as hybrid functions}
@@ -114,6 +158,12 @@ Although for clarity and succinctness we will use $(u_i)$ instead of $(i \mapsto
 
 However we are more interested in performing arithmetic with these vectors.
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Addition
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Vector Addition}
 
 Consider pointwise vector addition $U^T + V^T$:
@@ -166,6 +216,12 @@ In the third term, on the interval $(\!(1,5]\!]$, $u'_{i-4}$ would even evaluate
 
 However, these unevaluable terms also appear in the middle term however the interval $(\!(4,1]\!]$ is a negatively oriented interval and the offending points cancel!
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Inner Product
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Inner Product}
 
 The inner product or dot product of two vectors is given by:
@@ -193,17 +249,46 @@ Then the dot product of $U^T$ and $V^T$ becomes very familiar:
 
 The inner expression is identical to $U^T + V^T$ except for a replacement of $+$ with $\times$.
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Outer Product
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Outer Product}
 
-\todo[inline]{$U\cdot V^T$ instead of $U^T \cdot V$. But should be part of matrix multiplication?}
+While the inner product took two $n$-vectors and returned a single number,
+the outer product would take those two $n$-vectors and return an $n \times n$ matrix.
+Alternatively, one could think of $U^T$ and $V^T$ as $1\times n$ matrices.
+Then the inner product is the $1\times 1$ matrix given by $U^T \cdot V$ 
+while the outer product is given by $U \cdot V^T$. Formally we define:
+
+\begin{definition}
+	Let $A^T = [ a_1, a_2, \ldots, a_n]$ and $B^T = [ b_1, b_2, \ldots, b_m]$,
+	then the \textbf{outer product} (or \emph{tensor product}) $\otimes$ is given by:
+	\begin{equation}
+		A \boxtimes B = A \; B^T = \left[
+			\begin{array}{ccc}
+				a_1 b_1 & \ldots 	& a_1 b_m \\
+				\vdots 	& \ddots & \vdots \\
+				a_n b_1 & \ldots 	& a_n b_m
+			\end{array}
+		\right]
+	\end{equation}
+\end{definition}
+
+Hybrid sets won't allow us to do anything differently.
+
+But it will provide a nice lead in to our notation for matrix multiplication.
 
 
 
 
-
-
-\newpage
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% MATRICES
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Abstract Matrices}
 
 It is common practice in mathematics to represent matrices symbolically with sub-matrices such as:
@@ -227,8 +312,16 @@ Ellipses are also routinely used for interpolating over regions of a matrix, as 
 	\right]
 \end{equation}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Matrix Addition
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matrix Addition}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Matrix Multiplication
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matrix Multiplication}
 
 
 
