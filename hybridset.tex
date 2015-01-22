@@ -9,7 +9,7 @@
 
 
 The motivation behind hybrid sets and functions can be traced to wanting a better approach to piecewise functions.
-Piecewise functions are enormously useful constructions in many areas...
+Piecewise functions are enormously useful constructions in many areas (...)
 The perennial example of a piecewise function is $\mathrm{abs}:\mathbb{R} \to \mathbb{R}_{+} \cup \{ 0 \}$ given in the form:
 \begin{equation}
 	\mathrm{abs}(x) = 
@@ -69,7 +69,8 @@ where the set $\{ P _ i \}$ forms a partition of the domain of $f$ and for each 
 
 This allows us to re-write our previous definition of (\ref{eq_fP}) as:
 \begin{equation}
-	f = \restrict{f}{P_1} \fjoin \restrict{f}{P_2} \fjoin ... \fjoin \restrict{f}{P_n}
+	\label{fjoin_partition}
+	f = \restrict{f}{P_1} \fjoin \restrict{f}{P_2} \fjoin \ldots \fjoin \restrict{f}{P_n}
 \end{equation}
 \todo[inline]{To Do: problem with this approach + join}
 
@@ -81,7 +82,7 @@ but $( \restrict{f}{A} \fjoin ( \restrict{g}{B} \fjoin \restrict{h}{C} ))(x) = f
 
 
 Other conventions exist, for example \emph{Maple}'s 
-\texttt{piecewise(cond\_1, f\_1, cond\_2, f\_2, ..., cond\_n, f\_n, f\_otherwise)} 
+\texttt{piecewise(cond\_1, f\_1, cond\_2, f\_2, \ldots, cond\_n, f\_n, f\_otherwise)} 
 effectively uses a short-circuted $\fjoin$;
 it takes the first sub-function, \texttt{f\_i}, such that the corresponding condition, \texttt{cond\_i}, evaluates to \emph{true}.
 This approach simply trades associativity for commutivity.
@@ -131,7 +132,7 @@ On its own, this definition does us very little good; much of the usefulness of 
 
 We will use the notation:
 \begin{equation*}
-	H = \hset{x_1^{m_1}, x_2^{m_2},...}
+	H = \hset{x_1^{m_1}, x_2^{m_2},\ldots}
 \end{equation*}
 to describe the hybrid set $H$ where the element $x_i$ has multiplicity $m_i$. 
 We allow for repetitions in $\{ x_i \}$ but interpret the overall multiplicity of an element $x_i$ as 
@@ -148,13 +149,13 @@ For normalized hybrid sets it follows that $H(x_i) = m_i$.
 Traditional sets use the operations $\cup$ union, $\cap$ intersection, and $\setminus$ complementation.
 In the same way a hybrid set is a function $H : U \to \mathbb{Z}$, 
 a set could be considered as function $S : U \to \{ 0,1 \}$.
-Then set operations correspond to pointwise \texttt{OR}, \texttt{AND}, and \texttt{NOT}.
+Then set operations correspond to point-wise \texttt{OR}, \texttt{AND}, and \texttt{NOT}.
 That is, for two sets $A$ and $B$, then $(A \cup B)(x) = A(x) \;\mathtt{OR}\; B(x)$.
-One could easily extend union and intersection to hybrid sets using pointwise min and max
+One could easily extend union and intersection to hybrid sets using point-wise min and max
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 [cite],
 but it would make more sense to have operations corresponding to primitive operations in $\mathbb{Z}$ instead.
-Thus we will define $\oplus$, $\ominus$, and $\otimes$ by pointwise $+$, $-$, and $\cdot$.
+Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, and $\cdot$.
 
 \begin{definition}
 	For any two hybrid sets $A$ and $B$ over a common universe $U$, 
@@ -192,10 +193,10 @@ Taken alone, hybrid sets can be used to model various objects.
 Any positive rational number can be represented as a hybrid set over the set of primes and vice versa  
 (i.e. ($\mathbb{Z}^\mathbb{P}, \oplus) \simeq (\mathbb{Q}_+,\cdot)$).
 For any rational number $a/b$, both $a$ and $b$ being integers will have a prime decomposition: 
-$a=p_1^{m_1}\cdot p_2^{m_2} \cdot ...$ and $b=q_1^{n_1} \cdot q_2^{n_2} \cdot ...$ . 
+$a=p_1^{m_1}\cdot p_2^{m_2} \cdot \ldots$ and $b=q_1^{n_1} \cdot q_2^{n_2} \cdot ...$ . 
 Then there is an isomorphism:
 \begin{equation}
-	f(a/b) = \hset{p_1^{m_1}, p_2^{m_2}, ...} \ominus \hset{q_1^{n_1}, q_2^{n_2}, ...}
+	f(a/b) = \hset{p_1^{m_1}, p_2^{m_2}, \ldots} \ominus \hset{q_1^{n_1}, q_2^{n_2}, \ldots}
 \end{equation}
 
 \begin{example}
@@ -226,9 +227,7 @@ For example, $2/4 = \hset{2^1, 2^{-2}}$ which is the un-normalized form of $\hse
 \subsection{Example: \emph{Rational Polynomials}}
 
 Hybrid sets can also be used to represent the roots and asymptotes of a rational polynomial.
-
 \todo[inline]{Blending}
-
 \begin{example} Concretely: 
 	\begin{equation}
 		\frac{(x-2)}{(x-1)^2(x+1)} = \hset{ 2^1, 1^{-2}, -1^{-1} }
@@ -237,9 +236,10 @@ Hybrid sets can also be used to represent the roots and asymptotes of a rational
 
 \newpage
 
-In tradititional set theory, a partition of $X$ is a collection of subsets of $X$ such that 
+In traditional set theory, a partition of $X$ is a collection of subsets of $X$ such that 
 the subsets are mutually disjoint and their union is equivalent to $X$.
-When dealing with hybrid sets we no longer have union but use 
+When dealing with hybrid sets we no longer have union but use point-wise sum instead.
+
 
 \begin{definition}
 	A \textbf{generalized partition $\boldsymbol{P}$ of a hybrid set $\boldsymbol{H(x)}$} is a sequence of hybrid sets
@@ -265,11 +265,12 @@ First we must consider that not all hybrid sets can be cast back down to traditi
 
 
 \begin{definition}
-Given a hybrid set $H$ over universe $U$, 
-if for all $x \in U$ $H(x)=1$ or $H(x)=0$ then we say that \textbf{$\boldsymbol{H(x)}$ is reducible}.
-If $H$ is reducible then we denote the \textbf{reduction of $\boldsymbol{H}$} by $\mathcal{R}(H)$ 
-as the (non-hybrid) set over $U$ with the same membership.  
+	Given a hybrid set $H$ over universe $U$, 
+	if for all $x \in U$ $H(x)=1$ or $H(x)=0$ then we say that \textbf{$\boldsymbol{H(x)}$ is reducible}.
+	If $H$ is reducible then we denote the \textbf{reduction of $\boldsymbol{H}$} by $\mathcal{R}(H)$ 
+	as the (non-hybrid) set over $U$ with the same membership.  
 \end{definition}
+
 
 If a hybrid set $H$ is reducible, we still cannot be guaranteed that a generalized partition $P$ of $H$ will be a strict.
 Consider the reducible hybrid set $[0,1]$ (that is, $H(x)=1$ if $0 \leq x \leq 1$ and $H(x)=0$ otherwise).
@@ -280,15 +281,13 @@ Generalized partitions and reducibility will be very useful to us over the next 
 
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % HYBRID FUNCTIONS
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \section{Hybrid Functions}
+
 
 A function is typically defined as a mapping from elements of one set to another set.
 We will consider functions which have hybrid sets as their domain (but still map to traditional sets) 
@@ -299,7 +298,9 @@ But first we must establish \emph{hybrid relations}.
 \begin{definition}
 	For two sets $S$ and $T$, a hybrid set over their Cartesian product $S \times T$ is called a 
 	\textbf{hybrid (binary) relation between $\boldsymbol{S}$ and $\boldsymbol{T}$}.
+	We denote the set of all such hybrid relations by $\mathbb{Z}^{S \times T}$. 
 \end{definition}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Ordering Algebra
@@ -332,97 +333,177 @@ We say that $\succeq$ is a total ordering of $S$ if:
 	\text{supp}[\succeq] = S \times S
 \end{equation}
 
+
 \newpage
 \begin{definition}
-Let $H$ be a hybrid relation. For all $x,y,z$ if $(x,y) \in H$ and $(x,z) \in H$ implies $y=z$ then $H$ is said to be a \emph{hybrid function}.
-\todo{reword}%%%%%%%%%%%%%%%%%%%%
+	A \textbf{hybrid function from $\boldsymbol{S}$ to $\boldsymbol{T}$} is 
+	a hybrid relation $H$ between $S$ and $T$ such that $(x,y) \in H$ and $(x,z) \in H$ implies $y=z$.
+	We denote the set of all such hybrid functions by $\mathbb{Z}^{S \to T}$.
 \end{definition}
 
-Although this tells us what \emph{is} and \emph{is not} a hybrid function, it is not the most useful definition to work with. Generally, we already have a function in mind which we would like to use over a hybrid domain.
 
-\begin{theorem}
-Let $H$ be a hybrid set over $U$, $f:B \to S$ be a function where $B \subseteq U$ and $S$ a set. Then
+Although this tells us what \emph{is} and \emph{is not} a hybrid function, it is not the most useful definition to work with. 
+We would like to think of a hybrid function not as a mapping from a hybrid set to a boolean set but as
+a function between two sets with a multiplicity attached to each mapping.
+From this perspective, we would generally have a function and hybrid set already in mind.
+Given a hybrid set $H$ over $U$ and a function $f:B \to S$ be a function where $B \subseteq U$ and $S$ a set.
+Then we denote by $f^H$ the hybrid function from $B$ to $S$ defined by:
 \begin{equation}
-f^H := \bigoplus_{x \in B} H(x) \hset{ (x, f(x) )^1 }
+	f^H := \bigoplus_{x \in B} H(x) \hset{ (x, f(x) )^1 }
 \end{equation}
-is a hybrid function.
-\todo{theorem? reword}%%%%%%%%%%%%%%%%%%%%
-\end{theorem}
 
-This definition of a hybrid function should be less thought of as a true function and more as the \emph{graph of a} function.
-To return the functional behavior we extend the definition of $\mathcal{R}$ from the previous section.
+
+There is little literature or established use for hybrid functions;
+their primary use to us will be as something that we can turn back into traditional functions.
+One may notice that we have defined hybrid functions by their graph,
+taking the reduction (if it exists) of a hybrid function one naturally gets the graph of a function.
+
 
 \begin{definition}
-If $H$ is a reducible hybrid set, then $f^H$ is a reducible. Additionally, if $f^H$ is reducible, we override $\mathcal{R}$ by:
-\begin{equation}
-\mathcal{R}(f^H)(x) = \restrict{f}{\text{supp}(H)}(x)
-\end{equation}
+	If $H$ is a reducible hybrid set, then \textbf{$\boldsymbol{f^H}$ is a reducible hybrid function}. 
+	Additionally, if $f^H$ is reducible, we extend $\mathcal{R}$ by:
+	\begin{equation}
+		\mathcal{R}(f^H)(x) = \restrict{f}{\mathcal{R}(H)}(x)
+	\end{equation}
 \end{definition}
 
-Note that $\mathcal{R}$ can only be applied if at all points $H(x)$ is 0 or 1; 
-an irreducible hybrid function cannot be reduced!
-Unlike the join for regular functions, $\fjoin$ (\ref{def:fjoin}), the join of hybrid function is simply defined and does not rely on piecewise functions buried in definitions.
 
+Since $\mathcal{R}(H)$ only exists if $H(x)$ is everywhere 0 or 1; 
+$\mathcal{R}(f^H)$ only makes sense when $f^H$ is reducible.
+Assuming that we end up with a reducible function, hybrid functions make an excellent primitives to construct piecewise functions.
+Earlier in (\ref{def:fjoin}) we defined the \emph{join of functions} to allow us to construct piecewise functions from \emph{restricted functions}.
+The join of two hybrid functions is quite trivially defined.
+
+ 
 \begin{definition}
-The \emph{join}, $f^F \hjoin g^G$ of two hybrid functions $f^F$ and $g^G$ is the hybrid relation given by:
-\begin{equation}
-\label{def:hjoin}
-f^F \hjoin g^G := f^F \oplus g^G
-\end{equation}
-The join of two hybrid relations is identically defined.
+	The \textbf{join}, $f^F \hjoin g^G$ of two hybrid functions $f^F$ and $g^G$ is 
+	the hybrid relation given by their point-wise sum.
+	\begin{equation} \label{def:hjoin}
+		f^F \hjoin g^G := f^F \oplus g^G
+	\end{equation}
 \end{definition}
 
+
+However, we will immediately dispense with using $\hjoin$ altogether and simply use $\oplus$ 
+in order to prevent confusion between hybrid functional join and traditional functional join when they occur together.
 It is important to note that the join operator is closed under hybrid relations but not under hybrid functions.
-For any two hybrid functions the result will be a hybrid relation but not necessarily another hybrid function.
-So this definition is still nearly as ``dangerous'' as  $\fjoin$, non-hybrid function join. 
+For any two hybrid \emph{functions} the result will be a hybrid \emph{relation} 
+but not necessarily another hybrid function.
 We must still be wary of overlapping regions but there are some cases where we can be guaranteed to get a hybrid function.
-
-\todo[inline]{All of the everything} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Let $A$ and $B$ be hybrid sets over $U$ and let $f: U \to S$ a function.
-
-$f^A \hjoin f^B = f^{A \oplus B}$ is always a hybrid function. 
-Every element in $\text{supp}(f^A \hjoin f^B)$ is using the same map $f$, so there cannot be disagreement among points.
-
-Inductively, this holds for any number of pieces.
-
-For any generalized partition $P$, given by $P = P_1 \oplus P_2 \oplus ... \oplus P_n$, we have
-\begin{equation}
- f^P = f^{P_1} \hjoin f^{P_2} \hjoin ... \hjoin f^{P_n}
-\end{equation}
-
-For $g:U \to S$ another function then $f^A \hjoin g^B = (f \fjoin g)^{A \oplus B}$ if and only if $A$ and $B$ are disjoint (that is, $A \otimes B = \emptyset$).
-
-But the join of two non-disjoint functions may still be a hybrid function even if their respective functions do not agree at all points; as long as they agree on all points in the ``intersection'' the functions can be safely joined.
-
-\begin{definition}
-We say that two hybrid functions \emph{$f^A$ and $g^B$ are compatible} if and only if $f(x) = g(x)$ for all $x \in \text{supp} (A \otimes B)$.
-\end{definition}
-
-As with our definition of disjointness, the pointwise product $\otimes$, of hybrid sets acts as an analog for intersection $\cap$, of sets.
-
-Note that any two hybrid functions with disjoint domains will be compatible.
+This definition is still nearly as ``dangerous'' as non-hybrid functional join 
+but crucially, overlapping regions are not forgotten.
 
 
 \begin{theorem}
-Let $f^A$ and $g^B$ be two hybrid functions. Then $f^A \hjoin g^B$ is a hybrid function if and only if $f^A$ and $g^B$ are compatible.
+Let $A$ and $B$ be hybrid sets over $U$ and let $f: U \to S$ be a function.
+Then $f^A \oplus f^B$ is a hybrid function.
+Moreover,
+	\begin{equation}
+		f^A \oplus f^B = f^{A \oplus B}
+	\end{equation}
 \end{theorem}
 
-Notion of compatibility is not associative.
 
-Consider
 
+Clearly, if $(x,f(x)) \in f^A$, $(y,f(y)) \in B$ and $x=y$ then $f(x)=f(y)$.
+Since $f$ is common between both hybrid functions, there cannot be disagreement among points.
+Additionally,
+\begin{align}
+	f^A \oplus f^B 
+		&= \bigoplus_{x \in U} A(x) \hset{ (x, f(x) )^1 } 
+			\; \oplus \; \bigoplus_{x \in U} B(x) \hset{ (x, f(x) )^1 } \notag \\
+		&= \bigoplus_{x \in U} (A(x) + B(x)) \hset{ (x, f(x) )^1 } \notag \\
+		&= \bigoplus_{x \in U} (A \oplus B)(x) \hset{ (x, f(x) )^1 }
+\end{align}
+
+
+Inductively, this holds for any number of hybrid sets with a common function.
+For instance, given any generalized partition $P = P_1 \oplus P_2 \oplus \ldots \oplus P_n$, 
+we have the following equation reminiscent of (\ref{fjoin_partition}):
 \begin{equation}
-(f^H \hjoin g^H) \hjoin g^{\ominus H} = f^H \hjoin (g^H \hjoin g^{\ominus H}) = f^H \hjoin g^\emptyset = f^H
+ f^P = f^{P_1} \oplus f^{P_2} \oplus \ldots \oplus f^{P_n}
 \end{equation}
 
-Although $f^H$ and $g^H$ may be mutually incompatible, their join is compatible with $g^{\ominus H}$.
 
-Similarly, we can also see above that \emph{reducibility} does not lift through $\hjoin$.
+Joining a function with itself is not the most interesting construction.
+Piecewise functions are useful for their ability to tie together two \emph{different functions}.
+If two functions have separate, non-overlapping regions, then our definition is again trivial.
 
-\todo[inline]{Is \emph{lift} the right word? - I don't know enough category theory}
 
-\newpage \addtocounter{page}{1}
+\begin{theorem}
+	Given two function $f : U \to S$ and $g : U \to S$. The following identity holds if and only if $A$ and $B$ are disjoint:
+	\begin{equation}
+		f^A \oplus g^B = (f \fjoin g)^{A \oplus B}
+	\end{equation}
+\end{theorem}
+
+
+Notice here the use of $\fjoin$ on the right hand side.
+Here we are joining two non-hybrid functions.
+Since $A$ and $B$ are disjoint, the problems that arose earlier are not a problem.
+Disjointness is still too strong of a condition for us.
+The join of two non-disjoint functions may still be a hybrid function 
+even if their respective functions do not agree at \emph{all} points.
+So long as long as they agree on all points in overlapping regions intersection the functions can be safely joined.
+
+
+\begin{definition}
+	We say that two hybrid functions \textbf{$\boldsymbol{f^A}$ and $\boldsymbol{g^B}$ are compatible} 
+	if and only if $f(x) = g(x)$ for all $x \in \text{supp} (A \otimes B)$.
+	$f^A \oplus  g^B$ is a hybrid function if and only if $f^A$ and $g^B$ are compatible.
+\end{definition}
+
+
+As with our definition of disjointness, the pointwise product $\otimes$, 
+of hybrid sets acts as a hybrid set analog for intersection $\cap$, of sets.
+The notion of compatibility generalizes the two cases we have already seen.
+$f^A \oplus f^B$ are compatible hybrid functions because $f$ agrees with itself everywhere.
+For $A$ and $B$ disjoint, $f^A$ and $g^B$ are compatible since $A \otimes B$ is empty.
+Compatibility is not associative.
+Consider the following sequence:
+
+\begin{equation}
+(f^H \oplus g^H) \oplus g^{\ominus H} = f^H \oplus (g^H \oplus g^{\ominus H}) = f^H \oplus g^\emptyset = f^H
+\end{equation}
+
+Although $f^H$ and $g^H$ could be mutually incompatible; 
+we can only certain that $f^H \oplus g^H$ is a hybrid relation.
+Regardless of their compatibility, when this is joined with $g^{\ominus H}$, the $g$ terms cancel.
+What we are left with \emph{is} a hybrid function.
+Similarly, reducibility is clearly not preserved by $\hjoin$ as taking $g=f$ gives an intermediate $f^{2H}$, 
+which is only reducible if $H=\emptyset$
+
+
+Non-compatible functions are not the end of the line.
+
+Sometimes non-compatible functions will be desired
+
+For non-compatible $f^A \in \mathbb{Z}^{U \to S}$ and $g^B \in \mathbb{Z}^{U \to S'}$, we tag $\oplus$ with an operation $* : S \times S' \to T$.
+Then $f^A \oplus^* g^B$
+
+\begin{definition}
+$(f^F \hjoin[*] g^G)(x) = (F(x) + G(x)) \hset{(x, (f*g)(x))^1}$
+\end{definition}
+
+Returning to the example of the sign function from section 2.1, we could think of the function as the join of 3 different hybrid functions:
+\begin{equation}
+\text{sign} = -1^{(-\infty, 0)} \hjoin 0^{\{0\}} \hjoin 1^{(0, \infty)}
+\end{equation}
+
+Extended real line
+
+It seems silly to have a partition for a single point
+
+we could also use: 
+\begin{equation}
+	-1^{(-\infty, 0]} \oplus^+ 1^{[0, \infty)}
+\end{equation}
+
+Going from 3 regions to 2 is a small step, marked join allows us many gains in general
+
+Given two piecewise functions with $n$ regions each.
+
+Taking say the sum of such a function would lead to $n^2$ regions.
 
 \subsection{Example: \emph{Piecewise functions on generalized partitions}} 
 (2 pages)
@@ -431,29 +512,15 @@ Similarly, we can also see above that \emph{reducibility} does not lift through 
  &= \hset{(f_1(x)*g_1(x))^{A_1}} \hjoin[*] \hset{(f_2(x)*g_1(x))^{B_1 \ominus A_2}} \hjoin[*] \hset{(f_2(x) * g_2(x))^{B_2}}
 \end{align*}
 
-Formula for $f*g$ where $f = f_1^{P_1} \hjoin f_2^{P_2} \hjoin f_n^{P_n}$ and $g = g_1^{Q_1} \hjoin ... \hjoin g_m^{Q_m}$
+Formula for $f*g$ where $f = f_1^{P_1} \hjoin f_2^{P_2} \hjoin f_n^{P_n}$ and $g = g_1^{Q_1} \hjoin \ldots \hjoin g_m^{Q_m}$
 
 \begin{align*}
-f*g = & \hset{ (f_1 * g_m)^{P_1} } \hjoin[*] ... \hjoin[*] \hset{ (f_{n-1} * g_m)^{P_{n-1}}} \\ \hjoin[*]
-& \hset{ (f_n * g_1)^{Q_1} } \hjoin[*] ... \hjoin[*] \hset{ (f_n * g_{m-1})^{Q_{m-1}}} \\ \hjoin[*]
-&\hset{ (f_n * g_n)^{U \ominus (P_1 \oplus ... \oplus Q_{n-1} \oplus Q_1 \oplus ... \oplus Q_{m-1})}}
+f*g = & \hset{ (f_1 * g_m)^{P_1} } \hjoin[*] \ldots \hjoin[*] \hset{ (f_{n-1} * g_m)^{P_{n-1}}} \\ \hjoin[*]
+& \hset{ (f_n * g_1)^{Q_1} } \hjoin[*] \ldots \hjoin[*] \hset{ (f_n * g_{m-1})^{Q_{m-1}}} \\ \hjoin[*]
+&\hset{ (f_n * g_n)^{U \ominus (P_1 \oplus \ldots \oplus Q_{n-1} \oplus Q_1 \oplus \ldots \oplus Q_{m-1})}}
 \end{align*}
 
 \todo[inline]{Can't actually do this example until $\hjoin[*]$ is introduced, which doesn't work with basic hybrid functions}
-
-
-
-\newpage
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -473,24 +540,6 @@ Pseudo-function
 
 Properties of pseudo-functions
 
-\begin{definition}
-Hybrid Form
-\end{definition}
-
-\begin{definition}
-$(f^F \hjoin[*] g^G)(x) = (F(x) + G(x)) \hset{(x, (f*g)(x))^1}$
-\end{definition}
-
-Returning to the example of the sign function from section 2.1, we could think of the function as the join of 3 different hybrid functions:
-\begin{equation}
-\text{sign} = -1^{(-\infty, 0)} \hjoin 0^{\{0\}} \hjoin 1^{(0, \infty)}
-\end{equation}
-
-but we could also consider it as the ``joined sum'' of $-1^{(-\infty, 0]}$ and $1^{[0, \infty)}$.
-
-(3 pages)
-
-\newpage
 
 \subsection{Example: \emph{Piecewise functions revisited}}
 Repeat piece-wise function example with unsafe points (1 page)
@@ -498,5 +547,6 @@ Repeat piece-wise function example with unsafe points (1 page)
 (-x^2+2)^{[-1,1]} \hjoin \left( \frac{1}{x^2} \right)^{\mathbb{R} \ominus [1,1]}
 \end{equation}
 
+\subsection{Example: \emph{Convolution}}
 
 \newpage
