@@ -485,6 +485,8 @@ Then $f^A \oplus^* g^B$
 $(f^F \hjoin[*] g^G)(x) = (F(x) + G(x)) \hset{(x, (f*g)(x))^1}$
 \end{definition}
 
+\subsection{Example: \emph{Sign function}}
+
 Returning to the example of the sign function from section 2.1, we could think of the function as the join of 3 different hybrid functions:
 \begin{equation}
 \text{sign} = -1^{(-\infty, 0)} \hjoin 0^{\{0\}} \hjoin 1^{(0, \infty)}
@@ -520,7 +522,7 @@ f*g = & \hset{ (f_1 * g_m)^{P_1} } \hjoin[*] \ldots \hjoin[*] \hset{ (f_{n-1} * 
 &\hset{ (f_n * g_n)^{U \ominus (P_1 \oplus \ldots \oplus Q_{n-1} \oplus Q_1 \oplus \ldots \oplus Q_{m-1})}}
 \end{align*}
 
-\todo[inline]{Can't actually do this example until $\hjoin[*]$ is introduced, which doesn't work with basic hybrid functions}
+\todo[inline]{Can't actually do this example until $\hjoin[*]$ is introduced, which doesn't(???) work with basic hybrid functions}
 
 
 
@@ -530,9 +532,8 @@ f*g = & \hset{ (f_1 * g_m)^{P_1} } \hjoin[*] \ldots \hjoin[*] \hset{ (f_{n-1} * 
 Refinement
 \end{definition}
 
-\begin{example}
+\subsection{Example: \emph{Refinement of Intervals}}
 Refinement of intervals
-\end{example}
 
 \begin{definition}
 Pseudo-function
@@ -548,5 +549,7 @@ Repeat piece-wise function example with unsafe points (1 page)
 \end{equation}
 
 \subsection{Example: \emph{Convolution}}
+
+\todo[inline]{Not sure if this is better suited here or in integration. Doesn't really build off of integration.}
 
 \newpage
