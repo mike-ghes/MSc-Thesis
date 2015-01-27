@@ -473,46 +473,128 @@ What we are left with \emph{is} a hybrid function.
 Similarly, reducibility is clearly not preserved by $\hjoin$ as taking $g=f$ gives an intermediate $f^{2H}$, 
 which is only reducible if $H=\emptyset$
 
-
-Non-compatible functions are not the end of the line.
-
-Sometimes non-compatible functions will be desired
-
-For non-compatible $f^A \in \mathbb{Z}^{U \to S}$ and $g^B \in \mathbb{Z}^{U \to S'}$, we tag $\oplus$ with an operation $* : S \times S' \to T$.
-Then $f^A \oplus^* g^B$
+Irreducible functions can also reduce a hybrid function by an operator.
+To aid in this we will introduce some notation for iterated operators.
+\begin{definition}
+	Let $\op : S \times S \to S$ be an operator on $S$.
+	Then, for $n > 0$, $n \in \mathbb{Z}$ we use $\op^n:S \times S \to S$ to denote iterated $\op$.
+	So,
+	\begin{equation}
+		x \op^n y = x \overbrace{\op y \op y \op \ldots \op y}^{n \text{ times}}
+	\end{equation}
+	If $\op$ has an identity $e_\op$, then we extend $x \op^0 y = e_\op$.
+	If $\op$ is invertible, then we use $\op^{-1}$ to denote its inverse and $\op^{-n}$ for iterated $\op^{-1}$.
+	Finally, we allow $\op^n$ to be a unary operator, which we define by $\op^n x = e_\op \op^n x$.
+\end{definition}
 
 \begin{definition}
-$(f^F \hjoin[*] g^G)(x) = (F(x) + G(x)) \hset{(x, (f*g)(x))^1}$
+	We say that a hybrid relation $f^A = f_1^{A_1} \oplus f_2^{A_2} \oplus \ldots$ over $T \times S$ 
+	is $\op$\textbf{-reducible} if $(S, \op)$ is an abelian group 
+	or if $(S, \op)$ is an abelian semi-group and $f^A$ is everywhere non-negative.
+	If $f^A$ is $\op$-reducible we define its $\op$\textbf{-reduction}, $\mathcal{R}_\op(f^A) :  T \to S$ 
+	as a (non-hybrid) function given by:
+	\begin{equation}
+		\left( \mathcal{R}_\op (f^A) \right)\;(x) = \op^{A_1(x)} f_1(x) \op^{A_2(x)} f_2(x) \op \ldots 
+	\end{equation}
 \end{definition}
+
+If $f^A$ is reducible then it is $\op$-reducible.
 
 \subsection{Example: \emph{Sign function}}
 
-Returning to the example of the sign function from section 2.1, we could think of the function as the join of 3 different hybrid functions:
+One would typically write the sign function out as a piecewise function over 3 regions of the extended real line: 
+$(-\infty, 0)$, $\{ 0 \}$, and $(0, \infty)$.
+Written out as a hybrid function, this would be
 \begin{equation}
-\text{sign} = -1^{(-\infty, 0)} \hjoin 0^{\{0\}} \hjoin 1^{(0, \infty)}
+	\text{sign} = -1^{(-\infty, 0)} \hjoin 0^{\{0\}} \hjoin 1^{(0, \infty)}
+\end{equation}
+Alternatively, one could also use the equivalent:
+\begin{equation}
+	\text{sign} = \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)
 \end{equation}
 
-Extended real line
-
-It seems silly to have a partition for a single point
-
-we could also use: 
-\begin{equation}
-	-1^{(-\infty, 0]} \oplus^+ 1^{[0, \infty)}
-\end{equation}
-
-Going from 3 regions to 2 is a small step, marked join allows us many gains in general
-
-Given two piecewise functions with $n$ regions each.
-
-Taking say the sum of such a function would lead to $n^2$ regions.
+Going from 3 regions to 2 may seem a small step.
+However, consider two piecewise functions with $n$ and $m$ regions respectively.
+Taking the sum of these two functions would lead to a new piecewise function with $n\cdot m$ regions.
+We will show that $\op$-reductions can allow us to reduce this to only a linear increase!
 
 \subsection{Example: \emph{Piecewise functions on generalized partitions}} 
-(2 pages)
-\begin{align*}
-(f * g) (x) &= \hset{ f_1(x)^{A_1} , f_2(x)^{A_2}} * \hset{g_1(x)^{B_1} , g_2(x)^{B_2}} \\
- &= \hset{(f_1(x)*g_1(x))^{A_1}} \hjoin[*] \hset{(f_2(x)*g_1(x))^{B_1 \ominus A_2}} \hjoin[*] \hset{(f_2(x) * g_2(x))^{B_2}}
-\end{align*}
+Let $A_1 = [0,a)$, $A_2 = [0,1] \setminus A_1$, $B_1 = [0,b)$ and $B_2 = [0,1] \setminus B_1$.
+As well as piecewise functions $f$ and $g$ given as:
+\begin{equation*}
+	f(x) = f_1^{A_1} \oplus f_2^{A_2}
+		= \begin{cases}
+			f_1(x) & x \in A_1 \\
+			f_2(x) & x \in A_2
+		\end{cases}
+	\;\;\;\;\; \text{and} \;\;\;\;\;
+	g(x) = g_1^{B_1} \oplus g_2^{B_2}
+		= \begin{cases}
+			g_1(x) & x \in B_1 \\
+			g_2(x) & x \in B_2
+		\end{cases}
+\end{equation*}
+
+To compute $(f+g)$, the naive simplication would be to take the pairwise intersection of regions.
+\begin{equation}
+	(f+g)(x) = (f_1 + g_1)^{A_1 \cap B_1} 
+		\oplus (f_1 + g_2)^{A_1 \cap B_2} 
+		\oplus (f_2 + g_1)^{A_2 \cap B_1}
+		\oplus (f_2 + g_2)^{A_2 \cap B_2}
+\end{equation}
+
+However, we can alternatively partition $[0,1]$ into the generalized partition $A_1$, $B_1 \ominus A_1$, $B_2$.
+Observe that $B_1 = (B_1 \ominus A_1) \oplus A_1$ and $A_2 = (B_1 \ominus A_1) \oplus B_2$.
+Thus we can represent $f$ and $g$ with a common partition by:
+\begin{align}
+	f &=  f_1^{A_1} \;\oplus\; f_2^{(B_1 \ominus A_1) \oplus B_2}
+		\;=\; f_1^{A_1} \;\oplus\; f_2^{B_1 \ominus A_1} \;\oplus\; f_2^{B_2} \\
+	g &= g_1^{A_1 \oplus (B_1 \;\ominus\; A_1)} \;\oplus\; g_2^{B_2}
+		\;=\; g_1^{A_1} \;\oplus\; g_1^{B_1 \;\ominus\; A_1} \;\oplus\; g_2^{B_2}
+\end{align}
+
+Then we write:
+
+\begin{equation}
+	(f+g)(x) = \mathcal{R}_+ \left( (f_1 + g_1)^{A_1} 
+			\oplus (f_2 + g_1)^{B_1 \ominus A_1} 
+			\oplus (f_2 + g_2)^{B_2} \right)
+\end{equation}
+
+This equation holds regardless of the relative ordering of $a$ and $b$.
+Suppose $x \in A_1 \cap B_1$
+Then we have $A_1(x)= 1$ and $(B_1 \ominus A_1)(x) = B_2(x) = 0$.
+And so $(f+g)(x) = (f_1 + g_1)(x)$.
+Similarly, if $x \in B_1 \cap A_2$ or $x \in A_2 \cap B_2$ then 
+only $(B_1 \ominus A_1)(x)$ or $B_2(x)$ will respectively be non-zero.
+However, if $x \in B_2 \cap A_1$ then we have $A_1(x) = 1$, $(B_1 \ominus A_1)(x) = -1$ and $B_2(x) = 1$.
+Simplifying this expression yields:
+\begin{equation}
+	(f+g) \;=\; +^1 (f_1 + g_1) +^{-1} (f_2 + g_1) +^1 (f_2 + g_2) \;=\; (f_1 + g_2)
+\end{equation}
+
+
+Even though in this example only three regions can simultaneously exist 
+(either $A_1 \cap B_2$ or $A_2 \cap B_1$ will be empty)
+ this technique does not depend on it.
+$A_1$ and $B_1$ could be arbitrary subsets.
+We will even extend this to any generalized partition.
+First we will formalize some ideas we have already seen.
+
+\begin{definition}
+	A \textbf{refinement} of a generalized partition $P = \{P_i\}_{i=1}^n$ is another generalized partition
+	$Q = \{Q_j \}_{j=1}^m$ such that for every $P_i$ in $P$ there is a sequence
+	$\{ Q_{j_\ell} \}_{\ell=1}^k$ such that $P_i = Q_{j_1} \oplus Q_{j_2} \oplus \ldots \oplus Q_{j_k}$
+	A \textbf{common refinement} for a set of generalized partitions is a generalized partition which is a 
+	refinement of every partition in the set. 
+\end{definition}
+
+
+In our previous example we used $\{ A_1, B_1 \ominus A_1, B_2 \}$ which was a common refinement of both
+$\{ A_1, A_2 \}$ and $\{ B_1, B_2 \}$.
+Additionally, it also had the nice feature that its pointwise sum was also $[0,1]$.
+This however is not required in the above definition.
+The set 
 
 Formula for $f*g$ where $f = f_1^{P_1} \hjoin f_2^{P_2} \hjoin f_n^{P_n}$ and $g = g_1^{Q_1} \hjoin \ldots \hjoin g_m^{Q_m}$
 
@@ -521,9 +603,6 @@ f*g = & \hset{ (f_1 * g_m)^{P_1} } \hjoin[*] \ldots \hjoin[*] \hset{ (f_{n-1} * 
 & \hset{ (f_n * g_1)^{Q_1} } \hjoin[*] \ldots \hjoin[*] \hset{ (f_n * g_{m-1})^{Q_{m-1}}} \\ \hjoin[*]
 &\hset{ (f_n * g_n)^{U \ominus (P_1 \oplus \ldots \oplus Q_{n-1} \oplus Q_1 \oplus \ldots \oplus Q_{m-1})}}
 \end{align*}
-
-\todo[inline]{Can't actually do this example until $\hjoin[*]$ is introduced, which doesn't(???) work with basic hybrid functions}
-
 
 
 
@@ -545,11 +624,84 @@ Properties of pseudo-functions
 \subsection{Example: \emph{Piecewise functions revisited}}
 Repeat piece-wise function example with unsafe points (1 page)
 \begin{equation}
-(-x^2+2)^{[-1,1]} \hjoin \left( \frac{1}{x^2} \right)^{\mathbb{R} \ominus [1,1]}
+(2-x^2)^{[-1,1]} \hjoin \left( \frac{1}{x^2} \right)^{\mathbb{R} \ominus [1,1]}
 \end{equation}
 
 \subsection{Example: \emph{Convolution}}
 
 \todo[inline]{Not sure if this is better suited here or in integration. Doesn't really build off of integration.}
+
+\begin{definition}
+	The \textbf{convolution} $*$, of two functions $F$ and $G$ is defined as:
+	\begin{equation}
+		(F*G)(t) = \int_{-\infty}^\infty F(t) \;G(t - \tau) \; d\tau
+	\end{equation}
+\end{definition}
+
+Is often visualized by graphically flipping one function and sliding it across the other as seen in Figure \ref{convolution}.
+
+\begin{figure}[h]
+\label{convolution}
+\caption[Convolution of box signal with itself]{The convolution of the box signal 
+$f(t)=g(t)=\left( 0^\oiOpOp{-\infty,-0.5} \oplus 1^\oiClCl{-0.5,0.5} \oplus 0^\oiOpOp{0.5,\infty} \right)$ with itself.
+\emph{(from wikipedia; need to create new versions)}}
+\centering
+\includegraphics[scale=0.6]{diagrams/conv1}
+\includegraphics[scale=0.6]{diagrams/conv2}
+\includegraphics[scale=0.6]{diagrams/conv3}
+\end{figure}
+
+Has applications in signal processing
+
+Frequently used in image processing
+
+  Gaussian blurring result of convolving a function with the Gaussian function:
+\begin{equation}
+	f(x) = a \; \text{exp} \left( - \frac{(x-b)^2}{2c^2} \right)
+\end{equation}
+
+In statistics a weighted moving average is a convolution
+
+We are interested in \emph{Symbolic Linear Convolution} (of piecewise continuous functions)
+
+First we consider the convolution of ``one piece'' functions:
+
+\begin{equation}
+	F(x)=f^{[a_f,b_f)}(x) = 
+		\begin{cases}
+			f(x) & a_f \leq x < b_f \\
+			0 & \text{otherwise}
+		\end{cases}
+\end{equation}
+
+\begin{equation}
+	G(x)=g^{[a_g,b_g)}(x) = 
+		\begin{cases}
+			g(x) & a_g \leq x < b_g \\
+			0 & \text{otherwise}
+		\end{cases}
+\end{equation}
+
+Generally we assume that $b_f - a_f \leq b_g - a_g$, ($f$ is shorter)
+
+If this is not the case, convolution is commutative so we simply rearrange: $F * G = G * F$
+
+\begin{align}
+	(F*G)(t) 
+	&= \int_{-\infty}^\infty F(\tau)\; G(t-\tau) \; d\tau \notag \\
+	&= \int_{a_f}^{b_f} f(\tau) \; G(t-\tau) \; d\tau \notag \\
+	&= 	\begin{cases}
+			\int_{a_f}^{x-a_g} f(\tau) \; g(t-\tau) \; d\tau 	& (a_f+a_g) \leq t < (b_f+a_g) \\
+			\int_{a_f}^{b_f} f(\tau) \; g(t-\tau) \; d\tau		& (b_f+a_g) \leq t < (a_f+b_g) \\
+			\int_{x-b_g}^{b_f} f(\tau) \; g(t-\tau) \; d\tau	& (a_f+b_g) \leq t < (b_f+b_g) \\
+			0										& \text{otherwise}
+		\end{cases}
+\end{align}
+
+
+This is the way it's typically done.
+
+With hybrid functions we can ???
+
 
 \newpage
