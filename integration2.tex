@@ -1,5 +1,10 @@
 \chapter{Integration II}
 
+Earlier we established integration of functions and treated the ``$dx$'' nearly as punctuation.
+Another more flexible and approach is to use \emph{differential forms}.
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -9,31 +14,46 @@
 
 \section{Differential Forms}
 
+
+\todo[inline]{A 0-form is a function. A 1-form is a function with $dx$.}
+
 \begin{definition}
-A $k$-form $\beta$ on the open set $\Omega \subset \mathbb{R}^n$ has the form:
-\todo[inline]{open set or Lebesgue measurable sets??}
-\begin{equation}
-\beta = \sum_j b_j(x) \; \text{d} x_{j_1} \wedge ... \wedge \text{d} x_{j_k}
-\end{equation}
-where $j=(j_1, ..., j_k)$ is a $k$ dimensional multi-index. We say that $\beta \in \Lambda^k(\Omega)$
+	A \textbf{differential $p$-form} $\beta$ over an $k$-rectangle $\Omega$ has the form:
+	\begin{equation}
+		\beta = \sum_{j_1 \in [n]} \ldots \sum_{j_p \in [n]} b_{(j_1, \ldots, j_p)}(x) \; 
+				\text{d} x_{j_1} \wedge \ldots \wedge \text{d} x_{j_p}
+	\end{equation}
+	Typically, we will take $j = (j_1, \ldots, j_p)$ and express $\beta$ as, 
+	$\sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_p}$.
+	We denote the space of all $p$-forms on $\Omega$ by $\Lambda^p(\Omega)$.
 \end{definition}
 
-We have not yet defined the $\wedge$ operator.
 
-Anti-commutative: $\text{d} x \wedge \text{d} y = - \text{d}y \wedge \text{d} x$. 
-Which implies for any permutation $\sigma$ of $\{1,...,k\}$:
+
+Now we have not yet defined the wedge product $\wedge$, nor defined what exactly a $p$-form \emph{is}.
+First of all, the wedge product is primarily defined by being \emph{anti-commutative}.
+That is, $dx \wedge dy = -dy \wedge dx$.
+Several results immediately follow from this.
+When used on two identical $dx$, we have $dx \wedge dx = - dx \wedge dx$ and so the result must be zero.
+Additionally, for any permutation $\sigma$ of $[p]$:
 \begin{equation}
-dx_1 \wedge ... \wedge dx_k = \text{sgn}(\sigma) \; dx_{\sigma(1)} \wedge ... \wedge dx_{\sigma(k)}
+	dx_1 \wedge ... \wedge dx_p = \text{sgn}(\sigma) \; dx_{\sigma(1)} \wedge ... \wedge dx_{\sigma(p)}
 \end{equation}
 
-Anti-commutativity additionally implies that for all $x_i$, $dx_i \wedge dx_i = 0$. 
 
-Let $\alpha = \sum_i a_i(x) \; dx_{i_1} \wedge ... \wedge dx_{i_\ell} \in \Lambda^\ell(\Omega)$ and
-$\beta = \sum_j b_j(x) \; \text{d} x_{j_1} \wedge ... \wedge \text{d} x_{j_k} \in \Lambda^k(\Omega)$ then define:
+$dx$ and $dx \wedge dy$ are themselves trivial differential 1-forms and 2-forms respectively.
+We can also apply the wedge product to differential forms.
 
-\begin{equation}
-\alpha \wedge \beta  := \sum_{i,j} a_i(x) b_j(x) \; dx_{i_1} \wedge ... \wedge dx_{i_\ell} \wedge dx_{j_1} \wedge ... \wedge dx_{j_k}
-\end{equation}
+
+\begin{definition}
+	Let $\alpha = \sum_i a_i(x) \; dx_{i_1} \wedge \ldots \wedge dx_{i_\ell} \in \Lambda^\ell(\Omega)$ 
+	and $\beta = \sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_k} \in \Lambda^k(\Omega)$ then define:
+	\begin{equation}
+		\alpha \wedge \beta  = \sum_{i,j} a_i(x) b_j(x) \; 
+			dx_{i_1} \wedge \ldots \wedge dx_{i_\ell} \wedge 
+			dx_{j_1} \wedge \ldots \wedge dx_{j_k}
+	\end{equation}
+\end{definition}
 
 Thus we can think of $\wedge$ as mapping a $k$-form and an $\ell$-form to a $(k+\ell)$-form, $\wedge : \Lambda^\ell(\Omega) \times \Lambda^k (\Omega) \to \Lambda^{k+\ell} (\Omega)$. By anti-commutativity we have:
 
@@ -54,7 +74,6 @@ For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the
 \todo[inline]{Define $dx$ from $x_1 , ... , x_n$. Need to lift sign change from permutations}
 
 
-\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % PULL-BACKS (or coordinate changes)
@@ -123,17 +142,31 @@ d(\alpha \wedge \beta) = (d \alpha) \wedge \beta + (-1)^j \alpha \wedge ( d \bet
 F^* (d \beta ) = dF^* \beta
 \end{equation}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% MANIFOLD INTEGRATION
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Integration over Manifolds}
 
 \begin{example}
 Integrate an atlas with overlapping charts (using inclusion-exclusion)
 \end{example}
-\newpage
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% STOKE'S THEOREM
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Stokes' Theorem}
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Contour Integral
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Contour Integration}}
 \todo[inline]{??????????}
 

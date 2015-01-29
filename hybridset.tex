@@ -294,7 +294,9 @@ We will consider functions which have hybrid sets as their domain (but still map
 which we will call \emph{hybrid functions}.
 But first we must establish \emph{hybrid relations}.
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hybrid Relation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{definition}
 	For two sets $S$ and $T$, a hybrid set over their Cartesian product $S \times T$ is called a 
 	\textbf{hybrid (binary) relation between $\boldsymbol{S}$ and $\boldsymbol{T}$}.
@@ -335,6 +337,10 @@ We say that $\succeq$ is a total ordering of $S$ if:
 
 
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hybrid Function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{definition}
 	A \textbf{hybrid function from $\boldsymbol{S}$ to $\boldsymbol{T}$} is 
 	a hybrid relation $H$ between $S$ and $T$ such that $(x,y) \in H$ and $(x,z) \in H$ implies $y=z$.
@@ -349,6 +355,7 @@ From this perspective, we would generally have a function and hybrid set already
 Given a hybrid set $H$ over $U$ and a function $f:B \to S$ be a function where $B \subseteq U$ and $S$ a set.
 Then we denote by $f^H$ the hybrid function from $B$ to $S$ defined by:
 \begin{equation}
+	\label{hfunc}
 	f^H := \bigoplus_{x \in B} H(x) \hset{ (x, f(x) )^1 }
 \end{equation}
 
@@ -462,9 +469,11 @@ For $A$ and $B$ disjoint, $f^A$ and $g^B$ are compatible since $A \otimes B$ is 
 Compatibility is not associative.
 Consider the following sequence:
 
+
 \begin{equation}
 (f^H \oplus g^H) \oplus g^{\ominus H} = f^H \oplus (g^H \oplus g^{\ominus H}) = f^H \oplus g^\emptyset = f^H
 \end{equation}
+
 
 Although $f^H$ and $g^H$ could be mutually incompatible; 
 we can only certain that $f^H \oplus g^H$ is a hybrid relation.
@@ -472,6 +481,7 @@ Regardless of their compatibility, when this is joined with $g^{\ominus H}$, the
 What we are left with \emph{is} a hybrid function.
 Similarly, reducibility is clearly not preserved by $\hjoin$ as taking $g=f$ gives an intermediate $f^{2H}$, 
 which is only reducible if $H=\emptyset$
+
 
 Irreducible functions can also reduce a hybrid function by an operator.
 To aid in this we will introduce some notation for iterated operators.
@@ -487,6 +497,10 @@ To aid in this we will introduce some notation for iterated operators.
 	Finally, we allow $\op^n$ to be a unary operator, which we define by $\op^n x = e_\op \op^n x$.
 \end{definition}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% *-Reducible
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{definition}
 	We say that a hybrid relation $f^A = f_1^{A_1} \oplus f_2^{A_2} \oplus \ldots$ over $T \times S$ 
 	is $\op$\textbf{-reducible} if $(S, \op)$ is an abelian group 
@@ -498,7 +512,9 @@ To aid in this we will introduce some notation for iterated operators.
 	\end{equation}
 \end{definition}
 
+
 If $f^A$ is reducible then it is $\op$-reducible.
+
 
 \subsection{Example: \emph{Sign function}}
 
@@ -518,6 +534,10 @@ However, consider two piecewise functions with $n$ and $m$ regions respectively.
 Taking the sum of these two functions would lead to a new piecewise function with $n\cdot m$ regions.
 We will show that $\op$-reductions can allow us to reduce this to only a linear increase!
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Piecewise 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Piecewise functions on generalized partitions}} 
 Let $A_1 = [0,a)$, $A_2 = [0,1] \setminus A_1$, $B_1 = [0,b)$ and $B_2 = [0,1] \setminus B_1$.
 As well as piecewise functions $f$ and $g$ given as:
@@ -561,6 +581,7 @@ Then we write:
 			\oplus (f_2 + g_2)^{B_2} \right)
 \end{equation}
 
+
 This equation holds regardless of the relative ordering of $a$ and $b$.
 Suppose $x \in A_1 \cap B_1$
 Then we have $A_1(x)= 1$ and $(B_1 \ominus A_1)(x) = B_2(x) = 0$.
@@ -574,6 +595,9 @@ Simplifying this expression yields:
 \end{equation}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Refinement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Even though in this example only three regions can simultaneously exist 
 (either $A_1 \cap B_2$ or $A_2 \cap B_1$ will be empty)
  this technique does not depend on it.
@@ -581,52 +605,170 @@ $A_1$ and $B_1$ could be arbitrary subsets.
 We will even extend this to any generalized partition.
 First we will formalize some ideas we have already seen.
 
+
 \begin{definition}
-	A \textbf{refinement} of a generalized partition $P = \{P_i\}_{i=1}^n$ is another generalized partition
-	$Q = \{Q_j \}_{j=1}^m$ such that for every $P_i$ in $P$ there is a sequence
-	$\{ Q_{j_\ell} \}_{\ell=1}^k$ such that $P_i = Q_{j_1} \oplus Q_{j_2} \oplus \ldots \oplus Q_{j_k}$
+	A \textbf{refinement} of a generalized partition $P = \{P_i\}_{i \in I}$ is another generalized partition
+	$Q = \{Q_j \}_{j \in J}$ such that 
+	\begin{equation}
+		\bigoplus_{j \in J} Q_j = \bigoplus_{i \in I} P_i
+	\end{equation}
+	and for every $P_i$ in $P$ there is a sequence $\{ Q_{i_k} \}_{i_k \in I_k}$, $I_k \subseteq J$ such that 
+	\begin{equation}
+		P_i = \bigoplus_{i_k \in I_k} Q_{i_k}
+	\end{equation}
 	A \textbf{common refinement} for a set of generalized partitions is a generalized partition which is a 
 	refinement of every partition in the set. 
+	A refinement is \textbf{strict} if $\text{supp}(Q) = \text{supp}(P)$.
 \end{definition}
 
 
 In our previous example we used $\{ A_1, B_1 \ominus A_1, B_2 \}$ which was a common refinement of both
 $\{ A_1, A_2 \}$ and $\{ B_1, B_2 \}$.
 Additionally, it also had the nice feature that its pointwise sum was also $[0,1]$.
-This however is not required in the above definition.
-The set 
-
-Formula for $f*g$ where $f = f_1^{P_1} \hjoin f_2^{P_2} \hjoin f_n^{P_n}$ and $g = g_1^{Q_1} \hjoin \ldots \hjoin g_m^{Q_m}$
-
-\begin{align*}
-f*g = & \hset{ (f_1 * g_m)^{P_1} } \hjoin[*] \ldots \hjoin[*] \hset{ (f_{n-1} * g_m)^{P_{n-1}}} \\ \hjoin[*]
-& \hset{ (f_n * g_1)^{Q_1} } \hjoin[*] \ldots \hjoin[*] \hset{ (f_n * g_{m-1})^{Q_{m-1}}} \\ \hjoin[*]
-&\hset{ (f_n * g_n)^{U \ominus (P_1 \oplus \ldots \oplus Q_{n-1} \oplus Q_1 \oplus \ldots \oplus Q_{m-1})}}
-\end{align*}
+This however is not required in the above definition; for example the hybrid set $\hset{[0,1]^1}$ is refined by
+$\hset{ [-1,0)^{-1}, (1,2]^{-1}, [-1,2]^1 }$.
+However, this refinement is not strict as they do not have the same support.
+\todo[inline]{ but it is also refined by $\hset{ [0,1]^1, [1,2]^1, [2,3]^1, \ldots }$ ?!?!}
 
 
+We can now formally phrase our problem.
+Let $A=\{ A_i \}_{i \in [n]}$ and $B=\{ B_j \}_{j \in [m]}$ be two generalized partitions of a hybrid set $U$ 
+(where $[n] = \{ 1, \ldots, n \}$ for $n \in \mathbb{N}$).
+We wish to find a generalized partition $C$  of $U$ which is a \emph{common}, \emph{strict} refinement of $A$ and $B$
+and has minimal cardinality.
+This restriction on the cardinality is to minimize the number of terms that appear.
+These conditions can be summarized into the following system of $n+m+1$ simultaneous equations:
+\begin{equation}
+	U = \bigoplus_i C_i
+\end{equation}
+\begin{equation}
+	\forall i \in [n] : A_i = \bigoplus_j  a_{i,j} C_j
+\end{equation}
+\begin{equation}
+	\forall j \in [m] : B_j = \bigoplus_i b_{i,j} C_i
+\end{equation}
+for some integers $a_{i,j}$ and $b_{i,j}$.
+Since we know that $A$ and $B$ are each partitions of $U$, only $n+m-1$ can be independent.
+If there are additional dependencies betwen $A$ and $B$ then this can be even lower.
+Expressed as a linear system we have:
 
-\section{Pseudo-functions and Hybrid Forms}
+
+\begin{equation}
+	M \cdot 
+		\begin{pmatrix}
+			C_1 	\\
+			\vdots 	\\
+			C_{n+m-1}
+		\end{pmatrix}
+	=
+		\begin{pmatrix}
+			U 		\\[-0.5em] 
+			A_1 	\\[-0.5em] 
+			\vdots 	\\[-0.5em] 
+			A_{n-1}	\\[-0.5em] 
+			B_1 	\\[-0.5em] 
+			\vdots 	\\[-0.5em] 
+			B_{m-1}
+		\end{pmatrix}
+	\;\;\;\;\;\;\text{ where }\;\;
+	M = \begin{pmatrix}
+			1			& 1			& \cdots 	& 1 					\\[-0.5em]
+			a_{1,1}		& a_{1,2}	& \cdots 	& a_{1, n+m-1} 		\\[-0.5em]
+			\vdots 		&			&			& \vdots 			\\[-0.5em]
+			a_{n-1,1}	& a_{n-1, 2}	& \cdots 	& a_{n-1, n+m-1} 	\\[-0.5em]
+			b_{1,1} 		& b_{1,2} 	& \cdots 	& b_{1, n+m-1}		\\[-0.5em]
+			\vdots 		& 			&			& \vdots 			\\[-0.5em]
+			b_{m-1,1} 	& b_{m-1,2}	& \cdots 	& b_{m-1,n+m-1}
+	\end{pmatrix}
+\end{equation}
+
+
+By definition, $M$ is an integer matrix.
+But we are actually more interested in its inverse $M^{-1}$ to find values for $C_i$.
+If we assume that $M^{-1}$ is also an integer matrix, then the determinant must be $\pm 1$.
+Further restricting ourselves to upper triangular matrices we can simply choose $M$ to be all 1's along the diagonal
+as well as the top row. 
+This is not unique; we could also choose $M$ to be 1s for the whole upper triangle.
+Assuming the former, we find the inverse to be:
+\begin{equation}
+	\begin{pmatrix}
+		1 		&\cdots 	&\cdots 	&\cdots 	& 1 		\\[-0.5em]
+		0		& 1		& 0 		&\cdots 	& 0 		\\[-0.5em]
+		\vdots 	&\ddots 	&\ddots 	&\ddots 	&\vdots 	\\[-0.5em]
+		\vdots 	&		&\ddots 	&\ddots 	& 0 		\\[-0.5em]
+		0 		&\cdots 	&\cdots 	& 0 		& 1
+	\end{pmatrix}^{-1}
+	= \; \; \;
+	\begin{pmatrix}
+		1 		&-1	 	&\cdots 	&\cdots 	& -1		\\[-0.5em]
+		0		& 1		& 0 		&\cdots 	& 0 		\\[-0.5em]
+		\vdots 	&\ddots 	&\ddots 	&\ddots 	&\vdots 	\\[-0.5em]
+		\vdots 	&		&\ddots 	&\ddots 	& 0 		\\[-0.5em]
+		0 		&\cdots 	&\cdots 	& 0 		& 1
+	\end{pmatrix}
+\end{equation}
+
+
+Thus we find that for the partitions $A = \{ A_i \}_{i \in [n]}$ and $B = \{ B_j \}_{j \in [m]}$ we can \emph{always}
+use the strict, common and minimal refinement:
+\begin{equation}
+	\Big\{ (U \ominus A_1 \ominus \ldots \ominus A_{n-1} \ominus B_1 \ominus \ldots \ominus B_{n-1}), \;\;
+	A_1, A_2, \ldots, A_{n-1}, \;\; B_1, B_2, \ldots, B_{m-1}
+	\Big\}
+\end{equation}
+Finally, to generalize our example from earlier, let $f = f_1^{P_1} \oplus f_2^{P_2} \oplus f_n^{P_n}$
+and  $g = g_1^{Q_1} \oplus \ldots \oplus g_m^{Q_m}$ be two piecewise functions over a common domain $U$.
+We can compute $f \op g$ by:
+\begin{align}
+f \op g = \; \mathcal{R}_\op  \; & \!\!\! \left( \,
+		\hset{ (f_1 \op g_m)^{P_1} } 
+		\oplus \ldots \oplus 
+		\hset{ (f_{n-1} \op g_m)^{P_{n-1}}} \right. \notag \\
+	\oplus & 
+		\hset{ (f_n \op g_1)^{Q_1} } 
+		\oplus \ldots \oplus 
+		\hset{ (f_n \op g_{m-1})^{Q_{m-1}}} \notag \\
+	\oplus & \left. 
+		\hset{ (f_n \op g_n)^{
+			U \ominus (P_1 \oplus \ldots \oplus Q_{n-1} \oplus Q_1 \oplus \ldots \oplus Q_{m-1})}
+		}
+	\; \right)
+\end{align}
+
+
+One last detail remains to be settled, the sub-functions $f_i$ and $g_j$ may not be defined outside of 
+$P_i$ and $Q_j$ respectively.
+We have written $(f_1 \op g_m)^P_1$ but it may be that for some point $x \in P_1$, we have $g_m(x) = \infty$.
+Although this point may eventually be cancelled out later symbollically, we enter fuzzy territory.
+To resolve this, we use a lambda-lifting trick to have a hybrid relation over the domain and \emph{the function itself}
+rather than the domain and the image implied by the function.
+
+
 \begin{definition}
-Refinement
-\end{definition}
-
-\subsection{Example: \emph{Refinement of Intervals}}
-Refinement of intervals
-
-\begin{definition}
-Pseudo-function
+	Using the same notation as in our definition from (\ref{hfunc}), we define a pseudo-function $\tilde{f}^A$ as:
+	\begin{equation}
+ 		\tilde{f}^A = \bigoplus_{x \in B} A(x) \hset{(x,f)^1}
+	\end{equation}
+	That is, $\tilde{f}^A$ is a hybrid relation over $U \times (U \to S)$ as opposed to $U \times S$.
+	The evaluation of a pseudo-function is done by mapping $\tilde{f}^A$ back down to $f^A$.
 \end{definition}
 
 Properties of pseudo-functions
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Piecewise 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Piecewise functions revisited}}
 Repeat piece-wise function example with unsafe points (1 page)
 \begin{equation}
 (2-x^2)^{[-1,1]} \hjoin \left( \frac{1}{x^2} \right)^{\mathbb{R} \ominus [1,1]}
 \end{equation}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Convolution
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Convolution}}
 
 \todo[inline]{Not sure if this is better suited here or in integration. Doesn't really build off of integration.}
