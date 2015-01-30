@@ -14,24 +14,37 @@ Another more flexible and approach is to use \emph{differential forms}.
 
 \section{Differential Forms}
 
-
-\todo[inline]{A 0-form is a function. A 1-form is a function with $dx$.}
-
 \begin{definition}
-	A \textbf{differential $p$-form} $\beta$ over an $k$-rectangle $\Omega$ has the form:
+	A \textbf{(differential) 0-form} $\beta$ on $\mathbb{R}^n$ is a function $\beta : \mathbb{R}^n \to \mathbb{R}$.
+	A \textbf{(differental) 1-form} $\omega$ on $\mathbb{R}^n$ is an expression of the form:
 	\begin{equation}
-		\beta = \sum_{j_1 \in [n]} \ldots \sum_{j_p \in [n]} b_{(j_1, \ldots, j_p)}(x) \; 
-				\text{d} x_{j_1} \wedge \ldots \wedge \text{d} x_{j_p}
+		\omega = f_1(\text{x}) \; dx_1 + f_2(\text{x}) \; dx_2 + \ldots + f_n(\text{x}) \; dx_n
 	\end{equation}
-	Typically, we will take $j = (j_1, \ldots, j_p)$ and express $\beta$ as, 
-	$\sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_p}$.
-	We denote the space of all $p$-forms on $\Omega$ by $\Lambda^p(\Omega)$.
 \end{definition}
 
+There is very little to say about 0-forms, they are just functions on $\mathbb{R}^n$.
+1-forms look very much like something we're used to integrating with.
+Of course if all but one of $f_i$ are zero then we have a \emph{basic 1-form}, $\omega = f_i \; dx_i$ which is nothing new to integrate over.
+Using the linearity of integration, general 1-forms can easily be seperated into a sum of integrals on basic 1-forms.
+Typically, 1-forms are encountered inexplicitly in a multivariate calcululus class with Green's theorem:
+\begin{equation}
+	\tag{Green's Theorem}
+	\int_D \left( \frac{\partial f_2}{\partial x} - \frac{\partial f_1}{\partial y}  \right) \;dx\;dy 
+	=\int_{\partial D} f_1(x,y) \; dx + f_2(x,y) \; dy
+\end{equation}
+
+\todo[inline]{
+Formally, $T_x(\mathbb{R}^n) \to \mathbb{R}$.
 
 
-Now we have not yet defined the wedge product $\wedge$, nor defined what exactly a $p$-form \emph{is}.
-First of all, the wedge product is primarily defined by being \emph{anti-commutative}.
+}
+
+
+We can add differential forms but rather than multiplication we use the $\wedge$ product.
+
+To create higher order $p$-forms we use the wedge operator $\wedge$. 
+
+First of all, the wedge product is primarily defined by being \emph{anti-commutative} or \emph{skew-symmetric}.
 That is, $dx \wedge dy = -dy \wedge dx$.
 Several results immediately follow from this.
 When used on two identical $dx$, we have $dx \wedge dx = - dx \wedge dx$ and so the result must be zero.
@@ -41,26 +54,67 @@ Additionally, for any permutation $\sigma$ of $[p]$:
 \end{equation}
 
 
-$dx$ and $dx \wedge dy$ are themselves trivial differential 1-forms and 2-forms respectively.
-We can also apply the wedge product to differential forms.
+\begin{definition}
+	Given a $k$-rectangle $\Omega \in \mathbb{R}^n$ with coordinates $\text{x} = (x_1, x_2, \ldots, x_n)$
+	A \textbf{differential $p$-form} $\beta$ over $\Omega$ has the form:
+	\begin{equation}
+		\beta = \sum_{j_1 \in [n]} \ldots \sum_{j_p \in [n]} b_{(j_1, \ldots, j_p)}(\text{x}) \; 
+				\text{d} x_{j_1} \wedge \ldots \wedge \text{d} x_{j_p}
+	\end{equation}
+	Typically, we will take $j = (j_1, \ldots, j_p)$ and express $\beta$ as, 
+	$\sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_p}$.
+	We denote the space of all $p$-forms on $\Omega$ by $\Lambda^p(\Omega)$.
+\end{definition}
 
+
+$dx^i$ and $dx^j$ are trivial differential 1-forms by taking $f_i=1$ and $f_j=1$ respectively.
+When we take the wedge product of these, we end up with the 2-form $dx^i \wedge dx^j$.
+It should then seem natural to think of $\wedge$ as an operator which maps 
+a $k$-form and an $\ell$-form to a $(k+\ell)$-form.
+For general $p$ and $q$-forms we define the wedge product.
 
 \begin{definition}
-	Let $\alpha = \sum_i a_i(x) \; dx_{i_1} \wedge \ldots \wedge dx_{i_\ell} \in \Lambda^\ell(\Omega)$ 
-	and $\beta = \sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_k} \in \Lambda^k(\Omega)$ then define:
+	Let $\alpha = \sum_i a_i(x) \; dx_{i_1} \wedge \ldots \wedge dx_{i_p} \in \Lambda^p(\Omega)$ and 
+	$\beta = \sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_q} \in \Lambda^q(\Omega)$. We extend the
+	wedge product $\wedge : \Lambda^p(\Omega) \times \Lambda^q(\Omega) \to \Lambda^{p+q}(\Omega)$ by:
 	\begin{equation}
 		\alpha \wedge \beta  = \sum_{i,j} a_i(x) b_j(x) \; 
-			dx_{i_1} \wedge \ldots \wedge dx_{i_\ell} \wedge 
-			dx_{j_1} \wedge \ldots \wedge dx_{j_k}
+			dx_{i_1} \wedge \ldots \wedge dx_{i_p} \wedge 
+			dx_{j_1} \wedge \ldots \wedge dx_{j_q}
 	\end{equation}
 \end{definition}
 
-Thus we can think of $\wedge$ as mapping a $k$-form and an $\ell$-form to a $(k+\ell)$-form, $\wedge : \Lambda^\ell(\Omega) \times \Lambda^k (\Omega) \to \Lambda^{k+\ell} (\Omega)$. By anti-commutativity we have:
+Most of the possible terms will end up being zero.
+For any $q+p > n$, no term will be contributed.
+If any of $dx_{i} = dx_{j}$ then no term will be contributed either.
 
+The wedge operator is not skew symmetric with higher order differential-forms.
+Rather we have:
 \begin{equation}
-\alpha \wedge \beta = (-1)^{k \ell} \beta \wedge \alpha
+	\alpha \wedge \beta = (-1)^{pq} \beta \wedge \alpha
 \end{equation}
+This can be easily seen by commuting each of the $q$, $dx_{j}$ terms each past the $p$, $dx_{i}$ terms.
 
+
+Several other nice identities:
+
+If $f$ is a function, $\omega_1$ and $\omega_2$ are $k$-forms, $\eta$ an $m$-form and $\tau$ a form then.
+\begin{align}
+	(\omega_1 + \omega_2) \wedge \eta  & \;=\; \omega_1 \wedge \eta + \omega_2 \wedge \eta \\
+	(\omega_1 \wedge \eta) \wedge \tau & \;=\; \omega_1 \wedge ( \eta \wedge \tau ) \\
+	(f \cdot \omega_1) \wedge \eta & \;=\;  f \cdot (\omega_1 \wedge \eta) \;=\; \omega_1 \wedge (f \cdot \eta)
+\end{align}
+
+
+These should all be quite obvious from definitions. 
+
+Integrating over a $p$-form is quite simple.
+
+Generally we assume a $p$-form and a $p$-rectangle.
+
+Then we simply treat $dx_1 \wedge dx_2 \wedge \ldots \wedge dx_n$ as $dx_1 \;dx_2 \ldots dx_n$. 
+
+\todo[inline]{what about $\int .. dx \wedge dy = \int .. dxdy = -\int .. dy \wedge dx = -\int dydx$}
 
 \begin{definition}
 Let $\alpha$ be a $k$-form on $\Omega \subset \mathbb{R}^n$ of the form $\alpha = A(x) \; \text{d}x_1 \wedge ... \wedge \text{d} x_n$.
@@ -71,7 +125,7 @@ If $A \in \mathcal{L}^1 (\Omega , \text{d}x)$ then we define:
 Where the left-hand side is the integral of a $k$-form and the right-hand side is a Lebesgue integral.
 For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the sum of integrals.
 \end{definition}
-\todo[inline]{Define $dx$ from $x_1 , ... , x_n$. Need to lift sign change from permutations}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,6 +137,12 @@ For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the
 \section{Pull-backs}
 
 Benefit of differential forms is how cleanly they handle changes in coordinates.
+
+This is generally done through the use of pull-backs.
+
+A pullback $F^* \omega$ can be thought of as $\omega(F(x))$.
+
+Gets its name from pulling $F$ back through $\omega$
 
 \begin{definition}
 $F: X \to \Omega$
@@ -143,12 +203,20 @@ F^* (d \beta ) = dF^* \beta
 \end{equation}
 
 
+\todo[inline]{Unapologetic Mathematician - pullbacks, manifold integration...}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % MANIFOLD INTEGRATION
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Integration over Manifolds}
+
+A manifold is nothing more than a collection of local charts diffeomorphic to $\mathbb{R}^n$
+
+So we use pullbacks to turn a set of rectangles into a manifold while simultaneously applying the manifold's pullback.
+
+Integration on oriented manifolds is just a careful application of Theorem 5.2.1
 
 \begin{example}
 Integrate an atlas with overlapping charts (using inclusion-exclusion)
