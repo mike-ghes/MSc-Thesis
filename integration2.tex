@@ -112,9 +112,10 @@ Integrating over a $p$-form is quite simple.
 
 Generally we assume a $p$-form and a $p$-rectangle.
 
-Then we simply treat $dx_1 \wedge dx_2 \wedge \ldots \wedge dx_n$ as $dx_1 \;dx_2 \ldots dx_n$. 
+Then we simply treat $dx_1 \wedge dx_2 \wedge \ldots \wedge dx_n$ as $dx_1 \;dx_2 \ldots dx_n$
+where $x_1, x_2, \ldots x_n$ is the canonical basis.
 
-\todo[inline]{what about $\int .. dx \wedge dy = \int .. dxdy = -\int .. dy \wedge dx = -\int dydx$}
+This requires \emph{volume forms} -> Lebesgue integrals in the next chapter.
 
 \begin{definition}
 Let $\alpha$ be a $k$-form on $\Omega \subset \mathbb{R}^n$ of the form $\alpha = A(x) \; \text{d}x_1 \wedge ... \wedge \text{d} x_n$.
@@ -140,7 +141,8 @@ Benefit of differential forms is how cleanly they handle changes in coordinates.
 
 This is generally done through the use of pull-backs.
 
-A pullback $F^* \omega$ can be thought of as $\omega(F(x))$.
+A pullback $\varphi^* f$ can be thought of as \emph{functional precomposition}: $(\varphi^* f) (x) = f(\varphi(x))$
+
 
 Gets its name from pulling $F$ back through $\omega$
 
@@ -203,7 +205,45 @@ F^* (d \beta ) = dF^* \beta
 \end{equation}
 
 
-\todo[inline]{Unapologetic Mathematician - pullbacks, manifold integration...}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% MANIFOLD INTEGRATION
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Integration on Singular Cubes}
+
+\todo[inline]{Need introduction to manifolds somewhere.}
+
+We have already seen standard $n$-cubes in the previous chapter.
+Now that we have pull-backs we can define integration on the more general \emph{singular cube}
+But first, what is a singular cube.
+
+
+\begin{definition}
+	Singular cube: differentiable map $c$ from standard $k$-cube to $k$-dimensional manifold.
+\end{definition}
+
+It is a common abuse of notation to use $c$ to also to refer to the image $c( [\![ 0,1]\!]^k ) \subseteq M$.
+The choice of using specifically the standard $k$-cube is arbitrary.
+A differentiable map $f$ from $[\![a,b]\!]$ can always be composed with $g:t \mapsto ta +(1-t)b$ 
+to get singular cube $c=f \circ g$.
+Gives us innumerably more shapes to work with.
+Hemisphere for example is the singular 2-cube given by $(r, \varphi) \to r \cos(\pi \varphi) x+ r \sin(\pi \varphi) y$
+
+
+\begin{definition}
+	Let $c$ be a singular $k$-cube and $\omega$ a $k$-form on the image of $c$.
+	Then we define the integral using $c^*(\omega)$ the pull-back of $\omega$ along $c$:
+	\begin{equation}
+		\int\displaylimits_c \omega 
+		= \int\displaylimits_{c \left( [\![0,1]\!]^k \right)} \omega
+		= \int\displaylimits_{[\![0,1]\!]^k} c^* \omega
+	\end{equation}
+\end{definition}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -222,6 +262,8 @@ Integration on oriented manifolds is just a careful application of Theorem 5.2.1
 Integrate an atlas with overlapping charts (using inclusion-exclusion)
 \end{example}
 
+\todo[inline]{partitions of unity}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -231,6 +273,18 @@ Integrate an atlas with overlapping charts (using inclusion-exclusion)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Stokes' Theorem}
 
+\begin{equation}
+	\int_{\partial M} \omega = \int_M d\omega
+\end{equation}
+
+Generalization of FTC, Greens, ...
+
+
+Stokes' on $n$-cubes
+
+Simplicial cubes.
+
+Manifolds
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Contour Integral
