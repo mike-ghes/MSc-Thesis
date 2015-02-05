@@ -11,9 +11,9 @@ MSc-Thesis
   I have two chapters on integration and I'm not really saying anything new on the subject. Also a bit indecisive lately whether I want to go back to simplices for triangle meshes in 3D. Most integration treatments cover simplices but triangles/tets more used for computation.
 
   
-### 1 Introduction https://github.com/mike-ghes/MSc-Thesis/issues/2
-
-	Needs to be completely rewritten. File hasn't been touched in 4 months. Starting with the 
+### 1 Introduction 
+  - https://github.com/mike-ghes/MSc-Thesis/issues/2
+Needs to be completely rewritten. File hasn't been touched in 4 months. Starting with the 
 	intro/conclusion wasn't very helpful.
 
 	
@@ -23,17 +23,23 @@ MSc-Thesis
 	
   - Needs a bit more fluff to blend everything together
 	
-#### 2.1 Hybrid Sets https://github.com/mike-ghes/MSc-Thesis/issues/4
+  #### 2.1 Hybrid Sets 
   
-  - Need to work on transition.
+    - https://github.com/mike-ghes/MSc-Thesis/issues/4
+  
+    - Need to work on transition.
 	
   - Examples in 2.1.1 and 2.1.2 are a bit silly but I wanted to get something concrete in.
 	
-#### 2.2 Hybrid Relations https://github.com/mike-ghes/MSc-Thesis/issues/5
+  #### 2.2 Hybrid Relations 
   
-  - Another silly example in 2.2.1, just wanted to show a relation. Maybe a concrete usage?
+    - https://github.com/mike-ghes/MSc-Thesis/issues/5
+  
+    - Another silly example in 2.2.1, just wanted to show a relation. Maybe a concrete usage?
 	
-#### 2.3 Hybrid Functions https://github.com/mike-ghes/MSc-Thesis/issues/6
+  #### 2.3 Hybrid Functions 
+  
+  - https://github.com/mike-ghes/MSc-Thesis/issues/6
   
   - Need to get rid of explicit definition for join and just say "instead of join we used \oplus".
   
@@ -41,34 +47,44 @@ MSc-Thesis
 	
   - Not sure on definition for refinement
 
-#### 2.4 Pseudo-functions https://github.com/mike-ghes/MSc-Thesis/issues/7
-		Still to-do. wasn't sure if I wanted to keep pseudo-functions.
-		2.4.2 maybe should move to integration? Still very rough.
+  #### 2.4 Pseudo-functions 
+    - https://github.com/mike-ghes/MSc-Thesis/issues/7
+    - Still to-do. wasn't sure if I wanted to keep pseudo-functions.
+	- 2.4.2 maybe should move to integration? Still very rough.
 		
 ### 3 Symbolic Linear Algebra
 
   - Need to do introduction.
-	3.1 INTERVALS
-		One of the few ideas that doesn't seem like crap to me.
-		Needs some more.
-	3.2 VECTORS
-		Need to switch over to *-reduction from marked join.
-		Figure out outer product which should lead into matrix multiplication
-	3.3 MATRIX
-		Effectively unstarted.
-		Addition has already been done.
-		Multiplcation depends on vector outer product
+  
+  #### 3.1 Oriented Intervals
+    - One of the few ideas that doesn't seem like crap to me.
+	- Needs some more.
+	
+  #### 3.2 Vector Algebra
+    - Need to switch over to *-reduction from marked join.
+    - Figure out outer product which should lead into matrix multiplication
+	
+  #### 3.3 Matrix Algebra
+    - Effectively unstarted.
+	- Addition has already been done.
+	- Multiplcation depends on vector outer product
 		
-4 Integration I
-	Mostly happy with the chapter, aside from not really saying anything new.
-	Riemann integration is definitely on the chopping block (replace with Lebesgue)
+### 4 Integration I
+  - Mostly happy with the chapter, aside from not really saying anything new.
+  - Riemann integration is definitely on the chopping block (replace with Lebesgue)
 	
-5 Integration II
-	Currently working here.
-	Might just stop at singular chains.
+### 5 Integration II
+  - Currently working here.
+  - Might just stop at singular chains.
 	
-6 Integration III
-	Possible replacement for Riemann section.
+### 6 Integration III
+  - Possible replacement for Riemann section.
+  
+### 7 Parallel Inclusion/Exclusion
+  - ???
+  
+### 8 Conclusions
+  - Again, needs to be completely rewritten.
 	
 	
 	
