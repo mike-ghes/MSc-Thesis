@@ -11,11 +11,10 @@ MSc-Thesis
   I have two chapters on integration and I'm not really saying anything new on the subject. Also a bit indecisive lately whether I want to go back to simplices for triangle meshes in 3D. Most integration treatments cover simplices but triangles/tets more used for computation.
 
   
-### 1 Introduction 
-  - https://github.com/mike-ghes/MSc-Thesis/issues/2
+#### 1 Introduction https://github.com/mike-ghes/MSc-Thesis/issues/2
   - Needs to be completely rewritten. File hasn't been touched in 4 months. Starting with the intro/conclusion wasn't very helpful.
   
-### 2 Hybrid Set Theory
+#### 2 Hybrid Set Theory
   - Motivation for hybrid functions representing piece-wise functions.
   - Needs a bit more fluff to blend everything together
   - **2.1 Hybrid Sets** https://github.com/mike-ghes/MSc-Thesis/issues/4
@@ -31,34 +30,28 @@ MSc-Thesis
     - Still to-do. wasn't sure if I wanted to keep pseudo-functions.
 	- 2.4.2 maybe should move to integration? Still very rough.	
 
-### 3 Symbolic Linear Algebra
-  - https://github.com/mike-ghes/MSc-Thesis/issues/8
+#### 3 Symbolic Linear Algebra https://github.com/mike-ghes/MSc-Thesis/issues/8
   - Need to do introduction.
-  
-  #### 3.1 Oriented Intervals
-    - https://github.com/mike-ghes/MSc-Thesis/issues/9
+  - **3.1 Oriented Intervals** https://github.com/mike-ghes/MSc-Thesis/issues/9
     - One of the few ideas that doesn't seem like crap to me.
 	- Needs some more.
-  
-  #### 3.2 Vector Algebra 
-    - https://github.com/mike-ghes/MSc-Thesis/issues/10
+  - **3.2 Vector Algebra** https://github.com/mike-ghes/MSc-Thesis/issues/10
     - Need to switch over to *-reduction from marked join.
     - Figure out outer product which should lead into matrix multiplication
-  
-  #### 3.3 Matrix Algebra
+  - **3.3 Matrix Algebra**
     - Effectively unstarted.
 	- Addition has already been done.
 	- Multiplcation depends on vector outer product	
 
-### 4 Integration I
+#### 4 Integration I
   - Mostly happy with the chapter, aside from not really saying anything new.
   - Riemann integration is definitely on the chopping block (replace with Lebesgue)
 
-### 5 Integration II
+#### 5 Integration II
   - Currently working here.
   - Might just stop at singular chains.
 
-### 6 Integration III
+#### 6 Integration III
   - Possible replacement for Riemann section.
 
 ### 7 Parallel Inclusion/Exclusion
