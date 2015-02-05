@@ -84,38 +84,59 @@ For general $p$ and $q$-forms we define the wedge product.
 	\end{equation}
 \end{definition}
 
-Most of the possible terms will end up being zero.
-For any $q+p > n$, no term will be contributed.
-If any of $dx_{i} = dx_{j}$ then no term will be contributed either.
-
-The wedge operator is not skew symmetric with higher order differential-forms.
-Rather we have:
+Although we take all possible $\binom{n}{q} \cdot \binom{n}{p}$ pairs of 
+$a_i (x) dx_{i_1} \wedge \ldots \wedge dx_{i_p}$ and $b_i (x) dx_{i_1} \wedge \ldots \wedge dx_{i_p}$,
+most of the possible terms will end up being zero.
+If \emph{any} of the terms in $dx_{i}$ appears in $dx_{j}$, then the wedge product will be zero 
+and no term will be contributed.
+As such, if $q+p > n$, there will be a duplicate in every term and so the entire sum will be zero.
+When all is said and done, at most we will have $\binom{n}{p+q}$ terms.
+Rather than the skew-symmetry we had when commuting $dx \wedge dy$, in higher dimensions the sign depends on 
+$p \cdot q$ of the $p$-form and $q$-form we are commuting.
+Specifically, 
 \begin{equation}
 	\alpha \wedge \beta = (-1)^{pq} \beta \wedge \alpha
 \end{equation}
-This can be easily seen by commuting each of the $q$, $dx_{j}$ terms each past the $p$, $dx_{i}$ terms.
+This can be easily seen by commuting each of $dx_{j_1}, \ldots dx_{j_q}$ terms each past 
+$dx_{i_1}\wedge \ldots \wedge dx_{i_p}$. 
+So we are commuting $q$ terms each past $p$ terms, reversing the sign each time for a net $(-1)^{pq}$.
 
 
-Several other nice identities:
-
-If $f$ is a function, $\omega_1$ and $\omega_2$ are $k$-forms, $\eta$ an $m$-form and $\tau$ a form then.
+The wedge product is only one part of our algebra of differential forms.
+We have several other nice identities for its behaviour with addition and multiplication.
+For the following, we consider $f$ to be a function on $\mathbb{R}^n$.
+Additionally we consider the differential forms $\omega_1$ and $\omega_2$ to be $k$-forms, $\alpha$ to be a $p$-form
+ and $\beta$ to be an $q$-form.
+Then we have the following:
 \begin{align}
-	(\omega_1 + \omega_2) \wedge \eta  & \;=\; \omega_1 \wedge \eta + \omega_2 \wedge \eta \\
-	(\omega_1 \wedge \eta) \wedge \tau & \;=\; \omega_1 \wedge ( \eta \wedge \tau ) \\
-	(f \cdot \omega_1) \wedge \eta & \;=\;  f \cdot (\omega_1 \wedge \eta) \;=\; \omega_1 \wedge (f \cdot \eta)
+	(\omega_1 + \omega_2) \wedge \alpha  & \;=\; \omega_1 \wedge \alpha + \omega_2 \wedge \alpha \\
+	(\omega_1 \wedge \alpha) \wedge \beta & \;=\; \omega_1 \wedge ( \alpha \wedge \beta ) \\
+	(f \cdot \omega_1) \wedge \alpha & \;=\;  f \cdot (\omega_1 \wedge \alpha) \;=\; \omega_1 \wedge (f \cdot \alpha)
 \end{align}
-
-
 These should all be quite obvious from definitions. 
+We should also note the identities which are \emph{not} present.
+We have defined the sum of $\omega_1$ and $\omega_2$: two differential forms which are the same dimension but not
+the sum of $\alpha$ and $\beta$: differential forms with different dimension.
+It is clear how one would add two differential forms of the same dimension as both were defined as sums to begin with.
+We also do not define the multiplication of $\cdot$ two differential forms but we multiplying a form by a function is simply:
+\begin{equation}
+	(f \cdot \alpha) (x) = \sum_i f(x)\cdot a_i(x) \; dx_{i_1} \wedge \ldots \wedge dx_{i_p}
+\end{equation}
 
-Integrating over a $p$-form is quite simple.
 
-Generally we assume a $p$-form and a $p$-rectangle.
-
-Then we simply treat $dx_1 \wedge dx_2 \wedge \ldots \wedge dx_n$ as $dx_1 \;dx_2 \ldots dx_n$
-where $x_1, x_2, \ldots x_n$ is the canonical basis.
-
-This requires \emph{volume forms} -> Lebesgue integrals in the next chapter.
+Integrating over a $k$-form is quite simple.
+First we shall consider integrating a $k$-form over a $k$-rectangle in $\mathbb{R}^k$.
+Such a $k$-form is also known as a \emph{top-dimensional form}.
+As we saw previously, any form of higher degree must be zero.
+If $\omega$ is such a top form then we can always write
+\begin{equation}
+	\omega = f \; dx_1 \wedge \ldots \wedge dx_k
+\end{equation}
+for some function $f$.
+Other presentations of $\omega$ exist, but we can always achieve such a presentation by commuting over $\wedge$ 
+to the canonical ordering $x_1, \ldots, x_n$.
+Once we have the $k$-form in this presentation, we just remove the wedges and evaluate the integral using the
+integrand $f \; dx_1 \;dx_2 \ldots dx_k$.
 
 \begin{definition}
 Let $\alpha$ be a $k$-form on $\Omega \subset \mathbb{R}^n$ of the form $\alpha = A(x) \; \text{d}x_1 \wedge ... \wedge \text{d} x_n$.
@@ -128,14 +149,25 @@ For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the
 \end{definition}
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% PULL-BACKS (or coordinate changes)
+% SINGULAR CUBES (or coordinate changes)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Pull-backs}
+\section{Singular Cubes}
+
+Up until now we have been dealing with the very small set of axis aligned cubes.
+
+\begin{definition}
+	Manifold
+\end{definition}
+
+\begin{definition}
+	Given a map $\varPhi : X \to Y$, $x \in X$ pushes forward to $\Phi(x) \in Y$
+\end{definition}
+
+Forms pull back from $Y$ to $X$
 
 Benefit of differential forms is how cleanly they handle changes in coordinates.
 
