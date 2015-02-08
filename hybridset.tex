@@ -768,10 +768,49 @@ Properties of pseudo-functions
 % Piecewise 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Piecewise functions revisited}}
-Repeat piece-wise function example with unsafe points (1 page)
+In 2.3.2, we found the sum of two piecewise functions.
+Our solution depended on being able to evaluate $(f_2 + g_1)$ over the region ${B_1 \ominus A_1}$.
+Being able to do so cannot always be guaranteed. 
+Consider the piecewise function on $\mathbb{R}$:
 \begin{equation}
-(2-x^2)^{[-1,1]} \hjoin \left( \frac{1}{x^2} \right)^{\mathbb{R} \ominus [1,1]}
+	f(x) = \begin{cases}
+		(2-x^2) & -1 \leq x \leq 1\\
+		1/x^2 & \text{otherwise}
+	\end{cases}
 \end{equation}
+Which can be represented as the hybrid function:
+\begin{equation}
+	f = f_1^{A_1} \oplus f_2^{A_2} 
+	  = (2-x^2)^{[-1, 1]} \oplus (1/x^2)^{(-\infty, -1) \oplus (1, \infty)}
+\end{equation}
+In which we have a mundane-looking bell-shaped curve.
+
+
+
+Additionally we will take $g$ to be the absolute value function:
+\begin{equation}
+	g = \text{abs} = (-x)^{(-\infty, 0)} \oplus (x)^{[0, \infty )}
+\end{equation}
+
+To take the product $f \cdot g$, one would assume that as in 2.3.2, we take the common refinement:
+\begin{align}
+	P_1 &= [-1,1] \\
+	P_2 &= (-\infty, 0) \ominus [-1, 1]\\
+	P_3 &= [0, \infty)
+\end{align}
+where $P_2$ can be simplified to $(-\infty, -1) \ominus [0,1]$.
+Following the pattern of 2.3.2 one would find
+\begin{equation}
+	(f \cdot g) = \mathcal{R}_\times \left( ((2-x^2) \cdot (-x))^{P_1} \oplus ((1/x^2) \cdot (-x))^{P_2} \oplus ((1/x^2) \cdot (x))^{P_3} \right)
+\end{equation}
+Evaluating $(f\cdot g)$ at zero obviously should be zero.
+However, attempting to evaluate the above function one finds:
+\begin{equation}
+	\mathcal{R}_\times \left( (2 \cdot 0)^1 \oplus (\text{``}\infty\text{''} \cdot 0)^{-1} \oplus (\text{``}\infty\text{''} \cdot 0)^1 \right)
+\end{equation}
+Although we would like these infinities to cancel, the behaviour is not well defined.
+If we instead leave the functions unevaluated, terms cancel as before.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
