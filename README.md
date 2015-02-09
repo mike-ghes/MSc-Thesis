@@ -1,43 +1,34 @@
 MSc-Thesis
 ==========
 
-**Abstract**
-
-*Lorem Ipsum*
-
 
 **PDF here:**
 https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
 
 ###High-level thoughts:
-  _Where is the computer science?_
 
-  Hybrid functions don't give us any computational benefit at all. In Symbolic Domains paper, you claimed that this saved us exponential terms. Hybrid functions only leave the composition unsimplified. The only gain is moving from n+m terms to n+m-1 terms.
+  _Hybrid functions don't do anything._ In Symbolic Domains paper, you claimed that this saved us exponential terms. Hybrid functions leave the expression unsimplified. If we wanted an unsimplified expression, the input has n+m terms to begin with. The only gain is moving from n+m terms to n+m-1 terms. What's the point?
 	
-  We already have inner product of two vectors and matrix addition. I'm working on outer product which should easily extend into matrix multiplication.
-
-  I have two chapters on integration and I'm not really saying anything new on the subject. Also a bit indecisive lately whether I want to go back to simplices for triangle meshes in 3D. Most integration treatments cover simplices but triangles/tets more used for computation.
-
+  _Where is the computer science?_ I feel like the average math undergrad could do a better job writing this thesis. I have two chapters on integration and I'm not really saying anything new on the subject. 
   
 #### 1 Introduction
   - https://github.com/mike-ghes/MSc-Thesis/issues/2
   - Needs to be completely rewritten. File hasn't been touched in 4 months. Starting with the intro/conclusion wasn't very helpful.
   
 #### 2 Hybrid Set Theory
-  - Motivation for hybrid functions representing piece-wise functions.
-  - Needs a bit more fluff to blend everything together
+  - Needs a bit more fluff to blend everything together in the intro.
   - **2.1 Hybrid Sets** https://github.com/mike-ghes/MSc-Thesis/issues/4
     - Need to work on transition.
     - Examples in 2.1.1 and 2.1.2 are a bit silly but I wanted to get something concrete in.
   - **2.2 Hybrid Relations** https://github.com/mike-ghes/MSc-Thesis/issues/5
-    - Another silly example in 2.2.1, just wanted to show a relation. Maybe a concrete usage?
+    - Another silly example in 2.2.1, just wanted to show a relation. I should probably add concrete examples of what [<] looks like.
   - **2.3 Hybrid Functions** https://github.com/mike-ghes/MSc-Thesis/issues/6
-    - Need to get rid of explicit definition for join and just say "instead of join we used \oplus".
-    - I've gotten rid of the whole "marked join". The definitions don't work. *-reduce accomplishes what we wanted out of marked join.
+    - I should get rid of explicit definition for join and just say "instead of join we used \oplus".
+    - I've gotten rid of the whole "marked join". The definitions didn't work and *-reduce accomplishes what we wanted out of marked join.
     - Not sure on definition for refinement
   - **2.4 Pseudo-functions** https://github.com/mike-ghes/MSc-Thesis/issues/7
     - Still to-do. wasn't sure if I wanted to keep pseudo-functions.
-	- 2.4.2 maybe should move to integration? Still very rough.	
+	- 2.4.2 Convolution maybe should move to integration? Still very rough.	
 
 #### 3 Symbolic Linear Algebra
   - https://github.com/mike-ghes/MSc-Thesis/issues/8
@@ -57,13 +48,12 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
   - https://github.com/mike-ghes/MSc-Thesis/issues/11
   - Mostly happy with the chapter, aside from not really saying anything new.
   - Some of the pages break at weird spots.
-  - Riemann integration is definitely on the chopping block (replace with Lebesgue)
+  - Riemann integration on the chopping block (replace with Lebesgue)
 
 #### 5 Integration II
-  - 
-  - Currently working here.
-  - Might just stop at singular chains.
-
+  - Currently working in here.
+  - Might just stop at Stokes on singular chains and leave integration on manifolds as a remark.
+  
 #### 6 Integration III
   - Possible replacement for Riemann section.
 
