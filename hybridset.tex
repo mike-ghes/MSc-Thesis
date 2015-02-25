@@ -64,7 +64,6 @@ where the set $\{ P _ i \}$ forms a partition of the domain of $f$ and for each 
 	   	\right.
 	\end{equation}
 \end{definition}
-\todo[inline]{Is there a way to define without using piecewise functions?}
 
 
 This allows us to re-write our previous definition of (\ref{eq_fP}) as:
@@ -72,22 +71,40 @@ This allows us to re-write our previous definition of (\ref{eq_fP}) as:
 	\label{fjoin_partition}
 	f = \restrict{f}{P_1} \fjoin \restrict{f}{P_2} \fjoin \ldots \fjoin \restrict{f}{P_n}
 \end{equation}
-\todo[inline]{To Do: problem with this approach + join}
-
-
 But we must be careful as this definition is not associative.
-Let $x \in A \cap B \cap C$, 
-then $( (\restrict{f}{A} \fjoin \restrict{g}{B} ) \fjoin \restrict{h}{C} )(x) = h(x)$ 
-but $( \restrict{f}{A} \fjoin ( \restrict{g}{B} \fjoin \restrict{h}{C} ))(x) = f(x)$
-
-
+Given functions $f,g,h$ each restricted to the sets $A,B,C$. 
+Then for any element in the intersection $x \in A \cap B \cap C$:
+\begin{equation}
+	( (\restrict{f}{A} \fjoin \restrict{g}{B} ) \fjoin \restrict{h}{C} )(x) = h(x)
+\end{equation}
+But by rearranging the parentheses we find,
+\begin{equation}
+	( \restrict{f}{A} \fjoin ( \restrict{g}{B} \fjoin \restrict{h}{C} ))(x) = f(x)
+\end{equation}
 Other conventions exist, for example \emph{Maple}'s 
 \texttt{piecewise(cond\_1, f\_1, cond\_2, f\_2, \ldots, cond\_n, f\_n, f\_otherwise)} 
-effectively uses a short-circuted $\fjoin$;
-it takes the first sub-function, \texttt{f\_i}, such that the corresponding condition, \texttt{cond\_i}, evaluates to \emph{true}.
+effectively uses a short-circuted $\fjoin$.
+Each of conditionals, \texttt{cond\_i} are evaluated in order and when one evaluates to true, the corresponding \texttt{f\_i} is evaluted.
+Finally if all of \texttt{cond\_i} evaluate to false then \texttt{f\_otherwise} is used.
 This approach simply trades associativity for commutivity.
-In this section we will construct a formal system to manipulate partial functions more elegantly.
 
+
+More importantly, when dealing with multiple piecewise functions, expressions cannot be easily simplified without an explosion in terms.
+For example, given $f,g$ two piecewise functions 
+$f = \left(\restrict{f_1}{P_1} \fjoin \restrict{f_2}{P_2} \fjoin \restrict{f_3}{P_3} \right)$ 
+and $g= \left( \restrict{g_1}{Q_1} \fjoin \restrict{g_2}{Q_2} \right)$ their sum $(f+g)$ is:
+\begin{align}
+	(f+g) = \;
+	&\restrict{(f_1+g_1)}{P_1 \cap Q_1} 
+		\;\fjoin\; \restrict{(f_1+g_2)}{P_1 \cap Q_2} 
+		\;\fjoin\; \restrict{(f_1+g_3)}{P_1 \cap Q_3}\notag\\
+	&\restrict{(f_2+g_1)}{P_2 \cap Q_1} 
+	 	\;\fjoin\; \restrict{(f_2+g_2)}{P_2 \cap Q_2} 
+	 	\;\fjoin\; \restrict{(f_2+g_3)}{P_2 \cap Q_3}
+\end{align}
+That is, we first create a common refinement by the pairwise intersection of each $P_i$ with each $Q_j$.
+Over each intersection we then take the sum of the respective sub-functions.
+In general, assuming no degenerate intersections, the sum of an $n$ piece function and $m$ piece function will give a piecewise function with $n\times m$ pieces.
 
 
 
@@ -99,23 +116,19 @@ In this section we will construct a formal system to manipulate partial function
 \section{Hybrid Sets}
 
 
-\todo[inline]{To Do: join}
-We shall consider \emph{hybrid sets}: 
-an extension of multisets which has multiplicities ranging over $\mathbb{N}_0$, 
-a hybrid set has multiplicities over all of $\mathbb{Z}$.
-
-However first we must establish \emph{partial sets} (unrelated to a \emph{poset} or ``partially ordered set'').
-
-Similar to a partial function being only partially defined over its domain, 
-for a partial set, there may exist some items for which membership is undefined.
-
-
-For an underlying set $U$ we will consider a hybrid set as a function $U \to \mathbb{Z}$ as a way to track the multiplicities of any particular element.
+We shall consider \emph{hybrid sets}.
+One can define traditional sets by an indicator function which maps each member element to 1 and each non member to 0.
+A \emph{multiset} or \emph{bag} extends this by allowing multiple copies of the same element.
+The indicator function of a multiset would therefore range over $\mathbb{N}_0$, the set of non-negative integers.
+For example the types of coins in a currency might be represented as a set: $\{ 0.01, 0.05, 0.10, 0.25, 1.00 \}$.
+A multiset might represent the physical coins in my pocket: $2 \times 0.05, 5 \times 0.10, 1 \times 1.00$.
+Hybrid sets take this one step further allowing for an element to occur \emph{negatively many} times.
 
 \begin{definition}
-	Let $U$ be a universe, then any function $U \to \mathbb{Z}$ is called a \emph{hybrid set}.
+	Let $U$ be a universe, then any function $U \to \mathbb{Z}$ is called a \textbf{hybrid set}.
 \end{definition}
 
+By universe, roughly we just mean a (traditional) set that contains everything we may be interested in.
 On its own, this definition does us very little good; much of the usefulness of sets is derived from their rich notation.
 
 \begin{definition}
@@ -191,7 +204,7 @@ Taken alone, hybrid sets can be used to model various objects.
 
 
 Any positive rational number can be represented as a hybrid set over the set of primes and vice versa  
-(i.e. ($\mathbb{Z}^\mathbb{P}, \oplus) \simeq (\mathbb{Q}_+,\cdot)$).
+(i.e. we have the group isomorphism ($\mathbb{Z}^\mathbb{P}, \oplus) \simeq (\mathbb{Q}_+,\cdot)$).
 For any rational number $a/b$, both $a$ and $b$ being integers will have a prime decomposition: 
 $a=p_1^{m_1}\cdot p_2^{m_2} \cdot \ldots$ and $b=q_1^{n_1} \cdot q_2^{n_2} \cdot ...$ . 
 Then there is an isomorphism:
@@ -209,14 +222,19 @@ Then there is an isomorphism:
 	\end{equation*}
 \end{example}
 
-%%%%%%% word choice: ``consolidate''
-Typically one would need to specify equivalence classes on $\mathbb{Q}$ to consolidate the identity $ca/cb = a/b$.
-With hybrid set representation, this identity comes for free:
-any common factor between numerator and denominator will cancel result in cancelling multiplicities. 
+
+Typically one would need to specify equivalence classes on $\mathbb{Q}$ to consolidate the identity $ca/cb = a/b$,
+but with hybrid set representation, this identity comes for free.
+Any common factor between numerator and denominator will cancel result in cancelling multiplicities. 
+Equivalence of rational numbers is identical to equivalence on hybrid sets and a normalized hybrid set
 For example, $2/4 = \hset{2^1, 2^{-2}}$ which is the un-normalized form of $\hset{2^{-1}} = 1/2$.
 
 
-\todo[inline]{Is there a (nice!) way to extend this for 0 and negative $\mathbb{Q}$ that preserves uniqueness up to normalization? }%%%%%%%%%%%%%%%%%%%
+One should note that this does not however extend (nicely) for zero and negative $\mathbb{Q}$.
+Allowing for our hybrid sets to contain $-1$ would mean we can represent negative rational numbers at the expense of having unique a unique representation. 
+The representations of $1/2 = \hset{ 2^{-1}}$ and $-1/-2 = \hset{-1^2, 2^{-1}}$ no longer agree!
+Allowing our hybrid sets to contain $0$ leads to rational numbers which are not well defined.
+We would like our rational numbers to be members of $\mathbb{Z} \times \mathbb{Z} - \{ 0 \}$ but our construction does not let us discriminate.
 
 
 %Monic polynomial
@@ -226,15 +244,16 @@ For example, $2/4 = \hset{2^1, 2^{-2}}$ which is the un-normalized form of $\hse
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Rational Polynomials}}
 
-Hybrid sets can also be used to represent the roots and asymptotes of a rational polynomial.
-\todo[inline]{Blending}
-\begin{example} Concretely: 
-	\begin{equation}
-		\frac{(x-2)}{(x-1)^2(x+1)} = \hset{ 2^1, 1^{-2}, -1^{-1} }
-	\end{equation}
-\end{example}
+Similarly, we can also use hybrid sets to represent monic rational polynomials by encoding the roots and asymptotes.
+For example:
+\begin{equation}
+	\frac{(x-2)}{(x-1)^2(x+1)} = \hset{ 2^1, 1^{-2}, -1^{-1} }
+\end{equation}
 
-\newpage
+Although neither model is a revolutionary method of looking at rational numbers and polynomials,
+hopefully they demonstrate that hybrid set are not an arcane construction. 
+Negative multiplicities of elements can arise very naturally in many contexts.
+
 
 In traditional set theory, a partition of $X$ is a collection of subsets of $X$ such that 
 the subsets are mutually disjoint and their union is equivalent to $X$.
@@ -336,7 +355,6 @@ We say that $\succeq$ is a total ordering of $S$ if:
 \end{equation}
 
 
-\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hybrid Function
