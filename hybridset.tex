@@ -105,6 +105,10 @@ and $g= \left( \restrict{g_1}{Q_1} \fjoin \restrict{g_2}{Q_2} \right)$ their sum
 That is, we first create a common refinement by the pairwise intersection of each $P_i$ with each $Q_j$.
 Over each intersection we then take the sum of the respective sub-functions.
 In general, assuming no degenerate intersections, the sum of an $n$ piece function and $m$ piece function will give a piecewise function with $n\times m$ pieces.
+To flatten an expression containing multiple piecewise functions we can very quickly find ourselves with an unreasonable number of pieces.
+If we abandon boolean sets, we can construct common refinements much more efficiently as will be shown.
+
+
 
 
 
@@ -120,16 +124,22 @@ We shall consider \emph{hybrid sets}.
 One can define traditional sets by an indicator function which maps each member element to 1 and each non member to 0.
 A \emph{multiset} or \emph{bag} extends this by allowing multiple copies of the same element.
 The indicator function of a multiset would therefore range over $\mathbb{N}_0$, the set of non-negative integers.
-For example the types of coins in a currency might be represented as a set: $\{ 0.01, 0.05, 0.10, 0.25, 1.00 \}$.
-A multiset might represent the physical coins in my pocket: $2 \times 0.05, 5 \times 0.10, 1 \times 1.00$.
+For example the types of coins in a currency might be represented as a set: $\{ \$0.01, \$0.05, \$0.10, \$0.25, \$1.00 \}$.
+A multiset might represent the physical coins in my pocket: $2 \times \$0.05, 5 \times \$0.10, 1 \times \$1.00$.
 Hybrid sets take this one step further allowing for an element to occur \emph{negatively many} times.
+
 
 \begin{definition}
 	Let $U$ be a universe, then any function $U \to \mathbb{Z}$ is called a \textbf{hybrid set}.
 \end{definition}
 
-By universe, roughly we just mean a (traditional) set that contains everything we may be interested in.
-On its own, this definition does us very little good; much of the usefulness of sets is derived from their rich notation.
+
+By universe, we just mean a (traditional) set that \emph{contains everything we may be interested in}.
+The size of a universe is context dependant but we will rarely be interested in everything in the universe or its exact size.
+It is simply a compact way for us to talk about ``everything else''.
+This definition of hybrid sets does little good on its own; much of the usefulness of sets is derived from their rich notation.
+So with that said,
+
 
 \begin{definition}
 	Let $H$ be a hybrid set. 
@@ -158,7 +168,6 @@ A writing in which $x_i \neq x_j$ for all $i \neq j$ is refered to as a \emph{no
 For normalized hybrid sets it follows that $H(x_i) = m_i$.
 
 
-
 Traditional sets use the operations $\cup$ union, $\cap$ intersection, and $\setminus$ complementation.
 In the same way a hybrid set is a function $H : U \to \mathbb{Z}$, 
 a set could be considered as function $S : U \to \{ 0,1 \}$.
@@ -169,6 +178,7 @@ One could easily extend union and intersection to hybrid sets using point-wise m
 [cite],
 but it would make more sense to have operations corresponding to primitive operations in $\mathbb{Z}$ instead.
 Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, and $\cdot$.
+
 
 \begin{definition}
 	For any two hybrid sets $A$ and $B$ over a common universe $U$, 
@@ -194,7 +204,11 @@ Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, a
 	We say \textbf{$\boldsymbol{A}$ and $\boldsymbol{B}$ are disjoint} if and only if $A \otimes B = \emptyset$
 \end{definition}
 
-Taken alone, hybrid sets can be used to model various objects. 
+
+For boolean sets $A$ and $B$, disjointness would be defined by $A \cap B = \emptyset$.
+If we consider these boolean sets as simply hybrid sets with multiplicity 0 or 1 then the operations $\cap$ and $\otimes$
+identically correspond to elementwise $\texttt{AND}$.
+From these definitions, we can use hybrid sets to model various objects that would traditionally be described otherwise. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -354,6 +368,23 @@ We say that $\succeq$ is a total ordering of $S$ if:
 	\text{supp}[\succeq] = S \times S
 \end{equation}
 
+\begin{figure}[h]
+	\label{poset}
+	\caption{poset caption}
+	\centering
+	\begin{tikzpicture}[->, >=stealth, semithick]
+		\tikzstyle{every node}=[draw,circle,fill=white,minimum size=4pt]
+		\draw (0,0) node (A) {$A$};
+		\draw (-1, 1) node (B) {$B$};
+		\draw (1,1) node (C) {$C$};
+		\draw (0,2) node (D) {$D$};
+	
+		\draw (A) -> (B);
+		\draw (B) -> (D);
+		\draw (A) -> (C);
+		\draw (C) -> (D);
+	\end{tikzpicture}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -411,13 +442,15 @@ The join of two hybrid functions is quite trivially defined.
 
 
 However, we will immediately dispense with using $\hjoin$ altogether and simply use $\oplus$ 
-in order to prevent confusion between hybrid functional join and traditional functional join when they occur together.
+in order to prevent confusion between hybrid functional join (e.g. $f^F \oplus g^G$) and 
+traditional functional join (e.g. $\restrict{f}{F} \fjoin \restrict{g}{G}$).
 It is important to note that the join operator is closed under hybrid relations but not under hybrid functions.
 For any two hybrid \emph{functions} the result will be a hybrid \emph{relation} 
 but not necessarily another hybrid function.
-We must still be wary of overlapping regions but there are some cases where we can be guaranteed to get a hybrid function.
-This definition is still nearly as ``dangerous'' as non-hybrid functional join 
-but crucially, overlapping regions are not forgotten.
+As with traditional functional join, we must still be wary of overlapping regions
+ but non-disjoint hybrid domains are not nearly as ``dangerous''.
+For intersecting regions we do not have to choose between commutivity and associativity, we can have both.
+In general, all that we can say the result is a hybrid relation but there are many cases where we can guarantee hybrid function status is preserved.
 
 
 \begin{theorem}
@@ -430,8 +463,8 @@ Moreover,
 \end{theorem}
 
 
-
-Clearly, if $(x,f(x)) \in f^A$, $(y,f(y)) \in B$ and $x=y$ then $f(x)=f(y)$.
+It should not be a surprise that the same function over different restrictions combine to form a function.
+Let $(x,f(x)) \in f^A$ and $(y,f(y)) \in B$. Clearly, if $x=y$ then $f(x)=f(y)$. 
 Since $f$ is common between both hybrid functions, there cannot be disagreement among points.
 Additionally,
 \begin{align}
@@ -452,7 +485,7 @@ we have the following equation reminiscent of (\ref{fjoin_partition}):
 
 
 Joining a function with itself is not the most interesting construction.
-Piecewise functions are useful for their ability to tie together two \emph{different functions}.
+Piecewise functions are useful for their ability to tie together two \emph{different} functions.
 If two functions have separate, non-overlapping regions, then our definition is again trivial.
 
 
@@ -465,18 +498,19 @@ If two functions have separate, non-overlapping regions, then our definition is 
 
 
 Notice here the use of $\fjoin$ on the right hand side.
-Here we are joining two non-hybrid functions.
-Since $A$ and $B$ are disjoint, the problems that arose earlier are not a problem.
-Disjointness is still too strong of a condition for us.
+Here $\fjoin$ is traditional (non-hybrid) function join.
+Since $A$ and $B$ are disjoint, the problems that arose earlier are not an issue.
+In fact, it doesn't even matter which convention we use.
+Disjointness is still too strong of a condition for two hybrid functions to be compatible.
 The join of two non-disjoint functions may still be a hybrid function 
 even if their respective functions do not agree at \emph{all} points.
 So long as long as they agree on all points in overlapping regions intersection the functions can be safely joined.
 
 
 \begin{definition}
-	We say that two hybrid functions \textbf{$\boldsymbol{f^A}$ and $\boldsymbol{g^B}$ are compatible} 
-	if and only if $f(x) = g(x)$ for all $x \in \text{supp} (A \otimes B)$.
-	$f^A \oplus  g^B$ is a hybrid function if and only if $f^A$ and $g^B$ are compatible.
+	For hybrid functions $f^A$ and $g^B$, $f^A \oplus  g^B$ is a hybrid function
+	if and only if for all $x \in \text{supp} (A \otimes B)$, we have $f(x) = g(x)$.
+	We say that \textbf{$\boldsymbol{f^A}$ and $\boldsymbol{g^B}$ are compatible} 
 \end{definition}
 
 
@@ -647,7 +681,6 @@ Additionally, it also had the nice feature that its pointwise sum was also $[0,1
 This however is not required in the above definition; for example the hybrid set $\hset{[0,1]^1}$ is refined by
 $\hset{ [-1,0)^{-1}, (1,2]^{-1}, [-1,2]^1 }$.
 However, this refinement is not strict as they do not have the same support.
-\todo[inline]{ but it is also refined by $\hset{ [0,1]^1, [1,2]^1, [2,3]^1, \ldots }$ ?!?!}
 
 
 We can now formally phrase our problem.
@@ -831,84 +864,15 @@ If we instead leave the functions unevaluated, terms cancel as before.
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Convolution
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Convolution}}
-
-\todo[inline]{Not sure if this is better suited here or in integration. Doesn't really build off of integration.}
-
-\begin{definition}
-	The \textbf{convolution} $*$, of two functions $F$ and $G$ is defined as:
-	\begin{equation}
-		(F*G)(t) = \int_{-\infty}^\infty F(t) \;G(t - \tau) \; d\tau
-	\end{equation}
-\end{definition}
-
-Is often visualized by graphically flipping one function and sliding it across the other as seen in Figure \ref{convolution}.
-
-\begin{figure}[h]
-\label{convolution}
-\caption[Convolution of box signal with itself]{The convolution of the box signal 
-$f(t)=g(t)=\left( 0^\oiOpOp{-\infty,-0.5} \oplus 1^\oiClCl{-0.5,0.5} \oplus 0^\oiOpOp{0.5,\infty} \right)$ with itself.
-\emph{(from wikipedia; need to create new versions)}}
-\centering
-\includegraphics[scale=0.6]{diagrams/conv1}
-\includegraphics[scale=0.6]{diagrams/conv2}
-\includegraphics[scale=0.6]{diagrams/conv3}
-\end{figure}
-
-Has applications in signal processing
-
-Frequently used in image processing
-
-  Gaussian blurring result of convolving a function with the Gaussian function:
-\begin{equation}
-	f(x) = a \; \text{exp} \left( - \frac{(x-b)^2}{2c^2} \right)
-\end{equation}
-
-In statistics a weighted moving average is a convolution
-
-We are interested in \emph{Symbolic Linear Convolution} (of piecewise continuous functions)
-
-First we consider the convolution of ``one piece'' functions:
-
-\begin{equation}
-	F(x)=f^{[a_f,b_f)}(x) = 
-		\begin{cases}
-			f(x) & a_f \leq x < b_f \\
-			0 & \text{otherwise}
-		\end{cases}
-\end{equation}
-
-\begin{equation}
-	G(x)=g^{[a_g,b_g)}(x) = 
-		\begin{cases}
-			g(x) & a_g \leq x < b_g \\
-			0 & \text{otherwise}
-		\end{cases}
-\end{equation}
-
-Generally we assume that $b_f - a_f \leq b_g - a_g$, ($f$ is shorter)
-
-If this is not the case, convolution is commutative so we simply rearrange: $F * G = G * F$
-
-\begin{align}
-	(F*G)(t) 
-	&= \int_{-\infty}^\infty F(\tau)\; G(t-\tau) \; d\tau \notag \\
-	&= \int_{a_f}^{b_f} f(\tau) \; G(t-\tau) \; d\tau \notag \\
-	&= 	\begin{cases}
-			\int_{a_f}^{x-a_g} f(\tau) \; g(t-\tau) \; d\tau 	& (a_f+a_g) \leq t < (b_f+a_g) \\
-			\int_{a_f}^{b_f} f(\tau) \; g(t-\tau) \; d\tau		& (b_f+a_g) \leq t < (a_f+b_g) \\
-			\int_{x-b_g}^{b_f} f(\tau) \; g(t-\tau) \; d\tau	& (a_f+b_g) \leq t < (b_f+b_g) \\
-			0										& \text{otherwise}
-		\end{cases}
-\end{align}
 
 
-This is the way it's typically done.
 
-With hybrid functions we can ???
+
+
+
+
+
+
 
 
 \newpage

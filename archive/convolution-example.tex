@@ -1,0 +1,107 @@
+\documentclass{letter}
+\usepackage{amsmath}
+\title{Convolution}
+\begin{document}
+
+	In other chapters, I've been using the notation $[\![ ... )\!)$ for \textbf{oriented intervals} defined as:
+	\begin{equation}
+		[\![a,b)\!) = [a,b) \ominus [b,a)
+	\end{equation}
+	Only one of the non-oriented (traditional) intervals  $[a,b) = \{ x | a \leq x < b\}$ or $[b,a) = \{ x | b \leq x < a \}$ 
+	will be non-empty.
+	The multiplicity of $[\![a,b)\!)$ will be +1 or -1 between $a$ and $b$ depending.
+	This gives us some nice properties like:
+	\begin{align}
+		[\![a,b)\!) &= \ominus [\![b,a)\!) \\
+		[\![a,c)\!) &= [\![a,b)\!) \oplus [\![b,c)\!)
+	\end{align}
+
+
+	The convolution of two functions is defined by:
+	\begin{equation}
+		(F * G)(t) = \int_{-\infty}^\infty F(\tau) G(t-\tau) d\tau
+	\end{equation}
+	If $F$ and $G$ are the sum of disjoint sub-functions $f_1 , f_2, \ldots$ and $g_1, g_2, \ldots$ then:
+	\begin{equation}
+		(F * G)(t) = \sum_i \sum_j \int_{-\infty}^\infty f_i(\tau) g_j(t-\tau) d\tau
+	\end{equation}
+	So we only need to worry about convolving ``one-piece'' functions then we take the sum of all pairs.
+	So for two one piece functions:
+	\begin{equation*}
+		F(t) = \begin{cases}
+		f(t) & t \in [a_f,b_f) \\
+		0 & \text{otherwise}
+		\end{cases}
+		\;\;\;\;\;\;
+		G(t) = \begin{cases}
+		g(t) & t \in [a_g, b_g) \\
+		0 & \text{otherwise}
+		\end{cases}
+	\end{equation*}
+	the typical approach would be to commute $F$ and $G$ so that $b_f - a_f < b_g - a_g$ so that:
+	\begin{equation}
+	(F * G)(t) = 
+		\begin{cases}
+			\int_{a_f}^{x-a_g} f(\tau) \; g(t-\tau) \; d\tau 	& (a_f+a_g) \leq t < (b_f+a_g) \\
+			\int_{a_f}^{b_f} f(\tau) \; g(t-\tau) \; d\tau		& (b_f+a_g) \leq t < (a_f+b_g) \\
+			\int_{x-b_g}^{b_f} f(\tau) \; g(t-\tau) \; d\tau	& (a_f+b_g) \leq t < (b_f+b_g) \\
+			0											& \text{otherwise}
+		\end{cases}
+	\end{equation}
+	
+	However with hybrid functions we can (regardless of relative length) write:
+	\begin{align}
+	(F \;*\; G) (t) = 
+		\mathcal{R}_+ &\left( \; \left( 
+			\int_{a_f}^{t-a_g} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
+				\right. \notag \\ &\oplus \left( 
+			\int_{a_f}^{b_f} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
+				\notag \\ &\oplus \left. \left( 
+			\int_{t-b_g}^{b_f} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+b_g,\; b_f+b_g)\!)} 
+				\; \right)(t)
+	\end{align}
+	
+	Let $F, G$ be defined as:
+	\begin{align}
+		F &= f_1^{(-\infty, -1)} \oplus f_2^{[-1,1)} \oplus f_3^{[1,\infty)} \\
+		G &= 0^{(-\infty, -1)} \oplus g_1^{[-1, 0)} \oplus g_2^{[0,1)} \oplus 0^{[1,\infty)}	
+	\end{align}	
+	then 
+	\begin{align}
+	(f_2 * g_1)(t) = 
+		\mathcal{R}_+ &\left( \; \left( 
+			\int_{[\![-1,t+1)\!)} f_2(\tau) \; g_1(t-\tau) \; d\tau \right)^{[\![-2,0)\!)} 
+				\right. \notag \\ &\oplus \left( 
+			\int_{[\![-1,1)\!)} f_2(\tau) \; g_1(t-\tau) \; d\tau \right)^{[\![0,-1)\!)} 
+				\notag \\ &\oplus \left. \left( 
+			\int_{[\![t,1)\!)} f_2(\tau) \; g_1(t-\tau) \; d\tau \right)^{[\![-1,1)\!)} 
+				\; \right)(t)
+	\end{align}
+	Suppose we wanted to calculate the exact value at $-.5$. 
+	The point is in both $[\![-2,0)\!)$ and $[\![-1, 1)\!)$ once and in $[\![0,-1)\!)$ with multiplicity negative one.
+	After $+$-reducing we have:
+	\begin{align}
+	(f_2 * g_1)(-.5) =& 
+		\int_{[\![-1, .5)\!)} f_2(\tau) \; g_1(-.5-\tau) \; d\tau - 
+		\int_{[\![-1, 1)\!)} f_2(\tau) \; g_1(-.5-\tau) \; d\tau \notag \\
+		& + \int_{[\![-.5, 1)\!)} f_2(\tau) \; g_1(-.5-\tau) \; d\tau \\
+		=& \int_{[\![-1, .5)\!) \ominus [\![-1,1)\!) \oplus [\![-.5,1)\!)} f_2(\tau) \; g_1(-.5-\tau) \; d\tau \\
+		=& \int_{[\![-.5,.5)\!)} f_2(\tau) \; g_1(-.5-\tau) \; d\tau
+	\end{align}
+	Note that the terms in (11) are not directly evaluable; $g_1$ may not be well-defined outside of $[-1,0)$.
+	However, since the integrands are all identical, we can collect all the terms and the offending domains cancel.
+	
+	But there is a potential problem that I've been fudging over when computing $(f_3 * g_1)$ or any interval with 
+	infinite bounds.
+	(7) gives the bounds $[\![0, \infty-1)\!)$, $[\![\infty-1, 1)\!)$ and $[\![1, \infty+0)\!)$.
+	By treating $\infty -1 = \infty$, the numbers again cancel so that we have 
+	$(f_3 * g_1)(2) = \int_{[\![2,3)\!)} f_3(\tau)g_1(t-\tau) \; d\tau$.
+	I'm not sure if this is \emph{actually} a problem or not. 
+	This paper was making it out to be a problem, but that might only be due to the worrying about 
+	$b_f - a_f < b_g - a_g$ (which we can ignore).
+	I'd like to avoid breaking it into 12 cases; it doesn't seem like the right way.
+	
+	\textbf{Algorithms for symbolic linear convolution:}
+
+	http://ptolemy.eecs.berkeley.edu/publications/papers/94/symbolic\_convolution/asilomar94.pdf 
+\end{document}
