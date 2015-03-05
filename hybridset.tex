@@ -340,7 +340,7 @@ But first we must establish \emph{hybrid relations}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Ordering Algebra
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Algebra of Orderings}}
+\subsection{Example: \emph{Algebra of Orderings}?!?!}
 Consider a set $S$ with some ordering $\succ$.
 Then we can define the hybrid relations $[\succ]$ and $[=]$ as a hybrid relations between $S$ and itself 
 (i.e. elements of $\mathbb{Z}^{S\times S}$).
@@ -480,7 +480,7 @@ Inductively, this holds for any number of hybrid sets with a common function.
 For instance, given any generalized partition $P = P_1 \oplus P_2 \oplus \ldots \oplus P_n$, 
 we have the following equation reminiscent of (\ref{fjoin_partition}):
 \begin{equation}
- f^P = f^{P_1} \oplus f^{P_2} \oplus \ldots \oplus f^{P_n}
+ 	f^P = f^{P_1} \oplus f^{P_2} \oplus \ldots \oplus f^{P_n}
 \end{equation}
 
 
@@ -508,18 +508,21 @@ So long as long as they agree on all points in overlapping regions intersection 
 
 
 \begin{definition}
-	For hybrid functions $f^A$ and $g^B$, $f^A \oplus  g^B$ is a hybrid function
+	For hybrid functions $f^A$ and $g^B$, $f^A \oplus g^B$ is a hybrid function
 	if and only if for all $x \in \text{supp} (A \otimes B)$, we have $f(x) = g(x)$.
-	We say that \textbf{$\boldsymbol{f^A}$ and $\boldsymbol{g^B}$ are compatible} 
+	We say that \textbf{$\boldsymbol{f^A}$ and $\boldsymbol{g^B}$ are compatible}.
 \end{definition}
 
 
-As with our definition of disjointness, the pointwise product $\otimes$, 
-of hybrid sets acts as a hybrid set analog for intersection $\cap$, of sets.
-The notion of compatibility generalizes the two cases we have already seen.
-$f^A \oplus f^B$ are compatible hybrid functions because $f$ agrees with itself everywhere.
-For $A$ and $B$ disjoint, $f^A$ and $g^B$ are compatible since $A \otimes B$ is empty.
-Compatibility is not associative.
+As with our definition of disjointness, we use the pointwise product $\otimes$ 
+of hybrid sets as an analog for intersection $\cap$ of sets.
+This definition also generalizes the two cases we have already seen in theorems 2.3.1 and 2.3.2.
+The hybrid functions $f^A$ and $f^B$ are clearly compatible because $f$ agrees with itself everywhere.
+For $A$ and $B$ disjoint, $f^A$ and $g^B$ are also compatible since $A \otimes B$ is empty;
+there are no mutual points for $f$ and $g$ to disagree over.
+
+Compatibility becomes less clear when we begin to consider multiple hybrid functions.
+For one, compatibility is not associative.
 Consider the following sequence:
 
 
@@ -527,33 +530,46 @@ Consider the following sequence:
 (f^H \oplus g^H) \oplus g^{\ominus H} = f^H \oplus (g^H \oplus g^{\ominus H}) = f^H \oplus g^\emptyset = f^H
 \end{equation}
 
-
+$g^H$ and $g^{\ominus H}$ are clearly compatible by 2.3.1.
+The resulting $g^{\emptyset}$ is compatible with \emph{any} hybrid function.
 Although $f^H$ and $g^H$ could be mutually incompatible; 
 we can only certain that $f^H \oplus g^H$ is a hybrid relation.
-Regardless of their compatibility, when this is joined with $g^{\ominus H}$, the $g$ terms cancel.
-What we are left with \emph{is} a hybrid function.
-Similarly, reducibility is clearly not preserved by $\hjoin$ as taking $g=f$ gives an intermediate $f^{2H}$, 
-which is only reducible if $H=\emptyset$
+Regardless of their compatibility, when this is joined with $g^{\ominus H}$, the $g$ terms cancel
+and we are left with \emph{is} a hybrid function.
 
 
-Irreducible functions can also reduce a hybrid function by an operator.
-To aid in this we will introduce some notation for iterated operators.
-\begin{definition}
-	Let $\op : S \times S \to S$ be an operator on $S$.
-	Then, for $n > 0$, $n \in \mathbb{Z}$ we use $\op^n:S \times S \to S$ to denote iterated $\op$.
-	So,
-	\begin{equation}
-		x \op^n y = x \overbrace{\op y \op y \op \ldots \op y}^{n \text{ times}}
-	\end{equation}
-	If $\op$ has an identity $e_\op$, then we extend $x \op^0 y = e_\op$.
-	If $\op$ is invertible, then we use $\op^{-1}$ to denote its inverse and $\op^{-n}$ for iterated $\op^{-1}$.
-	Finally, we allow $\op^n$ to be a unary operator, which we define by $\op^n x = e_\op \op^n x$.
-\end{definition}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % *-Reducible
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Hybrid Function Fold}
+
+
+Compatibility and reducibility are one way of collapsing a hybrid function to a traditional function.
+Another approach is to fold or aggregate a hybrid function using some operator.
+To aid in this we will first introduce some notation for iterated operators.
+\begin{definition}
+	Let $\op : S \times S \to S$ be an operator on $S$.
+	Then, for $n > 0$, $n \in \mathbb{Z}$ we use $\op^n:S \times S \to S$ to denote iterated $\op$.
+	So,
+	\begin{equation}
+		x \op^n y = (((x \overbrace{\op y) \op y) \op \ldots \op y)}^{n \text{ times}}
+	\end{equation}
+	If $\op$ has an identity $e_\op$, then we extend $x \op^0 y = x$.
+	If $\op$ is invertible, then we use $\op^{-1}$ to denote its inverse and $\op^{-n}$ for iterated $\op^{-1}$.
+	Finally, we allow $\op^n$ to be a unary operator, which we define by $\op^n x = e_\op \op^n x$.
+\end{definition}
+
+Assuming $\op^m$ and $\op^n$ are both defined (e.g. if $m,n \leq 0$ then $\op$ must be invertible),
+we have $ ( x \op^m y ) \op^n y = x \op^{m+n} y$.
+
+For non-associative magmas, it may be of interest to instead define $\op^T$ for some tree $T$. 
+For example $\op^n$ above is analogous to Haskell's \texttt{foldl}.
+There are applications where \texttt{foldr}: $(x \op ( y \op ( y \op \ldots \op y)))$ or a balanced expression tree like \texttt{foldt} might be desired.
+Most applications however will be interested in group operators and so we will not explore this.
+
 \begin{definition}
 	We say that a hybrid relation $f^A = f_1^{A_1} \oplus f_2^{A_2} \oplus \ldots$ over $T \times S$ 
 	is $\op$\textbf{-reducible} if $(S, \op)$ is an abelian group 
@@ -561,26 +577,44 @@ To aid in this we will introduce some notation for iterated operators.
 	If $f^A$ is $\op$-reducible we define its $\op$\textbf{-reduction}, $\mathcal{R}_\op(f^A) :  T \to S$ 
 	as a (non-hybrid) function given by:
 	\begin{equation}
-		\left( \mathcal{R}_\op (f^A) \right)\;(x) = \op^{A_1(x)} f_1(x) \op^{A_2(x)} f_2(x) \op \ldots 
+		\mathcal{R}_\op (f^A)(x) = \restrict{\left(\op^{A_1(x)} f_1(x) \op^{A_2(x)} f_2(x) \op \ldots \right)}{\supp A}
 	\end{equation}
 \end{definition}
 
 
-If $f^A$ is reducible then it is $\op$-reducible.
+If $f^A$ is reducible then it is trivially $\op$-reducible and we have:
+\begin{equation}
+	\mathcal{R}(f^A) = \mathcal{R}_\op(f^A)
+\end{equation}
+If a hybrid function is already ``flattened'', then reducing it will do nothing.
+So clearly $\mathcal{R}_\op$ is a projection since it is idempotent  (i.e. $\mathcal{R}_\op ( \mathcal{R}_\op( f^A)) = \mathcal{R}_\op(f^A)$).
+Moreover,
+\begin{equation}
+	\mathcal{R}_\op( \mathcal{R}_\op(f^F) \oplus \mathcal{R}_\op(g^G)) =\mathcal{R}_\op( f^F \oplus g^G)
+\end{equation}
 
+\todo[inline]{$\mathcal{R}_\times ( \mathcal{R}_+ \oplus \mathcal{R}_+ )$}
 
 \subsection{Example: \emph{Sign function}}
 
 One would typically write the sign function out as a piecewise function over 3 regions of the extended real line: 
 $(-\infty, 0)$, $\{ 0 \}$, and $(0, \infty)$.
-Written out as a hybrid function, this would be
+Or alternatively using a $+$-reduction using 2 pieces: $(-\infty, 0]$ and $[0, \infty)$.
 \begin{equation}
-	\text{sign} = -1^{(-\infty, 0)} \hjoin 0^{\{0\}} \hjoin 1^{(0, \infty)}
+	\text{sign} \;=\; -1^{(-\infty, 0)} \hjoin 0^{\{0\}} \hjoin 1^{(0, \infty)}
+	\;=\; \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)
 \end{equation}
-Alternatively, one could also use the equivalent:
-\begin{equation}
-	\text{sign} = \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)
-\end{equation}
+Evaluation of the $\text{sign}$ at the points 1 or 0 is performed as follows:
+\begin{equation*}
+ \text{sign}(1) = \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)(1) 
+ = \mathcal{R}_+ \left( -1^{0} \oplus 1^{1} \right)
+ = +^0 (-1) +^1 (1) = 1
+\end{equation*}
+\begin{equation*}
+ \text{sign}(0) = \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)(0) 
+ = \mathcal{R}_+ \left( -1^{1} \oplus 1^{1} \right)
+ = +^1 (-1) +^1 (1) = 0
+\end{equation*}
 
 Going from 3 regions to 2 may seem a small step.
 However, consider two piecewise functions with $n$ and $m$ regions respectively.
@@ -608,7 +642,9 @@ As well as piecewise functions $f$ and $g$ given as:
 		\end{cases}
 \end{equation*}
 
-To compute $(f+g)$, the naive simplication would be to take the pairwise intersection of regions.
+If one were interested in computing the piecewise function $(f+g)$, the na\''{i}ve method would be to take the pairwise
+sum of each sub-function. 
+Then restrict each sum to the intersection of respective partitions as below:
 \begin{equation}
 	(f+g)(x) = (f_1 + g_1)^{A_1 \cap B_1} 
 		\oplus (f_1 + g_2)^{A_1 \cap B_2} 
@@ -616,9 +652,11 @@ To compute $(f+g)$, the naive simplication would be to take the pairwise interse
 		\oplus (f_2 + g_2)^{A_2 \cap B_2}
 \end{equation}
 
-However, we can alternatively partition $[0,1]$ into the generalized partition $A_1$, $B_1 \ominus A_1$, $B_2$.
-Observe that $B_1 = (B_1 \ominus A_1) \oplus A_1$ and $A_2 = (B_1 \ominus A_1) \oplus B_2$.
-Thus we can represent $f$ and $g$ with a common partition by:
+We will take another approach.
+First, we can partition $[0,1]$ into the generalized partition $A_1$, $B_1 \ominus A_1$, $B_2$.
+The source of this particular partition will remain mysterious for now but observe that we can still construct the partitions:
+$B_1 = (B_1 \ominus A_1) \oplus A_1$ and $A_2 = (B_1 \ominus A_1) \oplus B_2$.
+And so we can represent $f$ and $g$ from above with a common partition by using:
 \begin{align}
 	f &=  f_1^{A_1} \;\oplus\; f_2^{(B_1 \ominus A_1) \oplus B_2}
 		\;=\; f_1^{A_1} \;\oplus\; f_2^{B_1 \ominus A_1} \;\oplus\; f_2^{B_2} \\
@@ -626,7 +664,11 @@ Thus we can represent $f$ and $g$ with a common partition by:
 		\;=\; g_1^{A_1} \;\oplus\; g_1^{B_1 \;\ominus\; A_1} \;\oplus\; g_2^{B_2}
 \end{align}
 
-Then we write:
+Since we have a common partition we can avoid computing pairwise intersections altogether and simply add each 
+sub-function to the corresponding sub-function which shares a partition.
+Since $\{ A_1 , B_1, (B_1 \ominus A_1) \}$ is a generalized partition, we will need to flatten the expression back down
+to get a traditional function.
+We use $\mathcal{R}_+$ for this so that negative regions properly cancel. 
 
 \begin{equation}
 	(f+g)(x) = \mathcal{R}_+ \left( (f_1 + g_1)^{A_1} 
@@ -651,10 +693,10 @@ Simplifying this expression yields:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Refinement
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Even though in this example only three regions can simultaneously exist 
-(either $A_1 \cap B_2$ or $A_2 \cap B_1$ will be empty)
- this technique does not depend on it.
-$A_1$ and $B_1$ could be arbitrary subsets.
+In the above example only three regions could simultaneously exist.
+If $a<b$ then $A_1 \cap B_2 = \emptyset$ but if $b<a$ then $A_2 \cap B_1 = \emptyset$.
+Although it might seem that the three terms are a result of three regions, in the general case where 
+$A_1$ and $B_1$ could be arbitrary subsets, we still only have three terms.
 We will even extend this to any generalized partition.
 First we will formalize some ideas we have already seen.
 
