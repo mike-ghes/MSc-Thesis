@@ -703,35 +703,31 @@ First we will formalize some ideas we have already seen.
 
 \begin{definition}
 	A \textbf{refinement} of a generalized partition $P = \{P_i\}_{i \in I}$ is another generalized partition
-	$Q = \{Q_j \}_{j \in J}$ such that 
+	$Q = \{Q_j \}_{j \in J}$ such that, for every $P_i$ in $P$ there is a subset of $Q$: $\{ Q_{j} \}_{j \in J_i}$, 
+	$J_i \subseteq J$ such that for some integers $\{a_{i,j}\}_{j \in J_i}$
 	\begin{equation}
-		\bigoplus_{j \in J} Q_j = \bigoplus_{i \in I} P_i
+		P_i = \bigoplus_{j \in J_i} a_i,j Q_{j}
 	\end{equation}
-	and for every $P_i$ in $P$ there is a sequence $\{ Q_{i_k} \}_{i_k \in I_k}$, $I_k \subseteq J$ such that 
-	\begin{equation}
-		P_i = \bigoplus_{i_k \in I_k} Q_{i_k}
-	\end{equation}
-	A \textbf{common refinement} for a set of generalized partitions is a generalized partition which is a 
+	Given a \emph{set} of generalized partitions a \textbf{common refinement} is a generalized partition which is a 
 	refinement of every partition in the set. 
-	A refinement is \textbf{strict} if $\text{supp}(Q) = \text{supp}(P)$.
+	A refinement $Q$ of $P$ is \textbf{strict} if $\text{supp}(Q) = \text{supp}(P)$.
 \end{definition}
 
 
 In our previous example we used $\{ A_1, B_1 \ominus A_1, B_2 \}$ which was a common refinement of both
 $\{ A_1, A_2 \}$ and $\{ B_1, B_2 \}$.
-Additionally, it also had the nice feature that its pointwise sum was also $[0,1]$.
-This however is not required in the above definition; for example the hybrid set $\hset{[0,1]^1}$ is refined by
-$\hset{ [-1,0)^{-1}, (1,2]^{-1}, [-1,2]^1 }$.
-However, this refinement is not strict as they do not have the same support.
-
+$A_1$ and $B_2$ have trivial representations while $A_2 = (B_1 \ominus A_1) \oplus B_2$ and 
+$B_1 = A_1 \oplus (B_1 \ominus A_1)$.
+Another common refinement would be the trivial $\{ A_1, B_1, A_2, B_2 \}$
+This is less preferable due to not only containing 4 regions instead of 3 but also the pointwise sum is $[0,1]^2$
+instead of the reducible $[0,1]$.
 
 We can now formally phrase our problem.
 Let $A=\{ A_i \}_{i \in [n]}$ and $B=\{ B_j \}_{j \in [m]}$ be two generalized partitions of a hybrid set $U$ 
 (where $[n] = \{ 1, \ldots, n \}$ for $n \in \mathbb{N}$).
 We wish to find a generalized partition $C$  of $U$ which is a \emph{common}, \emph{strict} refinement of $A$ and $B$
 and has minimal cardinality.
-This restriction on the cardinality is to minimize the number of terms that appear.
-These conditions can be summarized into the following system of $n+m+1$ simultaneous equations:
+These conditions can be summarized into the following linear system of $n+m+1$ simultaneous equations:
 \begin{equation}
 	U = \bigoplus_i C_i
 \end{equation}
@@ -778,12 +774,13 @@ Expressed as a linear system we have:
 
 
 By definition, $M$ is an integer matrix.
-But we are actually more interested in its inverse $M^{-1}$ to find values for $C_i$.
-If we assume that $M^{-1}$ is also an integer matrix, then the determinant must be $\pm 1$.
-Further restricting ourselves to upper triangular matrices we can simply choose $M$ to be all 1's along the diagonal
+But we are actually more interested in its inverse $M^{-1}$ as this will give us values for $C_i$ 
+relative to $( U, A_1, \ldots, A_{m-1}, B_1, \ldots, B_{m-1} )$.
+To stay in the realm of hybrid sets, we would also like to enforce that $M^{-1}$ is also an integer matrix.
+Assuming this, then the determinant of $M$ must be $\pm 1$.
+Further restricting ourselves to upper triangular matrices we can choose $M$ to be all 1's along the diagonal
 as well as the top row. 
-This is not unique; we could also choose $M$ to be 1s for the whole upper triangle.
-Assuming the former, we find the inverse to be:
+Which has the following inverse:
 \begin{equation}
 	\begin{pmatrix}
 		1 		&\cdots 	&\cdots 	&\cdots 	& 1 		\\[-0.5em]
@@ -803,6 +800,7 @@ Assuming the former, we find the inverse to be:
 \end{equation}
 
 
+
 Thus we find that for the partitions $A = \{ A_i \}_{i \in [n]}$ and $B = \{ B_j \}_{j \in [m]}$ we can \emph{always}
 use the strict, common and minimal refinement:
 \begin{equation}
@@ -815,20 +813,23 @@ and  $g = g_1^{Q_1} \oplus \ldots \oplus g_m^{Q_m}$ be two piecewise functions o
 We can compute $f \op g$ by:
 \begin{align}
 f \op g = \; \mathcal{R}_\op  \; & \!\!\! \left( \,
-		\hset{ (f_1 \op g_m)^{P_1} } 
+		(f_1 \op g_m)^{P_1} 
 		\oplus \ldots \oplus 
-		\hset{ (f_{n-1} \op g_m)^{P_{n-1}}} \right. \notag \\
-	\oplus & 
-		\hset{ (f_n \op g_1)^{Q_1} } 
+		 (f_{n-1} \op g_m)^{P_{n-1}} \right. \notag \\
+	\oplus & \;
+		 (f_n \op g_1)^{Q_1} 
 		\oplus \ldots \oplus 
-		\hset{ (f_n \op g_{m-1})^{Q_{m-1}}} \notag \\
+		 (f_n \op g_{m-1})^{Q_{m-1}} \notag \\
 	\oplus & \left. 
-		\hset{ (f_n \op g_n)^{
-			U \ominus (P_1 \oplus \ldots \oplus Q_{n-1} \oplus Q_1 \oplus \ldots \oplus Q_{m-1})}
-		}
+		 (f_n \op g_n)^{U \ominus (P_1 \oplus \ldots \oplus Q_{n-1} \oplus Q_1 \oplus \ldots \oplus Q_{m-1})}
 	\; \right)
 \end{align}
 
+
+This is not a unique formulation.
+Any upper triangular matrix containing only 1, 0 and $-1$ and all 1's in the first row would also be acceptable.
+Each would lead to slightly different forms of (2.47). This particular choice is merely one of the simplest options. 
+Certain applications could lead to other choices of $M$ for reasons of memory efficiency, but it is not clear this is needed.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -839,8 +840,20 @@ f \op g = \; \mathcal{R}_\op  \; & \!\!\! \left( \,
 
 One last detail remains to be settled, the sub-functions $f_i$ and $g_j$ may not be defined outside of 
 $P_i$ and $Q_j$ respectively.
-We have written $(f_1 \op g_m)^P_1$ but it may be that for some point $x \in P_1$, we have $g_m(x) = \infty$.
-Although this point may eventually be cancelled out later symbollically, we enter fuzzy territory.
+Consider the equation in (2.47), evaluated at $x \in P_1 \cap Q_1$.
+Then we have the following terms with non-zero multiplicity.
+\begin{equation}
+	(f \op g)(x) = \mathcal{R}_\op 
+		\left(   (f_1(x) \op g_m(x))^1 \oplus 
+				(f_n(x) \op g_1(x))^1 \oplus 
+				(f_n(x) \op g_m(x))^{-1} 
+		\right)
+\end{equation}
+
+
+We would like for the $g_m(x)$ in the first term to cancel with the $g_m(x)$ in the third.
+If $q_m$ (and $f_n$) are defined and finite at all points in $U$, then there is no problem.
+However if $g_m(x)=\infty$, then we need to make cumbersome arguments for: $ \infty + y - \infty = y$.
 To resolve this, we use a lambda-lifting trick to have a hybrid relation over the domain and \emph{the function itself}
 rather than the domain and the image implied by the function.
 
@@ -850,59 +863,117 @@ rather than the domain and the image implied by the function.
 	\begin{equation}
  		\tilde{f}^A = \bigoplus_{x \in B} A(x) \hset{(x,f)^1}
 	\end{equation}
-	That is, $\tilde{f}^A$ is a hybrid relation over $U \times (U \to S)$ as opposed to $U \times S$.
-	The evaluation of a pseudo-function is done by mapping $\tilde{f}^A$ back down to $f^A$.
 \end{definition}
 
-Properties of pseudo-functions
+
+One should notice the similarity between (2.49) and (2.22).
+The difference is that we have replaced $(x, f(x))$ with the unevaluated $(x,f)$.
+This formally makes $\tilde{f}^A$ a hybrid relation over $U \times (U \to S)$ as opposed to 
+a hybrid function over $U \times S$.
+To evaluate $\tilde{f}^A$ we map back to $f^A$ and evaluate that.
+This mapping between $(x,f(x))$ and $(x,f)$ is very natural and we will perform it unceremoniously,
+often using $f^A$ and $\tilde{f}^A$ interchangeably. 
+Properties of hybrid functions such as compatibility and reducibility will be lifted to hybrid pseudo-functions by this as well.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Piecewise 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Piecewise functions revisited}}
-In 2.3.2, we found the sum of two piecewise functions.
-Our solution depended on being able to evaluate $(f_2 + g_1)$ over the region ${B_1 \ominus A_1}$.
-Being able to do so cannot always be guaranteed. 
-Consider the piecewise function on $\mathbb{R}$:
+
+
+We will repeat the example from 2.4.2 but concretely using the following function:
 \begin{equation}
 	f(x) = \begin{cases}
 		(2-x^2) & -1 \leq x \leq 1\\
 		1/x^2 & \text{otherwise}
 	\end{cases}
 \end{equation}
-Which can be represented as the hybrid function:
+Graphically, this is a mundane-looking bell-shaped curve shown in black in Figure 2.2.
+Although $f$ is defined for all of $\mathbb{R}$, this is not the case for its sub-functions. 
+The plots in red and blue show the behaviour of $(2-x^2)$ and $1/x^2$ outside of their defined ranges in $f$.
+
+
+\begin{figure}[h]
+	\label{plot}
+	\caption{A piecewise rational function is shown in black. The plots in red and blue are continuations of 
+		$(2-x^2)$ and $1/x^2$ respectively.}
+	\centering
+	\begin{tikzpicture}[>=stealth]
+	    \begin{axis}[
+	        xmin=-5,xmax=5,
+	        ymin=-2,ymax=10,
+	        axis x line=middle,
+	        axis y line=middle,
+	        axis line style=<->,
+	        xlabel={$x$},
+	        ylabel={$y$},
+	        ]
+	        \addplot[no marks,black,thick,-] expression[domain=-1:1,samples=100]{2 - x^2};
+	        \addplot[no marks,blue,->] expression[domain=-1:-0.33,samples=100]{1/x^2};
+	        \addplot[no marks,blue,<-] expression[domain=0.33:1,samples=100]{1/x^2};
+	        \addplot[no marks,black,thick,<-] expression[domain=-4:-1,samples=100]{1/x^2};
+	        \addplot[no marks,red,<-] expression[domain=-2:-1,samples=100]{2 - x^2};
+	        \addplot[no marks,black,thick,->] expression[domain=1:4,samples=100]{1/x^2};
+	        \addplot[no marks,red,->] expression[domain=1:2,samples=100]{2 - x^2};
+	    \end{axis}
+	\end{tikzpicture}
+\end{figure}
+
+
+Represented as a hybrid pseudo-functions we have $\tilde{f}$ as:
+
 \begin{equation}
-	f = f_1^{A_1} \oplus f_2^{A_2} 
-	  = (2-x^2)^{[-1, 1]} \oplus (1/x^2)^{(-\infty, -1) \oplus (1, \infty)}
+	\tilde{f} = \tilde{f_1}^{A_1} \oplus \tilde{f_2}^{A_2} 
+	  = (x \mapsto 2-x^2)^{[-1, 1]} \oplus (x \mapsto 1/x^2)^{(-\infty, -1) \oplus (1, \infty)}
 \end{equation}
-In which we have a mundane-looking bell-shaped curve.
-
-
-
-Additionally we will take $g$ to be the absolute value function:
+which we are interested in multiplying by the unevaluated absolute value function:
 \begin{equation}
-	g = \text{abs} = (-x)^{(-\infty, 0)} \oplus (x)^{[0, \infty )}
+	\tilde{g} = \tilde{\text{abs}} = (x \mapsto x)^{[0, \infty )} \oplus (x \mapsto -x)^{(-\infty, 0)}
 \end{equation}
 
-To take the product $f \cdot g$, one would assume that as in 2.3.2, we take the common refinement:
+First we must find a minimal common refinement.
+Using the formula in (2.46), we decide to use the partition:
 \begin{align}
 	P_1 &= [-1,1] \\
-	P_2 &= (-\infty, 0) \ominus [-1, 1]\\
-	P_3 &= [0, \infty)
+	P_2 &= [0, \infty) \\
+	P_3 &= \mathbb{R} \ominus [-1,1] \ominus [0, \infty)
 \end{align}
-where $P_2$ can be simplified to $(-\infty, -1) \ominus [0,1]$.
-Following the pattern of 2.3.2 one would find
+where $P_3$ could also be simplified into disjoint regions by $P_3 = (-\infty, -1) \ominus [0,1]$.
+Thus we have the expression
+\begin{align}
+	(\tilde{f} \times \tilde{g}) = \mathcal{R}_\times \bigg(
+				& \left( (x \mapsto 2-x^2) \times (x \mapsto -x) \right)^{P_1} \notag \\
+		\oplus \;& \left( (x \mapsto 1/x^2) \times (x \mapsto -x) \right)^{P_2} \notag \\
+		\oplus \;& \left( (x \mapsto 1/x^2) \times (x \mapsto -x) \right)^{P_3} 
+	\bigg)
+\end{align}
+If we use pseudo-functions then we assign multiplicities to the still unevaluated sub-functions.
+So, for example to evaluate $(f \times g)$ at 0, we would evaluate each of $P_1$, $P_2$ and $P_3$ at 0 and find:
+\begin{align}
+	(\tilde{f} \times \tilde{g})(0) = \mathcal{R}_\times \bigg(
+				& \left( (x \mapsto 2-x^2) \times (x \mapsto -x) \right)^1 \notag \\
+		\oplus \;& \left( (x \mapsto 1/x^2) \times (x \mapsto -x) \right)^1 \notag \\
+		\oplus \;& \left( (x \mapsto 1/x^2) \times (x \mapsto -x) \right)^{-1} 
+	\bigg)(0)
+\end{align}
+Once we have this, we can then evaluate the $\times$-reduction on the still unevaluated functions.
+Clearly $x \mapsto -x$ occurs with cancelling signs as does $x \mapsto 1/x^2$.
+This leaves us with the product of two unevaluated functions:
 \begin{equation}
-	(f \cdot g) = \mathcal{R}_\times \left( ((2-x^2) \cdot (-x))^{P_1} \oplus ((1/x^2) \cdot (-x))^{P_2} \oplus ((1/x^2) \cdot (x))^{P_3} \right)
+	(\tilde{f} \times \tilde{g})(0) = \left((x \mapsto 2-x^2) \times (x \mapsto x)\right) (0)
 \end{equation}
-Evaluating $(f\cdot g)$ at zero obviously should be zero.
-However, attempting to evaluate the above function one finds:
+
+
+\emph{After} these cancellations occur, then it is finally safe to evaluate at a point and 
+we find $(\tilde{f} \times \tilde{g})(0)=0$ as expected.
+To contrast this, if one were to attempt to evaluate a the (non-pseudo) hybrid function version of 
+$\tilde{f} \times \tilde{g}$, instead of (2.57) one would have the expression:
 \begin{equation}
-	\mathcal{R}_\times \left( (2 \cdot 0)^1 \oplus (\text{``}\infty\text{''} \cdot 0)^{-1} \oplus (\text{``}\infty\text{''} \cdot 0)^1 \right)
+	(f \times g)(0) = \mathcal{R}_\times \left( (2 \times 0)^1 \oplus (\text{``}\infty\text{''} \cdot 0)^1 \oplus (\text{``}\infty\text{''} \cdot 0)^{-1} \right)
 \end{equation}
-Although we would like these infinities to cancel, the behaviour is not well defined.
-If we instead leave the functions unevaluated, terms cancel as before.
+Simplifying the $\times$-reduction leads to both $\infty / \infty$ and $0/0$.
+Although they \emph{should} obviously cancel, the behaviour is not well defined.
 
 
 
