@@ -82,9 +82,10 @@ But by rearranging the parentheses we find,
 	( \restrict{f}{A} \fjoin ( \restrict{g}{B} \fjoin \restrict{h}{C} ))(x) = f(x)
 \end{equation}
 Other conventions exist, for example \emph{Maple}'s 
-\texttt{piecewise(cond\_1, f\_1, cond\_2, f\_2, \ldots, cond\_n, f\_n, f\_otherwise)} 
+\texttt{piecewise(cond\_1, f\_1, cond\_2, f\_2,} \linebreak
+\texttt{\ldots, cond\_n, f\_n, f\_otherwise)} 
 effectively uses a short-circuted $\fjoin$.
-Each of conditionals, \texttt{cond\_i} are evaluated in order and when one evaluates to true, the corresponding \texttt{f\_i} is evaluted.
+Each of the conditionals, \texttt{cond\_i} are evaluated in order and when one evaluates to true, the corresponding \texttt{f\_i} is evaluted.
 Finally if all of \texttt{cond\_i} evaluate to false then \texttt{f\_otherwise} is used.
 This approach simply trades associativity for commutivity.
 
@@ -177,7 +178,7 @@ One could easily extend union and intersection to hybrid sets using point-wise m
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 [cite],
 but it would make more sense to have operations corresponding to primitive operations in $\mathbb{Z}$ instead.
-Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, and $\cdot$.
+Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, and $\times$ respectively.
 
 
 \begin{definition}
@@ -201,7 +202,7 @@ Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, a
 
 
 \begin{definition}
-	We say \textbf{$\boldsymbol{A}$ and $\boldsymbol{B}$ are disjoint} if and only if $A \otimes B = \emptyset$
+	We say $\boldsymbol{A}$ \textbf{and} $\boldsymbol{B}$ \textbf{are disjoint} if and only if $A \otimes B = \emptyset$
 \end{definition}
 
 

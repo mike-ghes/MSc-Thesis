@@ -91,7 +91,7 @@ Taking the Cartesian product of a 2-rectangle and 1-rectangle gives a 3-rectangl
 We should note here that we do not distinguish between $((x,y),z)$ and $(x,(y,z))$ but rather we treat both as different names for the ordered triple $(x,y,z)$.
 We similarly associate parentheses in higher dimensions as well.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \caption[Cartesian product of two 1-rectangles]{The Cartesian product of two positively oriented 1-rectangles $[\![a,b]\!]$ and $[\![c,d]\!]$ is a positively oriented 2-rectangle.}
 \centering
 \begin{tikzpicture}[y=1cm, x=2.5cm]	
@@ -172,7 +172,7 @@ In at least one dimension, the cube will be degenerate (i.e. $a_i = b_i$) and so
 Additionally, one can also observe that $\text{vol}( \ominus [\![\boldsymbol{a}, \boldsymbol{b} ]\!]) = - \text{vol}( [\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$.
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \caption[Riemann Integral]{Upper and lower Riemann sums shown for the same sequence shown with light and dark rectangles respectively. A function over an oriented interval is Riemann integrable if the two sums converge.}
 \centering
 \includegraphics[scale=0.6]{diagrams/riemann}
@@ -398,7 +398,7 @@ Physically, the 3-rectangle is a solid cube and includes all interior points.
 The boundary meanwhile are just the rectangular outer faces, which conveniently,
  there are also six to match the six terms of $\partial[\![\boldsymbol{a},\boldsymbol{b}]\!]$.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \caption[Unit cube with boundary]{The unit cube in $\mathbb{R}^3$ with positive orientation can be represented as the 3-rectangle: $[\![(0,0,0), (1,1,1) ]\!]$ is shown as a wire-frame. 
 The six faces that make up its boundary are shaded and labeled with their corresponding terms.
 %Now with 100% more right-handed
@@ -454,7 +454,7 @@ These are all conceptual tools, which are convenient to use particularly in $\ma
 There may not be such a nice physical interpretation in other spaces.
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \caption[Orientations of 2-rectangles]{One way of visualizing the orientation of 2-rectangles using clockwise and counter-clockwise cycles of arrows for 1-rectangles. 
 The boundary of $[\![a,b]\!] \times [\![c,d]\!]$ becomes the cycle: 
 $(a,c) \to (b,c) \to (b,d) \to (a,d) \to (a,c)$.
@@ -576,7 +576,7 @@ When moving from (4.21) to (4.22), in addition to applying $\partial_1$ we also 
 The identity ``$\partial \partial = 0$'' is not unique to $2$-cubes but holds for higher dimensions as well.
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \caption[Boundary of a boundary (of a 2-cube)]{The boundary of 2-cube gives a cycle of oriented edges. Taking the boundary of again, at each corner, the negative boundary of one edge will be canceled by the positive boundary of the preceding edge.}
 \centering
 	\begin{tikzpicture}
@@ -671,7 +671,7 @@ By linearity this extends to all chains as well as the sum of empty sets is of c
 
 
 \begin{definition}
-	A \textbf{chain complex} is a sequence of Abelian groups $\ldots, A_2, A_1, A_0, A_{-1}, A_{-2}, \ldots$ 
+	A \textbf{chain complex} is a sequence of Abelian groups $\ldots, A_2, A_1, A_0, A_{-1}, A_{-2}, \ldots$ \linebreak
 	which are connected by homomorphisms $d_n:A_n \to A_{n-1}$ such that $d_n \circ d_{n+1} = 0$ for all $n$.
 	Typically written out as:
 	\begin{equation}
