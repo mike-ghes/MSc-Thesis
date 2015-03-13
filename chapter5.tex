@@ -71,7 +71,7 @@ generally, weighted moving averages can be made by convolving with other functio
 % CONVOLUTION OF PIECEWISE
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Convolution of Piecewise Functions}
+\section{Convolution of Piecewise Functions}\label{sec:PWConvolution}
 
 
 CAS such as Maple and Mathematica are quite adept at solving integrals.
@@ -138,17 +138,17 @@ For a tight boundary, we have the following:
 
 \begin{figure}[ht]
 	\caption[Convolution of ``one-piece'' functions]{Convolution of length 1 and 2 rectangular pulses. 
-	Given the functions $F=1^{[-2,2)}$ and $G=1^{[-1,1)}$, there are three non-zero regions in $(F*G)$.
+	Given the functions $F=1^{[-1,1)}$ and $G=1^{[-2,2)}$, there are three non-zero regions in $(F*G)$.
 	\label{fig:OnePiece}}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[
 			x=1.5cm,
-			y=2cm,
+			y=1.5cm,
 			xstep=1,
 			ystep=1,
 			xmin=-3.9,xmax=3.9,
-			ymin=-0.4,ymax=1.4,
+			ymin=-0.4,ymax=2.4,
 			axis x line=middle,
 			axis y line=middle,
 			axis line style=<->,
@@ -156,14 +156,14 @@ For a tight boundary, we have the following:
 			ylabel={$y$},
 	        ]
 		\addplot[no marks,black,very thick,<-] expression[domain=-3.9:-3,samples=100]{0};
-		\addplot[no marks,black,very thick,-] expression[domain=-1:1,samples=100]{1};
-		\addplot[no marks,black,very thick,-] expression[domain=-3:-1,samples=100]{(.5*x)+1.5};
-		\addplot[no marks,black,very thick,-] expression[domain=1:3,samples=100]{1.5-(.5*x)};
+		\addplot[no marks,black,very thick,-] expression[domain=-1:1,samples=100]{2};
+		\addplot[no marks,black,very thick,-] expression[domain=-3:-1,samples=100]{x+3};
+		\addplot[no marks,black,very thick,-] expression[domain=1:3,samples=100]{3-x};
 		\addplot[no marks,black,very thick,->] expression[domain=3:3.9,samples=100]{0};
-		\node(afag) at (axis cs:-3,1.25) {$a_f+a_g$};
-		\node(bfag) at (axis cs:-1,1.25) {$b_f+a_g$};
-		\node(afbg) at (axis cs:1,1.25) {$a_f+b_g$};
-		\node(bfbg) at (axis cs:3,1.25) {$b_f+b_g$};
+		\node(afag) at (axis cs:-3,2.25) {$a_f+a_g$};
+		\node(bfag) at (axis cs:-1,2.25) {$b_f+a_g$};
+		\node(afbg) at (axis cs:1,2.25) {$a_f+b_g$};
+		\node(bfbg) at (axis cs:3,2.25) {$b_f+b_g$};
 	        \end{axis}
 		%\draw[thick,<->] (-4,0) -- (4,0);
 		%\draw[thick,<->] (0,-.5) -- (0,1.5);
@@ -206,7 +206,9 @@ The convolution of $F*G$ is the sum of pairwise convolution:
 This is the typical approach to convolution of piece-wise functions originally presented by West and McClellan 
 \cite{west1993symbolic}.
 When the boundaries between regions is symbolic, then we may not be able to determine which interval is longer.
+Another approach involving hybrid functions will be presented in Section~\ref{sec:HFConvolution}. 
 Concerns with intervals where one boundary point is at infinity have also been raised \cite{evans1994algorithms}.
+Techniques to handle this will be investigated in Section~\ref{sec:ConvInfty}.
 
 
 
@@ -221,27 +223,119 @@ Concerns with intervals where one boundary point is at infinity have also been r
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hybrid Function Convolution}
+\label{sec:HFConvolution}
 
-With hybrid functions we do not have to worry about the relative length of $f$ and $g$ intervals.
+Our exposition for hybrid set convolution will appear very similar to that from the previous section.
+Again we will be interested in the convolution of ``one-piece'' functions which we will use to build up piece-wise
+continuous functions.
+So assume hybrid functions $F=f^{[a_f, b_f)}$ and $G=g^{[a_g,b_g)}$.
+We do \emph{not} enforce that $b_f - a_f \leq b_g - a_g$ as we did in Section~\ref{sec:PWConvolution}.
+Instead both cases will be handled by our generalized partition structure.
 
-Instead for hybrid functions $F = f^{[a_f, b_f)}$ and $G = g^{[a_f, b_f)}$:
 
 \begin{align}
-	(F \;*\; G) (t) = 
-		\mathcal{R}_+ &\left( \; \left( 
-			\int_{a_f}^{x-a_g} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
+	(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = 
+		\R[+] &\left( \; \left( 
+			\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
 				\right. \notag \\ &\oplus \left( 
-			\int_{a_f}^{b_f} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
+			\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
 				\notag \\ &\oplus \left. \left( 
-			\int_{x-b_g}^{b_f} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+b_g,\; b_f+b_g)\!)} 
+			\int_{[\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+b_g,\; b_f+b_g)\!)} 
 				\; \right)(t)
 \end{align}
 
-When $b_f - a_f \leq b_g - a_g$ then the intervals will be disjoint and the expression is identical to 2.61
+The first thing one should note is the similarity between this expression and (\ref{eqn:ConvNaiveOnePiece}).
+When $b_f - a_f \leq b_g - a_g$ then the three oriented intervals will be disjoint and the two equations are identical.
+Otherwise, if $b_f - a_f > b_g - a_g$, then the interval $[\![b_f +a_g, \; a_f + b_g)\!)$ will have a negative orientation.
+The intervals $[\![a_f+a_g, \; b_f+a_g)\!)$, $[\![b_f+a_g, \; a_f+b_g)\!)$ and $[\![a_f+b_g, \; b_f+b_g)\!)$ still forms
+a reducible (i.e. everywhere multiplicity one) generalized partition over $[a_f+a_g, \; b_f+b_g)$.
+Outside this region the function is zero as expected. 
 
-Otherwise, the interval $[\![b_f +a_g, \; a_f + b_g)\!)$ will have a negative orientation.
 
-For $(a_f+b_g) \leq t < (b_f+a_g)$ then $t$ will be in all three regions and we have
+Suppose we are in this second case and we wish to evaluate the convolution at a point $t$ which is in all three intervals.
+This occurs when $(a_f+b_g) \leq t < (b_f+a_g)$ and we have:
+\begin{align*}
+	[\![a_f+a_g, \; b_f+a_g)\!)(t) &= 1 \\
+	[\![b_f+a_g, \; a_f+b_g)\!)(t) &= -1 \\
+	[\![a_f+b_g,\; b_f+b_g)\!)(t) &= 1
+\end{align*}
+Simplifying the $+$-reduction we then get:
+\begin{align}
+	(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = 
+		& \; \left( 
+			\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right) 
+				\notag \\ &- \left( 
+			\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)
+				\notag \\ &+ \left( 
+			\int_{[\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right) 
+\end{align}
+All three of these integrals have the same integrand so we can use bi-linearity to move the sum to be over the domains
+of integration.
+These domains then cancel nicely to leave us with:
+\begin{align}
+	\label{eqn:HybridConvMidFinal}
+	(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = &
+		\int_{[\![a_f,\;t-a_g)\!) \;\ominus\; [\![a_f,\;b_f)\!) \;\oplus\; [\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \notag\\
+		= & \int_{[\![t-b_g,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau
+\end{align}
+Let us now look at a concrete example with some actual numbers.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HYBRID EXAMPLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Hybrid Convolution}}
+
+
+In Figure~\ref{fig:OnePiece} we saw the convolution of $1^{[-1,1)}$ with $1^{[-2,2)}$.
+We know that convolution is commutative so computing $1^{[-2,2)} * 1^{[-1,1)}$ we already know what to expect.
+We will label these as $1_f$ and $1_g$ to differentiate and to prevent confusion by reminding us that the object we are 
+dealing with is $x \mapsto 1$ rather than the number 1 itself.
+\begin{align}
+	\label{HCExample}
+	(1_f^{[-2,2)} \;*\; 1_g^{[-1,1)}) (t) = 
+		\R[+] &\left( \; \left( 
+			\int_{[\![-2,\;t-1)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-3,\; 1)\!)} 
+				\right. \notag \\ &\oplus \left( 
+			\int_{[\![-2,\;1)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![1,\; -1)\!)} 
+				\notag \\ &\oplus \left. \left( 
+			\int_{[\![t-1,\;2)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-1,\; 3)\!)} 
+				\; \right)(t)
+\end{align}
+
+
+Already this is promising as we can see the set of end-points: $\{-3, -1, 1, 3\}$ agrees with our previous example.
+Let us consider three points $t_1 \in [-3, -1)$, $t_2 \in [-1, 1)$ and $t_3 \in [1,3)$.
+We omit the derivations but encourage the reader to convince themselves that each is correct.
+\begin{equation*}
+	(1_f^{[-2,2)} \;*\; 1_g^{[-1,1)}) (t_1) 
+		\;=\; \int_{[\![-2,\;t_1-(-1))\!)} 1_f(\tau) \; 1_g(t_1-\tau) \; d\tau
+		\;=\; t_1 + 3
+\end{equation*}
+First we should note that at no point in the integral do we attempt to evaluate $1_f$ or $1_g$ outside of their original 
+domains $[-2,2]$ and $[-1,1]$ respectively. 
+Thus it is safe to replace $1_f(\tau)\cdot 1_g(t-\tau)$ with 1  inside the integral.
+From here, the integral is trivially evaluated and is as expected.
+
+For $t_3$, only the third term has non-zero multiplicity and by an identical argument as for $t_1$ we have:
+\begin{equation*}
+	(1_f^{[-2,2)} \;*\; 1_g^{[-1,1)}) (t_3) 
+		\;=\; \int_{[\![t-1,2)\!)} 1_f(\tau) \; 1_g(t_3-\tau) \; d\tau
+		\;=\; 3 - t_3
+\end{equation*}
+Finally, $t_2$ deviates from this pattern slightly as $t_2$ is in \emph{all three} oriented intervals.
+By the same derivation as we used in the previous section we can use equation~(\ref{eqn:HybridConvMidFinal}):
+\begin{equation*}
+	\label{eqn:HCExampleT2}
+	(1_f^{[a_f,b_f)} \;*\; 1_g^{[a_g,b_g)}) (t_2) 
+		\;=\; \int_{[\![t_2-1,\;t_2-(-1))\!)} f(\tau) \; g(t-\tau) \; d\tau
+		\;=\; 2
+\end{equation*}
+For any other point $t$ which is not in $[-3, 3)$, then all three oriented intervals will have multiplicity zero.
+Simplifying the $+$-reduction we have, $\R[+](\emptyset) = e_+ = 0$ and so (\ref{HCExample}) evaluates correctly 
+everywhere.
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -250,6 +344,11 @@ For $(a_f+b_g) \leq t < (b_f+a_g)$ then $t$ will be in all three regions and we 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Infinite Intervals}\label{sec:ConvInfty}
+
+
+The method for computing convolution in the previous section works for finite end points over the real line but if we
+move to infinite end points on the extended real line, things break down.
+
 
 
 
