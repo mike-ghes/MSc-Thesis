@@ -202,6 +202,14 @@ The convolution of $F*G$ is the sum of pairwise convolution:
 	\notag\\&= \sum_i \sum_j \left(f_i^{P_i} * g_j^{P_j}\right)
 \end{align}
 
+To summarize, the algorithm for convolution of two piecewise functions is as follows:
+\begin{enumerate*}
+	\item Each function is converted into a sum of disjoint function intervals.
+	\item Each function interval in one function is convolved with each function interval in the other.
+	\item The final result is the sum of all function interval convolutions.
+\end{enumerate*}
+
+\todo[inline]{Overlap-Save vs. Overlap-Add}
 
 This is the typical approach to convolution of piece-wise functions originally presented by West and McClellan 
 \cite{west1993symbolic}.
@@ -225,6 +233,8 @@ Techniques to handle this will be investigated in Section~\ref{sec:ConvInfty}.
 \section{Hybrid Function Convolution}
 \label{sec:HFConvolution}
 
+\todo[inline]{``Replacement for step 2. in algorithm''}
+
 Our exposition for hybrid set convolution will appear very similar to that from the previous section.
 Again we will be interested in the convolution of ``one-piece'' functions which we will use to build up piece-wise
 continuous functions.
@@ -234,6 +244,7 @@ Instead both cases will be handled by our generalized partition structure.
 
 
 \begin{align}
+	\label{eqn:defHConvolution}
 	(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = 
 		\R[+] &\left( \; \left( 
 			\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
@@ -281,6 +292,9 @@ These domains then cancel nicely to leave us with:
 Let us now look at a concrete example with some actual numbers.
 
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HYBRID EXAMPLE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -317,6 +331,7 @@ domains $[-2,2]$ and $[-1,1]$ respectively.
 Thus it is safe to replace $1_f(\tau)\cdot 1_g(t-\tau)$ with 1  inside the integral.
 From here, the integral is trivially evaluated and is as expected.
 
+
 For $t_3$, only the third term has non-zero multiplicity and by an identical argument as for $t_1$ we have:
 \begin{equation*}
 	(1_f^{[-2,2)} \;*\; 1_g^{[-1,1)}) (t_3) 
@@ -338,6 +353,7 @@ everywhere.
 
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % INFINITE INTERVALS
@@ -346,11 +362,62 @@ everywhere.
 \section{Infinite Intervals}\label{sec:ConvInfty}
 
 
-The method for computing convolution in the previous section works for finite end points over the real line but if we
-move to infinite end points on the extended real line, things break down.
+The method presented in Section \ref{sec:PWConvolution} behaves correctly assuming that all the end points are finite.
+But Evans and McClellan \cite{evans1994algorithms} raise two issues that arise when we allow for interval end points at
+infinity. Namely,
+\begin{enumerate*}
+	\item Interval lengths can no longer be compared to ensure the first interval is shorter than the second.
+	\item Indeterminant arithmetic may occur in computing new endpoints of the form $+\infty-\infty$
+\end{enumerate*}
 
 
+We have already shown that hybrid function convolution is not concerned with the relative length of functions. 
+Clearly, the first point should not be a concern for hybrid convolution.
+Less clear is that, invalid arithmetic on interval endpoints can be ignored as well!
+Unlike the 16 different cases used by Evans and McClellan, we can extend hybrid convolution from finite-only to mixed
+finite and infinite end points with no additional logic.
 
+
+The first important observation is that indeterminate arithmetic can only occur in \emph{internal} end-points.
+By this we mean that of the four end-points: $\{ a_f+a_g, \; b_f+a_g, \; a_f+b_g, \; b_f+b_g \}$, the points $a_f+a_g$
+and $b_f+b_g$ can always safely be evaluated.
+If $b_f$ were $-\infty$ or $a_f$ were $\infty$ then the function interval $f^{[a_f,b_f)}$ is actually $f^\emptyset$ and
+can be ignored (similarly $b_g \neq -\infty$ and $a_g \neq \infty$).
+Now, recall that the three hybrid set intervals that occurred in equation~(\ref{eqn:defHConvolution}) were:
+\begin{equation*}
+	[\![a_f+a_g, \; b_f+a_g)\!), 
+	\;\;\;\;\;\; [\![b_f+a_g, \; a_f+b_g )\!), 
+	\;\;\;\;\;\; \text{and} 
+	\;\;\;\;\;\; [\![a_f+b_g, b_f+b_g)\!)
+\end{equation*}
+So if indeterminate arithmetic does occur among end-points it would occur at least twice.
+This will prove useful in allowing us to have these points cancel each other out.
+For example, suppose $b_f+a_g = \infty+(-\infty) =\bot$ is undefined.
+Even though, $[\![a_f+a_g, \; b_f+a_g)\!)$ and ${[\![b_f+a_g, \; a_f+b_g )\!)}$ may separately be undefined, 
+their sum is not:
+\begin{equation*}
+	[\![a_f+a_g, \; b_f+a_g)\!) \oplus [\![b_f+a_g, \; a_f+b_g )\!) = [\![a_f+a_g, \;a_f+b_g)\!)
+\end{equation*}
+
+
+Before we can just add these intervals, each is of course attached to a function so we return to the discussion of compatibility
+from section~\ref{sec:HybridFunction}.
+After substituting the previously assumed $b_f = \infty$ and $a_g=-\infty$, we can see that both the integrands are
+identical and the domains nearly so as well:
+\begin{equation*}
+	\left( \int_{[\![a_f,\;t+\infty)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-\infty,\; \bot )\!)} 
+		\;\;\;\;\;
+		\text{and}
+		\;\;\;\;\;
+	\left( \int_{[\![a_f,\;\infty)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![\bot,\; a_f+b_g)\!)} 
+\end{equation*}
+For $t \neq -\infty$, the domains of integration match as well.
+By theorem~\ref{thm:reducible1}, these two terms are compatible.
+Putting this all together:
+
+\begin{align}
+ ...
+\end{align}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
