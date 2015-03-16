@@ -43,9 +43,6 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
 #### 5 Integration II
   - Currently working in here.
   - Might just stop at Stokes on singular chains and leave integration on manifolds as a remark.
-  
-#### 6 Integration III
-  - Possible replacement for Riemann section.
 
 #### 7 Convolution
   - Next chapter to work on.
@@ -53,9 +50,12 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
 #### 8 Conclusions
   - Again, needs to be completely rewritten.
 	
+#### A Lebesgue Integration
+  - Possible replacement for Riemann section.	
 	
-	
-	
+#### B Symbolic Convolution with Infinite End-Points
+  - Prove all 16 cases.
+		
 	
 		
 	

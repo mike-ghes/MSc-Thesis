@@ -3,7 +3,12 @@
 \title{Convolution}
 \begin{document}
 
-	In other chapters, I've been using the notation $[\![ ... )\!)$ for \textbf{oriented intervals} defined as:
+	I'm investigating a number of uses for \textbf{hybrid sets}: sets with integer ($\pm$) multiplicity rather than boolean
+	and hybrid functions: functions with hybrid set domains.
+	Union and intersection make sense for boolean sets when the correspond to boolean \texttt{AND} and \texttt{OR}.
+	For hybrid sets we use $\oplus$, $\otimes$ and $\ominus$ for pointwise sum, multiplication and subtraction.
+
+	So we can use $[\![ ... )\!)$ for \textbf{oriented intervals} defined as:
 	\begin{equation}
 		[\![a,b)\!) = [a,b) \ominus [b,a)
 	\end{equation}
@@ -15,6 +20,13 @@
 		[\![a,b)\!) &= \ominus [\![b,a)\!) \\
 		[\![a,c)\!) &= [\![a,b)\!) \oplus [\![b,c)\!)
 	\end{align}
+	
+	A hybrid function is generally written as $f^A$ where $A$ is a hybrid set.
+	Formally it is a hybrid set over ordered pairs that look like $(x,f(x))$ (or sometimes leaving $f$ unevaluated for 
+	technical reasons$(x,f)$).
+	If $A$ is ``reducible'' (+1 or 0 everywhere) then it behaves like restricting a function to the set $A$.
+	A non-reducible set can be reduced through $\mathcal{R}_+$ by adding when multiplicity is positive and subtracting
+	when multiplicity is negative (more generally some binary operation and it's inverse).
 
 
 	The convolution of two functions is defined by:
@@ -91,17 +103,41 @@
 	Note that the terms in (11) are not directly evaluable; $g_1$ may not be well-defined outside of $[-1,0)$.
 	However, since the integrands are all identical, we can collect all the terms and the offending domains cancel.
 	
-	But there is a potential problem that I've been fudging over when computing $(f_3 * g_1)$ or any interval with 
-	infinite bounds.
-	(7) gives the bounds $[\![0, \infty-1)\!)$, $[\![\infty-1, 1)\!)$ and $[\![1, \infty+0)\!)$.
-	By treating $\infty -1 = \infty$, the numbers again cancel so that we have 
-	$(f_3 * g_1)(2) = \int_{[\![2,3)\!)} f_3(\tau)g_1(t-\tau) \; d\tau$.
-	I'm not sure if this is \emph{actually} a problem or not. 
-	This paper was making it out to be a problem, but that might only be due to the worrying about 
-	$b_f - a_f < b_g - a_g$ (which we can ignore).
-	I'd like to avoid breaking it into 12 cases; it doesn't seem like the right way.
+	So relative length doesn't matter between $f$ and $g$.
+	Now, for what I've been working on this weekend: indeterminate arithmetic (e.g. $+\infty-\infty$) 
+	is not a problem either.
+	Suppose $a_f = -\infty$ and $b_g = \infty$ are both infinite while $b_f$ and $a_g$ are both finite.
+	Which gives the three intervals:
+	\begin{equation}
+		[\![-\infty, b_f+a_g )\!), [\![ b_f+a_g, \bot )\!), [\![\bot, \infty )\!)
+	\end{equation}
+	Even though $a_f+b_g$ is unevaluable, the two $\bot$ points are derived identically and so (3) gives us:
+	\begin{equation}
+		[\![ b_f+a_g, \bot )\!) \oplus [\![\bot, \infty )\!) = [\![b_f+a_g, \infty)\!)
+	\end{equation}
+	If we assume that $t$ is finite then the domains on the integrals in the 2nd and 3rd terms of (7) are identical:
+	\begin{equation}
+		[\![a_f, b_f)\!) = [\![-\infty, b_f )\!) = [\![t-b_g, b_f)\!)
+	\end{equation}
+	These two functions are identical which is important for the identity for hybrid functions: 
+	\begin{equation}
+		f^A \oplus f^B = f^{A \oplus B}
+	\end{equation}
+	Finally:
+		\begin{align}
+	(f^{[-\infty, b_f)} * g^{[a_g, \infty)})(t) = 
+		\mathcal{R}_+ &\left( \; \left( 
+			\int_{[\![ -\infty, t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-\infty,\; b_f+a_g)\!)} 
+				\right. \notag \\ &\oplus \left. \left( 
+			\int_{[\![ -\infty, b_f )\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![b_f+a_g,\; \infty)\!)} 
+				\; \right)(t)
+	\end{align}
 	
-	\textbf{Algorithms for symbolic linear convolution:}
-
-	http://ptolemy.eecs.berkeley.edu/publications/papers/94/symbolic\_convolution/asilomar94.pdf 
+	Each of the four end-points can either be finite or infinite ($+\infty$ if right end-point, or $-\infty$ if left) so there are
+	$2^4=16$ cases.
+	
+	So far, all cases seem to work, either producing indeterminate end-points which can be removed as above or making 
+	empty regions like: $[\![\infty, \infty )\!)$ that can just be ignored. 
+	
+	
 \end{document}
