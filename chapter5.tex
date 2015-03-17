@@ -414,16 +414,38 @@ identical and the domains nearly so as well:
 For $t \neq -\infty$, the domains of integration match as well.
 By theorem~\ref{thm:reducible1}, these two terms are compatible.
 Putting this all together:
-
 \begin{align}
- ...
+	(f^{[a_f,\infty)} \;*\; g^{[-\infty,b_g)}) (t) = 
+		\R[+] &\left( \; \left( 
+			\int_{[\![a_f,\;\infty)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-\infty,\; a_f+b_g)\!)} 
+				\right. \notag \\ &\oplus \left. \left( 
+			\int_{[\![t-b_g,\;\infty)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+b_g,\; \infty)\!)} 
+				\; \right)(t)
 \end{align}
 
+
+Each end-point can be either finite or infinite; left end-points are either finite or $-\infty$ while right end-points are finite
+or $+\infty$.
+So with 4 end-points and 2 possible cases for each, this leads to 16 possible cases of how one-piece functions can be 
+convolved.
+The proofs follow similar logic for most cases and will not be enumerated here. 
+Full derivation can be found in Appendix~\ref{chp:16cases}.
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% EXAMPLE
+% Other convolutions
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Example}
+\section{Discrete Convolution}
+
+Until now we have assumed $F$ and $G$ are continuous functions. 
+While this is of more historical interest, the discrete case is more widely used in digital signal processing.
+
+
+
 
 \newpage

@@ -1,5 +1,82 @@
 \chapter{Convolution with Infinite End-Points}
+\label{chp:16cases}
 
-\section{Case 1}
+\begin{figure}[h]
+\caption[Possible combinations of finite and infinite end-points]{
+	All possible cases of finite and infinite end-points. Finite end-points are denoted with $F$. Infinite left end-points are denoted 	
+	$-\infty$ and infinite right end-points are denoted $\infty$.
+	\label{fig:16cases}}
+\centering
+\begin{tabular}{| l || c | c | c | c || r || l ||  c | c | c | c |}
+	\hline
+		& $a_f$		& $b_f$		& $a_g$		& $b_g$	&$\;\;\;\;$&	& $a_f$		& $b_f$		& $a_g$		& $b_g$	\\
+	\hline 
+Case 1:	& $F$		& $F$		& $F$		& $F$	&&	Case 9:	& $-\infty$	& $F$		& $F$		& $F$	\\
+Case 2:	& $F$		& $F$		& $F$		& $\infty$&&	Case 10:	& $-\infty$	& $F$		& $F$		& $\infty$ \\
+Case 3:	& $F$		& $F$		& $-\infty$	& $F$	&&	Case 11:	& $-\infty$	& $F$		& $-\infty$	& $F$	\\
+Case 4:	& $F$		& $F$		& $-\infty$	& $\infty$&&	Case 12:	& $-\infty$	& $F$		& $-\infty$	& $\infty$ \\
+Case 5:	& $F$		& $\infty$	& $F$		& $F$	&&	Case 13:	& $-\infty$	& $\infty$	& $F$		& $F$	\\
+Case 6:	& $F$		& $\infty$ 	& $F$		& $\infty$&&	Case 14:	& $-\infty$	& $\infty$ 	& $F$		& $\infty$ \\
+Case 7:	& $F$		& $\infty$ 	& $-\infty$	& $F$	&&	Case 15:	& $-\infty$	& $\infty$ 	& $-\infty$	& $F$	\\
+Case 8:	& $F$		& $\infty$ 	& $-\infty$	& $\infty$&&	Case 16:	& $-\infty$	& $\infty$ 	& $-\infty$	& $\infty$ \\
+	\hline
+\end{tabular}
+\end{figure}
 
-\section{Case 2}
+When convolving one-piece functions with infinite end-points, there are 4 end-points which can each be either finite or infinite.
+As such there are $2^4$ possible combinations of end-point types shown in the table above.
+Additionally, the definition for hybrid convolution (originally equation~(\ref{eqn:defHConvolution})) is repeated here for
+ease of reference:
+\begin{align}
+	\label{eqn:defHConvolution2}
+	(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = 
+		\R[+] &\left( \; \left( 
+			\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
+				\right. \notag \\ &\oplus \left( 
+			\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
+				\notag \\ &\oplus \left. \left( 
+			\int_{[\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+b_g,\; b_f+b_g)\!)} 
+				\; \right)(t)
+\end{align}
+
+
+
+\textbf{Case 1} has all finite points and was already shown to be correct in Section~\ref{sec:HFConvolution}.
+No further simplifications are immediately possible.
+
+\textbf{Case 2} results in an empty interval for the third term.
+Since $t$ cannot be in $[\![\infty, \infty )\!)$, this term can safely be removed altogether.
+\begin{align*}
+	(f^{[a_f,b_f)} \;*\; g^{[a_g,\infty)}) (t) = 
+		\R[+] &\left( \; \left( 
+			\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
+				\right. \\ &\oplus \left( 
+			\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![b_f+a_g,\; \infty)\!)} 
+				\\ &\oplus \left. \left( 
+			\int_{[\![-\infty,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![\infty,\; \infty)\!)} 
+				\; \right)(t)
+\end{align*}
+
+Similarly, \textbf{case 3} yields the interval $[\![-\infty, -\infty)\!)$ for the first term which can be ignored.
+\textbf{Case 4} is a combination of both case 2 and 3, resulting in only a single term for the entire real line since
+both the first and third terms are over empty intervals.
+This can be further simplified:
+\begin{align*}
+	(f^{[a_f,b_f)} \;*\; g^{[-\infty,\infty)}) (t) = 
+		\R[+] &\left( \; \left( 
+			\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-\infty,\; \infty)\!)} 
+		\; \right)(t) \\
+		= & \int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau
+\end{align*}
+
+
+Case 5, 9, 13: Infinite in $f$ only
+
+
+
+
+\textbf{Case 16} has all infinite points and is not really what one would think of as a one-piece function at all.
+The definition of convolution already holds for such functions.
+
+
+
