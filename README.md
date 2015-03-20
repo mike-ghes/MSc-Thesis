@@ -24,15 +24,14 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
   - https://github.com/mike-ghes/MSc-Thesis/issues/8
   - Need to do introduction.
   - **3.1 Oriented Intervals** https://github.com/mike-ghes/MSc-Thesis/issues/9
-    - One of the few ideas that doesn't seem like crap to me.
-	- Needs some more.
   - **3.2 Vector Algebra** https://github.com/mike-ghes/MSc-Thesis/issues/10
     - Need to switch over to *-reduction from marked join.
-    - Figure out outer product which should lead into matrix multiplication
+    - Figure out outer product which should (hopefully) lead into matrix multiplication
+	- Need to figure out something clever still.
   - **3.3 Matrix Algebra**
     - Effectively unstarted.
 	- Addition has already been done.
-	- Multiplcation depends on vector outer product	
+	- Multiplication depends on vector outer product	
 
 #### 4 Integration I
   - https://github.com/mike-ghes/MSc-Thesis/issues/11
@@ -41,11 +40,12 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
   - Riemann integration on the chopping block (replace with Lebesgue)
 
 #### 5 Integration II
-  - Currently working in here.
+  - To finish next.
+  - Currently not really related to everything else.
   - Might just stop at Stokes on singular chains and leave integration on manifolds as a remark.
 
 #### 7 Convolution
-  - Next chapter to work on.
+  - Just about done.
   
 #### 8 Conclusions
   - Again, needs to be completely rewritten.
@@ -54,7 +54,7 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
   - Possible replacement for Riemann section.	
 	
 #### B Symbolic Convolution with Infinite End-Points
-  - Prove all 16 cases.
+  - Prove all 16 cases (separated from 6.3)
 		
 	
 		

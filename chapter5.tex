@@ -426,13 +426,51 @@ Putting this all together:
 
 Each end-point can be either finite or infinite; left end-points are either finite or $-\infty$ while right end-points are finite
 or $+\infty$.
-So with 4 end-points and 2 possible cases for each, this leads to 16 possible cases of how one-piece functions can be 
-convolved.
-The proofs follow similar logic for most cases and will not be enumerated here. 
-Full derivation can be found in Appendix~\ref{chp:16cases}.
+So with 4 end-points and 2 possible cases for each, this leads to 16 possible cases to convolve one-piece functions.
+It can be shown that equation~(\ref{eqn:defHConvolution}) without modification is correct in all cases.
+A full enumeration of this can be found in Appendix~\ref{chp:16cases}.
 
 
 
+\section{Implementation}
+
+Implementation of symbolic convolution was done in \emph{Maple}.
+
+\todo[inline]{What else is there to talk about?}
+
+
+For the most part, these cases follow one of a few patterns:
+\begin{enumerate}
+	\item Merging terms with indeterminate end-points. (Cases 6, 7, 9, 11, 13, 14, and 15)
+	\item Remove any terms over empty intervals. (Cases 1, 2, 3, 5, 7, 10, 11, 13, and 14)
+	\item Manipulate intervals to find a disjoint partition and combine integrals using linearity of domains 
+	(Cases 4, 8, and 12)
+\end{enumerate}
+
+To merge indeterminate end-points, we use the local variables \texttt{afbg} and \texttt{bfag} to represent the sums
+$a_f+b_g$ and $b_f+a_g$ respectively.
+If the sums are well defined, then we can apply the substitution, otherwise \texttt{afbg} and \texttt{bfag} are left symbolic.
+These symbolic terms then disappear when the piecewise OrientedIntervals are converted to Heaviside functions:
+ \texttt{convert(\%, Heaviside, t)}.
+Converting this back to a piecewise function with \texttt{convert(\%, piecewise,t)} results in a more readable expression.
+ 
+However, since the Heaviside function is undefined at 0, this can lead to point discontinuities in cases where $a_f+b_g$ and
+ $b_f+a_g$ \emph{are} perfectly well defined.
+To remedy this, before we convert to Heaviside and back, we should first attempt to convert it to a piecewise and only if 
+that fails, convert the expression to a Heaviside function:
+
+\lstset{language=Pascal}
+\lstset{morekeywords={try, catch, finally}}
+\begin{lstlisting}[frame=single]
+try temp := convert(out,piecewise,t);
+catch: 
+    try temp:=convert(convert(out,Heaviside),piecewise,t);
+    catch: temp := out;
+    finally out := temp;
+    end try;  
+finally out := temp; 
+end try;
+\end{lstlisting}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -443,7 +481,7 @@ Full derivation can be found in Appendix~\ref{chp:16cases}.
 \section{Discrete Convolution}
 
 Until now we have assumed $F$ and $G$ are continuous functions. 
-While this is of more historical interest, the discrete case is more widely used in digital signal processing.
+While the continuous is of more historical interest, the discrete case is more widely used in digital signal processing.
 
 
 \section{Convolution in $\mathbb{R}^d$}
