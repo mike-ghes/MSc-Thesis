@@ -430,16 +430,41 @@ So with 4 end-points and 2 possible cases for each, this leads to 16 possible ca
 It can be shown that equation~(\ref{eqn:defHConvolution}) without modification is correct in all cases.
 A full enumeration of this can be found in Appendix~\ref{chp:16cases}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Discrete Convolution
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discrete Convolution}
+
+Until now we have assumed $F$ and $G$ are continuous functions. 
+While the continuous is of more historical interest, the discrete case is more widely used in digital signal processing.
+From a theoretical perspective, very little is different between the continuous and discrete case.
+
+Defined as:
+
+\begin{equation}
+	(F*G)[\tau] = \sum_{\tau=-\infty}^\infty F[\tau] \cdot G[t-\tau]
+\end{equation}
+
+Similarly, hybrid convolution for discrete functions is a simple swap:
+
+\begin{equation}
+	(f^{[a_f,b_f)} * g^{[a_g, b_g)} = adsfsad
+\end{equation}
+
+The one thing to note is that while $\int_{[a,b)} f(x)\; dx = \int_{[a,b]} f(x)\;dx$.
+The same does not hold for summation; the openness or ``closed-ness'' of an interval matters.
+
+\todo[inline]{Show correctness}
 
 
 \section{Implementation}
 
 Implementation of symbolic convolution was done in \emph{Maple}.
-
-\todo[inline]{What else is there to talk about?}
-
-
-For the most part, these cases follow one of a few patterns:
+Maple is able to correctly determine many cancellations but requires assistance for a few cases with symbolic and infinite
+end-points.
+For the most part, the cases enumerated in Appendix~\ref{chp:16cases} follow a few patterns:
 \begin{enumerate}
 	\item Merging terms with indeterminate end-points. (Cases 6, 7, 9, 11, 13, 14, and 15)
 	\item Remove any terms over empty intervals. (Cases 1, 2, 3, 5, 7, 10, 11, 13, and 14)
@@ -447,43 +472,106 @@ For the most part, these cases follow one of a few patterns:
 	(Cases 4, 8, and 12)
 \end{enumerate}
 
+
 To merge indeterminate end-points, we use the local variables \texttt{afbg} and \texttt{bfag} to represent the sums
 $a_f+b_g$ and $b_f+a_g$ respectively.
 If the sums are well defined, then we can apply the substitution, otherwise \texttt{afbg} and \texttt{bfag} are left symbolic.
-These symbolic terms then disappear when the piecewise OrientedIntervals are converted to Heaviside functions:
- \texttt{convert(\%, Heaviside, t)}.
-Converting this back to a piecewise function with \texttt{convert(\%, piecewise,t)} results in a more readable expression.
- 
-However, since the Heaviside function is undefined at 0, this can lead to point discontinuities in cases where $a_f+b_g$ and
- $b_f+a_g$ \emph{are} perfectly well defined.
-To remedy this, before we convert to Heaviside and back, we should first attempt to convert it to a piecewise and only if 
-that fails, convert the expression to a Heaviside function:
 
-\lstset{language=Pascal}
-\lstset{morekeywords={try, catch, finally}}
+
 \begin{lstlisting}[frame=single]
-try temp := convert(out,piecewise,t);
-catch: 
-    try temp:=convert(convert(out,Heaviside),piecewise,t);
-    catch: temp := out;
-    finally out := temp;
-    end try;  
-finally out := temp; 
-end try;
+ if(af+bg != undefined) then afbg := af+bg; fi;
+ if(bf+ag != undefined) then bfag := bf+ag; fi;
+ ...
 \end{lstlisting}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Other convolutions
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Discrete Convolution}
-
-Until now we have assumed $F$ and $G$ are continuous functions. 
-While the continuous is of more historical interest, the discrete case is more widely used in digital signal processing.
+In cases where these sums are undefined, these terms will disappear (cancellation shown in Appendix~\ref{chp:16cases}).
+However, to assist Maple in finding this cancellation we must leave the sum as a symbolic term.
+We can avoid any potentially undefined integrals by delaying the evaluation of the functions inside the integral.
+We use the symbolic \texttt{fg(x)} to represent \texttt{f(x)*g(t-x)} to prevent Maple from unwrapping the integrals
+until we have determined ranges which the integrals will be evaluated much like pseudo-functions from
+ section~\ref{sec:HybridFunction}:
 
 
-\section{Convolution in $\mathbb{R}^d$}
+\begin{lstlisting}[frame=single]
+ ...
+ out:=(int(fg(x),x=af..t-ag))*(OrientedInterval(af+ag,bfag))(t)
+   +(int(fg(x),x=af..bf))*(OrientedInterval(bfag,afbg))(t)
+   +(int(fg(x),x=t-bg..bf))*(OrientedInterval(afbg,bf+bg))(t);
+ ...
+\end{lstlisting}
+
+
+To ensure that future steps function smoothly, we remove any $t-\infty$ or $t+\infty$ terms that can arise in the 
+bounds of integration.
+This is just a simple substitution:
+
+
+\begin{lstlisting}[frame=single]
+  ...
+ out:=subs(t-infinity=-infinity,out);
+ out:=subs(t+infinity=infinity,out);
+ ...
+\end{lstlisting}
+
+If \texttt{afbg} or \texttt{bfag} are symbolic ($a_f+b_g$ or $b_f+a_g$ are undefined respectively) then
+these symbolic terms then disappear when the piecewise OrientedIntervals are converted to Heaviside functions:
+ \texttt{convert(\%, Heaviside, t)}.
+Converting this back to a piecewise function with \texttt{convert(\%, piecewise,t)} results in a more readable expression.
+
+
+However, since the Heaviside function is undefined at 0, this can lead to point discontinuities in cases where $a_f+b_g$ and
+ $b_f+a_g$ \emph{are} perfectly well defined.
+To remedy this, before we convert to Heaviside and back, we should first attempt to convert it to a piecewise function.
+Converting to piecewise will fail if \texttt{bfag} or \texttt{afbg} are incomparable (undefined):
+
+
+\begin{lstlisting}[frame=single]
+ ...
+ try temp := convert(out,piecewise,t);
+ catch: 
+    try temp:=convert(convert(out,Heaviside),piecewise,t);
+    catch: temp := out;
+    end try;  
+ finally out := temp; 
+ end try;
+ ...
+\end{lstlisting}
+
+
+By this point, Maple has already removed any terms with empty intervals so all that remains is combining integrals by 
+linearity.
+In most cases this can be handled by \texttt{Combine} in the \texttt{IntegrationTools} package.
+\texttt{Combine} is unable to combine when end-points are infinite so again we will substitute a symbolic term:
+
+
+\begin{lstlisting}[frame=single]
+ ...
+ try temp:=Combine(subs(infinity=infty,out));
+    catch temp:=out;
+ finally out:=subs(infty=infinity,temp); end try;
+ ...
+\end{lstlisting}
+
+
+The final step is to replace \texttt{fg(x)} with \texttt{f(x)*g(t-x)}
+
+\begin{lstlisting}[frame=single]
+ ...
+out:=subs(fg(x)=f(x)*g(t-x), out)
+\end{lstlisting}
+
+Hopefully this algorithm is very simple
+
+Some strange looking hacks are required to ``make it work''
+
+but the whole point is that hybrid convolution is a simpler framework with less case-based logic
+
+Additionally, many of these steps, with the exception of deciding to leave \texttt{afbf} and \texttt{bfag} symbolic are 
+entirely optional.
+They result in a simplified, nicer looking expression but the equation can be correctly interpretted without them.
+
+
+
 
 \newpage

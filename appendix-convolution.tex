@@ -690,3 +690,54 @@ That being said:
 \end{align*}
 
 
+\section{Code}
+
+\begin{lstlisting}[frame=single, mathescape]
+Convolve := proc(f,af,bf,g,ag,bg)
+  local afbg,bfag,out,temp;
+  if(af+bg != undefined) then afbg := af+bg; fi;
+  if(bf+ag != undefined) then bfag := bf+ag; fi;
+  out:=(int(fg(x),x=af..t-ag))*(OrientedInterval(af+ag,bfag))(t)
+     +(int(fg(x),x=af..bf))*(OrientedInterval(bfag,afbg))(t)
+     +(int(fg(x),x=t-bg..bf))*(OrientedInterval(afbg,bf+bg))(t);
+  out:=subs(t-infinity=-infinity,out);
+  out:=subs(t+infinity=infinity,out);
+  try temp := convert(out,piecewise,t);
+  catch: 
+     try temp:=convert(convert(out,Heaviside),piecewise,t);
+     catch: temp := out; end try;  
+  finally out := temp; end try;
+  try temp:=Combine(subs(infinity=infty,out));
+     catch temp:=out;
+  finally out:=subs(infty=infinity,temp); end try;
+  out:=subs(fg(x)=f(x)*g(t-x), out)
+end proc;
+\end{lstlisting}
+
+
+\begin{lstlisting}[frame=single, mathescape]
+> Convolve(sin, 0, Pi, t->exp(-t), 0, 1);
+
+		$\displaystyle \begin{cases}
+	0 & t\!\sim\;<0 \\
+	\int_{t\sim}^0 \sin(x)e^{-t\sim+x} \; dx & t\!\sim\;<1 \\
+	\int_{-1+t\sim}^{t\sim} \sin(x)e^{-t\sim+x} \; dx & t\!\sim\;<\pi \\
+	\int_{-1+t\sim}^{t\sim} \sin(x)e^{-t\sim+x} \; dx & t\!\sim\;<\pi+1 \\
+	0 & \pi+1 \leq t\!\sim
+	\end{cases}$
+\end{lstlisting}
+
+\textbf{Case 1:}
+\begin{lstlisting}[frame=single, mathescape]
+> assume(t::real); additionally(af<bf); additionally(ag<bg);
+> Convolve(sin, 0, Pi, t->exp(-t), 0, 1);
+
+		$\displaystyle \begin{cases}
+	0 & t\!\sim\;<af\sim+ag\sim \\
+	\int_{af\sim}^{t\sim-ag\sim} f(x)g(t\sim-x) \; dx & t\!\sim\;<bf\sim+ag\sim \\
+	\int_{af\sim}^{bf\sim} f(x)g(t\sim-x) \; dx & bf\sim+ag\sim \leq t\sim
+	\end{cases}$
+\end{lstlisting}
+
+
+
