@@ -10,12 +10,28 @@ Visually, this can be seen below in Figure~\ref{fig:ConvolutionExample}.
 \begin{figure}[ht]
 	\caption[Convolution of box signal with itself]{The convolution of the box signal 
 	$f(t)=g(t)=\left( 0^\oiOpOp{-\infty,-0.5} \oplus 1^\oiClCl{-0.5,0.5} \oplus 0^\oiOpOp{0.5,\infty} \right)$ with itself.
-	\emph{(from wikipedia; need to create new versions)}
 	\label{fig:ConvolutionExample}}
 	\centering
-	\includegraphics[scale=0.5]{diagrams/conv1}
-	\includegraphics[scale=0.5]{diagrams/conv2}
-	\includegraphics[scale=0.5]{diagrams/conv3}
+	\begin{tikzpicture}[scale=4]
+		\draw[<->] (-2,0) -- (2,0);
+		\draw[<->] (0,-.1) -- (0,1.1);
+		\draw[very thick] (-2,0) -- (-1,0) -- (0,1) -- (1,0) -- (2,0);
+		\draw [thick,decorate,decoration={brace,amplitude=10pt},yshift=0.4pt] (-1,1) -- (0,1) 
+			node[black,midway,yshift=0.6cm] {$easdf$};
+		\draw [thick,decorate,decoration={brace,amplitude=10pt},yshift=0.4pt] (0,1) -- (1,1) 
+			node[black,midway,yshift=0.6cm] {$easdf$};
+			
+		\draw[<->] (-1.5,1.5) -- (-.5,1.5);
+		\draw[<->] (-1,1.4) -- (-1, 2.1);
+		\draw[thick] (-1.5,1.5) -- (-1.25,1.5) -- (-1.25,2) -- (-.75,2) -- (-.75,1.5) -- (-.5,1.5);
+		
+		\draw[<->] (-.5,1.5) -- (.5,1.5);
+		\draw[<->] (0,1.4) -- (0, 2);
+		
+		\draw[<->] (1.5,1.5) -- (.5,1.5);
+		\draw[<->] (1,1.4) -- (1, 2.1);
+		
+	\end{tikzpicture}
 \end{figure}
 
 Formally this, equates to the following definition for convolution over continuous domains:
@@ -439,26 +455,66 @@ A full enumeration of this can be found in Appendix~\ref{chp:16cases}.
 
 Until now we have assumed $F$ and $G$ are continuous functions. 
 While the continuous is of more historical interest, the discrete case is more widely used in digital signal processing.
-From a theoretical perspective, very little is different between the continuous and discrete case.
+From a theoretical perspective, very little is different between the continuous and discrete case; it is primarily a swap
+from integrals $\int$ to sums $\sum$ and evaluating functions at points $f(x)$ to indexing in an array $f[x]$.
 
-Defined as:
+\begin{definition}
+	The \textbf{discrete convolution} of two sequences $F$ and $G$ defined as:
+	\begin{equation}
+		(F*G)[t] = \sum_{\tau=-\infty}^\infty F[\tau] \cdot G[t-\tau]
+	\end{equation}
+	or for sequences with non-negative indexing:
+	\begin{equation}
+		(F*G)[t] = \sum_{\tau=0}^\infty F[\tau] \cdot G[t-\tau]
+	\end{equation}
+\end{definition}
 
-\begin{equation}
-	(F*G)[\tau] = \sum_{\tau=-\infty}^\infty F[\tau] \cdot G[t-\tau]
-\end{equation}
+When convolving sequences, limiting the boundaries which need to be summed over is just as important as in the
+continuous case.
+In particular, when working with digital inputs represented by arrays, it is very important to not attempt to index outside of
+the bounds of the arrays.
+Therefore it is important to get tight bounds on the range of $\tau$.
+Again, this is a simple swap as well:
+\begin{align}
+	(f^{[a_f,b_f]} * g^{[a_g, b_g]})[t] = 
+		\R[+] &\left( \; \left( 
+			\sum_{\tau \in [\![a_f,\;t-a_g]\!]} f[\tau] \; g[t-\tau] \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
+				\right. \notag \\ &\oplus \left( 
+			\sum_{\tau \in [\![a_f,\;b_f]\!]} f[\tau] \; g[t-\tau] \right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
+				\notag \\ &\oplus \left. \left( 
+			\sum_{\tau \in [\![t-b_g,\;b_f]\!]} f[\tau] \; g[t-\tau] \right)^{[\![a_f+b_g,\; b_f+b_g]\!]} 
+				\; \right)[t]
+\end{align}
 
-Similarly, hybrid convolution for discrete functions is a simple swap:
-
-\begin{equation}
-	(f^{[a_f,b_f)} * g^{[a_g, b_g)} = adsfsad
-\end{equation}
-
-The one thing to note is that while $\int_{[a,b)} f(x)\; dx = \int_{[a,b]} f(x)\;dx$.
-The same does not hold for summation; the openness or ``closed-ness'' of an interval matters.
-
-\todo[inline]{Show correctness}
+One must be even more careful with bounds in the discrete case compared to the continuous.
+Excepting the Dirac function and similar functions, generally including or excluding the end-points will not affect the
+ evaluation of an integral:
+\begin{equation*}
+	\int_{(a,b)} f(x)\; dx = \int_{(a,b]}f(x)\; dx = \int_{[a,b)} f(x)\; dx = \int_{[a,b]} f(x)\;dx
+\end{equation*}
+The difference between each interval is measure 0 and so excepting pathological functions, the integrals should be equal.
+The same does not hold for summation; the openness or ``closed-ness'' of an interval matters even in the typical use case.
 
 
+That being said, the boundary points between intervals are safe to fall in either direction.
+For $t=b_f+a_g$, evaluating either the sum
+\begin{equation*}
+	\sum_{\tau \in [\![a_f,\;t-a_g]\!]} f[\tau] \; g[t-\tau] 
+	\;\;\;\;\; \text{or} \;\;\;\;\; 
+	\sum_{\tau \in [\![a_f,\;b_f]\!]} f[\tau] \; g[t-\tau]
+\end{equation*}
+equates to the same thing.
+So we can have the intervals $[\![a_f+a_g, b_f+a_g)\!)$ and $[\![b_f+a_g,a_f+b_g)\!)$ or the intervals 
+$[\![a_f+a_g, b_f+a_g]\!]$ and $(\!(b_f+a_g,a_f+b_g)\!)$; either would be correct.
+Similarly we can also move the point at $a_f+b_g$ from the third term or the second term.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Implementation
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementation}
 
 Implementation of symbolic convolution was done in \emph{Maple}.
