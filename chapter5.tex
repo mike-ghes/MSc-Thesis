@@ -93,7 +93,7 @@ generally, weighted moving averages can be made by convolving with other functio
 CAS such as Maple and Mathematica are quite adept at solving integrals.
 Convolution of elementary functions generally poses no problem.
 When convolving two piecewise continuous functions, many possible intervals arise and the conditionals that arise
-can quickly overwhelm them unaided. \todo{cite, rewrite?}
+can quickly overwhelm them unaided.
 
 
 We are interested in \emph{Symbolic Linear Convolution} (of piecewise continuous functions).
@@ -225,9 +225,8 @@ To summarize, the algorithm for convolution of two piecewise functions is as fol
 	\item The final result is the sum of all function interval convolutions.
 \end{enumerate*}
 
-\todo[inline]{Overlap-Save vs. Overlap-Add}
 
-This is the typical approach to convolution of piece-wise functions originally presented by West and McClellan 
+This is the typical approach to convolution of piece-wise functions as presented by West and McClellan  
 \cite{west1993symbolic}.
 When the boundaries between regions is symbolic, then we may not be able to determine which interval is longer.
 Another approach involving hybrid functions will be presented in Section~\ref{sec:HFConvolution}. 
@@ -249,35 +248,44 @@ Techniques to handle this will be investigated in Section~\ref{sec:ConvInfty}.
 \section{Hybrid Function Convolution}
 \label{sec:HFConvolution}
 
-\todo[inline]{``Replacement for step 2. in algorithm''}
-
-Our exposition for hybrid set convolution will appear very similar to that from the previous section.
+Our exposition for hybrid set convolution will appear very similar to that from the previous section and can be seen as a
+ replacement for step 2 in the algorithm.
 Again we will be interested in the convolution of ``one-piece'' functions which we will use to build up piece-wise
 continuous functions.
-So assume hybrid functions $F=f^{[a_f, b_f)}$ and $G=g^{[a_g,b_g)}$.
-We do \emph{not} enforce that $b_f - a_f \leq b_g - a_g$ as we did in Section~\ref{sec:PWConvolution}.
-Instead both cases will be handled by our generalized partition structure.
-
-
-\begin{align}
-	\label{eqn:defHConvolution}
-	(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = 
-		\R[+] &\left( \; \left( 
-			\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
-				\right. \notag \\ &\oplus \left( 
-			\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
-				\notag \\ &\oplus \left. \left( 
-			\int_{[\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+b_g,\; b_f+b_g)\!)} 
-				\; \right)(t)
-\end{align}
+Assuming two hybrid one-piece functions $f^{[a_f, b_f)}$ and $g^{[a_g,b_g)}$ which are 0 outside of the intervals
+ $[a_f,b_f)$ and $[a_g, b_g)$ respectively.
+Then the \textbf{hybrid convolution of $\boldsymbol{f^{[a_f,b_f)}}$ and $\boldsymbol{g^{[a_g,b_g)}}$} is:
+	\begin{align}
+		\label{eqn:defHConvolution}
+		(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = 
+			\R[+] &\left( \; \left( 
+				\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
+					\right. \notag \\ &\oplus \left( 
+				\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
+					\notag \\ &\oplus \left. \left( 
+				\int_{[\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+b_g,\; b_f+b_g)\!)} 
+					\; \right)(t)
+	\end{align}
 
 The first thing one should note is the similarity between this expression and (\ref{eqn:ConvNaiveOnePiece}).
+But, \emph{we do not enforce} $b_f - a_f \leq b_g - a_g$ as we did in Section~\ref{sec:PWConvolution}.
+Instead both cases will be handled by our generalized partition structure.
+If the integral $f(t)g(t-\tau)$ is is easier to compute than $g(t)f(t-\tau)$ then the convolution can, of course, 
+still be commuted.
+This could be due to the nature of functions for $f$ and $g$ or if $f$ and $g$ are a part of a larger sum with identical 
+sub-functions on different regions.
+Then these integrals could potentially be combined, provided they have the same integrand, resulting in fewer overall 
+integrals to compute.
+The ordering of $f$ and $g$ is no longer dictated by the relative length of their respective intervals.
+
+
 When $b_f - a_f \leq b_g - a_g$ then the three oriented intervals will be disjoint and the two equations are identical.
 Otherwise, if $b_f - a_f > b_g - a_g$, then the interval $[\![b_f +a_g, \; a_f + b_g)\!)$ will have a negative orientation.
 The intervals $[\![a_f+a_g, \; b_f+a_g)\!)$, $[\![b_f+a_g, \; a_f+b_g)\!)$ and $[\![a_f+b_g, \; b_f+b_g)\!)$ still forms
 a reducible (i.e. everywhere multiplicity one) generalized partition over $[a_f+a_g, \; b_f+b_g)$.
 Outside this region the function is zero as expected. 
 
+\pagebreak
 
 Suppose we are in this second case and we wish to evaluate the convolution at a point $t$ which is in all three intervals.
 This occurs when $(a_f+b_g) \leq t < (b_f+a_g)$ and we have:
@@ -321,6 +329,7 @@ In Figure~\ref{fig:OnePiece} we saw the convolution of $1^{[-1,1)}$ with $1^{[-2
 We know that convolution is commutative so computing $1^{[-2,2)} * 1^{[-1,1)}$ we already know what to expect.
 We will label these as $1_f$ and $1_g$ to differentiate and to prevent confusion by reminding us that the object we are 
 dealing with is $x \mapsto 1$ rather than the number 1 itself.
+
 \begin{align}
 	\label{HCExample}
 	(1_f^{[-2,2)} \;*\; 1_g^{[-1,1)}) (t) = 
@@ -509,6 +518,28 @@ $[\![a_f+a_g, b_f+a_g]\!]$ and $(\!(b_f+a_g,a_f+b_g)\!)$; either would be correc
 Similarly we can also move the point at $a_f+b_g$ from the third term or the second term.
 
 
+Here we are using closed intervals for $f$ and $g$.
+This is at odds with typical array iteration, like Python's \texttt{range(..)} function which tend to use \emph{closed-open} 
+intervals.
+Unlike the contiuous case, there is no structural difference between an open or closed interval; the choice of using one over 
+the other is usually a matter of whichever gives the nicest indices by avoiding $+1$'s or $-1$'s.
+So we can handle the difference by converting $[a,b) = [a,b-1]$
+
+
+\begin{align}
+	(f^{[a_f,b_f)} * g^{[a_g, b_g)})[t] = 
+		\R[+] &\left( \; \left( 
+			\sum_{\tau \in [\![a_f,\;t-a_g]\!]} f[\tau] \; g[t-\tau] \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
+				\right. \notag \\ &\oplus \left( 
+			\sum_{\tau \in [\![a_f,\;b_f)\!)} f[\tau] \; g[t-\tau] \right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
+				\notag \\ &\oplus \left. \left( 
+			\sum_{\tau \in (\!(t-b_g,\;b_f)\!)} f[\tau] \; g[t-\tau] \right)^{[\![a_f+b_g,\; b_f+b_g-1)\!)} 
+				\; \right)[t]
+\end{align}
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -517,7 +548,7 @@ Similarly we can also move the point at $a_f+b_g$ from the third term or the sec
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementation}
 
-Implementation of symbolic convolution was done in \emph{Maple}.
+Implementation for continuous symbolic convolution was done in \emph{Maple}.
 Maple is able to correctly determine many cancellations but requires assistance for a few cases with symbolic and infinite
 end-points.
 For the most part, the cases enumerated in Appendix~\ref{chp:16cases} follow a few patterns:
@@ -617,17 +648,15 @@ The final step is to replace \texttt{fg(x)} with \texttt{f(x)*g(t-x)}
 out:=subs(fg(x)=f(x)*g(t-x), out)
 \end{lstlisting}
 
-Hopefully this algorithm is very simple
 
-Some strange looking hacks are required to ``make it work''
-
-but the whole point is that hybrid convolution is a simpler framework with less case-based logic
-
-Additionally, many of these steps, with the exception of deciding to leave \texttt{afbf} and \texttt{bfag} symbolic are 
-entirely optional.
+Hopefully this process strikes the reader as being quite \emph{simple} as most of the functionality to reduce 
+the hybrid function equation is already provided by Maple. 
+This is intentional, not only is it easier to implement but it illustrates the point that hybrid convolution can in fact be  a
+simpler framework with less case-based logic.
+Admittedly, some strange looking hacks are required to ``make it work'', such as the conversion to Heaviside and back 
+to piecewise.
+With the exception of deciding to leave \texttt{afbf} and \texttt{bfag} symbolic, many of these steps are entirely optional.
 They result in a simplified, nicer looking expression but the equation can be correctly interpretted without them.
-
-
 
 
 \newpage
