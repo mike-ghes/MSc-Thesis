@@ -1,0 +1,61 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Inner Product
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Inner Product}
+
+The inner product or dot product of two vectors is given by:
+\begin{equation}
+A \cdot B = A^T B = \sum_i A_i B_i
+\end{equation}
+
+Returning to the running example of $U^T$ and $V^T$, as defined in (3.13) and (3.14) respectively, we will consider $U^T \cdot V^T$.
+
+\begin{definition}
+	Let $X = \hset{x_1^{m_1}, x_2^{m_2}, \ldots , x_n^{m_n} }$ be a hybrid set with elements $x_i$ in a $\mathbb{Z}$-module.
+	Given a hybrid function over $X$,  $f^X$, we define the \textbf{sum over $\boldsymbol{f^X}$}, denoted with $\sum$, as
+	\begin{equation}
+		\sum \! \left( f^X \right)  := \sum_{i=1}^n \left( m_i \cdot f(x_i) \right)
+	\end{equation}
+	The \textbf{product over $\boldsymbol{f^X}$}, denoted with $\prod$ is defined similarly.
+\end{definition}
+
+Then the dot product of $U^T$ and $V^T$ becomes very familiar:
+\begin{equation}
+	U^T \cdot V^T = \sum \left( (u_i v_i)^{[\![1, k]\!]} 
+		\hjoin[\times] (u'_{i-k} v_i)^{(\!(k,\ell]\!]} 
+		\hjoin[\times] (u'_{i-k} v'_{i-\ell})^{(\!(\ell,n]\!]} \right)
+\end{equation}
+
+The inner expression is identical to $U^T + V^T$ except for a replacement of $+$ with $\times$.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Outer Product
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Outer Product}
+
+While the inner product took two $n$-vectors and returned a single number,
+the outer product would take those two $n$-vectors and return an $n \times n$ matrix.
+Alternatively, one could think of $U^T$ and $V^T$ as $1\times n$ matrices.
+Then the inner product is the $1\times 1$ matrix given by $U^T \cdot V$ 
+while the outer product is given by $U \cdot V^T$. Formally we define:
+
+\begin{definition}
+	Let $A^T = [ a_1, a_2, \ldots, a_n]$ and $B^T = [ b_1, b_2, \ldots, b_m]$,
+	then the \textbf{outer product} (or \emph{tensor product}) $\outerproduct$ is given by:
+	\begin{equation}
+		A \outerproduct B = A \; B^T = \left[
+			\begin{array}{ccc}
+				a_1 b_1 & \ldots 	& a_1 b_m \\
+				\vdots 	& \ddots & \vdots \\
+				a_n b_1 & \ldots 	& a_n b_m
+			\end{array}
+		\right]
+	\end{equation}
+\end{definition}
+
+Hybrid sets won't allow us to do anything differently.
+
+But it will provide a nice lead in to our notation for matrix multiplication.

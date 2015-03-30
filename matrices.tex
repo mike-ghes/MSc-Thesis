@@ -1,20 +1,8 @@
-\chapter{Symbolic Linear Algebra}
+\chapter{Symbolic Block Linear Algebra}
 
-In mathematics literature, is common practice to use ellipses: ``$\ldots$'' in matrices.
-For example:
+In mathematics literature, is common practice to represent matrices with symbolic blocks such as:
 \begin{equation}
-	\left[
-		\begin{array}{cccc}
-			A_{1,1} & A_{1,2}	& \ldots 	& A_{1,n} \\
-			0		& A_{2,2}	& \ldots	& A_{2,n} \\
- 			\vdots 	& \ddots 	& \ddots & \vdots \\
-			0		& \ldots 		& 0 		& A_{n,n} \\
-		\end{array}
-	\right]
-\end{equation}
-and symbolic blocks as in
-\begin{equation}
-	\left[
+	M= \left[
 		\begin{array}{c|c}
 			A & B \\
 			\hline
@@ -22,9 +10,20 @@ and symbolic blocks as in
 		\end{array}
 	\right]
 \end{equation}
-where $A,B,C,D$ are sub matrices.
+where $A,B,C,D$ are matrices themselves.
+Additionally it is assumed that these submatrices agree. 
 
-Computer algebra has unsatisfactory structures to represent these  
+If $M$ is $n \times m$ and  $A$ is $k \times \ell$ then the sizes of $B,C,D$ are all determined:
+They must be $k \times m - \ell$, $n-k \times \ell$ and $n-k \times m-\ell$ respectively.
+
+
+Block matrices are very important not only from a theoretical perspective but also provide considerable improvements
+to matrix multiplication algorithms by improving cache complexity.
+
+
+Although block matrices are commonly used with fixed values for bounds.
+Computer algebra has unsatisfactory structures to represent these when the bounds between blocks are symbolic.
+
 
 \todo[inline]{more}
 
@@ -123,12 +122,6 @@ This sort of reasoning is routine but a constant annoyance when dealing with int
 Many similar formulations such as $[\![ a,b ]\!] \oplus (\!( b,c )\!) = [\![a,c)\!)$ are also valid for any ordering of $a,b,c$.
 We will not enumerate all possible cases here.
 
-\todo[inline]{Note about partitions}
-
-% Scratch that. oriented intervals are not (obviously) commutators. Jacobian identity doesn't make sense.
-
-
-\newpage
 
 
 
@@ -139,7 +132,7 @@ We will not enumerate all possible cases here.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Symbolic Vectors}
+\section{Addition}
 
 \todo[inline]{Vectors as hybrid functions}
 
@@ -219,80 +212,11 @@ In the third term, on the interval $(\!(1,5]\!]$, $u'_{i-4}$ would even evaluate
 
 However, these unevaluable terms also appear in the middle term however the interval $(\!(4,1]\!]$ is a negatively oriented interval and the offending points cancel!
 
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Inner Product
+% Matrix Addition
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Inner Product}
+\section{Matrix Addition}
 
-The inner product or dot product of two vectors is given by:
-\begin{equation}
-A \cdot B = A^T B = \sum_i A_i B_i
-\end{equation}
-
-Returning to the running example of $U^T$ and $V^T$, as defined in (3.13) and (3.14) respectively, we will consider $U^T \cdot V^T$.
-
-\begin{definition}
-	Let $X = \hset{x_1^{m_1}, x_2^{m_2}, \ldots , x_n^{m_n} }$ be a hybrid set with elements $x_i$ in a $\mathbb{Z}$-module.
-	Given a hybrid function over $X$,  $f^X$, we define the \textbf{sum over $\boldsymbol{f^X}$}, denoted with $\sum$, as
-	\begin{equation}
-		\sum \! \left( f^X \right)  := \sum_{i=1}^n \left( m_i \cdot f(x_i) \right)
-	\end{equation}
-	The \textbf{product over $\boldsymbol{f^X}$}, denoted with $\prod$ is defined similarly.
-\end{definition}
-
-Then the dot product of $U^T$ and $V^T$ becomes very familiar:
-\begin{equation}
-	U^T \cdot V^T = \sum \left( (u_i v_i)^{[\![1, k]\!]} 
-		\hjoin[\times] (u'_{i-k} v_i)^{(\!(k,\ell]\!]} 
-		\hjoin[\times] (u'_{i-k} v'_{i-\ell})^{(\!(\ell,n]\!]} \right)
-\end{equation}
-
-The inner expression is identical to $U^T + V^T$ except for a replacement of $+$ with $\times$.
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Outer Product
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Outer Product}
-
-While the inner product took two $n$-vectors and returned a single number,
-the outer product would take those two $n$-vectors and return an $n \times n$ matrix.
-Alternatively, one could think of $U^T$ and $V^T$ as $1\times n$ matrices.
-Then the inner product is the $1\times 1$ matrix given by $U^T \cdot V$ 
-while the outer product is given by $U \cdot V^T$. Formally we define:
-
-\begin{definition}
-	Let $A^T = [ a_1, a_2, \ldots, a_n]$ and $B^T = [ b_1, b_2, \ldots, b_m]$,
-	then the \textbf{outer product} (or \emph{tensor product}) $\outerproduct$ is given by:
-	\begin{equation}
-		A \outerproduct B = A \; B^T = \left[
-			\begin{array}{ccc}
-				a_1 b_1 & \ldots 	& a_1 b_m \\
-				\vdots 	& \ddots & \vdots \\
-				a_n b_1 & \ldots 	& a_n b_m
-			\end{array}
-		\right]
-	\end{equation}
-\end{definition}
-
-Hybrid sets won't allow us to do anything differently.
-
-But it will provide a nice lead in to our notation for matrix multiplication.
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% MATRICES
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Abstract Matrices}
 
 It is common practice in mathematics to represent matrices symbolically with sub-matrices such as:
 \begin{equation}
@@ -304,32 +228,153 @@ It is common practice in mathematics to represent matrices symbolically with sub
 	\right]
 \end{equation}
 If $A$ is an $n \times n$ matrix then $A_1, A_2, A_3, A_4$ are not entries but $(k \times \ell)$, $(n-k \times \ell)$, $(k \times n - \ell)$ and $(n-k \times n - \ell)$ matrices respectively.
-Ellipses are also routinely used for interpolating over regions of a matrix, as in:
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Matrix Multiplication
+%
+% q = k1, r = q2, s = ell1, t=ell2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Matrix Multiplication}
+
+Matrix multiplication
+
+
+Assume two matrices which we plan to multiply $A$ which is $n \times m$ and $B$ which is $m \times p$.
+Both are block matrices:
 \begin{equation}
-	M = \left[
-		\begin{array}{ccc}
-			x_{11} & \ldots & x_{1n} \\
-			& \ddots & \vdots \\
-			0 & & x_{nn}
-		\end{array}
-	\right]
+	A = \left[ \begin{array}{cc} A_{11} & A_{12} \\ A_{21} & A_{22} \end{array} \right]
+	\;\;\;\;\; \text{and} \;\;\;\;\;
+	B = \left[ \begin{array}{cc} B_{11} & B_{12} \\ B_{21} & B_{22} \end{array} \right]
+\end{equation}
+Where $A_{11}$ is a $q \times r$ matrix and $B_{11}$ is a $s \times t$ matrix.
+Note that $0 \leq r , s \leq m$ but the ordering of $r$ and $s$ is unknown.
+
+The simplest case is for $r=s$.
+In  this case, 4 regions will arise.
+\begin{equation}
+	AB = \left[ \begin{array}{cc} 
+		A_{11}B_{11}+A_{12}B_{21} & A_{11}B_{12}+A_{12}B_{22} \\ 
+		A_{21}B_{11}+A_{22}B_{21} & A_{21}B_{12}+A_{22}B_{22}
+	\end{array} \right]
 \end{equation}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Matrix Addition
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Matrix Addition}
+
+For the general case ($k_2 \neq \ell_1$), we still get back a $2 \times 2$ block matrix, which we will denote $C$.
+\begin{equation}
+	AB = \left[ \begin{array}{cc} C_{11} & C_{12} \\ C_{21} & C_{22} \end{array} \right]
+\end{equation}
+$C_{11}$ is a $k_1 \times \ell_2$ sub-matrix; the sizes of the other partitions can be derived from this.
+The domains of these 12 submatrices can be partitioned using:
+\begin{equation*}\begin{array}{cc}
+	N_1 = [\![0,k_1)\!) & N_2 = [\![k_1, n)\!) 
+\end{array}\end{equation*}
+\begin{equation*}\begin{array}{cc}
+	P_1 = [\![0, \ell_2)\!) & P_2 = [\![ \ell_2, p)\!)
+\end{array}\end{equation*}
+\begin{equation*}\begin{array}{ccc}
+	M_1 = [\![0,k_2)\!) & M_2 = [\![ k_2, \ell_1)\!) & M_3 = [\![ \ell_1, m)\!)
+\end{array}\end{equation*}
+So we can rewrite $A$ and $B$ as:
+\begin{equation}
+	A = 	A_{11}^{N_1 \times M_1} \oplus A_{12}^{N_1 \times (M_2 \oplus M_3)} \oplus 
+			A_{21}^{N_2 \times M_1} \oplus A_{22}^{N_2 \times (M_2 \oplus M_3)}
+\end{equation}
+\begin{equation}
+	B = 		B_{11}^{(M_1 \oplus M_2) \times P_1} \oplus B_{12}^{(M_1 \oplus M_2) \times P_2} \oplus 
+			B_{21}^{M_3 \times P_1} \oplus B_{12}^{M_3 \times P_2}
+\end{equation}
+
+Here $\oplus$ is \emph{not} the direct sum of matrices, but hybrid function pointwise sum. 
+$\times$ is the Cartesian product of intervals. 
+
+For $i,j \in \{ 1,2 \}$ we can write blocks in $C$ as:
+\begin{equation}
+	C_{i,j} 	= A_{i,1}^{N_i \times M_1} B_{1,j}^{M_1 \times P_j} 
+			+ A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j}
+			+ A_{i,2}^{N_i \times M_3} B_{2,j}^{M_3 \times P_j}
+\end{equation}
+
+If $k_2 = \ell_1$ then $M_2 = \emptyset$.
+We can think of multiplying a $n \times 0$ matrix by a $0 \times p$ matrix as giving a $n \times p$ matrix which is the sum
+over an empty set, 0 everywhere.
+
+If $k_2 < \ell_1$ then this is like treating $A$ and $B$ instead as $2 \times 3$ and $3 \times 2$ block matrices.
+$M_1$, $M_2$ and $M_3$ are all positive intervals and form conformable blocks.
+
+If $k_2 > \ell_1$ then $M_2$ is a negative interval which doesn't have a good interpretation.
+To simplify $C_i,j$, we can use the partition $ \{ M_1 \oplus M_2, \ominus M_2, M_2 \oplus M_2 \}$ which contains only
+positive intervals.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Matrix Multiplication
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Matrix Multiplication}
+First we rewrite the hybrid functions in the first and third terms:
+\begin{align}
+	C_{i,j} 	= &\left( A_{i,1}^{N_i \times M_1 \oplus M_2} \oplus A_{i,1}^{N_i \times \ominus M_2} \right)
+				\left( B_{1,j}^{M_1 \oplus M_2 \times P_j} \oplus B_{1,j}^{\ominus M_2 \times P_j} \right)
+			+ A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j} \notag\\
+			&+ \left( A_{i,2}^{N_i \times \ominus M_2} \oplus A_{i,2}^{N_i \times M_3 \oplus M_2} \right)
+			 \left( B_{2,j}^{\ominus M_2 \times P_j} \oplus B_{2,j}^{M_3 \oplus M_2 \times P_j} \right)
+\end{align}
+
+Which are now the product of conformable $1 \times 2$ and $2 \times 1$ block matrices.
+This gives us a $1 \times 1$ block matrix :
+\begin{align}
+	C_{i,j} 	= & A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j}
+			+ A_{i,1}^{N_i \times \ominus M_2} B_{1,j}^{\ominus M_2 \times P_j}
+			+ A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j} \notag\\
+			&+ A_{i,2}^{N_i \times \ominus M_2} B_{2,j}^{\ominus M_2 \times P_j}
+			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j}
+\end{align}
+
+Then we merge the middle three terms:
+\begin{align}
+	C_{i,j} 	=& \left( A_{i,1}^{N_i \times \ominus M_2} 
+				\oplus  A_{i,2}^{N_i \times M_2} 
+				\oplus A_{i,2}^{N_i \times \ominus M_2} \right)
+			\left( B_{1,j}^{\ominus M_2 \times P_j} 
+				\oplus B_{1,j}^{M_2 \times P_j} 
+				\oplus B_{2,j}^{\ominus M_2 \times P_j} \right)\notag\\
+			&+ A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j} 
+			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j} 
+\end{align}
 
 
+$A_{i,2}$ occurs twice with opposite sign on the same region and so cancels itself. As does $B_{1,j}$:
+\begin{align}
+	C_{i,j} 	=& \left( A_{i,1}^{N_i \times \ominus M_2} \oplus  A_{i,2}^{N_i \times \emptyset}  \right)
+			\left(  B_{2,j}^{\ominus M_2 \times P_j} \oplus B_{1,j}^{\emptyset \times P_j} \right)\notag\\
+			&+ A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j} 
+			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j} 
+\end{align}
+And functions over empty domains can be removed:
+
+\begin{align}
+			= & A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j} 
+			+ A_{i,1}^{N_i \times \ominus M_2} B_{2,j}^{\ominus M_2 \times P_j}
+			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j}
+\end{align}
 
 
+Formally this relies on the following identities:
 
+\begin{equation}
+	M^B \oplus M^C = M^{B\oplus C}
+\end{equation}
+(we can split up a matrix into blocks)
+
+\begin{equation}
+	M_1^A \oplus M_2^\emptyset = M_1^A = M_2^\emptyset \oplus M_1^A
+\end{equation}
+(empty blocks can be ignored)
+
+\begin{equation}
+	M_1^{A \times B} M_2^{B \times D} + M_3^{A \times C} M_4^{C \times D} 
+	= \left(M_1^{A\times B} \oplus M_3^{A \times C} \right) \left( M_2^{B \times D} \oplus M_4^{C \times D} \right)
+\end{equation}
 
 
 
