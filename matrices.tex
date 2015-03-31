@@ -1,6 +1,7 @@
 \chapter{Symbolic Block Linear Algebra}
 
-In mathematics literature, is common practice to represent matrices with symbolic blocks such as:
+In mathematics literature, is common practice to represent matrices as being broken up into blocks or submatrices.
+For example the matrix $M$ is a block matrix with submatrices $A,B,C,D$.
 \begin{equation}
 	M= \left[
 		\begin{array}{c|c}
@@ -9,26 +10,109 @@ In mathematics literature, is common practice to represent matrices with symboli
 			C & D \\
 		\end{array}
 	\right]
+	= \left[
+		\begin{array}{ccc|ccc}
+			A_{1,1} & \ldots &A_{1,m} & B_{1,1} & \ldots & B_{1,q} \\
+			\vdots & & \vdots & \vdots & & \vdots \\
+			A_{n, 1} & \ldots & A_{n, m} & B_{n,1} & \ldots & B_{n,q} \\
+			\hline
+			C_{1, 1} & \ldots & C_{1, m} & D_{1,1} & \ldots & D_{1,q} \\
+			\vdots & & \vdots & \vdots & & \vdots \\
+			C_{r,1} & \ldots & C_{r,m} & D_{r,1} & \ldots & D_{r,q} \\
+		\end{array}
+	\right]
 \end{equation}
-where $A,B,C,D$ are matrices themselves.
-Additionally it is assumed that these submatrices agree. 
+The result is an $(n+r) \times (m+q)$ matrix.
+Within a block, there is a one-to-one correspondance from the entries of $M$ to the entries of a submatrix (shifted by some offset).
+In the above example, elements of $B$ would have an offset of $(0,m)$ since $B_{i,j}$ corresponds with $M_{i+0, j+m}$
 
-If $M$ is $n \times m$ and  $A$ is $k \times \ell$ then the sizes of $B,C,D$ are all determined:
-They must be $k \times m - \ell$, $n-k \times \ell$ and $n-k \times m-\ell$ respectively.
+An important condition however is that these partitions are divided by \emph{unbroken} horizontal and vertical lines.
+So for example the height of $A$ must be the same as the height of $B$ 
+and the width of $A$ must be the same as the width of $C$.
 
+\todo[inline]{Many blocks}
 
-Block matrices are very important not only from a theoretical perspective but also provide considerable improvements
-to matrix multiplication algorithms by improving cache complexity.
-
+Clearly block matrices are at the very least a convenient notation but they also have considerable practical applications as well.
+For example when multiplying large matrices, block matrices can be used to improve cache complexity. \cite{lam1991cache}
+In some cases, when a submatrices are known to have a nice properties, many optimizations can arise.
+For example inverting a \emph{block diagonal matrix} can be performed by only inverting 
+\begin{equation}
+	\begin{bmatrix}
+		A_1 & 0 & \ldots & 0 \\
+		0 & A_2 & \ddots & \vdots \\
+		\vdots & \ddots & \ddots & 0 \\
+		0 & \ldots & 0 & A_n \\
+	\end{bmatrix}^{-1}
+	=
+	\begin{bmatrix}
+		{A_1}^{-1} & 0 & \ldots & 0 \\
+		0 & {A_2}^{-1} & \ddots & \vdots \\
+		\vdots & \ddots & \ddots & 0 \\
+		0 & \ldots & 0 & {A_n}^{-1} \\
+	\end{bmatrix}
+\end{equation}
 
 Although block matrices are commonly used with fixed values for bounds.
 Computer algebra has unsatisfactory structures to represent these when the bounds between blocks are symbolic.
+For example, the sum of $2 \times 2$ block matrices, naively leads to 9 possible cases of overlapping regions depending on
+the relationship between horizontal and vertical boundaries between blocks.
 
 
-\todo[inline]{more}
+\begin{figure}[ht]
+	\caption[Possible block overlaps of $2 \times 2$ block matrices.]{There are 9 possible permutations. 1x (a) 2x (b) 2x (c) 4x (d)}
+	\begin{subfigure}[b]{0.24\textwidth}
+		\caption{}
+		\begin{equation*}
+			\left[ \begin{array}{c|c}
+				\; & \; \\
+				\hline
+				& \\
+			\end{array}\right]
+		\end{equation*}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.24\textwidth}
+		\caption{}
+		\begin{equation*}
+			\left[ \begin{array}{c|c}
+				\; & \; \\
+				\hline
+				& \\
+				\hline
+				& \\
+			\end{array}\right]
+		\end{equation*}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.24\textwidth}
+		\caption{}
+		\begin{equation*}
+			\left[ \begin{array}{c|c|c}
+				\; & \; & \;  \\
+				\hline
+				& \\
+			\end{array}\right]
+		\end{equation*}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.24\textwidth}
+		\caption{}
+		\begin{equation*}
+			\left[ \begin{array}{c|c|c}
+				\; & \; & \; \\
+				\hline
+				& \\
+				\hline
+				& \\
+			\end{array}\right]
+		\end{equation*}
+	\end{subfigure}
+\end{figure}
 
+
+In this chapter we will show a method using hybrid functions to avoid this case based approach for both addition
+and multiplication of matrices.
+First we introduce some notation that will be used frequently over the next 3 chapters.
 
 \newpage
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -44,14 +128,15 @@ Computer algebra has unsatisfactory structures to represent these when the bound
 	is the set of elements in $X$ between $a$ and $b$, up to inclusion of $a$ and $b$ themselves. 
 	Formally:
 	\begin{align}
-		[a,b] = \{ x \in X \;|\; a \leq x \leq b \} \\
-		[a,b) = \{ x \in X \;|\; a \leq x < b \} \\
-		(a,b] = \{ x \in X \;|\; a < x \leq b \} \\
-		(a,b) = \{ x \in X \;|\; a < x < b \}
+		[a,b]_X = \{ x \in X \;|\; a \leq x \leq b \} \\
+		[a,b)_X = \{ x \in X \;|\; a \leq x < b \} \\
+		(a,b]_X = \{ x \in X \;|\; a < x \leq b \} \\
+		(a,b)_X = \{ x \in X \;|\; a < x < b \}
 	\end{align}
+	When context makes $X$ obvious or the choice of $X$ is irrelevant, we shall omit the subscript.
 \end{definition}
 
-It should be noted that for $b<a$, $[b,a]$ is the empty set. 
+It should be noted that when $b$ is less than $a$, $[b,a]$ is the empty set. 
 Also, the interval $[a,a]$ contains a single point while $(a,a)$, $(a,a]$, and $[a,a)$ are all empty.
 As intervals are simply sets, they can naturally be interpreted as hybrid sets.
 If $a \leq b \leq c$, for intervals $[a,b)$ and $[b,c)$ using the hybrid set operator $\oplus$, one has
@@ -133,8 +218,15 @@ We will not enumerate all possible cases here.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Addition}
+Addition for partitioned vectors and $2 \times 2$ matrices using hybrid functions has already been considered in \cite{carette2010}.
+It will provide a good basis for multiplication.
 
+
+
+The method is nearly identical to that of adding piecewise functions.
+In fact one could think of block matrices as piecewise functions over $\mathbb{N} \times \mathbb{N}$
 \todo[inline]{Vectors as hybrid functions}
+
 
 We will use the following $n$-dimensional vectors as a running example in this section:
 
@@ -162,18 +254,19 @@ However we are more interested in performing arithmetic with these vectors.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Vector Addition}
 
+
 Consider pointwise vector addition $U^T + V^T$:
 \begin{align}
 	U^T + V^T 
 	&= \left( (u_i)^{[\![1, k]\!]} \oplus (u'_{i-k})^{(\!(k,n]\!]} \right) 
-		\hjoin[+] 
+		+
 		\left( (v_i)^{[\![1, \ell]\!]} \oplus (v'_{i-\ell})^{(\!(\ell,n]\!]} \right) \\
 	&= \left( (u_i)^{[\![1, k]\!]} \oplus (u'_{i-k})^{(\!(k,\ell]\!]} \oplus (u'_{i-k})^{(\!(\ell,n]\!]} \right) 
-		\hjoin[+]
+		+
 		\left( (v_i)^{[\![1, k]\!]} \oplus (v_i)^{(\!(k, \ell]\!]} \oplus (v'_{i-\ell})^{(\!(\ell,n]\!]} \right) \\
-	&= \left( (u_i + v_i)^{[\![1, k]\!]} 
-		\hjoin[+] (u'_{i-k} + v_i)^{(\!(k,\ell]\!]} 
-		\hjoin[+] (u'_{i-k}+v'_{i-\ell})^{(\!(\ell,n]\!]} \right)
+	&= \R[+] \left( (u_i + v_i)^{[\![1, k]\!]} 
+		\oplus (u'_{i-k} + v_i)^{(\!(k,\ell]\!]} 
+		\oplus (u'_{i-k}+v'_{i-\ell})^{(\!(\ell,n]\!]} \right)
 \end{align}
 
 This formulation is not unique.
@@ -183,9 +276,9 @@ The choice to partition $[\![1,n]\!]$ into $[\![1,k]\!] \oplus (\!(k,\ell]\!] \o
 We can just as easily partition $[\![1,n]\!]$ into $[\![1,\ell]\!] \oplus (\!(\ell, k]\!] \oplus (\!(k, n]\!]$ to get the equivalent expression:
 
 \begin{equation}
-	U^T + V^T = \left( (u_i + v_i)^{[\![1, \ell]\!]} 
-		\hjoin[+] (u_{i} + v'_{i-\ell})^{(\!(\ell,k]\!]} 
-		\hjoin[+] (u'_{i-k}+v'_{i-\ell})^{(\!(k,n]\!]} \right)
+	U^T + V^T = \R[+] \left( (u_i + v_i)^{[\![1, \ell]\!]} 
+		\oplus (u_{i} + v'_{i-\ell})^{(\!(\ell,k]\!]} 
+		\oplus (u'_{i-k}+v'_{i-\ell})^{(\!(k,n]\!]} \right)
 \end{equation}
 
 We must be careful while evaluating these expressions to not forget that $(u'_{i-k} + v_i)$ is actually shorthand for the function:
@@ -199,9 +292,9 @@ $V^T = [ v_1, v'_1, v'_2, v'_3, v'_4 ]$.
 
 We will also only assume that the functions $u_i, u'_i, v_i$ and $v'_i$ are defined only on the intervals in which they appear (e.g. $u_5$ is undefined, as is $v'_1$).
 
-Then the expression in (3.19) becomes:
+Then we have:
 \begin{equation}
-(u_i + v_i)^{[\![1,4]\!]} \hjoin[+] (u'_{i-4} + v_i)^{(\!(4,1]\!]} \hjoin[+] (u'_{i-4} + v'_{i-1})^{(\!(1,5]\!]}
+U^T + V^T = (u_i + v_i)^{[\![1,4]\!]} \oplus (u'_{i-4} + v_i)^{(\!(4,1]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(1,5]\!]}
 \end{equation}
 
 None of the individual subterms cannot be evaluated directly.
@@ -212,22 +305,25 @@ In the third term, on the interval $(\!(1,5]\!]$, $u'_{i-4}$ would even evaluate
 
 However, these unevaluable terms also appear in the middle term however the interval $(\!(4,1]\!]$ is a negatively oriented interval and the offending points cancel!
 
+\begin{align}
+U^T + V^T &= (u_i + v_i)^{[\![1,1]\!] \oplus (\!(1,4]\!]} \oplus (u'_{i-4} + v_i)^{\ominus(\!(1,4]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(1,4]\!] \oplus (\!(4,5]\!]}\\
+&= (u_i + v_i)^{[\![1,1]\!]} \oplus \left((u_i + v_i) - (u'_{i-4} + v_i) + (u'_{i-4} + v'_{i-1})\right)^{[\![1,4]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(4,5]\!]} \\ 
+&= (u_i + v_i)^{[\![1,1]\!]} \oplus (u_i + v'_{i-1})^{(\!(1,4]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(4,5]\!]}
+\end{align}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Matrix Addition
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Matrix Addition}
 
 
-It is common practice in mathematics to represent matrices symbolically with sub-matrices such as:
+First we will consider the addition of two $n \times m$ block matrices $A$ and $B$ of the form:
 \begin{equation}
-	A = \left[
-		\begin{array}{ccc}
-			A_1 & A_2 \\
-			A_3 & A_4 \\
-		\end{array}
-	\right]
+	A = \left[ \begin{array}{cc} A_{11} & A_{12} \\ A_{21} & A_{22} \end{array} \right]
+	\;\;\;\;\; \text{and} \;\;\;\;\;
+	B = \left[ \begin{array}{cc} B_{11} & B_{12} \\ B_{21} & B_{22} \end{array} \right]
 \end{equation}
-If $A$ is an $n \times n$ matrix then $A_1, A_2, A_3, A_4$ are not entries but $(k \times \ell)$, $(n-k \times \ell)$, $(k \times n - \ell)$ and $(n-k \times n - \ell)$ matrices respectively.
+If $A$ is an $n \times m$ matrix then $A_1, A_2, A_3, A_4$ are not entries but $(k \times \ell)$, $(n-k \times \ell)$, $(k \times m - \ell)$ and $(n-k \times m - \ell)$ matrices respectively.
 
 
 
