@@ -35,7 +35,7 @@ and the width of $A$ must be the same as the width of $C$.
 Clearly block matrices are at the very least a convenient notation but they also have considerable practical applications as well.
 For example when multiplying large matrices, block matrices can be used to improve cache complexity. \cite{lam1991cache}
 In some cases, when a submatrices are known to have a nice properties, many optimizations can arise.
-For example inverting a \emph{block diagonal matrix} can be performed by only inverting 
+For example inverting a \emph{block diagonal matrix} can be performed by inverting each block individually. 
 \begin{equation}
 	\begin{bmatrix}
 		A_1 & 0 & \ldots & 0 \\
@@ -127,57 +127,75 @@ First we introduce some notation that will be used frequently over the next 3 ch
 	for any $a,b \in X$, an \textbf{interval between $\boldsymbol{a}$ and $\boldsymbol{b}$} 
 	is the set of elements in $X$ between $a$ and $b$, up to inclusion of $a$ and $b$ themselves. 
 	Formally:
-	\begin{align}
-		[a,b]_X = \{ x \in X \;|\; a \leq x \leq b \} \\
-		[a,b)_X = \{ x \in X \;|\; a \leq x < b \} \\
-		(a,b]_X = \{ x \in X \;|\; a < x \leq b \} \\
-		(a,b)_X = \{ x \in X \;|\; a < x < b \}
-	\end{align}
+	\begin{equation} 
+	\begin{array}{cc}
+		{[a,b]}_X =  \{ x \in X \;|\; a \leq x \leq b \} \\
+		{[a,b)}_X =  \{ x \in X \;|\; a \leq x < b \} \\
+		{(a,b]}_X =  \{ x \in X \;|\; a < x \leq b \} \\
+		{(a,b)}_X =  \{ x \in X \;|\; a < x < b \}
+	\end{array} 
+	\end{equation}
 	When context makes $X$ obvious or the choice of $X$ is irrelevant, we shall omit the subscript.
 \end{definition}
 
 It should be noted that when $b$ is less than $a$, $[b,a]$ is the empty set. 
-Also, the interval $[a,a]$ contains a single point while $(a,a)$, $(a,a]$, and $[a,a)$ are all empty.
+In terms of idempotency, the bounds determine whether or not an interval will be empty.
+$[a,a]$ which contains $a$ and al points equivalent to $a$ while $(a,a)$, $(a,a]$, and $[a,a)$ are all empty sets.
 As intervals are simply sets, they can naturally be interpreted as hybrid sets.
-If $a \leq b \leq c$, for intervals $[a,b)$ and $[b,c)$ using the hybrid set operator $\oplus$, one has
-$[a,b) \oplus [b,c) = [a,c)$
-In this case, $\oplus$ behaves like concatenation but this is not always true.
-When $a \leq c \leq b$ then $[a,b) \oplus [b,c) = [a,b)$.
+If $a \leq b \leq c$, for intervals then we have $[a,b) \oplus [b,c) = [a,c)$.
+In this case, $\oplus$ seems to behave like concatenation but this is not always true.
+If instead we had $a \leq c \leq b$ then $[a,b) \oplus [b,c) = [a,b)$.
+
+\begin{equation}
+	[a,b) \oplus [b,c) =
+	\begin{cases}
+		[a,c) & a \leq b \leq c \\
+		[a,b) & a \leq c \leq b \\
+		[b,c) & b \leq a \leq c \\
+		\emptyset & \text{otherwise} \\
+	\end{cases}
+\end{equation}
+
+One could alternatively write $[a,b)\oplus [b,c) = [\; \min(a,b),\max(b,c) \;)$ but this simply sweeps the problem 
+under the rug.
 When working with intervals, a case-based approach to consider relative ordering of endpoints easily becomes quite cumbersome.
 Thus we turn to oriented intervals.
-\todo[inline]{1 more line}
+
 
 \begin{definition}
 	We define \textbf{oriented intervals} with $a,b\in X$, where $X$ is a totally ordered set, 
 	using hybrid set point-wise subtraction as follows:
-	\begin{align}
-		[\![ a,b )\!) = [a,b) \ominus [b,a) \\
-		(\!( a,b ]\!] = (a,b] \ominus (b,a] \\
-		[\![ a,b ]\!] = [a,b] \ominus (b,a) \\
-		(\!( a,b )\!) = (a,b) \ominus [b,a]
-	\end{align}
+	\begin{equation}
+		\begin{array}{cc}
+			{[\![ a,b )\!)} = [a,b) \ominus [b,a) \\
+			{(\!( a,b ]\!]} = (a,b] \ominus (b,a] \\
+			{[\![ a,b ]\!]} = [a,b] \ominus (b,a) \\
+			{(\!( a,b )\!)} = (a,b) \ominus [b,a]
+		\end{array}
+	\end{equation}
 \end{definition}
 
-For any choice of distinct $a$ and $b$, exactly one term will be empty.
+For any choice of \emph{distinct} $a$ and $b$, exactly one term will be empty; there can be no ``mixed'' multiplicities from a single oriented interval.
 Unlike traditional interviews where $[a,b)$ would be empty if $b < a$,  
-the oriented interval $[\![a,b)\!)$ simply has elements with negative multiplicity.
+the oriented interval $[\![a,b)\!)$ will have elements with negative multiplicity.
 Several results follow immediately from this definition.
 
 \begin{theorem} For all $a,b,c \in \mathbb{R}$, 
-	\begin{align}
-		[\![a,b)\!) &= \ominus [\![b,a)\!) \\
-		(\!(a,b]\!] &= \ominus (\!(b,a]\!] \\
-		[\![a,b]\!] &= \ominus (\!(a,b)\!) \\
-		(\!(a,b)\!) &= \ominus [\![a,b]\!]
-	\end{align}
+	\begin{equation}
+		\begin{array}{cc}
+		{[\![a,b)\!)} = \ominus [\![b,a)\!) \\
+		{(\!(a,b]\!]} = \ominus (\!(b,a]\!] \\
+		{[\![a,b]\!]} = \ominus (\!(a,b)\!) \\
+		{(\!(a,b)\!)} = \ominus [\![a,b]\!]
+		\end{array}
+	\end{equation}
 \end{theorem}
 
 We should make a note here how oriented intervals behave when $a=b$.
-Like their unoriented analogues, the oriented intervals $[\![ a,a )\!)$ and $(\!( a,a ]\!]$ are both empty 
-while $[\![a,a]\!]$ contains the point at $a$ (with multiplicity 1).
-However, unlike traditional intervals $(\!(a,a)\!)$ is \emph{not} empty but rather, $(\!(a,a)\!) = \ominus [\![a,a]\!] = \hset{a^{-1}}$.
-
-\todo[inline]{more}
+Like their unoriented analogues, the oriented intervals $[\![ a,a )\!)$ and $(\!( a,a ]\!]$ are still both empty sets.
+The interval $[\![a,a]\!]$ still contains points equivalent to $a$ (with multiplicity 1).
+However, unlike traditional intervals $(\!(a,a)\!)$ is \emph{not} empty but rather, $(\!(a,a)\!) = \ominus [\![a,a]\!]$ and so contains all points equivalent to $a$ but with a multiplicity of $-1$.
+The advantage of using oriented intervals is that now $\oplus$ does behave like contatenation.
 
 \begin{theorem}
 	For all $a,b,c \in \mathbb{R}$ (regardless of relative ordering),
@@ -187,26 +205,37 @@ However, unlike traditional intervals $(\!(a,a)\!)$ is \emph{not} empty but rath
 \end{theorem}
 
 \begin{proof}
-	$[\![a,b)\!) \oplus [\![ b,c )\!)$ 
-
-	$= \left( [a,b) \ominus [b,a) \right) \oplus \left( [b,c) \ominus [c,b) \right)$ 
-
-	$= \left( [a,b) \oplus [b,c) \right) \ominus \left( [c,b) \oplus [b,a) \right)$
-
-	If $a \geq c$ then $[c,a) = \emptyset$ and so $[\![a,c)\!) = [a,c)$. 
+	Following from definitions we have:
+	\begin{align*}
+		[\![a,b)\!) \oplus [\![ b,c )\!)
+		& = \left( [a,b) \ominus [b,a) \right) \oplus \left( [b,c) \ominus [c,b) \right)\\
+		& = \left( [a,b) \oplus [b,c) \right) \ominus \left( [c,b) \oplus [b,a) \right)
+	\end{align*}
 	\begin{description}
-		\item[Case 1: $a \leq b \leq c$] then $[c,b) = [b,a) = \emptyset$ and $[a,b) \oplus [b,c) = [a,c)$
-		\item[Case 2: $b \leq a \leq c$] then $[b,c) \ominus [b,a) = [b,a) \oplus [a,c) \ominus [b,a) = [a,c)$
-		\item[Case 3: $a \leq c \leq b$] then $[a,b) \ominus [c,b) = ([a,c) \oplus [c,b)) \ominus [c,b) = [a,c)$
+		\item[Case 1: $a \leq c$] then $[c,a) = \emptyset$ and so $[\![a,c)\!) = [a,c)$. 
+		\begin{description}
+			\item[Case 1.a: $a \leq b \leq c$] then $[c,b) = [b,a) = \emptyset$ and $[a,b) \oplus [b,c) = [a,c)$
+			\item[Case 1.b: $b \leq a \leq c$] then $[b,c) \ominus [b,a) = [b,a) \oplus [a,c) \ominus [b,a) = [a,c)$
+			\item[Case 1.c: $a \leq c \leq b$] then $[a,b) \ominus [c,b) = ([a,c) \oplus [c,b)) \ominus [c,b) = [a,c)$
+		\end{description}
+		\item[Case 2: $c < a$] then $[a,c) = \emptyset$ and so $[\![a,c)\!) = \ominus [c,a)$. 
+		\begin{description}
+			\item[Case 2.a: $c \leq b \leq a$] 
+				then $[a,b) = [b,c) = \emptyset$ and $\ominus[c,b) \ominus [b,a) = \ominus [c,a)$
+			\item[Case 2.b: $b \leq c \leq a$] 
+				then $\ominus [b,a) \oplus [b,c) = \ominus([b,c) \oplus [c,a)) \oplus [b,c) = \ominus[c,a)$
+			\item[Case 2.c: $c \leq a \leq b$] 
+				then $\ominus [c,b) \oplus [a,b) = \ominus([c,a) \oplus [a,b)) \oplus [a,b) = \ominus[c,a)$
+		\end{description}
 	\end{description}
-	Similar arguments will show that when $c \geq a$, that $[\![a,b)\!) \oplus [\![ b,c )\!) = \ominus [a,c)$.
-	
 \end{proof}
 
-This sort of reasoning is routine but a constant annoyance when dealing with intervals and is exactly the reason we want to be working with oriented intervals.
-Many similar formulations such as $[\![ a,b ]\!] \oplus (\!( b,c )\!) = [\![a,c)\!)$ are also valid for any ordering of $a,b,c$.
-We will not enumerate all possible cases here.
-
+This sort of reasoning is routine but a constant annoyance when dealing with intervals 
+and is exactly the reason we want to be working with oriented intervals.
+But now that the above work is done, we can use oriented intervals 
+and not concern ourselves with the relative ordering of points.
+Many similar formulations such as $[\![ a,b ]\!] \oplus (\!( b,c )\!) = [\![a,c)\!)$ or $(\!(a,b)\!) \oplus [\![b,c)\!) = (\!(a,c)\!)$ 
+are also valid for any ordering of $a,b,c$ by an identical argument. 
 
 
 
@@ -217,47 +246,49 @@ We will not enumerate all possible cases here.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Addition}
+\section{Vector Addition}
 Addition for partitioned vectors and $2 \times 2$ matrices using hybrid functions has already been considered in \cite{carette2010}.
-It will provide a good basis for multiplication.
-
-
-
 The method is nearly identical to that of adding piecewise functions.
-In fact one could think of block matrices as piecewise functions over $\mathbb{N} \times \mathbb{N}$
-\todo[inline]{Vectors as hybrid functions}
+In fact, one could think of both as simply addition of piecewise functions over a subset of 
+$\mathbb{N}$ and $\mathbb{N} \times \mathbb{N}$ respectively.
+However it will provide a good example of oriented intervals in use and as an introduction to multiplication of 
+symbolic block matrices.
 
 
-We will use the following $n$-dimensional vectors as a running example in this section:
+First we will consider the addition of two $n$-dimensional vectors.
+Addition of two vectors: $U= (u_1, u_2, \ldots u_n$ and $V = (v_1, v_2, \ldots, v_n)$ is itself an $n$ dimensional vector 
+defined as:
+\begin{equation}
+	U+V = (u_1+v_1, \; u_2+v_2, \ldots, u_n+v_n)
+\end{equation}
 
+
+In particular, we would like to consider the addition of vectors $U$ and $V$ which are each partitioned into two intervals,
+$[1,k]$ and $(k,n]$ as well as $[1,\ell]$ and $(\ell, n]$.
+Over each interval, taking the value of different functions, as in:
 \begin{align}
-	U^T &= [ u_1, u_2, \ldots, u_{k}, u'_1, u'_2, \ldots, u_{n-k} ] \\
-	V^T &= [ v_1, v_2, \ldots, v_{\ell}, v'_1, v'_2, \ldots, v_{n-\ell} ]
+	U &= [ u_1, u_2, \ldots, u_{k}, u'_1, u'_2, \ldots, u_{n-k} ] \\
+	V &= [ v_1, v_2, \ldots, v_{\ell}, v'_1, v'_2, \ldots, v_{n-\ell} ]
 \end{align}
 
-Using intervals, these vectors can be represented by hybrid functions over their indices.
 
+These can be written more concisely as hybrid functions over intervals. 
+Using intervals, these vectors can be represented by hybrid functions over their indices.
 For example
 \begin{align}
-	U^T &= (i \mapsto u_i)^{[\![1, k]\!]} \oplus (i \mapsto u_{i-k})^{(\!(k,n]\!]} \\
-	V^T &= (i \mapsto v_i)^{[\![1, \ell]\!]} \oplus (i \mapsto v_{i-\ell})^{(\!(\ell,n]\!]}
+	U &= (i \mapsto u_i)^{[\![1, k]\!]} \oplus (i \mapsto u_{i-k})^{(\!(k,n]\!]} \\
+	V &= (i \mapsto v_i)^{[\![1, \ell]\!]} \oplus (i \mapsto v_{i-\ell})^{(\!(\ell,n]\!]}
 \end{align}
 Although for clarity and succinctness we will use $(u_i)$ instead of $(i \mapsto u_i)$.
-
-However we are more interested in performing arithmetic with these vectors.
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Addition
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Vector Addition}
-
-
-Consider pointwise vector addition $U^T + V^T$:
 \begin{align}
-	U^T + V^T 
+	U &= (u_i)^{[\![1, k]\!]} \oplus (u_{i-k})^{(\!(k,n]\!]} \\
+	V &= (v_i)^{[\![1, \ell]\!]} \oplus v_{i-\ell})^{(\!(\ell,n]\!]}
+\end{align}
+
+
+To add $U$ and $V$
+\begin{align}
+	U + V
 	&= \left( (u_i)^{[\![1, k]\!]} \oplus (u'_{i-k})^{(\!(k,n]\!]} \right) 
 		+
 		\left( (v_i)^{[\![1, \ell]\!]} \oplus (v'_{i-\ell})^{(\!(\ell,n]\!]} \right) \\
@@ -269,47 +300,51 @@ Consider pointwise vector addition $U^T + V^T$:
 		\oplus (u'_{i-k}+v'_{i-\ell})^{(\!(\ell,n]\!]} \right)
 \end{align}
 
-This formulation is not unique.
 
-The choice to partition $[\![1,n]\!]$ into $[\![1,k]\!] \oplus (\!(k,\ell]\!] \oplus (\!(\ell, n]\!]$ was arbitrary.
-
-We can just as easily partition $[\![1,n]\!]$ into $[\![1,\ell]\!] \oplus (\!(\ell, k]\!] \oplus (\!(k, n]\!]$ to get the equivalent expression:
-
+The choice to partition $[\![1,n]\!]$ into $[\![1,k]\!] \oplus (\!(k,\ell]\!] \oplus (\!(\ell, n]\!]$ is only one common refinement.
+We can just as easily use $[\![1,\ell]\!] \oplus (\!(\ell, k]\!] \oplus (\!(k, n]\!]$ to get the equivalent expression:
 \begin{equation}
-	U^T + V^T = \R[+] \left( (u_i + v_i)^{[\![1, \ell]\!]} 
+	U + V = \R[+] \left( (u_i + v_i)^{[\![1, \ell]\!]} 
 		\oplus (u_{i} + v'_{i-\ell})^{(\!(\ell,k]\!]} 
 		\oplus (u'_{i-k}+v'_{i-\ell})^{(\!(k,n]\!]} \right)
 \end{equation}
 
-We must be careful while evaluating these expressions to not forget that $(u'_{i-k} + v_i)$ is actually shorthand for the function:
+
+We must be careful while evaluating these expressions to not forget that $(u'_{i-k} + v_i)$ 
+is actually shorthand for the function:
 \begin{equation*}
-	i \mapsto u'_{i-k} + v_i
+	(u'_{i-k} + v_i) = (i \mapsto u'_{i-k}) + (i \mapsto v_i) = (i \mapsto u'_{i-k} + v_i)
 \end{equation*}
+As a function, it may not be evaluable over the entire range implied in a given term.
+The same lambda-lifting trick of using pseudo-functions as in the previous section easily solves this.
+
 
 For example, consider the concrete example where $n=5$, $k=4$ and $\ell = 1$ so that
-$U^T = [ u_1, u_2, u_3, u_4, u'_1 ]$ and
-$V^T = [ v_1, v'_1, v'_2, v'_3, v'_4 ]$.
-
+$U = [ u_1, u_2, u_3, u_4, u'_1 ]$ and
+$V = [ v_1, v'_1, v'_2, v'_3, v'_4 ]$.
 We will also only assume that the functions $u_i, u'_i, v_i$ and $v'_i$ are defined only on the intervals in which they appear (e.g. $u_5$ is undefined, as is $v'_1$).
-
 Then we have:
-\begin{equation}
-U^T + V^T = (u_i + v_i)^{[\![1,4]\!]} \oplus (u'_{i-4} + v_i)^{(\!(4,1]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(1,5]\!]}
-\end{equation}
+\begin{equation*}
+	U + V = (u_i + v_i)^{[\![1,4]\!]} \oplus (u'_{i-4} + v_i)^{(\!(4,1]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(1,5]\!]}
+\end{equation*}
 
 None of the individual subterms cannot be evaluated directly.
-
 In the first term, $v_i$ is not totally defined over the interval $[\![1,4]\!]$.
-
 In the third term, on the interval $(\!(1,5]\!]$, $u'_{i-4}$ would even evaluated on negative indices.
-
-However, these unevaluable terms also appear in the middle term however the interval $(\!(4,1]\!]$ is a negatively oriented interval and the offending points cancel!
-
-\begin{align}
-U^T + V^T &= (u_i + v_i)^{[\![1,1]\!] \oplus (\!(1,4]\!]} \oplus (u'_{i-4} + v_i)^{\ominus(\!(1,4]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(1,4]\!] \oplus (\!(4,5]\!]}\\
-&= (u_i + v_i)^{[\![1,1]\!]} \oplus \left((u_i + v_i) - (u'_{i-4} + v_i) + (u'_{i-4} + v'_{i-1})\right)^{[\![1,4]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(4,5]\!]} \\ 
-&= (u_i + v_i)^{[\![1,1]\!]} \oplus (u_i + v'_{i-1})^{(\!(1,4]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(4,5]\!]}
-\end{align}
+However, these unevaluable terms also appear in the middle term however the interval $(\!(4,1]\!]$ is a negatively oriented
+ interval and the offending points cancel exactly as in the previous chapter.
+\begin{align*}
+	U + V
+		&= (u_i + v_i)^{[\![1,1]\!] \oplus (\!(1,4]\!]} 
+			\oplus (u'_{i-4} + v_i)^{\ominus(\!(1,4]\!]} 
+			\oplus (u'_{i-4} + v'_{i-1})^{(\!(1,4]\!] \oplus (\!(4,5]\!]}\\
+		&= (u_i + v_i)^{[\![1,1]\!]} 
+			\oplus \left((u_i + v_i) - (u'_{i-4} + v_i) + (u'_{i-4} + v'_{i-1})\right)^{[\![1,4]\!]} 
+			\oplus (u'_{i-4} + v'_{i-1})^{(\!(4,5]\!]} \\ 
+		&= (u_i + v_i)^{[\![1,1]\!]} 
+			\oplus (u_i + v'_{i-1})^{(\!(1,4]\!]} 
+			\oplus (u'_{i-4} + v'_{i-1})^{(\!(4,5]\!]}
+\end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Matrix Addition
@@ -323,10 +358,21 @@ First we will consider the addition of two $n \times m$ block matrices $A$ and $
 	\;\;\;\;\; \text{and} \;\;\;\;\;
 	B = \left[ \begin{array}{cc} B_{11} & B_{12} \\ B_{21} & B_{22} \end{array} \right]
 \end{equation}
-If $A$ is an $n \times m$ matrix then $A_1, A_2, A_3, A_4$ are not entries but $(k \times \ell)$, $(n-k \times \ell)$, $(k \times m - \ell)$ and $(n-k \times m - \ell)$ matrices respectively.
+Since these are block matrices then $A_{ij}$ and $B_{ij}$ are not entries but sub matrices themselves.
+We shall assume that $A_{11}$ is a $(q \times r)$ matrix and $B_{11}$ is a $(s \times t)$ matrix.
 
+Also use $A_{11}$ to denote the region $A_{11}$ is defined over.
 
+Rely on context; full-sized symbol is function, superscript is region.
 
+\begin{equation}
+	A = A_{11}^{A_{11}} \oplus A_{12}^{A_{12}} \oplus A_{21}^{A_{21}} \oplus A_{22}^{A_{22}} 
+\end{equation}
+\begin{equation}
+	B = B_{11}^{B_{11}} \oplus B_{12}^{B_{12}} \oplus B_{21}^{B_{21}} \oplus B_{22}^{B_{22}} 
+\end{equation}
+
+The sum of 
 
 
 
@@ -337,11 +383,11 @@ If $A$ is an $n \times m$ matrix then $A_1, A_2, A_3, A_4$ are not entries but $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Matrix Multiplication}
 
-Matrix multiplication
 
 
-Assume two matrices which we plan to multiply $A$ which is $n \times m$ and $B$ which is $m \times p$.
-Both are block matrices:
+Again, we will assume $2 \times 2$ block matrices $A$ and $B$.
+However for these matrices to be conformable for multiplication they must be  $n \times m$ and $m \times p$ rather than
+both $n \times m$.
 \begin{equation}
 	A = \left[ \begin{array}{cc} A_{11} & A_{12} \\ A_{21} & A_{22} \end{array} \right]
 	\;\;\;\;\; \text{and} \;\;\;\;\;
