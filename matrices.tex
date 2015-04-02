@@ -60,6 +60,7 @@ the relationship between horizontal and vertical boundaries between blocks.
 
 \begin{figure}[ht]
 	\caption[Possible block overlaps of $2 \times 2$ block matrices.]{There are 9 possible permutations. 1x (a) 2x (b) 2x (c) 4x (d)}
+	\label{MatAdditionPermutations}
 	\begin{subfigure}[b]{0.24\textwidth}
 		\caption{}
 		\begin{equation*}
@@ -352,28 +353,152 @@ However, these unevaluable terms also appear in the middle term however the inte
 \section{Matrix Addition}
 
 
-First we will consider the addition of two $n \times m$ block matrices $A$ and $B$ of the form:
-\begin{equation}
+Now we will consider the addition of $2 \times 2$ block matrices $A$ and $B$ with overall dimensions $n \times m$ 
+of the form:
+\begin{equation*}
 	A = \left[ \begin{array}{cc} A_{11} & A_{12} \\ A_{21} & A_{22} \end{array} \right]
 	\;\;\;\;\; \text{and} \;\;\;\;\;
 	B = \left[ \begin{array}{cc} B_{11} & B_{12} \\ B_{21} & B_{22} \end{array} \right]
-\end{equation}
+\end{equation*}
 Since these are block matrices then $A_{ij}$ and $B_{ij}$ are not entries but sub matrices themselves.
 We shall assume that $A_{11}$ is a $(q \times r)$ matrix and $B_{11}$ is a $(s \times t)$ matrix.
+The sum of $A$ and $B$ will also be a $n \times m$ matrix.
+Our universe, $\mathcal{U}$ is therefore the the set of all indices in an $n \times m$ matrix:
+\begin{equation*}
+	\mathcal{U} 
+		\;=\; [\![0,n)\!)_{\mathbb{N}_0} \times [\![0,m)\!)_{\mathbb{N}_0} 
+		\;=\; \{ (i,j) \;|\; 0 \leq i < n \text{ and } 0 \leq j < m \text{ and } i,j \in \mathbb{N}_0 \} 
+\end{equation*}
 
-Also use $A_{11}$ to denote the region $A_{11}$ is defined over.
 
-Rely on context; full-sized symbol is function, superscript is region.
+First we must convert $A$ and $B$ to hybrid function notation. 
+We will use $\mathcal{A}_{ij}$ an $\mathcal{B}_{ij}$ to respectively denote the regions for which 
+$A_{11}$ and $B_{ij}$ are defined.
+Explicitly,
+\begin{align*}
+	&\mathcal{A}_{11} = [\![0,q)\!) \times [\![0,r)\!) &
+	\mathcal{A}_{12} = [\![0,q)\!) \times [\![r,m)\!)\;\; &
+	\mathcal{A}_{21} = [\![q,n)\!) \times [\![0,r)\!) &
+	\mathcal{A}_{22} = [\![q,n)\!) \times [\![r,m)\!) \\
+	&\mathcal{B}_{11} = [\![0,s)\!) \times [\![0,t)\!) &
+	\mathcal{B}_{12} = [\![0,s)\!) \times [\![t,m)\!)\;\; &
+	\mathcal{B}_{21} = [\![s,n)\!) \times [\![0,t)\!) &
+	\mathcal{B}_{22} = [\![s,n)\!) \times [\![t,m)\!)
+\end{align*}
+Which will allow us to rewrite $A$ and $B$ as:
+\begin{align*}
+	A &= A_{11}^{\mathcal{A}_{11}} \oplus 
+		A_{12}^{\mathcal{A}_{12}} \oplus 
+		A_{21}^{\mathcal{A}_{21}} \oplus 
+		A_{22}^{\mathcal{A}_{22}} \\
+	B &= B_{11}^{\mathcal{B}_{11}} \oplus 
+		B_{12}^{\mathcal{B}_{12}} \oplus 
+		B_{21}^{\mathcal{B}_{21}} \oplus 
+		B_{22}^{\mathcal{B}_{22}} 
+\end{align*}
+
+
+Depending on the relation of $q$ with $s$ and $r$ with $t$ the regions in the sum of $A$ and $B$ may vary.
+In Figure~\ref{MatAdditionPermutations}, the shapes of block matrices that can arise are shown.
+Intuitively, the approach we will take is to not concern ourselves with all possible cases that \emph{could} arise but to just
+choose one ordering.
+If this ordering is wrong, then the hybrid function multiplicities will handle cancellations to yield the correct expression regardless.
+
+
+Since there are 4 partitions in $A$ and 4 partitions in $B$, we only require 7 pieces to form a common refinement.
+To this refinement for, we follow the same method as in the previous chapter.
+\begin{equation}
+	\label{eqn:2x2CommonRefinement}
+	\mathcal{A}_{11}, \; \mathcal{A}_{12}, \;  \mathcal{A}_{21}, \;
+	\mathcal{B}_{11}, \; \mathcal{B}_{12}, \; \mathcal{B}_{21}, \; \mathcal{P}
+\end{equation}
+where $\mathcal{P}$ is defined as,
+$\mathcal{P} = \mathcal{U} 
+		\ominus (\mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21} \oplus
+				\mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21})$.
+
+
+Clearly we can still express $\mathcal{A}_{22}$ using only the terms in (\ref{eqn:2x2CommonRefinement}) by
+\begin{align*}
+	\mathcal{A}_{22} &= \mathcal{U} \ominus (\mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21})\\
+		& = \mathcal{U} \ominus (\mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21} \oplus \mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21}) \oplus \mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21}\\
+		&= \mathcal{P} \oplus \mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21}
+\end{align*}
+Similarly $\mathcal{B}_{22}$ can be represented as $\mathcal{B}_{22} = \mathcal{P} \oplus \mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21}$
+
+When $A$ and $B$ are written in respect to this common refinement, we get
+\begin{align*}
+	A &= A_{11}^{\mathcal{A}_{11}} \oplus 
+		A_{12}^{\mathcal{A}_{12}} \oplus 
+		A_{21}^{\mathcal{A}_{21}} \oplus 
+		A_{22}^{\mathcal{P} \oplus \mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21}} \\
+	B &= B_{11}^{\mathcal{B}_{11}} \oplus 
+		B_{12}^{\mathcal{B}_{12}} \oplus 
+		B_{21}^{\mathcal{B}_{21}} \oplus 
+		B_{22}^{\mathcal{P} \oplus \mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21}} 
+\end{align*}
+
+And addition becomes straightforward. 
+We add functions for terms over corresponding regions.
+Since we are using \emph{generalized partitions}, not traditional partitions we cannot guarantee disjointness.
+
+\begin{align*}
+	(A+B) = \R[+] & \left(  (A_{11}+B_{22})^{\mathcal{A}_{11}} \oplus 
+		(A_{12} + B_{22})^{\mathcal{A}_{12}} \oplus 
+		(A_{21} + B_{22})^{\mathcal{A}_{21}} \right. \\ &\oplus 
+		(A_{22} + B_{11})^{\mathcal{B}_{11}} \oplus 
+		(A_{22} + B_{12})^{\mathcal{B}_{12}} \oplus 
+		(A_{22} + B_{21})^{\mathcal{B}_{21}} \\ &\oplus
+		\left.(A_{22} + B_{22})^{\mathcal{P}} \right)
+\end{align*}
+
+
+\todo[inline]{Evaluating at points}
+
+
+This extends easily to addition of more complex block matrices as well.
+If we consider conformable matrices
+
+\begin{equation*}
+	A = \begin{bmatrix}
+		A_{11} & \ldots & A_{1\ell}\\
+		\vdots & & \vdots \\
+		A_{k1} & \ldots & A_{k\ell}	
+	\end{bmatrix}
+	\;\;\;\;\;
+	B = \begin{bmatrix}
+		B_{11} & \ldots & B_{1m}\\
+		\vdots & & \vdots \\
+		B_{n1} & \ldots & B_{nm}	
+	\end{bmatrix}
+\end{equation*}
+
+
+With regions $\mathcal{A}_{ij}$ and $\mathcal{B}_{ij}$
+and sequences:
+ 
+$0 = q_0 < q_1 < \ldots < q_k = n?$ 
+ 
+$0 = r_0 < r_1 < \ldots < r_\ell = m?$ 
+ 
+$0 = s_0 < s_1 < \ldots < s_n = n?$ 
+  
+$0 = t_0 < t_1 < \ldots < t_m = m?$ 
+
+\begin{equation*}
+	\mathcal{A}_{ij} = [\![q_{i-1}, q_i )\!) \times [\![ r_{j-1}, r_{j} )\!)
+	\;\;\;\;\;
+	\mathcal{B}_{ij} = [\![s_{i-1}, s_i )\!) \times [\![ t_{j-1}, t_{j} )\!)
+\end{equation*}
+
 
 \begin{equation}
-	A = A_{11}^{A_{11}} \oplus A_{12}^{A_{12}} \oplus A_{21}^{A_{21}} \oplus A_{22}^{A_{22}} 
+	(A+B) = \R[+] \left( 
+		\left( \bigoplus (A_{ij} + B_{nm})^{\mathcal{A}_{ij}} \right) \oplus
+		\left( \bigoplus (A_{nm} + B_{ij})^{\mathcal{B}_{ij}} \right) \oplus
+			(A_{nm} + B_{nm})^{\mathcal{P}} 
+	\right)
 \end{equation}
-\begin{equation}
-	B = B_{11}^{B_{11}} \oplus B_{12}^{B_{12}} \oplus B_{21}^{B_{21}} \oplus B_{22}^{B_{22}} 
-\end{equation}
-
-The sum of 
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
