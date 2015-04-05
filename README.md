@@ -21,17 +21,10 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
   - **2.4 Pseudo-functions** https://github.com/mike-ghes/MSc-Thesis/issues/7
 
 #### 3 Symbolic Linear Algebra
-  - https://github.com/mike-ghes/MSc-Thesis/issues/8
-  - Need to do introduction.
-  - **3.1 Oriented Intervals** https://github.com/mike-ghes/MSc-Thesis/issues/9
-  - **3.2 Vector Algebra** https://github.com/mike-ghes/MSc-Thesis/issues/10
-    - Need to switch over to *-reduction from marked join.
-    - Figure out outer product which should (hopefully) lead into matrix multiplication
-	- Need to figure out something clever still.
-  - **3.3 Matrix Algebra**
-    - Effectively unstarted.
-	- Addition has already been done.
-	- Multiplication depends on vector outer product	
+  - Introduction needs another paragraph
+  - Matrix Addition: example of evaluating at points
+  - Matrix Multiplication: many blocks (+example?)
+  - Conclusions
 
 #### 4 Integration I
   - https://github.com/mike-ghes/MSc-Thesis/issues/11
