@@ -7,47 +7,39 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
 
 
 #### 1 Introduction
-  - https://github.com/mike-ghes/MSc-Thesis/issues/2
   - Needs to be completely rewritten. File hasn't been touched in 4 months. Starting with the intro/conclusion wasn't very helpful.
   
 #### 2 Hybrid Set Theory
-  - Needs a bit more fluff to blend everything together in the intro.
-  - **2.1 Hybrid Sets** https://github.com/mike-ghes/MSc-Thesis/issues/4
-    - Examples in 2.1.1 and 2.1.2 are a bit silly but I wanted to get something concrete in.
-  - **2.2 Hybrid Relations** https://github.com/mike-ghes/MSc-Thesis/issues/5
-    - Another silly example in 2.2.1, just wanted to show a relation.
-	- Potentially replace with a graph flow example.
-  - **2.3 Hybrid Functions** https://github.com/mike-ghes/MSc-Thesis/issues/6
-  - **2.4 Pseudo-functions** https://github.com/mike-ghes/MSc-Thesis/issues/7
+  - p12: Finish writing up about flow problems
+  - p17: Cut. Haven't worked on how folds with different operators interact.
 
 #### 3 Symbolic Linear Algebra
-  - Introduction needs another paragraph
-  - Matrix Addition: example of evaluating at points
-  - Matrix Multiplication: many blocks (+example?)
-  - Conclusions
+  - p26: Note about matrices with more than 4 blocks.
+  - p34: Example on evaluating summed matrices.
+  - p39: Example on evaluating product of matrices
+    - Extend to more blocks
+	- Wrap up chapter
 
 #### 4 Integration I
-  - https://github.com/mike-ghes/MSc-Thesis/issues/11
-  - Mostly happy with the chapter, aside from not really saying anything new.
-  - Some of the pages break at weird spots.
-  - Riemann integration on the chopping block (replace with Lebesgue)
-
+  - p41: Introduction.
+  - p42: Move this in to Hybrid Set 2? Along with Oriented Intervals.
+  - p44: Cut in favour of measuring blocks and oriented Lebesgue. (-3 pages)
+  
+  
 #### 5 Integration II
-  - To finish next.
-  - Currently not really related to everything else.
-  - Might just stop at Stokes on singular chains and leave integration on manifolds as a remark.
+  - A lot of work to do. Don't have a solid direction.
 
 #### 7 Convolution
-  - Just about done.
+  - p62: Diagram
   
 #### 8 Conclusions
   - Again, needs to be completely rewritten.
 	
 #### A Lebesgue Integration
-  - Possible replacement for Riemann section.	
+  - Replace Riemann integrals.
 	
 #### B Symbolic Convolution with Infinite End-Points
-  - Prove all 16 cases (separated from 6.3)
+  - Done.
 		
 	
 		

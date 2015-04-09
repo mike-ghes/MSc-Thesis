@@ -341,50 +341,40 @@ But first we must establish \emph{hybrid relations}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Ordering Algebra
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Algebra of Orderings}?!?!}
-Consider a set $S$ with some ordering $\succ$.
-Then we can define the hybrid relations $[\succ]$ and $[=]$ as a hybrid relations between $S$ and itself 
-(i.e. elements of $\mathbb{Z}^{S\times S}$).
-Which we define as,
-\begin{equation}
-	[\succ] = \hset{ (x,y)^1, (y,x)^{-1} : x \succ y }
-\end{equation}
-\begin{equation}
-	[=] = \hset{ (x,x)^1, : x \in S }
-\end{equation}
-These hybrid relations can then be algebraically manipulated to create other relations on $S$.
-For example, we can construct their respective dual relations $[\prec]$ and $[\neq]$ as well as the non-strict $[\succeq]$:
-\begin{equation}
-	[\prec] = \ominus [\succ]
-\end{equation}
-\begin{equation}
-	[\neq] = (S\times S) \ominus [=]
-\end{equation}
-\begin{equation}
-	[\succeq] = [=] \oplus [\succ]
-\end{equation}
-We can even use supp to define the notion of a total ordering.
-We say that $\succeq$ is a total ordering of $S$ if:
-\begin{equation}
-	\text{supp}[\succeq] = S \times S
-\end{equation}
+\subsection{Example: \emph{Maximum Flow}}
 
-\begin{figure}[h]
-	\caption[Poset short title]{poset caption\label{poset}}
-	\centering
-	\begin{tikzpicture}[->, >=stealth, semithick]
-		\tikzstyle{every node}=[draw,circle,fill=white,minimum size=4pt]
-		\draw (0,0) node (A) {$A$};
-		\draw (-1, 1) node (B) {$B$};
-		\draw (1,1) node (C) {$C$};
-		\draw (0,2) node (D) {$D$};
-	
-		\draw (A) -> (B);
-		\draw (B) -> (D);
-		\draw (A) -> (C);
-		\draw (C) -> (D);
-	\end{tikzpicture}
-\end{figure}
+The maximum flow problem involves finding out the maximal volume that can be pushed from a single source node
+to a single sink node in a flow network.
+Formally, we will let $G=(V,E)$ be a directed graph such that for every edge $(u,v) \in E$ there is a non-negative
+\textbf{capacity} denoted $c(u,v)$ (for $(u,v) \notin E$, assume that $c(u,v)=0$).
+A flow in $G$ is a a function $f:V \times V \to \mathbb{Z}$ subject to the following conditions:
+\begin{description}
+	\item[Constrained by capacity:] $f(u,v) \leq c(u,v)$ 
+	\item[Skew Symmetric:] $f(u,v)=-f(u,v)$
+	\item[Conservative:] For all $u \neq s$ and $u \neq t$, $\sum_{w \in V} f(u,w) = 0$
+\end{description}
+
+The flow could alternatively be modelled using a hybrid relations.
+
+Let $\mathcal{E} = \{ (u,v) \ominus (v,u) | (u,v) \in E \subseteq V \times V \}$
+
+Using $\mathcal{E}$ as a basis, we can construct flows which are skew symmetric.
+
+Define $\partial$ for all edges in $E$ by $\partial(u,v) = v$ and extend linearly.
+
+So for an element of $\mathcal{E}$ the ``boundary'' will be of the form $\partial(e) = \hset{v^1, u^{-1}}$
+
+Then conservation can be written as $\partial(f) = k \cdot \hset{s^{-1}, t^{+1}}$ for some constant $k$.
+
+Residual graphs $c_f = c \ominus f$ 
+
+This constant $k$ turns out to be the overall flow through the graph.
+
+Maximum flow is then just finding the maximum $k$ for a valid flow.
+
+\todo[inline]{finish}
+
+\newpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
