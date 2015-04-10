@@ -1,4 +1,4 @@
-\chapter{Integration I}
+\chapter{Integration}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,93 +57,157 @@ This will provide a base for the following chapter to investigate the cubic sing
 In Chapter 6, we will introduce the oriented Lebesgue integral.
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% N-CUBES
+% LEBESGUE
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Lebesgue Integral}
 
-\section{Higher dimension intervals}
-
-For now, we will concern ourselves only with oriented, $n$-dimensional, axis-aligned rectangles in $\mathbb{R}^n$.
-In one dimension, the previously discussed oriented intervals cover most of the ``obvious shapes'' one would be interested in.
-Moving to two dimensions, there are many more ``obvious shapes'' to consider but we will temporarily ignore triangles, circles and even rectangles that are tilted.
-We could also use triangles instead of rectangles as our primitive of choice. 
-This would generalize to $n$-simplexes in higher dimensions.
-Since $n$-simplexes and $n$-cubes end up b\cite{choquetanalysis}
-But, first we must introduce some notation to describe these and higher dimension rectangles. 
-
-At the moment the only rectangles we have defined are the one-dimensional ``oriented interval''.
-Hence we will also refer to this as a 1-cube.
-We construct higher dimensional $n$ rectangles using the Cartesian product.
 \begin{definition}
-	Let $X = \hset{ x_1^{m_1}, ... , x_k^{m_k} }$ and $Y= \hset{ y_1^{n_1}, ... , y_\ell^{n_\ell} }$ be hybrid sets.
-	We define the \textbf{Cartesian product of hybrid sets $\boldsymbol{X}$ and $\boldsymbol{Y}$}, denoted with $\times$ operator as:
-	\begin{equation}
-		X \times Y = \hset{ (x, y)^{m \cdot n} \; : \; x^m \in X, y^n \in Y }
-	 \end{equation}
+Let $(X, \mu )$ be a measure space and $S \in \mathcal{L}(X, \mu)$ a measurable set. If $\ind[S]$ is indicator function $\ind[S] : X \to \{ 0, 1 \}$ given by $\ind[S] (x) = 1$ if $x \in S$ and $\ind[S] (x) = 0$ otherwise.
+Then we define:
+\begin{equation}
+\int_X \! \ind[S] \; d \mu := \mu ( S )
+\end{equation}
 \end{definition}
 
-If $[\![a,b]\!]$ and $[\![c,d]\!]$ are both positively oriented 1-rectangles then their Cartesian product is shown in Figure 4.1 is clearly a two dimensional rectangle or \emph{2-rectangle}. 
-Taking the Cartesian product of a 2-rectangle and 1-rectangle gives a 3-rectangle in $\mathbb{R}^3$. 
-We should note here that we do not distinguish between $((x,y),z)$ and $(x,(y,z))$ but rather we treat both as different names for the ordered triple $(x,y,z)$.
-We similarly associate parentheses in higher dimensions as well.
+We define a simple function as a function which maps to a finite set.
+\begin{theorem}
+If $\varphi$ is a simple function, then we it can be represented as a finite sum of indicator functions:
+\begin{equation}
+\varphi := \sum_{k=0}^n a_k \ind[E_k]
+\end{equation}
+Where $\{ a_k \}_{k=0}^n$ is the set of values in the range of $\varphi$ and $E_k = \varphi^{-1}( \{ a_k \} )$, the set of all points which map to $a_k$.
+\end{theorem}
 
+This allows us to define the integral of a simple function.
+
+\begin{definition}
+Let $\varphi = \sum_{k=0}^n a_k \ind[E_k]$ be a simple function. We define the integral:
+\begin{equation}
+\int_X \! \varphi \; d \mu = \int_X \! \sum_{k=0}^n a_k \ind[E_k] d \mu = \sum_{k=0}^n a_k  \int_X \! \ind[E_k] d \mu
+\end{equation}
+\end{definition}
+
+Next we define integral of a non negative functions in $\extendedreal$
+
+\begin{definition}
+Let $(X,\mu)$ be a measure space and $f: X \to [0,\infty]$. 
+\begin{equation}
+\int_X \! f \; d\mu := \text{sup} \left\{ \int_X \varphi : \varphi \text{ simple, and } 0 \leq \varphi \leq f \right\}
+\end{equation}
+\end{definition}
+
+We use the simple function $\psi_n$ defined as:
+\begin{equation}
+\psi_n = \sum_{k=0}^{n2^n -1} \left[ \left(\frac{k}{2^n}\right)^{\left[ \frac{k}{2^n}, \frac{k+1}{2^n} \right)} \right] + n^{[n,\infty]}
+\end{equation}
+
+Notationally, this definition is rather heavy but is easily understood geometrically as seen in Figure 4.1
+
+\todo{figure description}
 \begin{figure}[ht]
-\caption[Cartesian product of two 1-rectangles]{The Cartesian product of two positively oriented 1-rectangles $[\![a,b]\!]$ and $[\![c,d]\!]$ is a positively oriented 2-rectangle.}
+\caption[Approximations using simple functions]{asdfasdf }
 \centering
-\begin{tikzpicture}[y=1cm, x=2.5cm]	
+
+\begin{tikzpicture}[y=1cm, x=2.5cm]
+
+
+	\foreach \x in {0,0.0625,...,3.99}
+		\draw[fill, color=black!10] (\x,0) rectangle ++ (0.0625, \x);
+	\draw[fill, color=black!10] (4,0) rectangle (5,4);
+
+	\foreach \x in {0,0.125,...,2.9}
+		\draw[fill, color=black!20] (\x,0) rectangle ++ (0.125, \x);
+	\draw[fill, color=black!20] (3,0) rectangle (5,3);
+	
+	\foreach \x in {0,0.25,...,1.9}
+		\draw[fill, color=black!40] (\x,0) rectangle ++ (0.25, \x);
+	\draw[fill, color=black!40] (2,0) rectangle (5,2);
+	
+	\foreach \x in {0,0.5,...,0.9}
+		\draw[fill, color=black!60] (\x,0) rectangle ++ (0.5, \x);
+	\draw[fill, color=black!60] (1,0) rectangle (5,1);
+	
+	
+	
  	%axis
-	\draw(0,0) -- coordinate (x axis mid) (4,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,4);
-    	
+	\draw(0,0) -- coordinate (x axis mid) (5,0);
+    	\draw (0,0) -- coordinate (y axis mid) (0,5);
     	%ticks
-    	\draw[fill] (1,1pt) rectangle (3,-1pt);    	
-    	\draw (1, 3pt) -- (1, -3pt) node[anchor=north] {$a$};
-    	\draw (3, 3pt) -- (3, -3pt) node[anchor=north] {$b$};
-    	\draw (2, 0) node[anchor=north] {$[\![a,b]\!]$};
-    	
-    	\draw[fill] (1pt,1) rectangle (-1pt, 3);
-    	\draw (3pt, 1) -- (-3pt, 1) node[anchor=east] {$c$};
-    	\draw (3pt, 3) -- (-3pt, 3) node[anchor=east] {$d$};
-    	\draw (0,2) node[anchor=east] {$[\![c,d]\!]$};
-    	
-    	\draw[fill, color=black!20] (1,1) rectangle (3,3);
-    	\draw (2, 2) node {$[\![a,b]\!] \times [\![c,d]\!]$ };
+    	\foreach \x in {0,1,...,5}
+     		\draw (\x,1pt) -- (\x,-3pt)
+			node[anchor=north] {\x};
+    	\foreach \y in {0,1,...,5}
+     		\draw (1pt,\y) -- (-3pt,\y) 
+     			node[anchor=east] {\y}; 
+	
+	\draw (0,0) -- (5,5);
+
+	
+	%legend
+	\begin{scope}[shift={(5.25,2.5)}] 
+	
+	\draw[yshift=4\baselineskip, fill, color=black!60] (0,0) rectangle (0.5,0.2) --++ (0,-0.1)
+		node[right, color=black]{$\psi_1$};
+	\draw[yshift=3\baselineskip, fill, color=black!40] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
+		node[right, color=black]{$\psi_2$};	
+	\draw[yshift=2\baselineskip, fill, color=black!20] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
+		node[right, color=black]{$\psi_3$};
+	\draw[yshift=\baselineskip, fill, color=black!10] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
+		node[right, color=black]{$\psi_4$};
+	\draw (0,0) -- (0.5,0) node[right] {$id$};
+	\end{scope}
 \end{tikzpicture}
 \end{figure}
 
+
+Which for any non-negative $f$ allows us to define $\varphi_n = \psi_n \circ f$ a simple function.
+
+Obviously we have $\varphi_n$ simple since $\psi_n$ is simple. 
+
+Since $\psi_n(x) \leq x$ for all $x$ then we also have $0 \leq \varphi_n \leq f$.
+
+Most importantly we have $0 \leq f(x) - \varphi_n(x) \leq 2^{-n}$ and so $\varphi_n$, uniformly approaches $f$ as $n$ approaches infinity. 
+
 \begin{theorem}
-	The Cartesian product of a $k$-rectangle in $\mathbb{R}^m$ (where, $k\leq m$) 
-	and $\ell$-rectangle in $\mathbb{R}^n$ (again, $\ell \leq n$) 
-	is a $(k+\ell)$-rectangle in $\mathbb{R}^{m+n}$.
+Let $f$ be a function mapping to $\mathbb{R}$. Then $f = f^+ - f^-$ where $f^+$ and $f^-$ are non-negative functions given by:
+\begin{align}
+f^+(x) &:= \mathrm{max}( 0, f(x)) \\
+f^-(x) &:= \mathrm{max}(0, -f(x)) 
+\end{align}
 \end{theorem}
 
-For completeness we will also define a 0-rectangle as a hybrid set containing a single point with multiplicity $1$ or $-1$.
-Firstly this allows us to embed $k$-rectangles in $\mathbb{R}^n$.
-For example $[\![a,b]\!] \times [\![c,d]\!] \times \hset{e^1}$ is the product of two 1-rectangles and a 0-rectangle (all over $\mathbb{R}$) and so it is a 2-rectangle over $\mathbb{R}^3$.
-Specifically, it is the 2-rectangle $[\![a,b]\!] \times [\![c,d]\!]$ on the plane $z=3$.
-This also illustrates the principle that given a $k$-rectangle in $\mathbb{R}^n$ where $n>k$ we can always find a $k$ dimensional subspace which also contains the rectangle.
-We will re-use the interval notation from earlier although one should be careful to ``type-check'' while interpreting.
-When $a$ and $b$ are real numbers then we continue to use the definition $[\![a,b]\!] = [a,b) \ominus [b,a)$.
-However, when $\boldsymbol{a}$ and $\boldsymbol{b}$ are $n$-tuples (for example, coordinates in $\mathbb{R}^n$ then this is \emph{not} the oriented line interval $[\boldsymbol{a}, \boldsymbol{b}) \ominus [\boldsymbol{b}, \boldsymbol{a})$.
+Now we have everything we need to define integrals for arbritrary functions mapping to $\mathbb{R}$:
 
 \begin{definition}
-	Let $\boldsymbol{a} = (a_1, a_2, \ldots, a_n)$ and 
-	$\boldsymbol{b} = (b_1, b_2, \ldots, b_n)$ be ordered $n$-tuples then we use the notation:
-	\begin{align}
-		[\![ \boldsymbol{a}, \boldsymbol{b} ]\!] 
-		= [\![a_1, b_1]\!] \times [\![a_2, b_2 ]\!] \times \ldots \times [\![a_n , b_n]\!]
-	\end{align}
+asdfasd
+\begin{equation}
+\int_X f d \mu = \int_X f^+ d \mu - \int_X f^- d \mu
+\end{equation}
 \end{definition}
 
-The dimension of $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ is equal to the number of indices where $a_i$ and $b_i$ are distinct.
-For any $i$ where $a_i = b_i$, the corresponding term: $[\![ a_i, b_i ]\!]$ will be a hybrid set containing a single point, that is, a 0-rectangle.
-The orientation of $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ is based on the number of negatively oriented intervals $[\![a_i,b_i]\!]$.
-Should there be an odd number of indices $i$ such that $a_i > b_i$ then $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ will also be negatively oriented.
-Otherwise, it will be positively oriented. 
+%\begin{example}
+%\begin{equation}
+%\int_{[0,1]} \! \ind[\mathbb{Q}] \; d\mu = \mu(\mathbb{Q}) = 0
+%\end{equation}
+%\end{example}
+
+%\begin{example}
+%\begin{equation}
+%\int_{[0,1]} \! x^2 d \mu = \lim_{n \to \infty} \sum_{k=0}^{2^n -1} \frac{k}{2^n} \int_{[0,1]} \ind[[k/2^n, (k+1)/2^n)]
+%\end{equation}
+%\end{example}
+
+This was a standard treatment of Lebesgue integration.
+
+Mathematically it is very simple to extend this to integrals of hybrid sets over $L(X, \mu)$ by linearity.
+That is, given $\Gamma \in \hsetover[\mathcal{L}(X,\mu)]$:
+
+\begin{equation}
+\int_\Gamma f d \mu = \sum_{\sigma \in \Gamma} \Gamma(\sigma) \int_\sigma f d\mu
+\end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -256,7 +320,6 @@ where $P = \sup \Big\{ \mathcal{P} [\![a,b]\!] \Big\}$
 % BOUNDARY
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
 \section{Boundary Operator}
 
 
@@ -511,8 +574,6 @@ Showing the relationship between $[\![a,b]\!] \times [\![c,d]\!]$ and $[\![b,a]\
 \end{figure}
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % CHAINS
@@ -700,11 +761,284 @@ As well as the related cochain complex: the \emph{``De Rham cohomology''} and ho
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% DIFFERENTIAL FORMS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Differential Forms}
+
+\begin{definition}
+	A \textbf{(differential) 0-form} $\beta$ on $\mathbb{R}^n$ is a function $\beta : \mathbb{R}^n \to \mathbb{R}$.
+	A \textbf{(differental) 1-form} $\omega$ on $\mathbb{R}^n$ is an expression of the form:
+	\begin{equation}
+		\omega = f_1(\text{x}) \; dx_1 + f_2(\text{x}) \; dx_2 + \ldots + f_n(\text{x}) \; dx_n
+	\end{equation}
+\end{definition}
+
+There is very little to say about 0-forms, they are just functions on $\mathbb{R}^n$.
+1-forms look very much like something we're used to integrating with.
+Of course if all but one of $f_i$ are zero then we have a \emph{basic 1-form}, $\omega = f_i \; dx_i$ which is nothing new to integrate over.
+Using the linearity of integration, general 1-forms can easily be seperated into a sum of integrals on basic 1-forms.
+Typically, 1-forms are encountered inexplicitly in a multivariate calcululus class with Green's theorem:
+\begin{equation}
+	\tag{Green's Theorem}
+	\int_D \left( \frac{\partial f_2}{\partial x} - \frac{\partial f_1}{\partial y}  \right) \;dx\;dy 
+	=\int_{\partial D} f_1(x,y) \; dx + f_2(x,y) \; dy
+\end{equation}
+
+\todo[inline]{
+Formally, $T_x(\mathbb{R}^n) \to \mathbb{R}$.
+
+
+}
+
+
+We can add differential forms but rather than multiplication we use the $\wedge$ product.
+
+To create higher order $p$-forms we use the wedge operator $\wedge$. 
+
+First of all, the wedge product is primarily defined by being \emph{anti-commutative} or \emph{skew-symmetric}.
+That is, $dx \wedge dy = -dy \wedge dx$.
+Several results immediately follow from this.
+When used on two identical $dx$, we have $dx \wedge dx = - dx \wedge dx$ and so the result must be zero.
+Additionally, for any permutation $\sigma$ of $[p]$:
+\begin{equation}
+	dx_1 \wedge ... \wedge dx_p = \text{sgn}(\sigma) \; dx_{\sigma(1)} \wedge ... \wedge dx_{\sigma(p)}
+\end{equation}
+
+
+\begin{definition}
+	Given a $k$-rectangle $\Omega \in \mathbb{R}^n$ with coordinates $\text{x} = (x_1, x_2, \ldots, x_n)$
+	A \textbf{differential $p$-form} $\beta$ over $\Omega$ has the form:
+	\begin{equation}
+		\beta = \sum_{j_1 \in [n]} \ldots \sum_{j_p \in [n]} b_{(j_1, \ldots, j_p)}(\text{x}) \; 
+				\text{d} x_{j_1} \wedge \ldots \wedge \text{d} x_{j_p}
+	\end{equation}
+	Typically, we will take $j = (j_1, \ldots, j_p)$ and express $\beta$ as, 
+	$\sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_p}$.
+	We denote the space of all $p$-forms on $\Omega$ by $\Lambda^p(\Omega)$.
+\end{definition}
+
+
+$dx^i$ and $dx^j$ are trivial differential 1-forms by taking $f_i=1$ and $f_j=1$ respectively.
+When we take the wedge product of these, we end up with the 2-form $dx^i \wedge dx^j$.
+It should then seem natural to think of $\wedge$ as an operator which maps 
+a $k$-form and an $\ell$-form to a $(k+\ell)$-form.
+For general $p$ and $q$-forms we define the wedge product.
+
+\begin{definition}
+	Let $\alpha = \sum_i a_i(x) \; dx_{i_1} \wedge \ldots \wedge dx_{i_p} \in \Lambda^p(\Omega)$ and 
+	$\beta = \sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_q} \in \Lambda^q(\Omega)$. We extend the
+	wedge product $\wedge : \Lambda^p(\Omega) \times \Lambda^q(\Omega) \to \Lambda^{p+q}(\Omega)$ by:
+	\begin{equation}
+		\alpha \wedge \beta  = \sum_{i,j} a_i(x) b_j(x) \; 
+			dx_{i_1} \wedge \ldots \wedge dx_{i_p} \wedge 
+			dx_{j_1} \wedge \ldots \wedge dx_{j_q}
+	\end{equation}
+\end{definition}
+
+Although we take all possible $\binom{n}{q} \cdot \binom{n}{p}$ pairs of 
+$a_i (x) dx_{i_1} \wedge \ldots \wedge dx_{i_p}$ and $b_i (x) dx_{i_1} \wedge \ldots \wedge dx_{i_p}$,
+most of the possible terms will end up being zero.
+If \emph{any} of the terms in $dx_{i}$ appears in $dx_{j}$, then the wedge product will be zero 
+and no term will be contributed.
+As such, if $q+p > n$, there will be a duplicate in every term and so the entire sum will be zero.
+When all is said and done, at most we will have $\binom{n}{p+q}$ terms.
+Rather than the skew-symmetry we had when commuting $dx \wedge dy$, in higher dimensions the sign depends on 
+$p \cdot q$ of the $p$-form and $q$-form we are commuting.
+Specifically, 
+\begin{equation}
+	\alpha \wedge \beta = (-1)^{pq} \beta \wedge \alpha
+\end{equation}
+This can be easily seen by commuting each of $dx_{j_1}, \ldots dx_{j_q}$ terms each past 
+$dx_{i_1}\wedge \ldots \wedge dx_{i_p}$. 
+So we are commuting $q$ terms each past $p$ terms, reversing the sign each time for a net $(-1)^{pq}$.
+
+
+The wedge product is only one part of our algebra of differential forms.
+We have several other nice identities for its behaviour with addition and multiplication.
+For the following, we consider $f$ to be a function on $\mathbb{R}^n$.
+Additionally we consider the differential forms $\omega_1$ and $\omega_2$ to be $k$-forms, $\alpha$ to be a $p$-form
+ and $\beta$ to be an $q$-form.
+Then we have the following:
+\begin{align}
+	(\omega_1 + \omega_2) \wedge \alpha  & \;=\; \omega_1 \wedge \alpha + \omega_2 \wedge \alpha \\
+	(\omega_1 \wedge \alpha) \wedge \beta & \;=\; \omega_1 \wedge ( \alpha \wedge \beta ) \\
+	(f \cdot \omega_1) \wedge \alpha & \;=\;  f \cdot (\omega_1 \wedge \alpha) \;=\; \omega_1 \wedge (f \cdot \alpha)
+\end{align}
+These should all be quite obvious from definitions. 
+We should also note the identities which are \emph{not} present.
+We have defined the sum of $\omega_1$ and $\omega_2$: two differential forms which are the same dimension but not
+the sum of $\alpha$ and $\beta$: differential forms with different dimension.
+It is clear how one would add two differential forms of the same dimension as both were defined as sums to begin with.
+We also do not define the multiplication of $\cdot$ two differential forms but we multiplying a form by a function is simply:
+\begin{equation}
+	(f \cdot \alpha) (x) = \sum_i f(x)\cdot a_i(x) \; dx_{i_1} \wedge \ldots \wedge dx_{i_p}
+\end{equation}
+
+
+Integrating over a $k$-form is quite simple.
+First we shall consider integrating a $k$-form over a $k$-rectangle in $\mathbb{R}^k$.
+Such a $k$-form is also known as a \emph{top-dimensional form}.
+As we saw previously, any form of higher degree must be zero.
+If $\omega$ is such a top form then we can always write
+\begin{equation}
+	\omega = f \; dx_1 \wedge \ldots \wedge dx_k
+\end{equation}
+for some function $f$.
+Other presentations of $\omega$ exist, but we can always achieve such a presentation by commuting over $\wedge$ 
+to the canonical ordering $x_1, \ldots, x_n$.
+Once we have the $k$-form in this presentation, we just remove the wedges and evaluate the integral using the
+integrand $f \; dx_1 \;dx_2 \ldots dx_k$.
+
+\begin{definition}
+Let $\alpha$ be a $k$-form on $\Omega \subset \mathbb{R}^n$ of the form $\alpha = A(x) \; \text{d}x_1 \wedge ... \wedge \text{d} x_n$.
+If $A \in \mathcal{L}^1 (\Omega , \text{d}x)$ then we define:
+\begin{equation}
+\int_\Omega \alpha = \int_\Omega A(x) \; \text{d}x
+\end{equation}
+Where the left-hand side is the integral of a $k$-form and the right-hand side is a Lebesgue integral.
+For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the sum of integrals.
+\end{definition}
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% STOKE'S THEOREM
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Stokes' Theorem}
 
 
+\begin{equation}
+	\int_{\partial M} \omega = \int_M d\omega
+\end{equation}
+
+
+\section{Example}
+
+
+\section{Manifolds}
+
+\subsection{Singular Cubes}
+
+Up until now we have been dealing with the very small set of axis aligned cubes.
+
+\begin{definition}
+	Manifold
+\end{definition}
+
+\begin{definition}
+	Given a map $\varPhi : X \to Y$, $x \in X$ pushes forward to $\Phi(x) \in Y$
+\end{definition}
+
+Forms pull back from $Y$ to $X$
+
+Benefit of differential forms is how cleanly they handle changes in coordinates.
+
+This is generally done through the use of pull-backs.
+
+A pullback $\varphi^* f$ can be thought of as \emph{functional precomposition}: $(\varphi^* f) (x) = f(\varphi(x))$
+
+
+Gets its name from pulling $F$ back through $\omega$
+
+\begin{definition}
+$F: X \to \Omega$
+Define the pullback $F^* \beta$
+\begin{equation}
+F^* \beta = \sum_j  b_j ( F(x)) (F^* \text{d}x_{j_1}) \wedge ... \wedge (F^* \text{d} x_{j_k})
+\end{equation}
+and
+\begin{equation}
+F^* \text{d}x_j = \sum_\ell \frac{\partial F^j}{\partial x_\ell} \; \text{d} x_\ell
+\end{equation}
+\end{definition}
+
+Which can be reduced by:
+\begin{align}
+F^ * \beta & = \sum_j  b_j ( F(x)) (F^* \text{d}x_{j_1}) \wedge ... \wedge (F^* \text{d} x_{j_k}) \\
+& = \sum_j  b_j ( F(x))  
+\left( \sum_\ell \frac{\partial F^{j_1}}{\partial x_\ell} \; \text{d} x_\ell \right)
+\wedge ... \wedge  
+\left( \sum_\ell \frac{\partial F^{j_k}}{\partial x_\ell} \; \text{d} x_\ell \right) \\
+& = ... \\
+& = \sum_j b_j ( F(x)) \; \text{det}\left( J_F \right) \; \text{d}x_{j_1} \wedge ... \wedge \text{d} x_{j_k}
+\end{align}
+
+Which is significant given the change of variable formula for integration:
+
+\begin{equation}
+\int_{\phi(U)} \! f(v) \; dv = \int_U \! f(\phi(u)) \; |\text{det}\phi'(u)| \; du
+\end{equation}
+
+\begin{theorem}
+Let $F : X  \to \Omega$ be an (orientation-preserving diffeomorphism) and $\alpha$ an integrable $n$-form on $\Omega$ then
+\begin{equation}
+\int_\Omega \alpha = \int_X F^* \alpha
+\end{equation}
+\end{theorem}
+
+More algebra of differential forms
+
+\begin{equation}
+F^* (\alpha \wedge \beta ) = (F^* \alpha) \wedge (F^* \beta)
+\end{equation}
+
+\begin{definition}
+Exterior derivative
+\end{definition}
+
+...
+
+\begin{equation}
+d(\alpha \wedge \beta) = (d \alpha) \wedge \beta + (-1)^j \alpha \wedge ( d \beta)
+\end{equation}
+
+...
+
+\begin{equation}
+F^* (d \beta ) = dF^* \beta
+\end{equation}
+
+We have already seen standard $n$-cubes in the previous chapter.
+Now that we have pull-backs we can define integration on the more general \emph{singular cube}
+But first, what is a singular cube.
+
+
+\begin{definition}
+	Singular cube: differentiable map $c$ from standard $k$-cube to $k$-dimensional manifold.
+\end{definition}
+
+It is a common abuse of notation to use $c$ to also to refer to the image $c( [\![ 0,1]\!]^k ) \subseteq M$.
+The choice of using specifically the standard $k$-cube is arbitrary.
+A differentiable map $f$ from $[\![a,b]\!]$ can always be composed with $g:t \mapsto ta +(1-t)b$ 
+to get singular cube $c=f \circ g$.
+Gives us innumerably more shapes to work with.
+Hemisphere for example is the singular 2-cube given by $(r, \varphi) \to r \cos(\pi \varphi) x+ r \sin(\pi \varphi) y$
+
+
+\begin{definition}
+	Let $c$ be a singular $k$-cube and $\omega$ a $k$-form on the image of $c$.
+	Then we define the integral using $c^*(\omega)$ the pull-back of $\omega$ along $c$:
+	\begin{equation}
+		\int\displaylimits_c \omega 
+		= \int\displaylimits_{c \left( [\![0,1]\!]^k \right)} \omega
+		= \int\displaylimits_{[\![0,1]\!]^k} c^* \omega
+	\end{equation}
+\end{definition}
+
+
+\subsection{Manifold Integration}
+
+A manifold is nothing more than a collection of local charts diffeomorphic to $\mathbb{R}^n$
+
+So we use pullbacks to turn a set of rectangles into a manifold while simultaneously applying the manifold's pullback.
+
+Integration on oriented manifolds is just a careful application of Theorem 5.2.1
 
 
 

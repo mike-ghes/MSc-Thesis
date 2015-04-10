@@ -1,7 +1,37 @@
 \chapter{Symbolic Block Linear Algebra}
 
-In mathematics literature, is common practice to represent matrices as being broken up into blocks or sub-matrices.
-For example the matrix $M$ is a block matrix with sub-matrices $A,B,C,D$.
+In mathematics literature, it is common practice to represent matrices as being broken up into blocks or sub-matrices.
+For example if $A$, $B$, $C$ and $D$ are matrices given by:
+\begin{equation}
+	A = \begin{bmatrix} 
+		A_{1,1} & \ldots & A_{1,m} \\
+		\vdots & & \vdots \\
+		A_{n,1} & \ldots & A_{n,m}
+	\end{bmatrix}
+	\;\;\;\;
+	B = \begin{bmatrix} 
+		B_{1,1} & \ldots & B_{1,q} \\
+		\vdots & & \vdots \\
+		B_{n,1} & \ldots & B_{n,q}
+	\end{bmatrix}	
+	\;\;\;\;
+	C = \begin{bmatrix} 
+		C_{1,1} & \ldots & C_{1,m} \\
+		\vdots & & \vdots \\
+		C_{r,1} & \ldots & C_{r,m}
+	\end{bmatrix}
+	\;\;\;\;
+	D = \begin{bmatrix} 
+		D_{1,1} & \ldots & D_{1,q} \\
+		\vdots & & \vdots \\
+		D_{r,1} & \ldots & D_{r,q}
+	\end{bmatrix}			
+\end{equation}
+Where, critically, $A$ and $C$ have the same width (namely $m$) as do $B$ and $D$ (width $q$).
+Additionally, $A$ and $B$ have the same height (in this case $n$), as do $C$ and $D$ (height $r$).
+Then they can be ``glued'' together into a single  $\boldsymbol{(2 \times 2)}$ \textbf{block matrix} $M$.
+Notationally, we write these matrices as elements of $M$ but we \emph{interpret} $M$ as a sort of concatenation of the
+sub-matrices.
 \begin{equation}
 	M= \left[
 		\begin{array}{c|c}
@@ -9,8 +39,7 @@ For example the matrix $M$ is a block matrix with sub-matrices $A,B,C,D$.
 			\hline
 			C & D \\
 		\end{array}
-	\right]
-	= \left[
+	\right] = \left[
 		\begin{array}{ccc|ccc}
 			A_{1,1} & \ldots &A_{1,m} & B_{1,1} & \ldots & B_{1,q} \\
 			\vdots & & \vdots & \vdots & & \vdots \\
@@ -22,20 +51,42 @@ For example the matrix $M$ is a block matrix with sub-matrices $A,B,C,D$.
 		\end{array}
 	\right]
 \end{equation}
-The result is an $(n+r) \times (m+q)$ matrix.
-Within a block, there is a one-to-one correspondence from the entries of $M$ to the entries of a sub-matrix (shifted by some offset).
-In the above example, elements of $B$ would have an offset of $(0,m)$ since $B_{i,j}$ corresponds with $M_{i+0, j+m}$
 
-An important condition however is that these partitions are divided by \emph{unbroken} horizontal and vertical lines.
-So for example the height of $A$ must be the same as the height of $B$ 
-and the width of $A$ must be the same as the width of $C$.
 
-\todo[inline]{Many blocks}
+So $M$ is actually a $(n+r) \times (m+q)$ matrix but we write it as a $2 \times 2$ \emph{block} matrix.
+Within an individual block, there is a one-to-one correspondence from the entries of $M$ to the entries of a sub-matrix 
+(shifted by some offset).
+In the above example, elements of $B$ would have an offset of $(0,m)$ since $B_{i,j}$ corresponds with $M_{i+0, j+m}$.
+
+
+There is no reason to stop at combining 4 matrices into a $2 \times 2$ block matrix.
+We can take a set of matrices $A_{i,j}$ and combine them into an $\boldsymbol{(n\times m)}$ \textbf{block matrix}:
+\begin{equation*}
+	M = \left[ \begin{array}{c|c|c|c}
+		A_{1,1} & A_{1,2} &\ldots & A_{1,m} \\
+		\hline
+		A_{2,1} & A_{2,2} & \ldots & A_{2,m} \\
+		\hline
+		\vdots & \vdots & & \vdots \\
+		\hline
+		A_{n,1} & A_{n,2} & \ldots & A_{n,m}
+
+	\end{array}\right]
+\end{equation*}
+
+
+In the $2\times 2$ case, we enforced that for example the height of $A$ was the same as the height of $B$.
+Similarly, here it is an important condition that these partitions are divided by \emph{unbroken} horizontal and vertical lines.
+Formally, for each sub-matrix $A_{i,j}$ in $M$ then $A_{i,j}$ is a $s_i \times t_j$ matrix for strictly positive integer sequences $\{s_i\}_{i=1}^n$ and $\{t_j\}_{j=1}^m$ common to all sub-matrices.
+As before we interpret the block matrix as a concatenation of its sub-matrices.
+Thus $M$ is a $n\times m$ block matrix but a $\left( \sum_{i=1}^n s_i \right) \times \left( \sum_{j=1}^m t_j \right)$
+block matrix.
+
 
 Clearly block matrices are at the very least a convenient notation but they also have considerable practical applications as well.
-For example when multiplying large matrices, block matrices can be used to improve cache complexity. \cite{lam1991cache}
-In some cases, when a submatrices are known to have a nice properties, many optimizations can arise.
-For example inverting a \emph{block diagonal matrix} can be performed by inverting each block individually. 
+For example when multiplying large matrices, block matrices can be used to improve cache complexity \cite{lam1991cache}.
+Additionally, in some cases, when a sub-matrices are known to have a nice properties, many optimizations can arise.
+For example to invert what is known as a \emph{block diagonal matrix}, one can invert each block individually:
 \begin{equation}
 	\begin{bmatrix}
 		A_1 & 0 & \ldots & 0 \\
@@ -51,11 +102,6 @@ For example inverting a \emph{block diagonal matrix} can be performed by inverti
 		0 & \ldots & 0 & {A_n}^{-1} \\
 	\end{bmatrix}
 \end{equation}
-
-Although block matrices are commonly used with fixed values for bounds.
-Computer algebra has unsatisfactory structures to represent these when the bounds between blocks are symbolic.
-For example, the sum of $2 \times 2$ block matrices, naively leads to 9 possible cases of overlapping regions depending on
-the relationship between horizontal and vertical boundaries between blocks.
 
 
 \begin{figure}[ht]
@@ -107,13 +153,13 @@ the relationship between horizontal and vertical boundaries between blocks.
 	\end{subfigure}
 \end{figure}
 
-
+Although block matrices are commonly used with fixed values for bounds.
+Computer algebra has unsatisfactory structures to represent these when the bounds between blocks are symbolic.
+For example, the sum of $2 \times 2$ block matrices, naively leads to 9 possible cases of overlapping regions depending on
+the relationship between horizontal and vertical boundaries between blocks.
 In this chapter we will show a method using hybrid functions to avoid this case based approach for both addition
 and multiplication of matrices.
 First we introduce some notation that will be used frequently over the next 3 chapters.
-
-\newpage
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -241,6 +287,8 @@ are also valid for any ordering of $a,b,c$ by an identical argument.
 
 
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % VECTORS
@@ -346,6 +394,97 @@ However, these un-evaluable terms also appear in the middle term however the int
 			\oplus (u_i + v'_{i-1})^{(\!(1,4]\!]} 
 			\oplus (u'_{i-4} + v'_{i-1})^{(\!(4,5]\!]}
 \end{align*}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% N-CUBES
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Higher dimension intervals}
+
+For now, we will concern ourselves only with oriented, $n$-dimensional, axis-aligned rectangles in $\mathbb{R}^n$.
+In one dimension, the previously discussed oriented intervals cover most of the ``obvious shapes'' one would be interested in.
+Moving to two dimensions, there are many more ``obvious shapes'' to consider but we will temporarily ignore triangles, circles and even rectangles that are tilted.
+We could also use triangles instead of rectangles as our primitive of choice. 
+This would generalize to $n$-simplexes in higher dimensions.
+Since $n$-simplexes and $n$-cubes end up b\cite{choquetanalysis}
+But, first we must introduce some notation to describe these and higher dimension rectangles. 
+
+At the moment the only rectangles we have defined are the one-dimensional ``oriented interval''.
+Hence we will also refer to this as a 1-cube.
+We construct higher dimensional $n$ rectangles using the Cartesian product.
+\begin{definition}
+	Let $X = \hset{ x_1^{m_1}, ... , x_k^{m_k} }$ and $Y= \hset{ y_1^{n_1}, ... , y_\ell^{n_\ell} }$ be hybrid sets.
+	We define the \textbf{Cartesian product of hybrid sets $\boldsymbol{X}$ and $\boldsymbol{Y}$}, denoted with $\times$ operator as:
+	\begin{equation}
+		X \times Y = \hset{ (x, y)^{m \cdot n} \; : \; x^m \in X, y^n \in Y }
+	 \end{equation}
+\end{definition}
+
+If $[\![a,b]\!]$ and $[\![c,d]\!]$ are both positively oriented 1-rectangles then their Cartesian product is shown in Figure 4.1 is clearly a two dimensional rectangle or \emph{2-rectangle}. 
+Taking the Cartesian product of a 2-rectangle and 1-rectangle gives a 3-rectangle in $\mathbb{R}^3$. 
+We should note here that we do not distinguish between $((x,y),z)$ and $(x,(y,z))$ but rather we treat both as different names for the ordered triple $(x,y,z)$.
+We similarly associate parentheses in higher dimensions as well.
+
+\begin{figure}[ht]
+\caption[Cartesian product of two 1-rectangles]{The Cartesian product of two positively oriented 1-rectangles $[\![a,b]\!]$ and $[\![c,d]\!]$ is a positively oriented 2-rectangle.}
+\centering
+\begin{tikzpicture}[y=1cm, x=2.5cm]	
+ 	%axis
+	\draw(0,0) -- coordinate (x axis mid) (4,0);
+    	\draw (0,0) -- coordinate (y axis mid) (0,4);
+    	
+    	%ticks
+    	\draw[fill] (1,1pt) rectangle (3,-1pt);    	
+    	\draw (1, 3pt) -- (1, -3pt) node[anchor=north] {$a$};
+    	\draw (3, 3pt) -- (3, -3pt) node[anchor=north] {$b$};
+    	\draw (2, 0) node[anchor=north] {$[\![a,b]\!]$};
+    	
+    	\draw[fill] (1pt,1) rectangle (-1pt, 3);
+    	\draw (3pt, 1) -- (-3pt, 1) node[anchor=east] {$c$};
+    	\draw (3pt, 3) -- (-3pt, 3) node[anchor=east] {$d$};
+    	\draw (0,2) node[anchor=east] {$[\![c,d]\!]$};
+    	
+    	\draw[fill, color=black!20] (1,1) rectangle (3,3);
+    	\draw (2, 2) node {$[\![a,b]\!] \times [\![c,d]\!]$ };
+\end{tikzpicture}
+\end{figure}
+
+\begin{theorem}
+	The Cartesian product of a $k$-rectangle in $\mathbb{R}^m$ (where, $k\leq m$) 
+	and $\ell$-rectangle in $\mathbb{R}^n$ (again, $\ell \leq n$) 
+	is a $(k+\ell)$-rectangle in $\mathbb{R}^{m+n}$.
+\end{theorem}
+
+For completeness we will also define a 0-rectangle as a hybrid set containing a single point with multiplicity $1$ or $-1$.
+Firstly this allows us to embed $k$-rectangles in $\mathbb{R}^n$.
+For example $[\![a,b]\!] \times [\![c,d]\!] \times \hset{e^1}$ is the product of two 1-rectangles and a 0-rectangle (all over $\mathbb{R}$) and so it is a 2-rectangle over $\mathbb{R}^3$.
+Specifically, it is the 2-rectangle $[\![a,b]\!] \times [\![c,d]\!]$ on the plane $z=3$.
+This also illustrates the principle that given a $k$-rectangle in $\mathbb{R}^n$ where $n>k$ we can always find a $k$ dimensional subspace which also contains the rectangle.
+We will re-use the interval notation from earlier although one should be careful to ``type-check'' while interpreting.
+When $a$ and $b$ are real numbers then we continue to use the definition $[\![a,b]\!] = [a,b) \ominus [b,a)$.
+However, when $\boldsymbol{a}$ and $\boldsymbol{b}$ are $n$-tuples (for example, coordinates in $\mathbb{R}^n$ then this is \emph{not} the oriented line interval $[\boldsymbol{a}, \boldsymbol{b}) \ominus [\boldsymbol{b}, \boldsymbol{a})$.
+
+\begin{definition}
+	Let $\boldsymbol{a} = (a_1, a_2, \ldots, a_n)$ and 
+	$\boldsymbol{b} = (b_1, b_2, \ldots, b_n)$ be ordered $n$-tuples then we use the notation:
+	\begin{align}
+		[\![ \boldsymbol{a}, \boldsymbol{b} ]\!] 
+		= [\![a_1, b_1]\!] \times [\![a_2, b_2 ]\!] \times \ldots \times [\![a_n , b_n]\!]
+	\end{align}
+\end{definition}
+
+The dimension of $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ is equal to the number of indices where $a_i$ and $b_i$ are distinct.
+For any $i$ where $a_i = b_i$, the corresponding term: $[\![ a_i, b_i ]\!]$ will be a hybrid set containing a single point, that is, a 0-rectangle.
+The orientation of $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ is based on the number of negatively oriented intervals $[\![a_i,b_i]\!]$.
+Should there be an odd number of indices $i$ such that $a_i > b_i$ then $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ will also be negatively oriented.
+Otherwise, it will be positively oriented. 
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Matrix Addition
@@ -682,7 +821,11 @@ And finally cleaning up this expression by removing the terms over empty regions
 
 
 
-\todo[inline]{example + extend to more blocks + wrap-up}
+\todo[inline]{example}
+
+\todo[inline]{multiple blocks}
+ 
+\todo[inline]{wrap-up}
 
 
 
