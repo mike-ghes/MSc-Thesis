@@ -34,10 +34,10 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
 #### 6 Conclusions
   - Again, needs to be completely rewritten.
 	
-#### A Lebesgue Integration
+#### (A) Lebesgue Integration
   - Gone. Merged into Integration.
 	
-#### B Symbolic Convolution with Infinite End-Points
+#### A Symbolic Convolution with Infinite End-Points
   - Done.
 		
 	

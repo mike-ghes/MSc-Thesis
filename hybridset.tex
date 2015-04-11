@@ -339,7 +339,7 @@ But first we must establish \emph{hybrid relations}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Ordering Algebra
+% Flow
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Maximum Flow}}
 
@@ -355,27 +355,30 @@ A flow in $G$ is a a function $f:V \times V \to \mathbb{Z}$ subject to the follo
 \end{description}
 
 The flow could alternatively be modelled using a hybrid relations.
+We will use the hybrid set $\mathcal{E}$ to denote a basis for constructing flows.
+For each edge $(u,v)$ in $E$, we will have $(u,v) \ominus (v,u)$ in $\mathcal{E}$ with multiplicity $c(u,v)$:
+\begin{equation}
+	\mathcal{E} = \hset{ \left((u,v) \ominus (v,u)\right)^{c(u,v)} \;|\; (u,v) \in E }
+\end{equation}
+Additionally define $\partial : V \times V \to V$ by $\partial(u,v) = v$ and extend linearly over hybrid sets.
+So, for an element of $\mathcal{E}$, $\partial((u,v) \ominus (v,u)) = \hset{v^1, u^{-1}}$ which can be thought of as the
+movement of one unit of volume across one edge that would occur when said edge is included in a flow $f$.
 
-Let $\mathcal{E} = \{ (u,v) \ominus (v,u) | (u,v) \in E \subseteq V \times V \}$
-
-Using $\mathcal{E}$ as a basis, we can construct flows which are skew symmetric.
-
-Define $\partial$ for all edges in $E$ by $\partial(u,v) = v$ and extend linearly.
-
-So for an element of $\mathcal{E}$ the ``boundary'' will be of the form $\partial(e) = \hset{v^1, u^{-1}}$
-
+By constructing $f$ with elements taken from $\mathcal{E}$, we can be guaranteed skew-symmetry.
 Then conservation can be written as $\partial(f) = k \cdot \hset{s^{-1}, t^{+1}}$ for some constant $k$.
-
-Residual graphs $c_f = c \ominus f$ 
-
 This constant $k$ turns out to be the overall flow through the graph.
+So maximum flow is then just finding the maximum $k$ for a valid flow.
+And so long as $\mathcal{E} \ominus f$ is everywhere positive, all three conditions are fulfilled. 
 
-Maximum flow is then just finding the maximum $k$ for a valid flow.
+Residual graphs $G_f = \mathcal{E} \ominus f$ 
 
-\todo[inline]{finish}
 
-\newpage
+This can be used to formulate a ``reversed'' Ford-Fulkerson algorithm.
+Rather than start with an empty flow, start with $f = \mathcal{E}$, a full-capacity ``flow''.
+It is unlikely that $f$ will initially be a valid flow.
+By adding el
 
+\todo[inline]{finish...}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hybrid Function

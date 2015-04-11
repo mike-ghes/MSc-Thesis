@@ -159,7 +159,7 @@ For example, the sum of $2 \times 2$ block matrices, naively leads to 9 possible
 the relationship between horizontal and vertical boundaries between blocks.
 In this chapter we will show a method using hybrid functions to avoid this case based approach for both addition
 and multiplication of matrices.
-First we introduce some notation that will be used frequently over the next 3 chapters.
+First we introduce some notation that will be used frequently over the next few chapters.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -193,7 +193,7 @@ If $a \leq b \leq c$, for intervals then we have $[a,b) \oplus [b,c) = [a,c)$.
 In this case, $\oplus$ seems to behave like concatenation but this is not always true.
 If instead we had $a \leq c \leq b$ then $[a,b) \oplus [b,c) = [a,b)$.
 
-\begin{equation}
+\begin{equation*}
 	[a,b) \oplus [b,c) =
 	\begin{cases}
 		[a,c) & a \leq b \leq c \\
@@ -201,12 +201,13 @@ If instead we had $a \leq c \leq b$ then $[a,b) \oplus [b,c) = [a,b)$.
 		[b,c) & b \leq a \leq c \\
 		\emptyset & \text{otherwise} \\
 	\end{cases}
-\end{equation}
+\end{equation*}
+
 
 One could alternatively write $[a,b)\oplus [b,c) = [\; \min(a,b),\max(b,c) \;)$ but this simply sweeps the problem 
 under the rug.
-When working with intervals, a case-based approach to consider relative ordering of endpoints easily becomes quite cumbersome.
-Thus we turn to oriented intervals.
+When working with intervals, a case-based approach to consider relative ordering of endpoints easily becomes 
+quite cumbersome.
 
 
 \begin{definition}
@@ -222,12 +223,13 @@ Thus we turn to oriented intervals.
 	\end{equation}
 \end{definition}
 
+
 For any choice of \emph{distinct} $a$ and $b$, exactly one term will be empty; there can be no ``mixed'' multiplicities from a single oriented interval.
 Unlike traditional interviews where $[a,b)$ would be empty if $b < a$,  
 the oriented interval $[\![a,b)\!)$ will have elements with negative multiplicity.
 Several results follow immediately from this definition.
 
-\begin{theorem} For all $a,b,c \in \mathbb{R}$, 
+\begin{theorem} For all $a,b,c$, 
 	\begin{equation}
 		\begin{array}{cc}
 		{[\![a,b)\!)} = \ominus [\![b,a)\!) \\
@@ -238,19 +240,20 @@ Several results follow immediately from this definition.
 	\end{equation}
 \end{theorem}
 
+
 We should make a note here how oriented intervals behave when $a=b$.
 Like their unoriented analogues, the oriented intervals $[\![ a,a )\!)$ and $(\!( a,a ]\!]$ are still both empty sets.
 The interval $[\![a,a]\!]$ still contains points equivalent to $a$ (with multiplicity 1).
 However, unlike traditional intervals $(\!(a,a)\!)$ is \emph{not} empty but rather, $(\!(a,a)\!) = \ominus [\![a,a]\!]$ and so contains all points equivalent to $a$ but with a multiplicity of $-1$.
 The advantage of using oriented intervals is that now $\oplus$ does behave like concatenation.
 
+
 \begin{theorem}
-	For all $a,b,c \in \mathbb{R}$ (regardless of relative ordering),
+	For all $a,b,c$ (regardless of relative ordering),
 	\begin{equation}
 		[\![ a,b )\!) \oplus [\![ b,c )\!) = [\![ a,c )\!)
 	\end{equation}
 \end{theorem}
-
 \begin{proof}
 	Following from definitions we have:
 	\begin{align*}
@@ -277,15 +280,13 @@ The advantage of using oriented intervals is that now $\oplus$ does behave like 
 	\end{description}
 \end{proof}
 
+
 This sort of reasoning is routine but a constant annoyance when dealing with intervals 
 and is exactly the reason we want to be working with oriented intervals.
 But now that the above work is done, we can use oriented intervals 
 and not concern ourselves with the relative ordering of points.
 Many similar formulations such as $[\![ a,b ]\!] \oplus (\!( b,c )\!) = [\![a,c)\!)$ or $(\!(a,b)\!) \oplus [\![b,c)\!) = (\!(a,c)\!)$ 
 are also valid for any ordering of $a,b,c$ by an identical argument. 
-
-
-
 
 
 
@@ -296,7 +297,7 @@ are also valid for any ordering of $a,b,c$ by an identical argument.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Vector Addition}
-Addition for partitioned vectors and $2 \times 2$ matrices using hybrid functions has already been considered in \cite{carette2010}.
+Addition for partitioned vectors and $2 \times 2$ matrices using hybrid functions has already been considered in \cite{sexton2008abstract, carette2010}.
 The method is nearly identical to that of adding piecewise functions.
 In fact, one could think of both as simply addition of piecewise functions over a subset of 
 $\mathbb{N}$ and $\mathbb{N} \times \mathbb{N}$ respectively.
@@ -371,7 +372,8 @@ The same lambda-lifting trick of using pseudo-functions as in the previous secti
 For example, consider the concrete example where $n=5$, $k=4$ and $\ell = 1$ so that
 $U = [ u_1, u_2, u_3, u_4, u'_1 ]$ and
 $V = [ v_1, v'_1, v'_2, v'_3, v'_4 ]$.
-We will also only assume that the functions $u_i, u'_i, v_i$ and $v'_i$ are defined only on the intervals in which they appear (e.g. $u_5$ is undefined, as is $v'_1$).
+We will also only assume that the functions $u_i, u'_i, v_i$ and $v'_i$ are defined only on the intervals in which they 
+appear (e.g. $u_5$ is undefined, as is $v'_1$).
 Then we have:
 \begin{equation*}
 	U + V = (u_i + v_i)^{[\![1,4]\!]} \oplus (u'_{i-4} + v_i)^{(\!(4,1]\!]} \oplus (u'_{i-4} + v'_{i-1})^{(\!(1,5]\!]}
@@ -395,9 +397,6 @@ However, these un-evaluable terms also appear in the middle term however the int
 			\oplus (u'_{i-4} + v'_{i-1})^{(\!(4,5]\!]}
 \end{align*}
 
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % N-CUBES
@@ -406,29 +405,25 @@ However, these un-evaluable terms also appear in the middle term however the int
 
 \section{Higher dimension intervals}
 
-For now, we will concern ourselves only with oriented, $n$-dimensional, axis-aligned rectangles in $\mathbb{R}^n$.
-In one dimension, the previously discussed oriented intervals cover most of the ``obvious shapes'' one would be interested in.
-Moving to two dimensions, there are many more ``obvious shapes'' to consider but we will temporarily ignore triangles, circles and even rectangles that are tilted.
-We could also use triangles instead of rectangles as our primitive of choice. 
-This would generalize to $n$-simplexes in higher dimensions.
-Since $n$-simplexes and $n$-cubes end up b\cite{choquetanalysis}
-But, first we must introduce some notation to describe these and higher dimension rectangles. 
-
-At the moment the only rectangles we have defined are the one-dimensional ``oriented interval''.
-Hence we will also refer to this as a 1-cube.
-We construct higher dimensional $n$ rectangles using the Cartesian product.
+Oriented intervals work perfectly well when we are only dealing with the indices of a vector. 
+However, we are more interested in the rectangular blocks of a matrix.
+We can move from 1-dimensional intervals to 2-dimensional blocks using the Cartesian product
 \begin{definition}
-	Let $X = \hset{ x_1^{m_1}, ... , x_k^{m_k} }$ and $Y= \hset{ y_1^{n_1}, ... , y_\ell^{n_\ell} }$ be hybrid sets.
-	We define the \textbf{Cartesian product of hybrid sets $\boldsymbol{X}$ and $\boldsymbol{Y}$}, denoted with $\times$ operator as:
+	Let $X = \hset{ x_1^{m_1}, ... , x_k^{m_k} }$ and $Y= \hset{ y_1^{n_1}, ... , y_\ell^{n_\ell} }$ be hybrid sets
+	over sets $S$ and $T$
+	We define the \textbf{Cartesian product of hybrid sets $\boldsymbol{X}$ and $\boldsymbol{Y}$}, to be a hybrid set
+	over $S \times T$ and denoted with $\times$ operator as
 	\begin{equation}
-		X \times Y = \hset{ (x, y)^{m \cdot n} \; : \; x^m \in X, y^n \in Y }
+		X \times Y = \hset{ (x, y)^{m \cdot n} \; : \; x \in^m X, y \in^n Y }
 	 \end{equation}
 \end{definition}
 
-If $[\![a,b]\!]$ and $[\![c,d]\!]$ are both positively oriented 1-rectangles then their Cartesian product is shown in Figure 4.1 is clearly a two dimensional rectangle or \emph{2-rectangle}. 
-Taking the Cartesian product of a 2-rectangle and 1-rectangle gives a 3-rectangle in $\mathbb{R}^3$. 
-We should note here that we do not distinguish between $((x,y),z)$ and $(x,(y,z))$ but rather we treat both as different names for the ordered triple $(x,y,z)$.
-We similarly associate parentheses in higher dimensions as well.
+
+If $[\![a,b]\!]$ and $[\![c,d]\!]$ are both positively oriented intervals in $\mathbb{R}$ then their Cartesian product 
+$[\![a,b]\!] \times [\![c,d]\!]$ is shown in Figure 4.1 is clearly a two dimensional rectangle in $\mathbb{R}^2$.
+If one of $[\![a,b]\!]$ or $[\![c,d]\!]$ were negatively oriented then we would have a negatively oriented rectangle.
+If both were negative, then the signs will cancel and the Cartesian product will be \emph{positively} oriented.
+
 
 \begin{figure}[ht]
 \caption[Cartesian product of two 1-rectangles]{The Cartesian product of two positively oriented 1-rectangles $[\![a,b]\!]$ and $[\![c,d]\!]$ is a positively oriented 2-rectangle.}
@@ -454,28 +449,59 @@ We similarly associate parentheses in higher dimensions as well.
 \end{tikzpicture}
 \end{figure}
 
+
+There is no reason to stop here.
+$[\![a,b]\!]\times [\![c,d]\!]$ is still a hybrid set, we can take its Cartesian product with another interval, say $[\![e,f]\!]$
+to get a rectangular cuboid in $\mathbb{R}^3$.
+We should note here that we do not distinguish between $((x,y),z)$ and $(x,(y,z))$
+ but rather we treat both as different names for the ordered triple $(x,y,z)$.
+That is, the Cartesian product is associative, and any difference in the brackets that arise:
+\begin{equation*}
+	\hset{ ((x, y), z)^{(m \cdot n)\cdot p} | x \in^m X, y \in^n Y, z \in^p Z }
+	= X \times Y \times Z
+	= \hset{ (x, (y, z)^{m \cdot (n\cdot p)} |  x \in^m X, y \in^n Y, z \in^p Z }
+\end{equation*}
+ 
+ 
+Although we will not be using them in this chapter, the objects resulting from iterated Cartesian product of intervals 
+turn out to be quite useful.
+We will call them $k$-rectangles.
+A 1-dimensional (non-degenerate) oriented interval will be called a 1-rectangle.
+A 2-dimensional rectangle will be called a 2-rectangle and a cuboid a 3-rectangle, and so on.
+
 \begin{theorem}
 	The Cartesian product of a $k$-rectangle in $\mathbb{R}^m$ (where, $k\leq m$) 
 	and $\ell$-rectangle in $\mathbb{R}^n$ (again, $\ell \leq n$) 
 	is a $(k+\ell)$-rectangle in $\mathbb{R}^{m+n}$.
 \end{theorem}
 
+
 For completeness we will also define a 0-rectangle as a hybrid set containing a single point with multiplicity $1$ or $-1$.
-Firstly this allows us to embed $k$-rectangles in $\mathbb{R}^n$.
-For example $[\![a,b]\!] \times [\![c,d]\!] \times \hset{e^1}$ is the product of two 1-rectangles and a 0-rectangle (all over $\mathbb{R}$) and so it is a 2-rectangle over $\mathbb{R}^3$.
-Specifically, it is the 2-rectangle $[\![a,b]\!] \times [\![c,d]\!]$ on the plane $z=3$.
-This also illustrates the principle that given a $k$-rectangle in $\mathbb{R}^n$ where $n>k$ we can always find a $k$ dimensional subspace which also contains the rectangle.
-We will re-use the interval notation from earlier although one should be careful to ``type-check'' while interpreting.
+This allows us to embed $k$-rectangles in $\mathbb{R}^n$.
+For example $[\![a,b]\!]_\mathbb{R} \times [\![c,d]\!]_\mathbb{R} \times \hset{e^1}$ is the product of two 1-rectangles
+and a 0-rectangle and so it is a 2-rectangle.
+But it was still a Cartesian product of 3 hybrid sets (each over $\mathbb{R}$) and so is a 2-rectangle in $\mathbb{R}^3$.
+Specifically, it is the 2-rectangle $[\![a,b]\!] \times [\![c,d]\!]$ on the plane $z=e$.
+This also illustrates the principle that given a $k$-rectangle in $\mathbb{R}^n$ where $n>k$ we can always find a $k$ 
+dimensional subspace which also contains the rectangle.
+
+
+Finally, one last note regarding $k$-rectangles before we return to the realm of symbolic linear algebra.
+We will re-use the interval notation and allow for intervals between two vectors: $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$.
+But one should be careful to ``type-check'' when interpreting.
 When $a$ and $b$ are real numbers then we continue to use the definition $[\![a,b]\!] = [a,b) \ominus [b,a)$.
-However, when $\boldsymbol{a}$ and $\boldsymbol{b}$ are $n$-tuples (for example, coordinates in $\mathbb{R}^n$ then this is \emph{not} the oriented line interval $[\boldsymbol{a}, \boldsymbol{b}) \ominus [\boldsymbol{b}, \boldsymbol{a})$.
+However, when $\boldsymbol{a}$ and $\boldsymbol{b}$ are $n$-tuples (for example, coordinates in $\mathbb{R}^n$ 
+then this is \emph{not} the oriented line interval, 
+$[\boldsymbol{a}, \boldsymbol{b}) \ominus [\boldsymbol{b}, \boldsymbol{a})$
+rather we define it as follows:
 
 \begin{definition}
 	Let $\boldsymbol{a} = (a_1, a_2, \ldots, a_n)$ and 
 	$\boldsymbol{b} = (b_1, b_2, \ldots, b_n)$ be ordered $n$-tuples then we use the notation:
-	\begin{align}
+	\begin{equation}
 		[\![ \boldsymbol{a}, \boldsymbol{b} ]\!] 
 		= [\![a_1, b_1]\!] \times [\![a_2, b_2 ]\!] \times \ldots \times [\![a_n , b_n]\!]
-	\end{align}
+	\end{equation}
 \end{definition}
 
 The dimension of $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ is equal to the number of indices where $a_i$ and $b_i$ are distinct.
@@ -484,6 +510,14 @@ The orientation of $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ is based on the nu
 Should there be an odd number of indices $i$ such that $a_i > b_i$ then $[\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$ will also be negatively oriented.
 Otherwise, it will be positively oriented. 
 
+
+For the remainder of this chapter, we will only be interested in the space $\mathbb{N}_0 \times \mathbb{N}_0$ where 
+there is only enough space for a single Cartesian product.
+This discussion of higher dimension rectangles will be returned to in Chapter 4 when investigating integration.
+
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -495,9 +529,9 @@ Otherwise, it will be positively oriented.
 Now we will consider the addition of $2 \times 2$ block matrices $A$ and $B$ with overall dimensions $n \times m$ 
 of the form:
 \begin{equation*}
-	A = \left[ \begin{array}{cc} A_{11} & A_{12} \\ A_{21} & A_{22} \end{array} \right]
+	A = \left[ \begin{array}{c|c} A_{11} & A_{12} \\ \hline A_{21} & A_{22} \end{array} \right]
 	\;\;\;\;\; \text{and} \;\;\;\;\;
-	B = \left[ \begin{array}{cc} B_{11} & B_{12} \\ B_{21} & B_{22} \end{array} \right]
+	B = \left[ \begin{array}{c|c} B_{11} & B_{12} \\ \hline B_{21} & B_{22} \end{array} \right]
 \end{equation*}
 Since these are block matrices then $A_{ij}$ and $B_{ij}$ are not entries but sub matrices themselves.
 We shall assume that $A_{11}$ is a $(q \times r)$ matrix and $B_{11}$ is a $(s \times t)$ matrix.
@@ -591,12 +625,38 @@ As such we must also apply a $+$-reduction after summing each matching pair:
 		\left.(A_{22} + B_{22})^{\mathcal{P}} \right)
 \end{align*}
 
+\todo[inline]{vbox}
 
-\todo[inline]{Evaluating at points}
+\subsection{Example: \emph{Evaluation at points}} 
+We will now demonstrate evaluating this expression.
+Let us assume a point $(i,j)$ exists in the region $\mathcal{A}_{11} \cap \mathcal{B}_{12}$.
+That is, $0 \leq i < \min(q,s)$ and $t \leq j < r$. 
+Evaluating each of the hybrid sets from (\ref{eqn:2x2CommonRefinement}) we find that only three have 
+non-zero multiplicities: $\mathcal{A}_{11}(i,j)=1$, $\mathcal{B}_{12}=1$ and 
+$\mathcal{P}(i,j)=1-(1+0+0+0+1+0)=-1$.
+After removing all zero terms, this yields:
+\begin{align*}
+	(A+B)(i,j) &= \R[+]  \left(  (A_{11}+B_{22})^{1} \oplus 
+		(A_{22} + B_{12})^{1} \oplus 
+		(A_{22} + B_{22})^{-1} \right)\\
+		&= \left(A_{11}+B_{22}) + (A_{22} + B_{12}) - (A_{22} + B_{22}\right)(i,j)\\
+		&= (A_{11}+B_{12})(i,j)
+\end{align*}
+
+As a second example assume $(i,j) \in \mathcal{A}_{22} \cap \mathcal{B}_{12}$.
+Then we find there is only one partition with non-zero multiplicity.
+Clearly $\mathcal{B}_{12} = 1$ but $\mathcal{A}_{22} \notin$(\ref{eqn:2x2CommonRefinement}).
+Calculating the multiplicity of $\mathcal{P}$ also yields $1-(0+0+0+0+1+0) = 0$.
+Very simply:
+\begin{align*}
+	(A+B)(i,j) &= \R[+]  \left(  (A_{22}+B_{12})^{1} \right)(i,j)\\
+		&=(A_{22}+B_{12})(i,j)
+\end{align*}
 
 
-This extends easily to addition of more complex block matrices as well.
-If we consider conformable matrices $A$ and $B$ of the form:
+\subsection{Larger block matrices}
+This method extends easily from addition of two $2\times 2$ block matrices to arbitrary addition of block matrices.
+If we consider (\emph{conformable}) $k \times \ell$ and $n \times m$ block matrices $A$ and $B$ respectively of the form:
 
 \begin{equation*}
 	A = \begin{bmatrix}
@@ -613,8 +673,12 @@ If we consider conformable matrices $A$ and $B$ of the form:
 		B_{n1} & \ldots & B_{nm}	
 	\end{bmatrix}
 \end{equation*}
-For  sequences $q$, $r$, $s$, and $t$ which are strictly increasing and additionally constrained by 
-${q_0 = r_0 = s_0 = t_0 = 0}$ and $q_k = s_n$ and $r_\ell = t_m$.
+
+For matrices to be conformable for additon they must have the same dimensions.
+So we can partition the rows of $A$ by the strictly increasing sequence $\{q_i\}_{i=0}^k$ and 
+the columns by $\{r_j \}_{j=0}^\ell$.
+Similarly for $B$ we partition the rows by $\{s_i\}_{i=0}^n$ and the columns by $\{t_j\}_{j=0}^m$.
+With the additional constraints that ${q_0 = r_0 = s_0 = t_0 = 0}$ and $q_k = s_n$ and $r_\ell = t_m$.
 Each $A_{ij}$ and $B_{ij}$ is defined over a rectangular region $\mathcal{A}_{ij}$ and $\mathcal{B}_{ij}$:
  \begin{equation*}
 	\mathcal{A}_{ij} = [\![q_{i-1}, q_i )\!) \times [\![ r_{j-1}, r_{j} )\!)
@@ -740,7 +804,7 @@ Using these intervals, we can now rewrite our matrices inline as:
 			C_{21}^{N_2 \times P_1} \oplus C_{22}^{N_2 \times P_2}
 \end{align}
 It should be noted here that $\oplus$ is still the point-wise sum of hybrid functions.
-It should not be confused with the direct sum or Kronecker sum of matrices which both use the same $\oplus$ operator.
+It should not be confused with the direct sum nor the Kronecker sum of matrices which both use the same $\oplus$ operator.
 The $\times$ operator refers to the Cartesian product of intervals. 
 
 For $i,j \in \{ 1,2 \}$ the terms of $C$ are given by.
@@ -817,16 +881,31 @@ And finally cleaning up this expression by removing the terms over empty regions
 			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j}
 \end{equation}
 
+\subsection{Larger block matrices}
 
+The most difficult part of extending block matrix multiplication to larger block matrices turns out to be the number of 
+variables needed.
+Once again we will use $N_i$ to divide the rows of blocks in $A$ and $P_j$ to divide the block columns of $B$.
+\begin{equation}
+	C = \bigoplus_{i \in I} \bigoplus_{j \in J} C_{i,j}^{N_i \times P_j}
+\end{equation}
 
+Where each $C_{i,j}$ is defined as:
+\begin{equation}
+	C_{i,j} = 	\left(\sum_{k \in K / last} A_{i,k}^{N_i \times M_k} B_{last,j}^{M_k \times P_j} \right)+ 
+				\left(\sum_{k \in K' / last} A_{i,last}^{N_i \times M_k} B_{k,j}^{M_k \times P_j} \right)+ 
+				A_{i,last}^{N_i \times M_{U\ominus all}} B_{last,j}^{M_{U \ominus all} \times P_j}
+\end{equation}
 
-
-\todo[inline]{example}
-
-\todo[inline]{multiple blocks}
- 
-\todo[inline]{wrap-up}
-
+\todo[inline]{Unfortunately these formulation for multiplication is not the easiest to work with.
+The arithmetic used to convert any negatively oriented matrices to all positive ones is \emph{required} before the
+equation can be interpreted.
+Another approach would be to use:
+$
+	C_{i,j} = \sum_{[\![0,m)\!)} \R[\times] \left( 
+		A_1^{M_1 \oplus M_2} \oplus A_2^{M_3} \oplus B_1^{M_1} \oplus B_2^{M_2 \oplus M_3}
+	\right)
+$}
 
 
 
