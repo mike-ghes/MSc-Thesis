@@ -19,8 +19,9 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
 	- Wrap up chapter
 
 #### 4 Integration
-  - p44: Introduction.
-  - p48: Cut Riemann in favour of measuring blocks and oriented Lebesgue? (-3 pages)
+  - p46: Introduction Part 2
+  - p47: Re-word intro
+  - p48: Riemann generalized partition
   - p58 on: a lot.
   
 #### 5 Convolution
