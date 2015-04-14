@@ -22,7 +22,11 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
   - p46: Introduction Part 2
   - p47: Re-word intro
   - p48: Riemann generalized partition
-  - p58 on: a lot.
+  - p50: Intro Diff Forms
+  - p53: Exterior Derivative definition
+  - p53: Singular Cubes
+  - p56: Stokes' Intro?
+  - p62: Stokes' proper
   
 #### 5 Convolution
   - Done.

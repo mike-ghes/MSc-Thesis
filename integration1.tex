@@ -100,9 +100,7 @@ In Chapter 6, we will introduce the oriented Lebesgue integral.
 \section{Integration over Hybrid Domains}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
 % RIEMANN
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Riemann Integral on $k$-rectangles}
@@ -209,9 +207,7 @@ where $P = \sup \Big\{ \mathcal{P} [\![a,b]\!] \Big\}$
 \todo[inline]{redo for arbitrary generalized partition with pieces going to zero}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
 % DIFFERENTIAL FORMS
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Differential Forms}
@@ -234,8 +230,9 @@ For example, Green's theorem is introduced using differential forms without even
 \begin{equation}
 	\tag{Green's Theorem}
 	\textcolor{black!40}{
-	\int_D \left( \frac{\partial f_2}{\partial x} - \frac{\partial f_1}{\partial y}  \right) \;dx\;dy 
-	=\int_{C}} f_1(x,y) \; dx + f_2(x,y) \; dy
+		\int_D \left( \frac{\partial f_2}{\partial x} - \frac{\partial f_1}{\partial y}  \right) \;dx\;dy 
+		=\int_{C}
+	} f_1(x,y) \; dx + f_2(x,y) \; dy
 \end{equation}
 Here $C$ is a closed curve that encloses $D$ a region in the $(x,y)$ plane; hence the right-hand side is an integral of
 a 1-form over a 1-dimensional curve.
@@ -368,6 +365,10 @@ Exterior derivative
 d(\alpha \wedge \beta) = (d \alpha) \wedge \beta + (-1)^j \alpha \wedge ( d \beta)
 \end{equation}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SINGULAR CUBE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Singular Cubes}
 
 Up until now we have been dealing with the very small set of axis aligned $k$-rectangles 
@@ -413,6 +414,19 @@ One first evaluates the first function and feeds the result into the second.
 Gets its name from pulling $f$ back through $g$.
 
 
+\todo[inline]{pullbacks and forms}
+
+\begin{equation}
+F^* (\alpha \wedge \beta ) = (F^* \alpha) \wedge (F^* \beta)
+\end{equation}
+
+\begin{equation}
+F^* (d \beta ) = dF^* \beta
+\end{equation}
+
+\todo[inline]{vbox}
+
+
 If we again have $\beta = \sum_j b_j(\text{x}) dx_{j_1} \wedge \ldots \wedge dx_{j_k} \in \Lambda^k(\Omega)$
 and some \todo{smooth + differentiable?} map $F: X \to \Omega$.
 The pull-back of $\beta$ is
@@ -431,7 +445,6 @@ F^ * \beta & = \sum_j  b_j ( F(x)) (F^* \text{d}x_{j_1}) \wedge ... \wedge (F^* 
 \left( \sum_\ell \frac{\partial F^{j_1}}{\partial x_\ell} \; \text{d} x_\ell \right)
 \wedge ... \wedge  
 \left( \sum_\ell \frac{\partial F^{j_k}}{\partial x_\ell} \; \text{d} x_\ell \right) \\
-& = ... \\
 & = \sum_j b_j ( F(x)) \; \text{det}\left( J_F \right) \; \text{d}x_{j_1} \wedge ... \wedge \text{d} x_{j_k}
 \end{align}
 
@@ -448,28 +461,7 @@ Let $F : X  \to \Omega$ be an (orientation-preserving diffeomorphism) and $\alph
 \end{equation}
 \end{theorem}
 
-More algebra of differential forms
 
-\begin{equation}
-F^* (\alpha \wedge \beta ) = (F^* \alpha) \wedge (F^* \beta)
-\end{equation}
-
-...
-
-\begin{equation}
-F^* (d \beta ) = dF^* \beta
-\end{equation}
-
-
-\begin{definition}
-	Let $c$ be a singular $k$-cube and $\omega$ a $k$-form on the image of $c$.
-	Then we define the integral using $c^*(\omega)$ the pull-back of $\omega$ along $c$:
-	\begin{equation}
-		\int\displaylimits_c \omega 
-		= \int\displaylimits_{c \left( [\![0,1]\!]^k \right)} \omega
-		= \int\displaylimits_{[\![0,1]\!]^k} c^* \omega
-	\end{equation}
-\end{definition}
 
 
 To integrate over a manifold $M$, we first observe that each local chart in the manifold is essentially a singular cube.
@@ -481,12 +473,31 @@ for all points in $x \in M$, $\sum_k \theta_k(x) = 1$.
 In addition we also enforce that for each function $\text{supp} \theta_k$ and that at each point in $M$, there are only
 a finite number of functions such that $\theta_k \neq 0$.
 
-\section{Stokes' Theorem}
+$\{ \psi_i \}$ a partition of unity with locally finite cover $\{ U_i, \psi_i \}$ of consistently oriented coordinate charts.
+
+\begin{equation}
+\int_M \alpha = \sum_i \int_{U_i} \psi_i \alpha
+\end{equation}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% BOUNDARY
+% STOKES' THEOREM
 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Stokes' Theorem}
+
+When discussing differential forms an equation called \emph{Green's Theorem} was shown. 
+Green's Theorem allows for one to convert between an integral over a 2-dimensional region and a 1-dimensional integral
+over a curve that bounds it.
+This turns out to be just one instance of the more general \emph{Stokes' Theorem} 
+which will work in higher dimensions as well.
+To do so we will first need to generalize the notion of a bounding region or boundary.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BOUNDARY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Boundary Operator}
 
@@ -670,8 +681,6 @@ The six faces that make up its boundary are shaded and labeled with their corres
 	\draw[color=black, dashed, <-] (0.5-0.07,1-0.07) --++ (-0.7,-0.7) node[anchor=east, black] {$[\![0,1]\!] \times \hset{0} \times [\![0,1]\!]$};
 	%top
 	\draw[color=black, dashed, <-] (0.85,2.35+0.2) --++ (0,1) node[anchor=south, black] {$[\![0,1]\!] \times [\![0,1]\!] \times \hset{1}$};
-	
-	
 \end{tikzpicture}
 \end{figure}
 
@@ -940,10 +949,100 @@ As well as the related cochain complex: the \emph{``De Rham cohomology''} and ho
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Stokes' Theorem}
 
+Now we come to the statement of the generalized Stokes' Theorem itself.
+
+Given a $k-1$-form $\omega$ and $k$ chain $M$, ...
 
 \begin{equation}
 	\int_{\partial M} \omega = \int_M d\omega
 \end{equation}
+
+
+In one dimension this is the fundamental theorem of calculus.
+
+In two, it is Green's Theorem and three the Kelvin-Stokes Theorem.
+
+
+First we will consider Stokes theorem for the standard cube $I^k = [0,1]^k \subset \mathbb{R}^k$.
+In the previous section we saw how cumbersome representing the faces in $\partial I^k$, could be.
+
+We will denote the faces of $I^k$ by $I^k_{i=0}$ and $I^k_{i=1}$ for the $i$-th faces of $I^k$.
+This allows us to rewrite:
+
+\begin{equation}
+	\partial (I^k) = \bigoplus_{i=1}^k (-1)^i \left( I^k_{i=0} \ominus I^k_{i=1} \right) 
+\end{equation}
+
+A $k-1$-form $\omega$ can be written as the sum
+\begin{equation}
+	\omega = \sum_{i=1}^k f_i \; dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k
+\end{equation}
+but since everything: the integrals, $d$ and $\partial$ are all linear, we can work using just one of these terms.
+
+To compute $d\omega$, we have for each term in the sum:
+\begin{align*}
+	d \left( f_i dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \right) 
+ 		&= df_i \wedge dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \\ 
+ 		&= \left( \sum_{j=1}^k \frac{\partial f_i}{\partial x_j} dx_j \right)
+ 			\wedge dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \\ 
+\end{align*}
+But for $j \neq i$, there will be a duplicate $dx_j$ term and this collision will cause the term to go to zero.
+Hence only one term in the sum, $i=j$ will actually result in a non-zero term:
+\begin{align*}
+	d \left( f_i dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \right) 
+ 		&= \left(\frac{\partial f_i}{\partial x_i} dx_i \right)
+ 			\wedge dx_1 \wedge \ldots \wedge \hat{dx_i} \wedge  \ldots \wedge dx_k \\ 
+		&= (-1)^{i-1} \frac{\partial f_i}{\partial x_i}
+ 			 dx_1 \wedge \ldots \wedge dx_k \\ 
+\end{align*}
+Since this is an integral over the canonical basis $\text{x} = (x_1, \ldots, x_k)$ we can remove the wedge products and
+integrate as normal.
+\begin{align*}
+	\int_{[0,1]^k} d\omega
+		=&\; (-1)^{i-1} \int_{[0,1]^k} \frac{\partial f_i}{\partial x_i}\; d(x_1, \ldots, x_k) \\
+		=&\; (-1)^{i-1} \int_{[0,1]^{k-1}} \left( \int_0^1 \frac{\partial f_i}{\partial x_i} dx_i \right) 
+			\;d(x_1, \ldots, \widehat{x_i}, \ldots, x_k)\\
+		=&\; (-1)^{i-1}\left( \int_{[0,1]^{k-1}} f_i(x_1, \ldots, x_{i-1}, 1, x_{i+1}, \ldots, x_k)
+			\;d(x_1, \ldots, \widehat{x_i}, \ldots, x_k) \right.\\
+		&\;	- \left. \int_{[0,1]^{k-1}} f_i(x_1, \ldots, x_{i-1}, 0, x_{i+1}, \ldots, x_k)
+			\;d(x_1, \ldots, \widehat{x_i}, \ldots, x_k) \right)
+\end{align*}
+The trick here being Fubini's Theorem allowing us to evaluate the iterated integral in whichever order we choose.
+
+
+On the other side of the equality we have:
+\begin{align*}
+	\int_{\partial I^k} \omega 
+		&= \sum_{j=1}^k (-1)^j \int_{I^k_{j=0}} \omega - \int_{I^k_{j=1}} \omega
+\end{align*}
+but $I^k_{j=0}$ is just a $k-1$ rectangle embedded in $\mathbb{R}^k$ by the map 
+$(x_1, \ldots x_k-1) \mapsto (x_1, \ldots, x_{j-1}, 0, x_{j}, \ldots x_{k-1})$.
+So we can think of it as just a change in coordinates.
+\begin{align*}
+	\int_{\partial I^k} \omega 
+		&= \sum_{j=1}^k (-1)^j \int_{I^{k-1}} (I^k_{j=0})^*\omega - \int_{I^{k-1}} (I^k_{j=1})^*\omega
+\end{align*}
+
+Once we have Stokes' Theorem for the standard cube we can extend to the singular cube by:
+\begin{align*}
+	\int_{\partial c} \omega
+		&= \int_{c (\partial ([0,1]^k))} \omega \\
+		&= \int_{\partial( [0,1]^k)} c^* \omega \\
+		&= \int_{[0,1]^k} dc^* \omega \\
+		&= \int_{[0,1]^k} c^* d \omega \\
+		&= \int_c d\omega
+\end{align*}
+
+And for a chain $C=a_1 c_1 + \ldots + a_n c_n$:
+\begin{align*}
+	\int_C d\omega 
+		&= \int_{a_1c_1 + \ldots + a_nc_n	} d\omega \\
+		&= a_1 \int_{c_1} d\omega + \ldots + a_n \int_{c_n} d\omega \\
+		&= a_1 \int_{\partial c_1} \omega + \ldots + a_n \int_{\partial c_n} \omega \\
+		&= \int_{a_1 \partial c_1 + \ldots a_n \partial c_n} \omega \\
+		&= \int{\partial ( a_1c_1 + \ldots + a_n c_n)} \omega \\
+		&= \int_{\partial C} \omega
+\end{align*}
 
 
 \section{Applications}
