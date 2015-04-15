@@ -10,27 +10,43 @@
 Some data structures in mathematics are more well-loved than others and none more than Cantor's set.
 The very foundations of mathematics lie in set theory: numbers are defined in terms of sets as are ordered tuples which in turn lead to relations, functions, sequences and from there branches into countless other structures.
 But this trunk typically omits a satisfactory treatment of several \emph{generalized sets}.
-For example, it is difficult to begin speaking about \emph{hybrid sets} without immediately punctuating, ``that is, multisets with negative multiplicity''.
-It is a statement of progress that multisets have even entered into (relatively) common mathematical parlance.
+For example, it is difficult to begin speaking about \emph{hybrid sets} without immediately punctuating, 
+\emph{``---that is, multi-sets with negative multiplicity''}.
 
 
+It is a statement of progress that multi-sets have even entered into (relatively) common mathematical parlance.
+On the other hand, sequences need no introduction and are generally relied on when a structure resembling a 
+multi-set is needed.
+One can easily represent a multi-set by a sequence: if an element occurs in a multi-set with multiplicity $n$, simply make
+sure it's in the sequence $n$ times as well.
+Indeed,  \emph{``why not?''}, even if the order of elements is not needed, \emph{``surely it can't hurt?''}
 
-Still, sequences need no introduction and are generally relied on when a structure allowing repeated elements is needed.
-The addition of an ordering is often not even needed but ``surely it can't hurt?''
+
 Consider the \emph{Fundamental Theorem of Arithmetic}:
 \begin{quote}
-``Every positive integer, except 1, is a product of primes.'' ... ``The standard form of $n$ is unique; apart from rearrangement of factors, $n$ can be expressed as a product of primes in one way only.''
+``Every positive integer, except 1, is a product of primes. (\ldots) The standard form of $n$ is unique; apart from rearrangement of factors, $n$ can be expressed as a product of primes in one way only.''
 \attrib{Hardy and Wright 1979, p.2-3}
 \end{quote}
-By recognizing the possibility of rearranging factors, the authors implicitly define type the ``product of primes'' as a sequence.
-But for iterated commutative operators (e.g. $\sum, \prod \bigcap, \bigcup$), the order of terms is irrelevant.
-So then, why order terms to begin with?
-Reisig \cite{reisig1985petri} uses multisets to define relation nets where ``... several individuals of some sort do not have
-to be distinguished" and furthermore ``One should not be forced to distinguish individuals if one doesn't wish to. This would lead to overspecification''.
-The same applies here.
-Secondly, iterated operators over an empty set is simply the respective identity ($\prod_{x\in \emptyset} x = 1$) , and so 1 \emph{is} a product of primes.
+By recognizing the possibility of rearranging factors, the authors implicitly define type the ``product of primes'' as a sequence rather than, more aptly a multi-set.
+For iterated, commutative operators (e.g. $\sum, \prod \bigcap, \bigcup$), the order of terms is irrelevant so then, 
+\emph{``why order terms to begin with?''}
+Reisig \cite{reisig1985petri} uses multi-sets to define relation nets where 
+``\ldots several individuals of some sort do not have to be distinguished", and moreover
+ ``One \emph{should not} be forced to distinguish individuals if one doesn't wish to.  This would lead to overspecification''
+(emphasis added). The same applies here.
+
+Secondly --- and this is a more subtle and subjective point --- 
+the empty sequence is not nearly as enshrined as the empty set.
+Whereas the empty set is often the first thing that comes to mind when searching for trivial cases or counter-examples,
+the empty sequence is not usually so readily recalled.
 Despite the empty sequence being just as well-defined as the empty set; it tends to be treated as an aberrant case.
-Some definitions even disregard the singleton sequence to say, ``is prime or the product of primes''. 
+In the case of iterated operators over an empty set, it is simply the respective identity.
+In the case of $\prod$, this is 1, and so 1 \emph{is} a product of primes.
+It is uniquely, the product of the empty set of primes.
+Similarly, a sequence containing just one element is still a sequence but this also can be easy to forget.
+Some definitions will also disregard this to say, ``is prime or the product of primes''. 
+Whether this is extra specificity is a fault to the authors or simply a reminder to readers, the point remains the same.
+The perception of sequences can be misleading in ways in which sets are not often misconstrued.
 
 
 
@@ -38,10 +54,14 @@ Stripped of these qualifications we are left with simply:
 \begin{quote}
 ``Every positive integer is the product of a unique multiset of primes.''
 \end{quote}
-Although the definition is equivalent, by using appropriate data structures, the result is more elegant and less case-based reasoning for later uses of the definition.
+Although the definition is equivalent, by using appropriate data structures, we can more succinctly state
 In this spirit that we will graft hybrid sets into areas of mathematics where conventional structures don't fit as tightly as we'd like.
 		
-					
+\todo[inline]{vbox}		
+\todo[inline]{vbox}
+\todo[inline]{vbox}		
+\todo[inline]{vbox}
+\todo[inline]{vbox}	
 																							
 \section{Objectives}
 
@@ -63,9 +83,6 @@ Such a model would allow for integation of differential forms over subsets of ma
 
 
 
-%%%%%%%% TODO!
-I don't currently have a set of objectives for the Petri net chapter.
-Another couple lines will go here once I have a better idea what the chapter will look like.
 
 
 

@@ -646,7 +646,7 @@ The six faces that make up its boundary are shaded and labeled with their corres
 %Now with 100% more right-handed
 }
 \centering
-\begin{tikzpicture}[y=1.5cm, x=3cm]	
+\begin{tikzpicture}[y=1.4cm, x=2.8cm]	
  	%axis
  	
  	%left
@@ -975,9 +975,20 @@ This allows us to rewrite:
 
 A $k-1$-form $\omega$ can be written as the sum
 \begin{equation}
-	\omega = \sum_{i=1}^k f_i \; dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k
+	\omega 
+		= \sum_{i=1}^k \omega_i 
+		= \sum_{i=1}^k f_i \; dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k
 \end{equation}
 but since everything: the integrals, $d$ and $\partial$ are all linear, we can work using just one of these terms.
+Assuming Stokes' theorem holds for $\omega_i$ then we immediately have it for $\omega$ as well:
+\begin{align*}
+	\int_{\partial\Omega} \omega 
+	&= \int_{\partial \Omega} (\omega_1 + \ldots + \omega_k) \\
+	&= \int_{\partial\Omega} \omega_1 + \ldots + \int_{\partial\Omega} \omega_k  \\
+	&= \int_{\Omega} d\omega_1 + \ldots + \int_\Omega d\omega_k \\
+	&= \int_\Omega (d\omega_1 + \ldots + d\omega_k)\\
+	&= \int_\Omega d(\omega_1 + \ldots + \omega_k) = \int_\Omega d\omega
+\end{align*}
 
 To compute $d\omega$, we have for each term in the sum:
 \begin{align*}
@@ -995,10 +1006,12 @@ Hence only one term in the sum, $i=j$ will actually result in a non-zero term:
 		&= (-1)^{i-1} \frac{\partial f_i}{\partial x_i}
  			 dx_1 \wedge \ldots \wedge dx_k \\ 
 \end{align*}
+
+
 Since this is an integral over the canonical basis $\text{x} = (x_1, \ldots, x_k)$ we can remove the wedge products and
 integrate as normal.
 \begin{align*}
-	\int_{[0,1]^k} d\omega
+	\int_{[0,1]^k} d\omega_i
 		=&\; (-1)^{i-1} \int_{[0,1]^k} \frac{\partial f_i}{\partial x_i}\; d(x_1, \ldots, x_k) \\
 		=&\; (-1)^{i-1} \int_{[0,1]^{k-1}} \left( \int_0^1 \frac{\partial f_i}{\partial x_i} dx_i \right) 
 			\;d(x_1, \ldots, \widehat{x_i}, \ldots, x_k)\\
@@ -1008,22 +1021,38 @@ integrate as normal.
 			\;d(x_1, \ldots, \widehat{x_i}, \ldots, x_k) \right)
 \end{align*}
 The trick here being Fubini's Theorem allowing us to evaluate the iterated integral in whichever order we choose.
-
-
 On the other side of the equality we have:
 \begin{align*}
-	\int_{\partial I^k} \omega 
-		&= \sum_{j=1}^k (-1)^j \int_{I^k_{j=0}} \omega - \int_{I^k_{j=1}} \omega
+	\int_{\partial I^k} \omega_i
+		&= \sum_{j=1}^k (-1)^j \int_{I^k_{j=0}} \omega_i - \int_{I^k_{j=1}} \omega_i
 \end{align*}
-but $I^k_{j=0}$ is just a $k-1$ rectangle embedded in $\mathbb{R}^k$ by the map 
-$(x_1, \ldots x_k-1) \mapsto (x_1, \ldots, x_{j-1}, 0, x_{j}, \ldots x_{k-1})$.
-So we can think of it as just a change in coordinates.
+but $I^k_{j=0}$ is just a $k-1$-rectangle embedded in $\mathbb{R}^k$ by the map:
+\begin{equation*}
+	(x_1, \ldots x_{k-1}) \mapsto (x_1, \ldots, x_{j-1}, 0, x_{j}, \ldots x_{k-1})
+\end{equation*}
+So we could alternatively think of $I^k_{j=0}: I^{k-1} \to I^k$ as just a change in coordinates:
 \begin{align*}
-	\int_{\partial I^k} \omega 
-		&= \sum_{j=1}^k (-1)^j \int_{I^{k-1}} (I^k_{j=0})^*\omega - \int_{I^{k-1}} (I^k_{j=1})^*\omega
+	\int_{\partial I^k} \omega_i 
+		=&\; \sum_{j=1}^k (-1)^j 
+			\left(\int_{I^{k-1}} (I^k_{j=0})^*\omega_i - \int_{I^{k-1}} (I^k_{j=1})^* \omega_i \right) \\
+		=&\; \sum_{j=1}^k (-1)^j 
+			\left(\int_{I^{k-1}} f_i (x_1, \ldots, x_{i-1}, 0, x_{i+1}, \ldots, x_k)
+				\;dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \right. \\
+		&	\left. - \int_{I^{k-1}} f_i (x_1, \ldots, x_{i-1}, 1, x_{i+1}, \ldots, x_k)
+				\;dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \right)\\
+		=&\; (-1)^i \left(\int_{I^{k-1}} f_i (x_1, \ldots, x_{i-1}, 0, x_{i+1}, \ldots, x_k)
+				\;d(x_1, \ldots,\widehat{x_i},  \ldots, x_k) \right. \\
+		&	\left. - \int_{I^{k-1}} f_i (x_1, \ldots, x_{i-1}, 1, x_{i+1}, \ldots, x_k)
+				\;d(x_1, \ldots,\widehat{x_i},  \ldots, x_k) \right)
 \end{align*}
 
-Once we have Stokes' Theorem for the standard cube we can extend to the singular cube by:
+
+
+In the final step we observe that all terms in the sum for $i \neq j$ end up disappearing leaving us with just the term for
+$i=j$.
+Clearly, both sides of the equation are the same and so Stokes' theorem holds for the standard cube.
+From here, the remaining cases build on one another are quite straight-forward.
+For a singular cube $c$, we have:
 \begin{align*}
 	\int_{\partial c} \omega
 		&= \int_{c (\partial ([0,1]^k))} \omega \\
@@ -1032,8 +1061,7 @@ Once we have Stokes' Theorem for the standard cube we can extend to the singular
 		&= \int_{[0,1]^k} c^* d \omega \\
 		&= \int_c d\omega
 \end{align*}
-
-And for a chain $C=a_1 c_1 + \ldots + a_n c_n$:
+And for a chain $C=a_1 c_1 + \ldots + a_n c_n$ made up of singular cubes:
 \begin{align*}
 	\int_C d\omega 
 		&= \int_{a_1c_1 + \ldots + a_nc_n	} d\omega \\
@@ -1044,20 +1072,70 @@ And for a chain $C=a_1 c_1 + \ldots + a_n c_n$:
 		&= \int_{\partial C} \omega
 \end{align*}
 
+And so we have Stokes' theorem on general chains.
+
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+
+
 
 \section{Applications}
 
-\subsection{Integrating a mesh}
+Integrating with hybrid set domains does not enable any new techniques that were previously not possible.
+Using differential forms or digging even deeper with pseudo-forms and densities on manifolds, 
+one can generalize integration to a vast class of structures.
+These will all generally come back to some numeric integration ``back-end'' as we saw with differential forms.
+In the end, to compute an integral with differential forms we still need to convert the wedge product
+$dx_1 \wedge \ldots \wedge dx_k$ into $d(x_1, \ldots x_k)$.
+While there are many options; the Riemann and Lebesgue integrals being the most famous  a whole host of 
+less widely known formulations exist \cite{bochner1933integration, darboux1896leccons, henstock1991general}.
+
+
+Hybrid set integration does not enable anything new.
+It does enable us to bring the useful abstraction of orientation on a set into the ``back-end'' of integration.
+
+The following examples will primarily be an application of existing, well-known methods for computing integrals but 
+translated into the language of hybrid sets.
+\todo[inline]{Why is this a good thing?}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ''HAVING YOUR CAKE AND EATING IT TOO'' EXAMPLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Irrational numbers}}
+
+A Lebesgue measurable hybrid set can now have an orientation like Riemann integral intervals and the power of Lebesgue integration
 
 \begin{equation}
-	f(x,y) = \frac{\sin(x) \cos(y)}{\cos^2(x) + \sin^2(x)}
+	\int_1^0 1 -\mathbb{I}_\mathbb{Q}(x)\; dx
 \end{equation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MESH EXAMPLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Integrating a mesh}}
+
+\begin{equation}
+	f(x,y) = \frac{\sin(x) \cos(y)}{\cos^2(x) + \sin^2(y)}
+\end{equation}
+
+
+\begin{figure}[ht]
+	\caption[Mesh Diagram]{The function $f(x,y) = \frac{\sin(x) \cos(y)}{\cos^2(x) + \sin^2(y)}$}
+	\centering
+	\includegraphics[scale=0.6]{diagrams/sinxcosy_cos2xsin2y.png}
+\end{figure}
 
 Anti-periodic $f(x+P) = -f(x)$
 
-\subsection{Irrational numbers}
 
-\subsection{Contour Integral}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONTOUR EXAMPLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Contour Integral}}
 
 
 
