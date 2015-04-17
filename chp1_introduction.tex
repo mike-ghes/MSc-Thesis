@@ -81,22 +81,36 @@ In this spirit that we will graft hybrid sets into areas of mathematics where cu
 
 
 This thesis will include and extend the work of \cite{carette2010} on hybrid sets and their applications.
-
-
-
-In particular, integration is a natural application of signed domains that had not been explored from this perspective.
-Take the identity:
+In particular we will take as inspiration the following identity for integrals:
 \begin{equation}
 	\int_a^b f(x) \diff x = -\int_b^a f(x) \diff x
 \end{equation}
-The domain of integration on the left-side is considered to be the interval $[a,b]$ or in set builder notation, 
-$\{ x \in \mathbb{R} \; | \; a \leq x \leq b \}$ .
-It would follow then that the right hand should have domain $[b,a]$.
-Under traditional set definitions, this is not be well defined.
-Using hybrid sets allows us to give meaning to an inverted interval.
-When generalized to higher dimensions, this goal becomes an attempt to unify the \emph{Lebesgue integral} and \emph{integration of forms}.
-Such a model would allow for integration of differential forms over subsets of manifolds.
+This allows for the identity
+\begin{equation}
+	\int_a^c f(x) \diff x = \int_a^b f(x) \diff x + \int_b^c f(x) \diff x
+\end{equation}
+regardless of the ordering of $a$, $b$ and $c$.
+One can think of the region from $a$ to $c$ being partitioned into $a$ to $b$ and $b$ to $c$.
+But this is not a partition in the traditional sense.
+Rather than the union of disjoint subsets it is a sum of oriented subsets: a generalized partition.
+This is a rather nice behaviour that would be nice to emulate in other contexts as well.
 
+
+We will consider several different applications.
+When matrices are represented in terms of block submatrices, the sum or product can vary depending on block size.
+Representing the regions of a block matrix with hybrid sets will allow for all cases to be consolidated into one;
+no matter how those blocks may overlap.
+Lebesgue integration relies on measurable sets and also does not naturally support orientation.
+Here, hybrid sets will allow us to evaluate integrals like $\int_1^0 1_{\mathbb{R} \setminus \mathbb{Q}} \diff x = -1$
+Finally, we will consider the convolution of piecewise interval functions.
+Typically different equations are used depending on the relative length of intervals but with hybrid sets we can condense this
+into one general equation and ignore the interval lengths altogether.
+
+
+Unifying all of this is the argument that hybrid sets are a very useful structure and there are many instances where existing
+structures ought to be replaced.
+Hopefully these examples will provide inspiration to the reader to recognize similar situations elsewhere as well.
+\todo[inline]{vbox}
 
 
 
