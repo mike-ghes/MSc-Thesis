@@ -2,13 +2,16 @@
 \doublespacing
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MOTIVATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Motivation}
-
 
 
 %(Unordered pairs \cite{EWD:EWD1223} ?)	
 Some data structures in mathematics are more well-loved than others and none more than Cantor's set.
-The very foundations of mathematics lie in set theory: numbers are defined in terms of sets as are ordered tuples which in turn lead to relations, functions, sequences and from there branches into countless other structures.
+The very foundations of mathematics lie in set theory: numbers are defined in terms of sets as are ordered tuples 
+which in turn lead to relations, functions, sequences and from there branches into countless other structures.
 But this trunk typically omits a satisfactory treatment of several \emph{generalized sets}.
 For example, it is difficult to begin speaking about \emph{hybrid sets} without immediately punctuating, 
 \emph{``---that is, multi-sets with negative multiplicity''}.
@@ -24,8 +27,11 @@ Indeed,  \emph{``why not?''}, even if the order of elements is not needed, \emph
 
 Consider the \emph{Fundamental Theorem of Arithmetic}:
 \begin{quote}
-``Every positive integer, except 1, is a product of primes. (\ldots) The standard form of $n$ is unique; apart from rearrangement of factors, $n$ can be expressed as a product of primes in one way only.''
-\attrib{Hardy and Wright 1979, p.2-3}
+	``Every positive integer, except 1, is a product of primes. 
+	(\ldots) 
+	The standard form of $n$ is unique; 
+	apart from rearrangement of factors, $n$ can be expressed as a product of primes in one way only.''
+	\attrib{Hardy and Wright 1979, p.2-3}
 \end{quote}
 By recognizing the possibility of rearranging factors, the authors implicitly define type the ``product of primes'' as a sequence rather than, more aptly a multi-set.
 For iterated, commutative operators (e.g. $\sum, \prod \bigcap, \bigcup$), the order of terms is irrelevant so then, 
@@ -34,6 +40,7 @@ Reisig \cite{reisig1985petri} uses multi-sets to define relation nets where
 ``\ldots several individuals of some sort do not have to be distinguished", and moreover
  ``One \emph{should not} be forced to distinguish individuals if one doesn't wish to.  This would lead to overspecification''
 (emphasis added). The same applies here.
+
 
 Secondly --- and this is a more subtle and subjective point --- 
 the empty sequence is not nearly as enshrined as the empty set.
@@ -47,31 +54,40 @@ Similarly, a sequence containing just one element is still a sequence but this a
 Some definitions will also disregard this to say, ``is prime or the product of primes''. 
 Whether this is extra specificity is a fault to the authors or simply a reminder to readers, the point remains the same.
 The perception of sequences can be misleading in ways in which sets are not often misconstrued.
-
-
-
-Stripped of these qualifications we are left with simply:
+Stripped of these qualifications we are left with the more succinct:
 \begin{quote}
-``Every positive integer is the product of a unique multiset of primes.''
+	``Every positive integer is the product of a unique multiset of primes.''
 \end{quote}
-Although the definition is equivalent, by using appropriate data structures, we can more succinctly state
-In this spirit that we will graft hybrid sets into areas of mathematics where conventional structures don't fit as tightly as we'd like.
-		
-\todo[inline]{vbox}		
-\todo[inline]{vbox}
-\todo[inline]{vbox}		
-\todo[inline]{vbox}
-\todo[inline]{vbox}	
-																							
+
+
+It goes deeper than a matter of aesthetics. 
+Sets are certainly flexible objects and it is tempting to take a minimal approach to the tools required in one's toolbox.
+But the algebra of sets, is a fairly restrictive one.
+Consider the sets $[a,b) = \{ x \; |\; a \leq x < b \}$ and $[b,c) = \{ x \;|\: b \leq x < c \}$.
+Their union $[a,b) \cup [b,c)$ will depend heavily on the relative ordering of $a$, $b$ and $c$. 
+More often, as in integration what one really wants is $[a,b) + [b,c) = [a,c)$.
+When boolean algebra and numeric algebra interface, results can get unnecessarily messy.
+Hybrid sets will allow us to remove this tension, by committing fully to numeric algebra
+In this spirit that we will graft hybrid sets into areas of mathematics where current approaches are unsatisfactory.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OBJECTIVES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 \section{Objectives}
 
 
-
 This thesis will include and extend the work of \cite{carette2010} on hybrid sets and their applications.
+
+
+
 In particular, integration is a natural application of signed domains that had not been explored from this perspective.
 Take the identity:
 \begin{equation}
-\int_a^b f(x) \;\mathrm{d}x = -\int_b^a f(x) \;\mathrm{d}x
+	\int_a^b f(x) \diff x = -\int_b^a f(x) \diff x
 \end{equation}
 The domain of integration on the left-side is considered to be the interval $[a,b]$ or in set builder notation, 
 $\{ x \in \mathbb{R} \; | \; a \leq x \leq b \}$ .
@@ -79,43 +95,71 @@ It would follow then that the right hand should have domain $[b,a]$.
 Under traditional set definitions, this is not be well defined.
 Using hybrid sets allows us to give meaning to an inverted interval.
 When generalized to higher dimensions, this goal becomes an attempt to unify the \emph{Lebesgue integral} and \emph{integration of forms}.
-Such a model would allow for integation of differential forms over subsets of manifolds.
+Such a model would allow for integration of differential forms over subsets of manifolds.
 
 
 
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% RELATED WORK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Related Work}
 
 
-
-It is difficult to date the origin of multisets. The term was coined by N.G. de Bruijn in corresponces with Donald Knuth, \cite{knuth2014art}
-but thought of as a ``collection of objects that may or may not be distinguished'' is as old as tally marks. 
-In regards to the generalization to \emph{signed} multisets, Hailperin \cite{hailperin1986boole} suggests that Boole's 1854 \emph{Laws of Thought} \cite{boole1854investigation} is a treatise of signed multisets.
-Whether this was Boole's intent is debated 
-[cite]. %%%%%%%%%
-Sets with negative membership explicitly began to appear in \cite{whitney1933characteristic} and were formalized under the name Hybrid sets in Blizard's extensive work with generalized sets \cite{blizard1988, blizard1990} 
+It is difficult to date the origin of multisets.
+Although the term itself was coined by De Bruijn in corresponces with Knuth \cite{knuth2014art},
+the thought of a ``collection of objects that may or may not be distinguished'' is as old as tally marks. 
+In regards to the generalization to \emph{signed} multisets, Hailperin \cite{hailperin1986boole} 
+suggests that Boole's 1854 \emph{Laws of Thought} \cite{boole1854investigation} is actually a treatise of signed multisets.
+Whether this was Boole's intent is debateable.
+Sets with negative membership explicitly began to appear in \cite{whitney1933characteristic} and were 
+formalized under the name Hybrid sets in Blizard's extensive work with generalized sets \cite{blizard1988, blizard1990} 
 Although hybrid set and signed multiset are the most common nomenclature, other names appearing in literature include
-multiset (specifying positive when for unsigned multisets) \cite{reisig1985petri} 
+multiset (specifying positive when speaking of unsigned multisets) \cite{reisig1985petri} 
 and integral multiset \cite{wildberger2003new}. 
+
 
 Existing explicit applications of hybrid sets are currently limited.
 Loeb \emph{et al.} \cite{damiani1991, loeb1992} use hybrid sets to generalize several combinatoric identities to negative values.
-Bailey \emph{et al.} \cite{bailey2009hypergraphic} and Ban\^{a}tre \emph{et al.} \cite{banatre2006} have also had success with hybrid sets in chemical programming. 
-Representing a solution is represented as a collection of atoms and molecules, negative multiplicities are treated as ``antimatter'' . 
+Bailey \emph{et al.} \cite{bailey2009hypergraphic} and Ban\^{a}tre \emph{et al.} \cite{banatre2006} 
+have also had success with hybrid sets in chemical programming. 
+Representing a solution is represented as a collection of atoms and molecules, 
+negative multiplicities are treated as ``antimatter'' . 
 For a deeper overview and systemization of generalized sets, see \cite{singh2007, singh2008systematization}.
-Finally, Bartoletti \cite{bartolettilending, bartoletti2013} and Schmidt \cite{schmidt1995parameterized} also investigate petri and relation nets (to be examined in chapter 5), albeit not from the perspective of hybrid sets.
 
 
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MOTIVATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Thesis Outline}
 
 
+In chapter 2, the foundations for hybrid sets and functions with hybrid set domains will be laid. 
+This will provide us with formal definitions and some immediate applications to piecewise functions will be presented.
+Chapter 3 will see hybrid domains applied towards symbolic matrix algebra.
+Addition has already been considered \cite{carette2010}, but this will be extended to multiplication as well.
+In chapter 4, hybrid functions will be applied towards integration. 
+We will start from foundations and use hybrid functions to allow for an oriented Lebesgue integral.
+We will then show how hybrid sets naturally come up in Stokes' theorem with the boundary operator.
+Finally in chapter 5, hybrid sets will be applied towards convolution of piecewise functions.
 
-In chapter 2, the foundations for hybrid sets and functions with hybrid set domains will be laid. Some immediate applications to piecewise functions will be presented.
-In chapter 3, the algebra of domains will be more deeply explored with generalized partitions and inclusion-exclusion and present an method for computing the support of a hybrid set.
-In chapter 4, hybrid functions will be applied towards integration. Starting from foundations we will use hybrid functions to unify integration of forms with integration on subsets of manifolds and prove Stokes' theorem on the new model.
-Finally in chapter 5, hybrid sets will be applied to Petri and relation nets with the scope of ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

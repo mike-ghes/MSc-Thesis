@@ -1,4 +1,4 @@
-\chapter{Integration}
+\chapter{Integration on Oriented Sets}
 \label{chp:Integration}
 
 
@@ -995,7 +995,7 @@ To compute $d\omega$, we have for each term in the sum:
 	d \left( f_i dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \right) 
  		&= df_i \wedge dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \\ 
  		&= \left( \sum_{j=1}^k \frac{\partial f_i}{\partial x_j} dx_j \right)
- 			\wedge dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \\ 
+ 			\wedge dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k
 \end{align*}
 But for $j \neq i$, there will be a duplicate $dx_j$ term and this collision will cause the term to go to zero.
 Hence only one term in the sum, $i=j$ will actually result in a non-zero term:
@@ -1004,9 +1004,11 @@ Hence only one term in the sum, $i=j$ will actually result in a non-zero term:
  		&= \left(\frac{\partial f_i}{\partial x_i} dx_i \right)
  			\wedge dx_1 \wedge \ldots \wedge \hat{dx_i} \wedge  \ldots \wedge dx_k \\ 
 		&= (-1)^{i-1} \frac{\partial f_i}{\partial x_i}
- 			 dx_1 \wedge \ldots \wedge dx_k \\ 
+ 			 dx_1 \wedge \ldots \wedge dx_k
 \end{align*}
 
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 Since this is an integral over the canonical basis $\text{x} = (x_1, \ldots, x_k)$ we can remove the wedge products and
 integrate as normal.
@@ -1106,10 +1108,43 @@ translated into the language of hybrid sets.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Irrational numbers}}
 
-A Lebesgue measurable hybrid set can now have an orientation like Riemann integral intervals and the power of Lebesgue integration
+A Lebesgue measurable hybrid set can now have an orientation like Riemann integral intervals 
+and the power of Lebesgue integration.
+Consider the indicator function for the set of rational numbers, $1_\mathbb{Q}$ which evaluates to 
+1 for rational numbers and 0 for irrational numbers.
+Over the interval $[0,1]$ on the real line, this is not Riemann-integrable.
+Suppose we have some generalized partition of $[0,1]$ made up of intervals.
+Then for any of these sub-intervals, there will be at least one rational and one irrational number.
+Hence the upper Riemann sum will be 1 and the lower Riemann sum will be 0.
+No matter how small we make our intervals, there will always be a rational and irrational number in each.
+The two sums will never converge and so there is no well-defined Riemann integral.
+
+
+On the other hand, it is Lebesgue integrable:
+\begin{equation}
+	\int_{[0,1]} 1_\mathbb{Q} \; d\mu = \mu(\mathbb{Q} \cap [0,1])
+\end{equation}
+But since $\mathbb{Q}$ is countable, it has measure 0 and so $1_\mathbb{Q}$ \emph{is} Lebesgue integrable on $[0,1]$.
+Similarly, we could also find that:
+\begin{equation}
+	\int_0^1 1_{\mathbb{R}\setminus \mathbb{Q}} \;d\mu
+		= \int_{[0,1]} 1_{\mathbb{R}\setminus \mathbb{Q}} \;d\mu
+		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
+		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
+		= 1
+\end{equation}
+
+One would expect the same process to hold for when integrating from 0 to 1 but restricted to sets, this is not possible.
+The statement $[1,0] = -[0,1]$ is nonsense.
+But if we instead take integrating from $a$ to $b$ to mean the Lebesgue integral over the oriented $[\![a,b]\!]$.
+Additionally instead of the Lebesgue measure $\mu$ which is defined for 
+measure $\nu$:
 
 \begin{equation}
-	\int_1^0 1 -\mathbb{I}_\mathbb{Q}(x)\; dx
+	\int_1^0 1_{\mathbb{R}\setminus \mathbb{Q}} \;d\nu
+		\;=\; \int_{[\![0,1]\!]} 1_{\mathbb{R}\setminus \mathbb{Q}} \;d\nu
+		\;=\; \nu \big( (\mathbb{R}\setminus\mathbb{Q} ) \otimes [\![1,0]\!] \big)
+		\;=\; -1
 \end{equation}
 
 
@@ -1123,11 +1158,11 @@ A Lebesgue measurable hybrid set can now have an orientation like Riemann integr
 \end{equation}
 
 
-\begin{figure}[ht]
-	\caption[Mesh Diagram]{The function $f(x,y) = \frac{\sin(x) \cos(y)}{\cos^2(x) + \sin^2(y)}$}
-	\centering
-	\includegraphics[scale=0.6]{diagrams/sinxcosy_cos2xsin2y.png}
-\end{figure}
+%\begin{figure}[ht]
+%	\caption[Mesh Diagram]{The function $f(x,y) = \frac{\sin(x) \cos(y)}{\cos^2(x) + \sin^2(y)}$}
+%	\centering
+%	\includegraphics[scale=0.6]{diagrams/sinxcosy_cos2xsin2y.png}
+%\end{figure}
 
 Anti-periodic $f(x+P) = -f(x)$
 
@@ -1137,9 +1172,62 @@ Anti-periodic $f(x+P) = -f(x)$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Contour Integral}}
 
+Generalized partitions can extend past the original domain. 
+Sometimes the additional regions that are added and negated can be quite unexpected.
 
 
+Contour integration is a method for solving integrals and can involve including curious looking regions to solve.
+
+\begin{equation}
+	f(x) = \frac{1}{x^4 + 1}
+\end{equation}
+
+and compute the integral over the real line.
+
+\begin{equation}
+	 \int_{-\infty}^\infty f(x) \; dx
+\end{equation}
+
+Rather than think of this as an integral over the entire real line $f:\mathbb{R} \to \mathbb{R}$, 
+we instead consider it as a complex function: $f:\mathbb{C} \to \mathbb{C}$.
+
+\begin{equation}
+	\lim_{a\to \infty} \int_{-a}^a \frac{1}{z^4+1} \; dz
+\end{equation}
+
+We will close off $[-a, a]$ with $Arc(t) = a ( \cos(t) + i \sin(t))$ which forms the semi-circle with radius $a$
+
+DIAGRAM
+
+$f(z)$ has four singularities at $(-1)^{1/4} =  \pm \sqrt{2} \pm \sqrt{2}i$
+$e^{i \pi/4} $
 
 
+We will also let $C$ be the path made by $C= [-a, a] \oplus Arc$ 
 
+\begin{equation}
+	\int_{-a}^a f(x)\;dx = \oint_{C} f(z)\;dz - \int_{Arc} f(z) \; dz
+\end{equation}
+
+$C$ is a closed simple path so we use the Cauchy integral formula to evaluate it.
+
+\begin{equation}
+	\oint_C f(z) \;dz = 2 \pi i \sum \text{Res}
+\end{equation}
+
+$\text{Res}(e^{i\pi/4}) = \frac{1}{4 i \sqrt{i}}$ and $\text{Res}(e^{3i\pi/4}) = \frac{1}{4 \sqrt{i}}$ 
+
+$\oint_C f(z) \;dz = \frac{\pi \sqrt{2}}{2}$
+
+The integral on $Arc$:
+
+$z = re^{i \theta}$ $dz=ire^{i\theta} d\theta$
+
+$\int_{Arc} f(z) \;dz = \int_0^\pi \frac{ire^{i\theta}}{r^4 e^{4i\theta} +1} \; d\theta$
+
+as $r \to \infty$ this goes to 0  and so the term for $Arc$ drops off
+
+\begin{equation}
+	\int_{-\infty}^\infty f(x) = \frac{\pi }{\sqrt{2}}
+\end{equation}
 
