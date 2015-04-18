@@ -19,13 +19,13 @@ Given a function $f$ with real variable $x$ and an interval $[a,b)$ of the (exte
 \footnote{ The extended real line denoted $\extendedreal$ is the set of real numbers as well as the points at 
 $+\infty$ and $-\infty$} the definite integral
 \begin{equation*}
-	\int_a^b f(x) \; dx
+	\int_a^b f(x) \diff x
 \end{equation*}
 is defined as the signed area bounded by $f$ between $x=a$ and $x=b$.
 Generally after a short exposition about Riemann sums, it would then be revealed that if $F$ is an anti-derivative of the
  function $f$ then:
 \begin{equation*}
-	\int_a^b f(x) \; dx \;=\; F(b)-F(a) \;=\; - (F(a)-F(b)) \;=\; - \int_b^a f(x) \; dx
+	\int_a^b f(x) \diff x \;=\; F(b)-F(a) \;=\; - (F(a)-F(b)) \;=\; - \int_b^a f(x) \diff x
 \end{equation*}
 
 
@@ -40,7 +40,7 @@ As are the intervals $[a,a)$, $[\pi, e)$, and$[\infty, -\infty)$.
 As these are all different representations of the same interval, and we are considered with the relationship between $f$ and
 the interval, then one might argue that, in fact
 \begin{equation*}
-	\int_b^a f(x) \; dx \;=\; \int_a^a f(x) \; dx \;=\; \int_\pi^e f(x)\;dx \;=\; \int_\infty^{-\infty} f(x) \; dx
+	\int_b^a f(x) \diff x \;=\; \int_a^a f(x) \diff x \;=\; \int_\pi^e f(x)\diff x \;=\; \int_\infty^{-\infty} f(x) \diff x
 \end{equation*}
 Obviously this is not the intent but there is a distinct mismatch between the conceptual usefulness of considering
 integrals as over an interval.
@@ -49,116 +49,117 @@ But when actually using said interval, it is treated as an ordered pair of endpo
 
 This issue is exasperated working with the more general notation
 \begin{equation*}
-	\int_X f(x) \; dx
+	\int_X f(x) \diff x
 \end{equation*}
 which denotes integrating $f$ over a set $X$.
-Now there is nothing stopping $X$ from an interval and one would very much like to say that,
+Now there is nothing stopping $X$ from an interval and one would very much like to say that we can convert between the
+two notations with a definition like:
 \begin{equation*}
-	\int_a^b f(x) \; dx \;=\; \int_{[a,b)} f(x) \; dx
+	\int_a^b f(x) \diff x \;=\; \int_{[a,b)} f(x) \diff x
 \end{equation*}
 but there is no analogous translation to $\int_a^b = - \int_b^a$ and so if we made this assertion we would be left with
 \begin{equation*}
-	\int_{[a,b)} f(x) \; dx 
-		= \int_a^b f(x) \; dx 
-		= -\int_b^a f(x) \; dx 
-		= - \int_{[b,a)} f(x)\; dx 
-		= -\int_\emptyset f(x)\;dx 	
+	\int_{[a,b)} f(x) \diff x 
+		= \int_a^b f(x) \diff x 
+		= -\int_b^a f(x) \diff x 
+		= - \int_{[b,a)} f(x)\diff x 
+		= -\int_\emptyset f(x)\diff x 	
 		= 0
 \end{equation*}
-Again, clearly this is not a desired outcome.
+This is clearly not a desired outcome; instead what is actually intended is an oriented interval.
+The integral should instead be over the hybrid set $[\![a,b)\!)$.
 
-\todo[inline]{Instead what is actually intended is an oriented interval}
+
 
 Another advantage to using oriented sets is a more natural language for manipulating domains of integration than sets.
-There is no common understanding of the sum of two sets, but since we have the point-wise sum $\oplus$ for hybrid sets, we simply say that the integral operator is \emph{bi-linear}.
-By this we mean, it is linear with respect to both operands: the function it is integrating over:
+We cannot add sets (in the traditional, non-$\sigma$-algebra sense) 
+but with the point-wise sum $\oplus$, we \emph{can} add hybrid sets.
+This allows us to say that the integral operator is \emph{bi-linear}.
+By this we mean, that integration is a function of two operands, the integrand and the domain.
+Integration is linear over integrands regardless,
 \begin{equation}
-	\int_{X} f(x) + g(x) \; dx = \int_X f(x) \;dx + \int_X g(x) \; dx
+	\int_{X} f(x) + g(x) \diff x = \int_X f(x) \diff x + \int_X g(x) \diff x
 \end{equation}
-and the domain of integration:
+but with summation defined on the domain as well
 \begin{equation}
-	\int_{X\oplus Y} f(x) \; dx = \int_{X} f(x) \; dx + \int_Y f(x) \; dx
+	\int_{X\oplus Y} f(x) \diff x = \int_{X} f(x) \diff x + \int_Y f(x) \diff x
 \end{equation}
-By definition, this immediately gives way to the very useful identities:
-\begin{align}
-	\int_{[\![a,c)\!)} f(x) \; dx = \int_{[\![a,b)\!)} f(x) \; dx + \int_{[\![b,c)\!)} f(x) \; dx \\
-	\int_{[\![a,b)\!)} f(x) \; dx = \int_{\ominus [\![b,a)\!)} f(x) \; dx = - \int_{[\![b,a)\!)} f(x) \; dx
-\end{align}
-for all $a$, $b$ and $c$.
 
 
-\todo[inline]{new chapter overview}
+In one dimension, many of these changes may seem trivial advances but in higher dimensions, 
+the oriented and measure-theoretic approaches diverge \cite{tao2007differential}.
+A Riemann integration foundation is not overly concerned with negatively oriented intervals and the definitions continue
+to function unperturbed by the fact that the ``right-hand'' bound is actually less than the ``left-hand'' bound.
+As such extending to higher dimension Riemann integrals, orientation is easily bundled in as well.
+But measure-based approaches to integration need to fake orientation in one dimension.
+First one must convert $\int_a^b$ into either $-\int_{[a,b)}$ or $\int_{[a,b)}$ and then integrate one or the other.
+Once one commits to an orientation, there is no coming back.
+In higher dimensions, this becomes more of a problem.
 
-In one dimension, many of these changes may seem trivial advances but in higher dimensions, the oriented and measure-theoretic approaches diverge \cite{tao2007differential}.
+This is usually forgivable given the extra power the Lebesgue integral affords over the Riemann.
 Using hybrid sets as domains of integration allow us to use the best features of both.
-In this chapter we will present an introduce integration over oriented intervals and generalize to oriented $n$-cubes in higher dimensions.
-We will also explore the boundary operator and the cubic homology formed by $n$-cubes.
-This will provide a base for the following chapter to investigate the cubic singular homology, integration of forms and Stokes' theorem.
-In Chapter 6, we will introduce the oriented Lebesgue integral.
+In this chapter we will investigate integration using hybrid set domains.
+
+\todo[inline]{more...}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% HYBRID INTEGRATION
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Integration over Hybrid Domains}
+
+In section~\ref{sec:OrientedIntervals} we introducted oriented intervals and more generally, 
+$k$-dimensional oriented rectangles.
+We will now look to integrate over $k$-rectangles. 
+Two approaches will be discussed: first the Riemann integral and the Lebesgue integral.
+Following this, we will extend to singular cubes to handle more complex domains.
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % RIEMANN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \subsection{Riemann Integral on $k$-rectangles}
 
-
-\todo[inline]{new intro}
-Now that we have oriented $n$-dimensional cubes, we would like to define the integral over one.
-For now, we will content ourselves with the Riemann integral and Euclidean volume.
-More complex domains and other metrics will be handled in later chapters with push-backs and the Lebesgue integral.
-The volume of an oriented $n$-cube in $\mathbb{R}^n$ we define to be the product of its side lengths.
-Formally,
-
 \begin{definition}
-	Let $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ be a $k$-cube in $\mathbb{R}^n$ again with $\boldsymbol{a}=(a_1,\ldots, a_n)$ and $\boldsymbol{b}=(b_1,\ldots, b_n)$. 
+	Let $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ be a $k$-rectangle in $\mathbb{R}^n$ 
+	where $\boldsymbol{a}=(a_1,\ldots, a_n)$ and $\boldsymbol{b}=(b_1,\ldots, b_n)$. 
 	We denote the \textbf{volume of $\boldsymbol{[\![a,b]\!]}$} with $\text{vol}$ and define it as:
 	\begin{equation}
-		\text{vol}(\; [\![\boldsymbol{a}, \boldsymbol{b} ]\!] \;) = (b_1 - a_1) \cdot (b_2 - a_2) \cdot \ldots \cdot (b_n - a_n)
+		\text{vol}(\; [\![\boldsymbol{a}, \boldsymbol{b} ]\!] \;) 
+			= (b_1 - a_1) \cdot (b_2 - a_2) \cdot \ldots \cdot (b_n - a_n)
 	\end{equation}
 \end{definition}
 
-For any $k<n$, a $k$-cube will have volume zero.
+We say volume, but this depends on the dimension.
+In 2-dimensions, this would better be described as area and in 1-dimension as a length.
+For any $k<n$, a $k$-rectangle will have volume zero.
+This is fitting, as we wished for example to measure the area of rectangle in 2 dimensions, but the same 2-rectangle in
+$\mathbb{R}^3$ is flat and can hold no volume.
 In at least one dimension, the cube will be degenerate (i.e. $a_i = b_i$) and so will contribute zero to the product.
-Additionally, one can also observe that $\text{vol}( \ominus [\![\boldsymbol{a}, \boldsymbol{b} ]\!]) = - \text{vol}( [\![ \boldsymbol{a}, \boldsymbol{b} ]\!]$.
+Additionally, one can also observe that $\text{vol}( \ominus [\![\boldsymbol{a}, \boldsymbol{b} ]\!]) 
+= - \text{vol}( [\![ \boldsymbol{a}, \boldsymbol{b} ]\!] )$.
 
 
-\begin{figure}[ht]
-\caption[Riemann Integral]{Upper and lower Riemann sums shown for the same sequence shown with light and dark rectangles respectively. A function over an oriented interval is Riemann integrable if the two sums converge.}
-\centering
-\includegraphics[scale=0.6]{diagrams/riemann}
-%\begin{tikzpicture}[scale=2, domain=0:5]
-%	\draw[<->] (0,2) -- (0,0) -- (5,0);
-%	\draw[smooth,samples=20, domain=0.0:5.0] plot(\x, {(\x^3 - 6 * \x^2 + 4 * \x + 18)/10});
-%\end{tikzpicture}
-\end{figure}
+The next task is to partiton the $k$-rectangle $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ into a grid of smaller
+$k$-rectangles.
+To do this we must cut each $[\![a_i, b_i]\!]$ into a partition of sub-intervals. 
 
-Given an $n$-cube $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ we must cut each $[\![a_i, b_i]\!]$ into partitions.
-Previously we used generalized partitions and did not mind if pieces overlapped or exceeded the original range.
-However, for building our Riemann sums, we are only interested in partitions in the traditional, non-intersecting sense.
 
-\begin{definition}
-	Given an oriented interval $[\![a,b]\!]$ of the real line, we say that a partition of $[\![a,b]\!]$, $\{P_i\}_{i=1}^n$
-	is an \textbf{interval partition of $\boldsymbol{[\![a,b]\!]}$} if its pieces are:
-	\begin{enumerate}
-		\item \emph{Oriented intervals}: $P_i$ is an oriented interval of the real line for all $i$.
-		\item \emph{Disjoint}: $P_i \otimes P_j = \emptyset$ for all $i,j$
-	\end{enumerate}
-	We denote the set of all such partition as $\mathcal{P}[\![a,b]\!]$.
-\end{definition}
+\todo[inline]{def: $\mathcal{P}$ =  interval partition}
 
-This greatly restricts the types of partitions we have access to.
-Every interval partition will be --- up to substitution of ``$]\!], (\!($'' in place of ``$)\!), [\![$'' --- of the form:
-\begin{equation}
-	\Big\{ \; [\![a,x_1)\!), \; [\![x_1, x_2)\!), \; [\![x_2, x_3)\!),\; \ldots,\; [\![x_{n-1}, b]\!] \; \Big\}
-\end{equation}
-where $x_i$ is a monotone sequence (that is, either non-increasing or non-decreasing).
-This is not to say that $P_i = [\![x_{i-1}, x_i )\!)$ as the pieces of $P$ may not be given in this order.
+
 Regardless of the ordering, we select partitions $P^j \in \mathcal{P}[\![a^j,b^j)\!)$ for each dimension of $[\![a,b)\!)$.
-To build our mesh, we construct smaller $n$-cubes $I_{i_1, \ldots, i_n}$ using the Cartesian product of pieces:
+To build our mesh, we construct smaller $k$-rectangles $I_{i_1, \ldots, i_n}$ using the Cartesian product of pieces:
 \begin{equation}
 	I_{i_1, \ldots, i_n} = i_1 \times \ldots \times i_n
 \end{equation}
@@ -169,42 +170,270 @@ We are now ready to construct Riemann sums.
 	Given $P=\{ P_j \}_{j=1}^n$ where $P_j \in \mathcal{P}[\![a_j, b_j]\!]$,
 	and $f:[\![\boldsymbol{a}, \boldsymbol{b}]\!] \to \mathcal{R}$ then we define a Riemann sum $f_P$ to be:
 	\begin{equation}
-		f_P = \sum_{i_1 \in P_1} \ldots \sum_{i_n \in P_n} f(x_{i_1, \ldots, i_n}) \text{vol}(I_{i_1, \ldots, i_n})
+		f_P = \sum_{i_1 \in P_1} \ldots \sum_{i_n \in P_n} f(x^*_{i_1, \ldots, i_n}) \text{vol}(I_{i_1, \ldots, i_n})
 	\end{equation}
-	where $x_{i_1, \ldots, i_n}$ is any point chosen from $I_{i_1, \ldots, i_n}$.
+	where $x^*_{i_1, \ldots, i_n}$ is any point chosen from $I_{i_1, \ldots, i_n}$.
 \end{definition}
 
 Note that we specify \emph{a} Riemann sum, not \emph{the} Riemann sum.
-There are several ways to choose $x_{i_1,\ldots,i_n} \in I_{i_1, \ldots, i_n}$ and different samplings can lead to different Riemann sums for the same partition and same function.
+There are several ways to choose $x^*_{i_1,\ldots,i_n} \in I_{i_1, \ldots, i_n}$ and different samplings can lead to different Riemann sums for the same partition and same function.
 In $\mathbb{R}^1$, several common ways to sample include the left and right Riemann sums (which sample at the left and right boundaries), the trapezoidal Riemann sum (which averages the left and right) the upper Riemann sum (which samples at $\max(f(x_{i_1, \ldots, i_n}))$) and the lower Riemann sum (which samples at $\min(f(x_{i_1,\ldots,i_n}))$).
 
-Recall our discussion of refinements from Chapter 2.
-Given 2 partitions $P$ and $P'$ of the same set then we say $P \preceq P'$ if $P'$ is a refinement of $P$.
-In this way we can induce a partial ordering on $\mathcal{P}[\![a,b]\!]$.
-There is a unique smallest element in this partial ordering which is $[\![a,b]\!]$ itself; 
-every partition by definition will refine $[\![a,b]\!]$.
-Additionally, given $P,P' \in \mathcal{P}[\![a,b]\!]$ then propose that we can always find $Q$ that simultaneously refines both.
-If $P=P'$ then trivially $Q=P$ is a common refinement.
-Otherwise, we take:
-\begin{equation}
-	Q= [\![a,b]\!] \otimes \left( \bigoplus_{p\in P} \bigoplus_{p' \in P} p \otimes p' \right)
-\end{equation}
-The heavy lifting here is done by the fact that every point in $[\![a,b]\!]$ is covered by exactly one $p\in P$ and exactly one $p' \in P$.
-The product of any two partition pieces will then be the smallest common interval with multiplicity 1.
-Multiplying the entire thing by $[\![a,b]\!]$ is done to correct the sign.
-As we go up in our ordering, our mesh becomes increasingly fine.
-Taking the Riemann sum of the suprema of this poset gives us the Riemann integral.
+
+\begin{figure}[ht]
+\caption[Riemann Integral]{Upper and lower Riemann sums shown for the same sequence shown with light and dark rectangles respectively. A function over an oriented interval is Riemann integrable if the two sums converge.}
+\centering
+\includegraphics[scale=0.6]{diagrams/riemann}
+\end{figure}
+
 
 \begin{definition}
-The Riemann integral of a function $f:\mathbb{R}^n \to \mathbb{R}$ over a $k$-cube $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$
-where $P = \sup \Big\{ \mathcal{P} [\![a,b]\!] \Big\}$
+The Riemann integral of a function $f:\mathbb{R}^n \to \mathbb{R}$ over a $k$-rectangle 
+$[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ where $P = \sup \Big\{ \mathcal{P} [\![a,b]\!] \Big\}$
 	\begin{equation}
-		\int_{[\![a,b]\!]} f(x) \; dx = f_P
+		\int_{[\![a,b]\!]} f(x) \diff x = f_P
 	\end{equation} 
 	We say that a function is \textbf{Riemann integrable} if the upper and lower Riemann sums converge.
 \end{definition}
 
-\todo[inline]{redo for arbitrary generalized partition with pieces going to zero}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LEBESGUE INTEGRAL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Lebesgue Integral on $k$-rectangles}
+
+Another common approach to integration is the Lebesgue integral.
+
+Unlike the Riemann integral, this does not normally handle orientation well.
+
+Much of the theory behind the Lebesgue integral depends on definitions for measurability.
+
+Given a set $X$ with sigma-algebra $\Sigma$.
+
+A sigma-algebra 
+
+and measure $\mu$ the measure space $(E, X, \mu)$.
+
+$X$ is a collection of measurable subsets of $E$.
+
+$\mu$ is the measure of these sets.
+
+A measurable function $f$ is one in which $\{ x \; | \; f(x) > t\}$ is a measurable set for all $t$.
+
+The measure $\mu$ can easily be extended linearly to include hybrid sets over $\Sigma$, $\hsetover[\Sigma]$.
+
+
+
+If $\ind[S]$ is indicator function $\ind[S] : X \to \{ 0, 1 \}$ given by 
+$\ind[S] (x) = 1$ if $x \in S$ and $\ind[S] (x) = 0$ otherwise.
+
+The indicator function for a measurable set is clearly a measurable function.
+
+One defines the integral as follows:
+
+\begin{equation}
+	\int_E \! \ind[S] \; \diff \mu := \mu ( S )
+\end{equation}
+
+We define a simple function as a function which maps to a finite set.
+\begin{theorem}
+	If $\varphi$ is a simple function, then we it can be represented as a finite sum of indicator functions:
+	\begin{equation}
+		\varphi := \sum_{k=0}^n a_k \ind[A_k]
+	\end{equation}
+	Where $\{ a_k \}_{k=0}^n$ is the set of values in the range of $\varphi$ and $A_k = \varphi^{-1}( \{ a_k \} )$, 
+	the set of all points which map to $a_k$.
+	Alternatively stated, for all $x \in A_k$, $\varphi(x) = a_k$.
+\end{theorem}
+
+This allows us to define the integral of a simple function.
+
+\begin{definition}
+	Let $\varphi = \sum_{k=0}^n a_k \ind[A_k]$ be a simple function. We define the integral:
+	\begin{equation}
+		\int_E \! \varphi \; \diff \mu 
+		= \int_E \! \sum_{k=0}^n a_k \ind[A_k] \diff \mu 
+		= \sum_{k=0}^n a_k  \int_E \! \ind[A_k] \diff \mu
+	\end{equation}
+\end{definition}
+
+But we don't always wish to integrate over the entire measure space.
+And this is where hybrid sets come in.
+
+For a hybrid set $B \in \hsetover[X]$,
+\begin{equation}
+	\int_B s \diff \mu = \int_E B \cdot s \diff \mu = \sum_k a_k \cdot \mu(A_k \otimes B)
+\end{equation}
+
+
+Next we define integral of a non negative functions in $\extendedreal$
+
+\begin{definition}
+	Let $(X,\mu)$ be a measure space and $f: X \to [0,\infty]$. 
+	\begin{equation}
+		\int_X \! f \; \diff\mu = \text{sup} \left\{ \int_X \varphi : \varphi \text{ simple, and } 0 \leq \varphi \leq f \right\}
+	\end{equation}
+\end{definition}
+
+We use the simple function $\psi_n$ defined as:
+\begin{equation}
+	\psi_n = \sum_{k=0}^{n2^n -1} 
+		\left[ \left(\frac{k}{2^n}\right)^{\left[ \frac{k}{2^n}, \frac{k+1}{2^n} \right)} \right] 
+		+ n^{[n,\infty]}
+\end{equation}
+
+Notationally, this definition is rather heavy but is easily understood geometrically as seen in Figure 4.1
+
+\todo{figure description}
+\begin{figure}[ht]
+\caption[Approximations using simple functions]{asdfasdf }
+\centering
+
+\begin{tikzpicture}[y=1cm, x=2.5cm]
+
+
+	\foreach \x in {0,0.0625,...,3.99}
+		\draw[fill, color=black!10] (\x,0) rectangle ++ (0.0625, \x);
+	\draw[fill, color=black!10] (4,0) rectangle (5,4);
+
+	\foreach \x in {0,0.125,...,2.9}
+		\draw[fill, color=black!20] (\x,0) rectangle ++ (0.125, \x);
+	\draw[fill, color=black!20] (3,0) rectangle (5,3);
+	
+	\foreach \x in {0,0.25,...,1.9}
+		\draw[fill, color=black!40] (\x,0) rectangle ++ (0.25, \x);
+	\draw[fill, color=black!40] (2,0) rectangle (5,2);
+	
+	\foreach \x in {0,0.5,...,0.9}
+		\draw[fill, color=black!60] (\x,0) rectangle ++ (0.5, \x);
+	\draw[fill, color=black!60] (1,0) rectangle (5,1);
+	
+	
+	
+ 	%axis
+	\draw(0,0) -- coordinate (x axis mid) (5,0);
+    	\draw (0,0) -- coordinate (y axis mid) (0,5);
+    	%ticks
+    	\foreach \x in {0,1,...,5}
+     		\draw (\x,1pt) -- (\x,-3pt)
+			node[anchor=north] {\x};
+    	\foreach \y in {0,1,...,5}
+     		\draw (1pt,\y) -- (-3pt,\y) 
+     			node[anchor=east] {\y}; 
+	
+	\draw (0,0) -- (5,5);
+
+	
+	%legend
+	\begin{scope}[shift={(5.25,2.5)}] 
+	
+	\draw[yshift=4\baselineskip, fill, color=black!60] (0,0) rectangle (0.5,0.2) --++ (0,-0.1)
+		node[right, color=black]{$\psi_1$};
+	\draw[yshift=3\baselineskip, fill, color=black!40] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
+		node[right, color=black]{$\psi_2$};	
+	\draw[yshift=2\baselineskip, fill, color=black!20] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
+		node[right, color=black]{$\psi_3$};
+	\draw[yshift=\baselineskip, fill, color=black!10] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
+		node[right, color=black]{$\psi_4$};
+	\draw (0,0) -- (0.5,0) node[right] {$id$};
+	\end{scope}
+\end{tikzpicture}
+\end{figure}
+
+
+Which for any non-negative $f$ allows us to define $\varphi_n = \psi_n \circ f$ a simple function.
+
+Obviously we have $\varphi_n$ simple since $\psi_n$ is simple. 
+
+Since $\psi_n(x) \leq x$ for all $x$ then we also have $0 \leq \varphi_n \leq f$.
+
+Most importantly we have $0 \leq f(x) - \varphi_n(x) \leq 2^{-n}$ and so $\varphi_n$, uniformly approaches $f$ as $n$ approaches infinity. 
+
+\begin{theorem}
+Let $f$ be a function mapping to $\mathbb{R}$. Then $f = f^+ - f^-$ where $f^+$ and $f^-$ are non-negative functions given by:
+\begin{align}
+f^+(x) &:= \mathrm{max}( 0, f(x)) \\
+f^-(x) &:= \mathrm{max}(0, -f(x)) 
+\end{align}
+\end{theorem}
+
+Now we have everything we need to define integrals for arbritrary functions mapping to $\mathbb{R}$:
+
+\begin{definition}
+asdfasd
+\begin{equation}
+\int_X f \diff \mu = \int_X f^+ \diff \mu - \int_X f^- \diff \mu
+\end{equation}
+\end{definition}
+
+%\begin{example}
+%\begin{equation}
+%\int_{[0,1]} \! \ind[\mathbb{Q}] \; d\mu = \mu(\mathbb{Q}) = 0
+%\end{equation}
+%\end{example}
+
+%\begin{example}
+%\begin{equation}
+%\int_{[0,1]} \! x^2 d \mu = \lim_{n \to \infty} \sum_{k=0}^{2^n -1} \frac{k}{2^n} \int_{[0,1]} \ind[[k/2^n, (k+1)/2^n)]
+%\end{equation}
+%\end{example}
+
+This was a standard treatment of Lebesgue integration.
+
+Mathematically it is very simple to extend this to integrals of hybrid sets over $L(X, \mu)$ by linearity.
+That is, given $\Gamma \in \hsetover[\mathcal{L}(X,\mu)]$:
+
+\begin{equation}
+\int_\Gamma f \diff \mu = \sum_{\sigma \in \Gamma} \Gamma(\sigma) \int_\sigma f \diff\mu
+\end{equation}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ''HAVING YOUR CAKE AND EATING IT TOO'' EXAMPLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Integrating the Irrationals}}
+
+A Lebesgue measurable hybrid set can now have an orientation like Riemann integral intervals 
+and the power of Lebesgue integration.
+Consider the indicator function for the set of rational numbers, $1_\mathbb{Q}$ which evaluates to 
+1 for rational numbers and 0 for irrational numbers.
+Over the interval $[0,1]$ on the real line, this is not Riemann-integrable.
+Suppose we have some generalized partition of $[0,1]$ made up of intervals.
+Then for any of these sub-intervals, there will be at least one rational and one irrational number.
+Hence the upper Riemann sum will be 1 and the lower Riemann sum will be 0.
+No matter how small we make our intervals, there will always be a rational and irrational number in each.
+The two sums will never converge and so there is no well-defined Riemann integral.
+
+
+On the other hand, it is Lebesgue integrable:
+\begin{equation}
+	\int_{[0,1]} 1_\mathbb{Q} \diff\mu = \mu(\mathbb{Q} \cap [0,1])
+\end{equation}
+But since $\mathbb{Q}$ is countable, it has measure 0 and so $1_\mathbb{Q}$ \emph{is} Lebesgue integrable on $[0,1]$.
+Similarly, we could also find that:
+\begin{equation}
+	\int_0^1 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \mu
+		= \int_{[0,1]} 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \mu
+		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
+		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
+		= 1
+\end{equation}
+
+One would expect the same process to hold for when integrating from 0 to 1 but restricted to sets, this is not possible.
+The statement $[1,0] = -[0,1]$ is nonsense.
+But if we instead take integrating from $a$ to $b$ to mean the Lebesgue integral over the oriented $[\![a,b]\!]$.
+Additionally instead of the Lebesgue measure $\mu$ which is defined for 
+measure $\nu$:
+
+\begin{equation}
+	\int_1^0 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \nu
+		\;=\; \int_{[\![0,1]\!]} 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \nu
+		\;=\; \nu \big( (\mathbb{R}\setminus\mathbb{Q} ) \otimes [\![1,0]\!] \big)
+		\;=\; -1
+\end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DIFFERENTIAL FORMS
@@ -222,7 +451,7 @@ And there is very little else to say as they are just functions on $\mathbb{R}^n
 
 A \textbf{(differental) 1-form} $\omega$ on $\mathbb{R}^n$ is an expression of the form:
 \begin{equation}
-	\omega = f_1(\text{x}) \; dx_1 + f_2(\text{x}) \; dx_2 + \ldots + f_n(\text{x}) \; dx_n
+	\omega = f_1(\text{x}) \diff x_1 + f_2(\text{x}) \diff x_2 + \ldots + f_n(\text{x}) \diff x_n
 \end{equation}
 Now this look very much like something we're used to integrating.
 Specifically it is something that be used as an integrand over a 1 dimensional domain.
@@ -230,20 +459,23 @@ For example, Green's theorem is introduced using differential forms without even
 \begin{equation}
 	\tag{Green's Theorem}
 	\textcolor{black!40}{
-		\int_D \left( \frac{\partial f_2}{\partial x} - \frac{\partial f_1}{\partial y}  \right) \;dx\;dy 
+		\int_D \left( \frac{\partial f_2}{\partial x} - \frac{\partial f_1}{\partial y}  \right) \diff x \diff y 
 		=\int_{C}
-	} f_1(x,y) \; dx + f_2(x,y) \; dy
+	} f_1(x,y) \diff x + f_2(x,y) \diff y
 \end{equation}
 Here $C$ is a closed curve that encloses $D$ a region in the $(x,y)$ plane; hence the right-hand side is an integral of
 a 1-form over a 1-dimensional curve.
-Having multiple $dx_i$ appearing in a single integrand may initially seem unusual when first presented, 
+Having multiple $\diff x_i$ appearing in a single integrand may initially seem unusual when first presented, 
 but is quite intuitively handled.
-Integration is linear so just as we can separate $\int f(x) + g(x) dx$ into $\int f(x) dx + \int g(x) dx$, we can similarly break
-up an integral of a 1-form into the sum of integrals over \emph{basic} 1-forms (1-forms involving a single term).
+Integration is linear so just as we can separate $\int f(x) + g(x) \diff x$ into $\int f(x) \diff x + \int g(x) \diff x$, 
+we can similarly breakup an integral of a 1-form into the sum of integrals over \emph{basic} 1-forms 
+(1-forms involving a single term).
 \begin{equation}
-	\int f_1(\text{x}) \; dx_1 + f_2(\text{x}) \; dx_2 + \ldots + f_n(\text{x}) \; dx_n
-	=
-	\sum_{i=1}^n \left( \int f_i \; dx_i \right)
+	\int f_1(\text{x}) \diff x_1 
+		+ f_2(\text{x}) \diff x_2 
+		+ \ldots 
+		+ f_n(\text{x}) \diff x_n
+	=	\sum_{i=1}^n \left( \int f_i \diff x_i \right)
 \end{equation}
 
 
@@ -251,69 +483,76 @@ Adding two 1-forms then is quite straight-forward; simply collect terms with mat
 So if we can add differential forms but what about multiplication?
 For a 0-form $\beta$ and 1-form $\omega$ as defined above, the answer the answer is a simple yes:
 \begin{equation}
-	(\beta \cdot \omega)(\text{x}) = \beta(\text{x})f_1(\text{x})dx_1 + \ldots  + \beta(\text{x})f_n(\text{x})dx_n
+	(\beta \cdot \omega)(\text{x}) 
+		= \beta(\text{x})f_1(\text{x}) \diff x_1 
+		+ \ldots  
+		+ \beta(\text{x})f_n(\text{x}) \diff x_n
 \end{equation}
 The result is a 1-form where each basic 1-form term is the product of $f_i$ and $\beta$ in $\mathbb{R}$.
 To ``multiply'' two 1-forms together however we must turn instead to the wedge product $\wedge$.
 
 First of all, the wedge product is primarily defined by being \emph{anti-commutative} or \emph{skew-symmetric}.
-That is, $dx \wedge dy = -dy \wedge dx$ and several results will immediately follow.
-When applied to two identical $dx$, we have $dx \wedge dx = - dx \wedge dx$ and so $dx \wedge dx = 0$.
+That is, $\diff x \wedge \diff y = -\diff y \wedge \diff x$ and several results will immediately follow.
+When applied to two identical $dx$, we have $\diff x \wedge \diff x = - \diff x \wedge \diff x$ 
+and so $\diff x \wedge \diff x = 0$.
 Additionally, for any permutation $\sigma$ of $[p]$
 \begin{equation}
-	dx_1 \wedge ... \wedge dx_p = \text{sgn}(\sigma) \; dx_{\sigma(1)} \wedge ... \wedge dx_{\sigma(p)}
+	\diff x_1 \wedge ... \wedge \diff x_p 
+	= \text{sgn}(\sigma) \diff x_{\sigma(1)} \wedge ... \wedge \diff x_{\sigma(p)}
 \end{equation}
-The wedge product of two 1-forms moves us out of the realm of 1-forms which have basis $dx_i$ and into the 
-realm of 2-forms with basis $dx_i \wedge dx_j$.
+The wedge product of two 1-forms moves us out of the realm of 1-forms which have basis $\diff x_i$ and into the 
+realm of 2-forms with basis $\diff x_i \wedge \diff x_j$.
 
 
 \begin{definition}
 	Given a $k$-rectangle $\Omega \in \mathbb{R}^n$ with coordinates $\text{x} = (x_1, x_2, \ldots, x_n)$
 	A \textbf{differential $p$-form} $\beta$ over $\Omega$ has the form:
 	\begin{equation}
-		\beta = \sum_{j_1 \in [n]} \ldots \sum_{j_p \in [n]} b_{(j_1, \ldots, j_p)}(\text{x}) \; 
-				\text{d} x_{j_1} \wedge \ldots \wedge \text{d} x_{j_p}
+		\beta = \sum_{j_1 \in [n]} \ldots \sum_{j_p \in [n]} b_{(j_1, \ldots, j_p)}(\text{x})
+				\diff x_{j_1} \wedge \ldots \wedge \diff x_{j_p}
 	\end{equation}
-	Typically, we will take $j$ to be the vector $(j_1, \ldots, j_p)$ and express $\beta$ instead as a single sum multi-indexed
+	Typically, we will take $j$ to be the vector $(j_1, \ldots, j_p)$ 
+	and express $\beta$ instead as a single sum multi-indexed
 	by $j$, $\sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_p}$.
 	We denote the space of all $p$-forms on $\Omega$ by $\Lambda^p(\Omega)$.
 \end{definition}
 
 
 \begin{definition}
-	Let $\alpha = \sum_i a_i(x) \; dx_{i_1} \wedge \ldots \wedge dx_{i_p} \in \Lambda^p(\Omega)$ and 
-	$\beta = \sum_j b_j(x) \; dx_{j_1} \wedge \ldots \wedge dx_{j_q} \in \Lambda^q(\Omega)$. We extend the
-	wedge product $\wedge : \Lambda^p(\Omega) \times \Lambda^q(\Omega) \to \Lambda^{p+q}(\Omega)$ by:
+	Let $\alpha = \sum_i a_i(x) \diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p} \in \Lambda^p(\Omega)$ 
+	and $\beta = \sum_j b_j(x) \diff x_{j_1} \wedge \ldots \wedge \diff x_{j_q} \in \Lambda^q(\Omega)$. 
+	We extend the wedge product to 
+	$\wedge : \Lambda^p(\Omega) \times \Lambda^q(\Omega) \to \Lambda^{p+q}(\Omega)$ by:
 	\begin{equation}
-		\alpha \wedge \beta  = \sum_{i,j} a_i(x) b_j(x) \; 
-			dx_{i_1} \wedge \ldots \wedge dx_{i_p} \wedge 
-			dx_{j_1} \wedge \ldots \wedge dx_{j_q}
+		\alpha \wedge \beta  = \sum_{i,j} a_i(x) b_j(x)
+			\diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p} \wedge 
+			\diff x_{j_1} \wedge \ldots \wedge \diff x_{j_q}
 	\end{equation}
 \end{definition}
 
 Although we take all possible $\binom{n}{q} \cdot \binom{n}{p}$ pairs of 
-$a_i (x) dx_{i_1} \wedge \ldots \wedge dx_{i_p}$ and $b_i (x) dx_{i_1} \wedge \ldots \wedge dx_{i_p}$,
+$a_i (x) \diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p}$ and $b_i (x) \diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p}$,
 most of the possible terms will end up being zero.
-If \emph{any} of the terms in $dx_{i}$ appears in $dx_{j}$, then the wedge product will be zero 
+If \emph{any} of the terms in $\diff x_{i}$ appears in $\diff x_{j}$, then the wedge product will be zero 
 and no term will be contributed.
 As such, if $q+p > n$, there will be a duplicate in every term and so the entire sum will be zero.
 When all is said and done, at most we will have $\binom{n}{p+q}$ terms.
-Rather than the skew-symmetry we had when commuting $dx \wedge dy$, in higher dimensions the sign depends on 
-$p \cdot q$ of the $p$-form and $q$-form we are commuting.
+Rather than the skew-symmetry we had when commuting $\diff x \wedge \diff y$, 
+in higher dimensions the sign depends on $p \cdot q$ of the $p$-form and $q$-form we are commuting.
 Specifically, 
 \begin{equation}
 	\alpha \wedge \beta = (-1)^{pq} \beta \wedge \alpha
 \end{equation}
-This can be easily seen by commuting each of $dx_{j_1}, \ldots dx_{j_q}$ terms each past 
-$dx_{i_1}\wedge \ldots \wedge dx_{i_p}$. 
+This can be easily seen by commuting each of $\diff x_{j_1}, \ldots \diff x_{j_q}$ terms each past 
+$\diff x_{i_1}\wedge \ldots \wedge \diff x_{i_p}$. 
 So we are commuting $q$ terms each past $p$ terms, reversing the sign each time for a net $(-1)^{pq}$.
 
 
 The wedge product is only one part of our algebra of differential forms.
 We have several other nice identities for its behaviour with addition and multiplication.
 For the following, we consider $f$ to be a function on $\mathbb{R}^n$.
-Additionally we consider the differential forms $\omega_1$ and $\omega_2$ to be $k$-forms, $\alpha$ to be a $p$-form
- and $\beta$ to be an $q$-form.
+Additionally we consider the differential forms $\omega_1$ and $\omega_2$ to be $k$-forms, 
+$\alpha$ to be a $p$-form and $\beta$ to be an $q$-form.
 Then we have the following:
 \begin{align}
 	(\omega_1 + \omega_2) \wedge \alpha  & \;=\; \omega_1 \wedge \alpha + \omega_2 \wedge \alpha \\
@@ -327,7 +566,7 @@ the sum of $\alpha$ and $\beta$: differential forms with different dimension.
 It is clear how one would add two differential forms of the same dimension as both were defined as sums to begin with.
 We also do not define the multiplication of $\cdot$ two differential forms but we multiplying a form by a function is simply:
 \begin{equation}
-	(f \cdot \alpha) (x) = \sum_i f(x)\cdot a_i(x) \; dx_{i_1} \wedge \ldots \wedge dx_{i_p}
+	(f \cdot \alpha) (x) = \sum_i f(x)\cdot a_i(x) \diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p}
 \end{equation}
 
 
@@ -337,33 +576,40 @@ Such a $k$-form is also known as a \emph{top-dimensional form}.
 As we saw previously, any form of higher degree must be zero.
 If $\omega$ is such a top form then we can always write
 \begin{equation}
-	\omega = f \; dx_1 \wedge \ldots \wedge dx_k
+	\omega = f \; \diff x_1 \wedge \ldots \wedge \diff x_k
 \end{equation}
 for some function $f$.
 Other presentations of $\omega$ exist, but we can always achieve such a presentation by commuting over $\wedge$ 
 to the canonical ordering $x_1, \ldots, x_n$.
 Once we have the $k$-form in this presentation, we just remove the wedges and evaluate the integral using the
-integrand $f \; dx_1 \;dx_2 \ldots dx_k$.
+integrand $f \diff x_1 \diff x_2 \ldots \diff x_k$.
 
 \begin{definition}
-Let $\alpha$ be a $k$-form on $\Omega \subset \mathbb{R}^n$ of the form $\alpha = A(x) \; \text{d}x_1 \wedge ... \wedge \text{d} x_n$.
-If $A \in \mathcal{L}^1 (\Omega , \text{d}x)$ then we define:
-\begin{equation}
-\int_\Omega \alpha = \int_\Omega A(x) \; \text{d}x
-\end{equation}
-Where the left-hand side is the integral of a $k$-form and the right-hand side is a Lebesgue integral.
-For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the sum of integrals.
+	Let $\alpha$ be a $k$-form on $\Omega \subset \mathbb{R}^n$ of the form 
+	$\alpha = A(x) \diff x_1 \wedge ... \wedge \diff x_n$.
+	If $A \in \mathcal{L}^1 (\Omega , \diff x)$ then we define:
+	\begin{equation}
+		\int_\Omega \alpha = \int_\Omega A(x) \; \diff x
+	\end{equation}
+	Where the left-hand side is the integral of a $k$-form and the right-hand side is a Lebesgue integral.
+	For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the sum of integrals.
 \end{definition}
 
-\begin{definition}
-Exterior derivative
-\end{definition}
-
-\todo[inline]{...}
-
+Finally, we extend the differential operator $\diff$ to act on forms known as the \textbf{exterior derivative}.
+For a function (0-form), it is the 1-form:
 \begin{equation}
-d(\alpha \wedge \beta) = (d \alpha) \wedge \beta + (-1)^j \alpha \wedge ( d \beta)
+	\diff f = \sum_i \frac{\partial f}{\partial x_i} \diff x_i
 \end{equation}
+This will result in equivalent 1-forms regardless of the choice of coordinates $\text{x} = (x_1, \ldots, x_n)$.
+For higher dimension forms it will similarly map a $k$-form to a $k+1$-form.
+This is done by recursively using the identities for $p$-form $\alpha$ and $q$-form $\beta$.
+\begin{equation}
+	\diff (\alpha \wedge \beta) = (\diff \alpha) \wedge \beta + (-1)^p \alpha \wedge ( \diff \beta)
+\end{equation}
+\begin{equation}
+	\diff (\diff ( \alpha )) = 0
+\end{equation}
+and extending linearly for all $k$-forms.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -384,18 +630,18 @@ and with them, push forward tangent spaces as well.
 	We denote the \textbf{standard $\boldsymbol{k}$-cube} as the specific $k$-rectangle $[\![0,1]\!]^k$ in 	
 	$\mathbb{R}^n$ which is the Cartesian product of $k$ copies of $[\![0,1]\!]$.
 	We also consider $[\![0,1]\!]^0 = \{0\}$.
-	Given an $n$-dimensional manifold $M$, a \textbf{singular $\boldsymbol{k}$-cube in $\boldsymbol{M}$} is a 
-	smooth differentiable map $c$ from the standard $k$-cube to $M$, $c:[\![0,1]\!]^k$
-	\todo[inline]{Singular $k$-cube: differentiable map $c$ from standard $k$-cube to $k$-dimensional manifold.}
+	Given an $k$-dimensional manifold $M$, a \textbf{singular $\boldsymbol{k}$-cube in $\boldsymbol{M}$} is a 
+	smooth differentiable map $c$ from the standard $k$-cube to $M$, $c:[\![0,1]\!]^k \to M$.
+	We will abuse this notation somewhat by also using $c \subseteq M$ to refer to the image of $[\![0,1]\!]^k$ under $c$.
 \end{definition}
 
-
-It is a common abuse of notation to use $c$ to also to refer to the image $c( [\![ 0,1]\!]^k ) \subseteq M$.
-The choice of using specifically the standard $k$-cube is arbitrary.
+For example, the hemisphere $H = \{ (x,y) \; | \: x \geq 0, y\geq 0, x^2+y^2 \leq 1 \}$
+is a singular 2-cube under the transformation $c: (r, \varphi) \mapsto r \cos(\pi \varphi) x+ r \sin(\pi \varphi) y$.
+Depending on the context we might refer to either $H$ or $c$ as a singular cube.
+Also, the choice of using specifically the standard $k$-cube is arbitrary.
 A differentiable map $f$ from $[\![a,b]\!]$ can always be composed with $g:t \mapsto ta +(1-t)b$ 
-to get singular cube $c=f \circ g$.
-Gives us innumerably more shapes to work with.
-Hemisphere for example is the singular 2-cube given by $(r, \varphi) \to r \cos(\pi \varphi) x+ r \sin(\pi \varphi) y$
+to construct the singular cube $c=f \circ g$.
+
 
 
 However if we have a valid integral $\int_{\Omega} \omega$ with $\Omega$ in some space $X$, 
@@ -412,47 +658,14 @@ before feeding the result of $g(x)$ into the first function $f$.
 The pre-composition or pullback would be $f^*g = g(f(x))$. 
 One first evaluates the first function and feeds the result into the second.
 Gets its name from pulling $f$ back through $g$.
-
-
-\todo[inline]{pullbacks and forms}
-
+Using the following identities:
 \begin{equation}
-F^* (\alpha \wedge \beta ) = (F^* \alpha) \wedge (F^* \beta)
+	F^* (\alpha \wedge \beta ) = (F^* \alpha) \wedge (F^* \beta)
 \end{equation}
-
 \begin{equation}
-F^* (d \beta ) = dF^* \beta
+	F^* (d \beta ) = dF^* \beta
 \end{equation}
-
-\todo[inline]{vbox}
-
-
-If we again have $\beta = \sum_j b_j(\text{x}) dx_{j_1} \wedge \ldots \wedge dx_{j_k} \in \Lambda^k(\Omega)$
-and some \todo{smooth + differentiable?} map $F: X \to \Omega$.
-The pull-back of $\beta$ is
-\begin{equation}
-F^* \beta = \sum_j  b_j ( F(x)) (F^* \text{d}x_{j_1}) \wedge ... \wedge (F^* \text{d} x_{j_k})
-\end{equation}
-and
-\begin{equation}
-F^* \text{d}x_j = \sum_\ell \frac{\partial F^j}{\partial x_\ell} \; \text{d} x_\ell
-\end{equation}
-
-Which can be reduced by:
-\begin{align}
-F^ * \beta & = \sum_j  b_j ( F(x)) (F^* \text{d}x_{j_1}) \wedge ... \wedge (F^* \text{d} x_{j_k}) \\
-& = \sum_j  b_j ( F(x))  
-\left( \sum_\ell \frac{\partial F^{j_1}}{\partial x_\ell} \; \text{d} x_\ell \right)
-\wedge ... \wedge  
-\left( \sum_\ell \frac{\partial F^{j_k}}{\partial x_\ell} \; \text{d} x_\ell \right) \\
-& = \sum_j b_j ( F(x)) \; \text{det}\left( J_F \right) \; \text{d}x_{j_1} \wedge ... \wedge \text{d} x_{j_k}
-\end{align}
-
-Which is significant given the change of variable formula for integration:
-
-\begin{equation}
-\int_{\phi(U)} \! f(v) \; dv = \int_U \! f(\phi(u)) \; |\text{det}\phi'(u)| \; du
-\end{equation}
+one finds a very convenient way to express change of basis inside an integral.
 
 \begin{theorem}
 Let $F : X  \to \Omega$ be an (orientation-preserving diffeomorphism) and $\alpha$ an integrable $n$-form on $\Omega$ then
@@ -463,21 +676,26 @@ Let $F : X  \to \Omega$ be an (orientation-preserving diffeomorphism) and $\alph
 
 
 
-
-To integrate over a manifold $M$, we first observe that each local chart in the manifold is essentially a singular cube.
+To integrate over a manifold $M$, we first observe that each local chart $U_i$ in the manifold is essentially a singular cube.
 If the chart is not a map over the standard cube, then there exists a diffeomorphism 
 that can be composed with the local map to transform it into a singular cube.
 It is then a matter of stitching together these local charts so that points in the manifold are not ``double-counted''.
-To do this we use a partition of unity on $M$: a collection of functions $\theta_k \geq 0$ such that 
-for all points in $x \in M$, $\sum_k \theta_k(x) = 1$.
-In addition we also enforce that for each function $\text{supp} \theta_k$ and that at each point in $M$, there are only
-a finite number of functions such that $\theta_k \neq 0$.
-
-$\{ \psi_i \}$ a partition of unity with locally finite cover $\{ U_i, \psi_i \}$ of consistently oriented coordinate charts.
-
+To do this we use a \textbf{partition of unity} on $M$.
+That is, a collection of functions $\{ \psi_i \}_i$, $\psi_i: U_i \to \mathbb{R}$ which is:
+\begin{description}
+	\item[Non-negative:] For each $\psi_i$ and for all $x \in \text{supp}(\psi_i)$, $\psi_i \geq 0$ .
+	\item[Sums to one(unity):] For all $x \in M$, $\sum_i \psi_i(x) = 1$
+	\item[Locally finite:] for any point in $M$ there are only a finite number of non-zero $\psi_i$
+\end{description}
+Given such a parititon of unity for the manifold, we define the integral over all of $M$ as:
 \begin{equation}
 \int_M \alpha = \sum_i \int_{U_i} \psi_i \alpha
 \end{equation}
+
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -543,7 +761,7 @@ The intervals $[\![1, i_j)\!)$ and $(\!(i_j, n]\!]$ are  and is an interval over
 Thus, the term $\boldsymbol{a}^{[\![1,i_j)\!)}$ refers to the vector $(a_1, a_2, \ldots, a_{i_j-1})$ 
 while the term $\boldsymbol{b}^{(\!(i_j,n]\!]}$ refers to $(b_{i_j+1}, b_{i_j+2}, \ldots, b_{n})$.
 This provides a compact notation to partition the original range of indices into 3 pieces: $[\![ 1,i_j )\!)$, $\hset{i_j}$, and $(\!(i_j, n]\!]$.
-Formally, we are actually using the hybrid sets $\hset{(i_j)^1}$ but we omit multiplicity of one (and will continue to do so through out the section) to lighten notation.
+Formally, we are actually using the hybrid sets $\hset{(i_j)^1}$ but we omit multiplicity of one.
 
 
 Next we use the pointwise sum $\oplus$ we reconstruct $n$-dimensional vectors from our pieces.
@@ -598,8 +816,8 @@ It follows that:
 	[\![\boldsymbol{a}^{(\!(1,1]\!]}, \boldsymbol{b}^{(\!(1,1]\!]} ]\!] )\\
 	=& \; \ominus [\![\boldsymbol{a}^{\emptyset}, \boldsymbol{b}^{\emptyset} ]\!]
 	\times \hset{a_1} \times
-	[\![\boldsymbol{a}^{\emptyset}, \boldsymbol{b}^{\emptyset} ]\!]\\
-	& \; \oplus
+	[\![\boldsymbol{a}^{\emptyset}, \boldsymbol{b}^{\emptyset} ]\!]
+	\oplus
 	[\![\boldsymbol{a}^{\emptyset}, \boldsymbol{b}^{\emptyset} ]\!]
 	\times \hset{b_1} \times
 	[\![\boldsymbol{a}^{\emptyset}, \boldsymbol{b}^{\emptyset} ]\!] \\
@@ -746,7 +964,6 @@ Showing the relationship between $[\![a,b]\!] \times [\![c,d]\!]$ and $[\![b,a]\
 	\draw (12+1.5,0) node[anchor=north] {$+$};
 	%\draw (12+1.5, 1.5) node {$-$};
 	\draw(12+1.5,1.5) node {$\;\circlearrowright^-$};
-	
 \end{tikzpicture}
 \end{figure}
 
@@ -772,8 +989,9 @@ An element $c \in C_k$(X) is called a \textbf{$\boldsymbol{k}$-chain on $X$} and
 with integer coefficients $\lambda_i$ and  $k$-cubes in $c_i$.
 If coefficients $\lambda_i$ are $\pm 1$ and $c$ is \emph{locally finite} (i.e. each $c_i$ intersects with only finitely many $c_j$ that have non-zero coefficients) then we say that $c$ is a \textbf{domain of integration}.
 \end{definition}
-	
-	
+
+
+		
 Since $k$-chains are just linear combinations of $k$-cubes, we naturally extend many of our definitions linearly as well.
 The integral $\int_c f$ of a $k$-chain $c=\bigoplus_i \lambda_i c_i$ is defined as $\lambda_i \int_{c_i} f  + \lambda_2 \int_{c_2} f + \ldots$.
 Doing the same for the boundary operator $\partial$ we have:
@@ -787,7 +1005,7 @@ Elegantly, the boundary operator now maps $k$-chains to $(k-1)$-chains!
 \end{equation}
 The most natural next question becomes \emph{``What does $\partial_{k-1}( \partial_k ( c ))$ look like?''}
 
-
+\todo[inline]{vbox}\todo[inline]{vbox}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -817,7 +1035,7 @@ The identity ``$\partial \partial = 0$'' is not unique to $2$-cubes but holds fo
 \begin{figure}[ht]
 \caption[Boundary of a boundary (of a 2-cube)]{The boundary of 2-cube gives a cycle of oriented edges. Taking the boundary of again, at each corner, the negative boundary of one edge will be canceled by the positive boundary of the preceding edge.}
 \centering
-	\begin{tikzpicture}
+	\begin{tikzpicture}[scale=0.8]
 	
 		\draw (1,2.5) node {$C_2$};
 		\filldraw[fill=black!40] (0,0) rectangle (2,2);
@@ -901,6 +1119,8 @@ The sequences depend on one another so it is not as simple as simply swapping $\
        [\![i_{\ell+1}]\!] \oplus [\![i_{\ell+1,j}]\!] & j \leq \ell
      \end{cases}
 \end{equation}
+
+
 So each term representing a $(k-2)$-cube will occur twice in the sum.
 Once with the iteration $(j,\ell)$ and once with $(\ell, j-1)$ or $(\ell+1, j)$.
 In either case, $(-1)^{j+\ell}$ is inverted meaning the two cubes will cancel.
@@ -908,39 +1128,15 @@ Leaving us with the boundary of a boundary being empty.
 By linearity this extends to all chains as well as the sum of empty sets is of course still empty.
 
 
-\begin{definition}
-	A \textbf{chain complex} is a sequence of Abelian groups $\ldots, A_2, A_1, A_0, A_{-1}, A_{-2}, \ldots$ \linebreak
-	which are connected by homomorphisms $d_n:A_n \to A_{n-1}$ such that $d_n \circ d_{n+1} = 0$ for all $n$.
-	Typically written out as:
-	\begin{equation}
-		\ldots 	\xleftarrow{d_{k-1}} A_{k-1} 
-				\xleftarrow{d_{k}} A_k 
-				\xleftarrow{d_{k+1}} A_{k+1} 
-				\xleftarrow{d_{k+2}} \ldots
-	\end{equation}
-	A \textbf{cochain complex} is a sequence of Abelian groups $\ldots, A^{-2}, A^{-1}, A^0, A^{1}, A^{2}, \ldots$
-	which are connected by homomorphisms $d^n:A^n \to A^{n+1}$ such that $d^n \circ d^{n-1} = 0$ for all $n$.
-	Typically written out as:
-	\begin{equation}
-		\ldots 	\xrightarrow{d^{k-1}} A^{k-1} 
-				\xrightarrow{d^{k}} A^k 
-				\xrightarrow{d^{k+1}} A^{k+1} 
-				\xrightarrow{d^{k+2}} \ldots
-	\end{equation}
-\end{definition}
+One may notice a duality here between $\partial$ and $\diff$.
 
-$(C_\bullet, \partial_\bullet)$ is just one instance of a chain complex known as the \emph{``cubic homology''}.
-In the next chapter we will look at the more general \emph{``cubic singular homology''}.
-As well as the related cochain complex: the \emph{``De Rham cohomology''} and how the two relate.
+$\diff$ mapped a $k$-form to a $k+1$-form.
 
+$\partial$ maps a $k+1$-chain to a $k$-chain.
 
+Not only that but $\partial \partial = 0$ and $\diff \diff = 0$
 
-
-
-
-
-
-
+This would be a very astute observation and is central to the generalized Stokes' theorem.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -950,6 +1146,8 @@ As well as the related cochain complex: the \emph{``De Rham cohomology''} and ho
 \subsection{Stokes' Theorem}
 
 Now we come to the statement of the generalized Stokes' Theorem itself.
+Stokes' theorem is a very important 
+
 
 Given a $k-1$-form $\omega$ and $k$ chain $M$, ...
 
@@ -966,12 +1164,16 @@ In two, it is Green's Theorem and three the Kelvin-Stokes Theorem.
 First we will consider Stokes theorem for the standard cube $I^k = [0,1]^k \subset \mathbb{R}^k$.
 In the previous section we saw how cumbersome representing the faces in $\partial I^k$, could be.
 
+
 We will denote the faces of $I^k$ by $I^k_{i=0}$ and $I^k_{i=1}$ for the $i$-th faces of $I^k$.
 This allows us to rewrite:
+
 
 \begin{equation}
 	\partial (I^k) = \bigoplus_{i=1}^k (-1)^i \left( I^k_{i=0} \ominus I^k_{i=1} \right) 
 \end{equation}
+
+
 
 A $k-1$-form $\omega$ can be written as the sum
 \begin{equation}
@@ -990,6 +1192,8 @@ Assuming Stokes' theorem holds for $\omega_i$ then we immediately have it for $\
 	&= \int_\Omega d(\omega_1 + \ldots + \omega_k) = \int_\Omega d\omega
 \end{align*}
 
+
+
 To compute $d\omega$, we have for each term in the sum:
 \begin{align*}
 	d \left( f_i dx_1 \wedge \ldots \wedge \widehat{dx_i} \wedge  \ldots \wedge dx_k \right) 
@@ -1007,8 +1211,7 @@ Hence only one term in the sum, $i=j$ will actually result in a non-zero term:
  			 dx_1 \wedge \ldots \wedge dx_k
 \end{align*}
 
-\todo[inline]{vbox}
-\todo[inline]{vbox}
+
 
 Since this is an integral over the canonical basis $\text{x} = (x_1, \ldots, x_k)$ we can remove the wedge products and
 integrate as normal.
@@ -1076,14 +1279,11 @@ And for a chain $C=a_1 c_1 + \ldots + a_n c_n$ made up of singular cubes:
 
 And so we have Stokes' theorem on general chains.
 
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
 
-
-
-\section{Applications}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONTOUR EXAMPLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Contour Integral}}
 
 Integrating with hybrid set domains does not enable any new techniques that were previously not possible.
 Using differential forms or digging even deeper with pseudo-forms and densities on manifolds, 
@@ -1101,76 +1301,6 @@ It does enable us to bring the useful abstraction of orientation on a set into t
 The following examples will primarily be an application of existing, well-known methods for computing integrals but 
 translated into the language of hybrid sets.
 \todo[inline]{Why is this a good thing?}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ''HAVING YOUR CAKE AND EATING IT TOO'' EXAMPLE
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Irrational numbers}}
-
-A Lebesgue measurable hybrid set can now have an orientation like Riemann integral intervals 
-and the power of Lebesgue integration.
-Consider the indicator function for the set of rational numbers, $1_\mathbb{Q}$ which evaluates to 
-1 for rational numbers and 0 for irrational numbers.
-Over the interval $[0,1]$ on the real line, this is not Riemann-integrable.
-Suppose we have some generalized partition of $[0,1]$ made up of intervals.
-Then for any of these sub-intervals, there will be at least one rational and one irrational number.
-Hence the upper Riemann sum will be 1 and the lower Riemann sum will be 0.
-No matter how small we make our intervals, there will always be a rational and irrational number in each.
-The two sums will never converge and so there is no well-defined Riemann integral.
-
-
-On the other hand, it is Lebesgue integrable:
-\begin{equation}
-	\int_{[0,1]} 1_\mathbb{Q} \; d\mu = \mu(\mathbb{Q} \cap [0,1])
-\end{equation}
-But since $\mathbb{Q}$ is countable, it has measure 0 and so $1_\mathbb{Q}$ \emph{is} Lebesgue integrable on $[0,1]$.
-Similarly, we could also find that:
-\begin{equation}
-	\int_0^1 1_{\mathbb{R}\setminus \mathbb{Q}} \;d\mu
-		= \int_{[0,1]} 1_{\mathbb{R}\setminus \mathbb{Q}} \;d\mu
-		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
-		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
-		= 1
-\end{equation}
-
-One would expect the same process to hold for when integrating from 0 to 1 but restricted to sets, this is not possible.
-The statement $[1,0] = -[0,1]$ is nonsense.
-But if we instead take integrating from $a$ to $b$ to mean the Lebesgue integral over the oriented $[\![a,b]\!]$.
-Additionally instead of the Lebesgue measure $\mu$ which is defined for 
-measure $\nu$:
-
-\begin{equation}
-	\int_1^0 1_{\mathbb{R}\setminus \mathbb{Q}} \;d\nu
-		\;=\; \int_{[\![0,1]\!]} 1_{\mathbb{R}\setminus \mathbb{Q}} \;d\nu
-		\;=\; \nu \big( (\mathbb{R}\setminus\mathbb{Q} ) \otimes [\![1,0]\!] \big)
-		\;=\; -1
-\end{equation}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MESH EXAMPLE
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Integrating a mesh}}
-
-\begin{equation}
-	f(x,y) = \frac{\sin(x) \cos(y)}{\cos^2(x) + \sin^2(y)}
-\end{equation}
-
-
-%\begin{figure}[ht]
-%	\caption[Mesh Diagram]{The function $f(x,y) = \frac{\sin(x) \cos(y)}{\cos^2(x) + \sin^2(y)}$}
-%	\centering
-%	\includegraphics[scale=0.6]{diagrams/sinxcosy_cos2xsin2y.png}
-%\end{figure}
-
-Anti-periodic $f(x+P) = -f(x)$
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% CONTOUR EXAMPLE
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Contour Integral}}
 
 Generalized partitions can extend past the original domain. 
 Sometimes the additional regions that are added and negated can be quite unexpected.

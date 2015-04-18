@@ -1,4 +1,4 @@
-\chapter{Convolution of Piecewise-defined Functions}
+\chapter{Convolution of Piecewise Functions}
 
 Convolution is an operation which takes two functions and produces a third.
 It takes one of the two input functions, and modifies one by mirroring and translating.
@@ -249,10 +249,10 @@ Another approach involving hybrid functions will be presented in Section~\ref{se
 Concerns with intervals where one boundary point is at infinity have also been raised \cite{evans1994algorithms}.
 Techniques to handle this will be investigated in Section~\ref{sec:ConvInfty}.
 
-
-
-
-
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 
 
@@ -301,7 +301,7 @@ The intervals $[\![a_f+a_g, \; b_f+a_g)\!)$, $[\![b_f+a_g, \; a_f+b_g)\!)$ and $
 a reducible (i.e. everywhere multiplicity one) generalized partition over $[a_f+a_g, \; b_f+b_g)$.
 Outside this region the function is zero as expected. 
 
-\pagebreak
+\todo[inline]{vbox}
 
 Suppose we are in this second case and we wish to evaluate the convolution at a point $t$ which is in all three intervals.
 This occurs when $(a_f+b_g) \leq t < (b_f+a_g)$ and we have:
@@ -333,8 +333,6 @@ Let us now look at a concrete example with some actual numbers.
 
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HYBRID EXAMPLE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -345,6 +343,7 @@ In Figure~\ref{fig:OnePiece} we saw the convolution of $1^{[-1,1)}$ with $1^{[-2
 We know that convolution is commutative so computing $1^{[-2,2)} * 1^{[-1,1)}$ we already know what to expect.
 We will label these as $1_f$ and $1_g$ to differentiate and to prevent confusion by reminding us that the object we are 
 dealing with is $x \mapsto 1$ rather than the number 1 itself.
+
 
 \begin{align}
 	\label{HCExample}
@@ -357,6 +356,8 @@ dealing with is $x \mapsto 1$ rather than the number 1 itself.
 			\int_{[\![t-1,\;2)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-1,\; 3)\!)} 
 				\; \right)(t)
 \end{align}
+
+
 
 
 Already this is promising as we can see the set of end-points: $\{-3, -1, 1, 3\}$ agrees with our previous example.
@@ -391,8 +392,7 @@ For any other point $t$ which is not in $[-3, 3)$, then all three oriented inter
 Simplifying the $+$-reduction we have, $\R[+](\emptyset) = e_+ = 0$ and so (\ref{HCExample}) evaluates correctly 
 everywhere.
 
-
-
+\todo[inline]{vbox}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -482,6 +482,10 @@ Until now we have assumed $F$ and $G$ are continuous functions.
 While the continuous is of more historical interest, the discrete case is more widely used in digital signal processing.
 From a theoretical perspective, very little is different between the continuous and discrete case; it is primarily a swap
 from integrals $\int$ to sums $\sum$ and evaluating functions at points $f(x)$ to indexing in an array $f[x]$.
+
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+
 
 \begin{definition}
 	The \textbf{discrete convolution} of two sequences $F$ and $G$ defined as:
