@@ -128,14 +128,14 @@ Following this, we will extend to singular cubes to handle more complex domains.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % RIEMANN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Riemann Integral on $k$-rectangles}
+\subsection{The Riemann Integral on $k$-rectangles}
 
 \begin{definition}
 	Let $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ be a $k$-rectangle in $\mathbb{R}^n$ 
 	where $\boldsymbol{a}=(a_1,\ldots, a_n)$ and $\boldsymbol{b}=(b_1,\ldots, b_n)$. 
 	We denote the \textbf{volume of $\boldsymbol{[\![a,b]\!]}$} with $\text{vol}$ and define it as:
 	\begin{equation}
-		\text{vol}(\; [\![\boldsymbol{a}, \boldsymbol{b} ]\!] \;) 
+		\vol(\; [\![\boldsymbol{a}, \boldsymbol{b} ]\!] \;) 
 			= (b_1 - a_1) \cdot (b_2 - a_2) \cdot \ldots \cdot (b_n - a_n)
 	\end{equation}
 \end{definition}
@@ -152,27 +152,22 @@ Additionally, one can also observe that $\text{vol}( \ominus [\![\boldsymbol{a},
 
 The next task is to partiton the $k$-rectangle $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ into a grid of smaller
 $k$-rectangles.
-To do this we must cut each $[\![a_i, b_i]\!]$ into a partition of sub-intervals. 
-
-
-\todo[inline]{def: $\mathcal{P}$ =  interval partition}
-
-
-Regardless of the ordering, we select partitions $P^j \in \mathcal{P}[\![a^j,b^j)\!)$ for each dimension of $[\![a,b)\!)$.
+To do this, for each dimension $[\![a_i, b_i]\!]$, we choose a generalized partition $P_i$ such that $P_i$ is composed of
+oriented intervals.
 To build our mesh, we construct smaller $k$-rectangles $I_{i_1, \ldots, i_n}$ using the Cartesian product of pieces:
 \begin{equation}
-	I_{i_1, \ldots, i_n} = i_1 \times \ldots \times i_n
+	I_{p_1, \ldots, p_n} = p_1 \times \ldots \times p_n
 \end{equation}
-where each $i_j$ is taken from $P^j$.
+where each $p_i$ is taken from $P_i$.
 We are now ready to construct Riemann sums.
 
 \begin{definition}
-	Given $P=\{ P_j \}_{j=1}^n$ where $P_j \in \mathcal{P}[\![a_j, b_j]\!]$,
+	Given $P=\{ P_j \}_{j=1}^n$ where $P_j$ is an interval generalized partition of $[\![a_j, b_j]\!]$,
 	and $f:[\![\boldsymbol{a}, \boldsymbol{b}]\!] \to \mathcal{R}$ then we define a Riemann sum $f_P$ to be:
 	\begin{equation}
-		f_P = \sum_{i_1 \in P_1} \ldots \sum_{i_n \in P_n} f(x^*_{i_1, \ldots, i_n}) \text{vol}(I_{i_1, \ldots, i_n})
+		f_P = \sum_{p_1 \in P_1} \ldots \sum_{p_n \in P_n} f(x^*_{p_1, \ldots, p_n}) \vol(I_{p_1, \ldots, p_n})
 	\end{equation}
-	where $x^*_{i_1, \ldots, i_n}$ is any point chosen from $I_{i_1, \ldots, i_n}$.
+	where $x^*_{p_1, \ldots, p_n}$ is any point chosen from $I_{p_1, \ldots, p_n}$.
 \end{definition}
 
 Note that we specify \emph{a} Riemann sum, not \emph{the} Riemann sum.
@@ -189,7 +184,7 @@ In $\mathbb{R}^1$, several common ways to sample include the left and right Riem
 
 \begin{definition}
 The Riemann integral of a function $f:\mathbb{R}^n \to \mathbb{R}$ over a $k$-rectangle 
-$[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ where $P = \sup \Big\{ \mathcal{P} [\![a,b]\!] \Big\}$
+$[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ as $\max( | \vol( I_{p_1,\ldots, p_n}) | : p_i \in P_i )$ goes to zero.
 	\begin{equation}
 		\int_{[\![a,b]\!]} f(x) \diff x = f_P
 	\end{equation} 
@@ -202,194 +197,165 @@ $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ where $P = \sup \Big\{ \mathcal{P} [\![
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LEBESGUE INTEGRAL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Lebesgue Integral on $k$-rectangles}
+\subsection{The Lebesgue Integral on hybrid domains}
 
-Another common approach to integration is the Lebesgue integral.
-
-Unlike the Riemann integral, this does not normally handle orientation well.
-
-Much of the theory behind the Lebesgue integral depends on definitions for measurability.
-
-Given a set $X$ with sigma-algebra $\Sigma$.
-
-A sigma-algebra 
-
-and measure $\mu$ the measure space $(E, X, \mu)$.
-
-$X$ is a collection of measurable subsets of $E$.
-
-$\mu$ is the measure of these sets.
-
-A measurable function $f$ is one in which $\{ x \; | \; f(x) > t\}$ is a measurable set for all $t$.
-
-The measure $\mu$ can easily be extended linearly to include hybrid sets over $\Sigma$, $\hsetover[\Sigma]$.
+Another common approach to integration is the Lebesgue integral which approaches integration from a measure theoretic
+perspective.
+We begin our construction with a $\sigma$-algebra (read sigma-algebra) over a set $X$.
+By this we mean a collection of subsets of $X$ which are closed under countable complement, union and intersection.
+The important part here is that we have a closed universe of sets on which we can perform 
+\emph{nearly} arbitrary set operations but remain within said universe.
+Next we can attach to a $\sigma$-algebra a measure to form a \textbf{measure space} $(X, \Sigma, \mu)$ 
+where $X$ is a set $\Sigma$ is a $\sigma$-algebra  over subsets of $X$ and $\mu$ is a measure defined on the sets in
+ $\Sigma$.
+This measure $\mu$ is a function $\mu: \Sigma \to \extendedreal$ with the following properties:
+\begin{description}
+	\item[Non-negative:] For all $E \in \Sigma$, $\mu(E) \geq 0$
+	\item[Empty set has measure 0:] $\mu(\emptyset) = 0$
+	\item[Countably Additive:] For $\{E_i\}_i$, a countable set of disjoint sets in $\Sigma$,
+		$\mu \left( \bigcup_i E_i \right) = \sum_i \mu(E_i)$
+\end{description}
+Within the context of integration, the Borel and Lebesgue measure spaces are notable constructions.
+Both of which give a suitably large universe of sets for which to integrate over.
+Certainly much more than the set of Riemann integrable domains.
+Finally, given a measure space $(X, \Sigma, \mu)$, we say that $f : X \to \mathbb{R}$ is a \textbf{measurable function}
+if  $\{ x \; | \; f(x) > t\}$ is a measurable set for all $t$.
 
 
 
 If $\ind[S]$ is indicator function $\ind[S] : X \to \{ 0, 1 \}$ given by 
 $\ind[S] (x) = 1$ if $x \in S$ and $\ind[S] (x) = 0$ otherwise.
-
-The indicator function for a measurable set is clearly a measurable function.
-
-One defines the integral as follows:
-
+Clearly if $S$ is a measurable set, then $\ind[S]$ is a measurable function.
+We will use this as a base case.
+Given a measure space $(X, \Sigma, \mu)$ and $S \in \Sigma$, we define the integral:
 \begin{equation}
-	\int_E \! \ind[S] \; \diff \mu := \mu ( S )
+	\int \! \ind[S] \diff \mu = \mu ( S )
 \end{equation}
 
-We define a simple function as a function which maps to a finite set.
-\begin{theorem}
-	If $\varphi$ is a simple function, then we it can be represented as a finite sum of indicator functions:
-	\begin{equation}
-		\varphi := \sum_{k=0}^n a_k \ind[A_k]
-	\end{equation}
-	Where $\{ a_k \}_{k=0}^n$ is the set of values in the range of $\varphi$ and $A_k = \varphi^{-1}( \{ a_k \} )$, 
-	the set of all points which map to $a_k$.
-	Alternatively stated, for all $x \in A_k$, $\varphi(x) = a_k$.
-\end{theorem}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
-This allows us to define the integral of a simple function.
-
-\begin{definition}
-	Let $\varphi = \sum_{k=0}^n a_k \ind[A_k]$ be a simple function. We define the integral:
-	\begin{equation}
-		\int_E \! \varphi \; \diff \mu 
-		= \int_E \! \sum_{k=0}^n a_k \ind[A_k] \diff \mu 
-		= \sum_{k=0}^n a_k  \int_E \! \ind[A_k] \diff \mu
-	\end{equation}
-\end{definition}
-
-But we don't always wish to integrate over the entire measure space.
-And this is where hybrid sets come in.
-
-For a hybrid set $B \in \hsetover[X]$,
+From this, we consider functions which are the sum of indicator functions.
+We say that $s$ is a \textbf{simple function} if there are finite sets of measurable sets and $\{ A_k \}_{k=0}^n$
+and matching real coefficients $\{ a_k \}_{k=0}^n$ such that:
 \begin{equation}
-	\int_B s \diff \mu = \int_E B \cdot s \diff \mu = \sum_k a_k \cdot \mu(A_k \otimes B)
+	s = \sum_{k=0}^n a_k \ind[A_k]
+\end{equation}
+The integral of a simple function is then easily defined linearly in terms of integrals of indicator functions:
+\begin{equation}
+	\int \! s \diff \mu 
+		= \int \left(\sum_{k=0}^n a_k \ind[A_k] \right) \diff \mu 
+		= \sum_{k=0}^n a_k  \int \! \ind[A_k] \diff \mu
+		= \sum_{k=0}^n a_k \cdot \mu(A_k)
+\end{equation}
+
+But we don't always wish to integrate over the entire measure space but rather some measurable subset of $X$.
+This would be done with the notation $\int_B$ instead of $\int$ and replacing $\mu(A_k)$ with $\mu(A_k \cap B)$.
+If $A_k$ and $B$ are both measurable sets in $\Sigma$ then their intersection is also a measurable set in $\Sigma$.
+But as already mentioned, integrating over sets is a misnomer; we should be integrating over oriented sets.
+To do this, we extend $\mu$ linearly for hybrid sets on $\Sigma$.
+Strictly speaking, doing so means that $\mu$ is no longer a measure as it takes on negative values.
+For a hybrid set $H \in \hsetover[\Sigma]$,
+\begin{equation}
+	\int_H s \diff \mu = \int H \cdot s \diff \mu = \sum_k a_k \cdot \mu(A_k \otimes H)
 \end{equation}
 
 
-Next we define integral of a non negative functions in $\extendedreal$
+We then use simple functions to approximate general measurable functions.
+For a non-negative function $f$, we say this is the largest simple function that is everywhere less than $f$:
+\begin{equation}
+	\int_H \! f \diff\mu = 
+		\text{sup} \left\{ 
+			\int_H s \diff \mu \;\middle|\; s \text{ simple, and } 0 \leq \varphi \leq f 
+		\right\}
+\end{equation}
+But even if $f$ takes negative values, we can split it into positive and negative parts by:
+\begin{align}
+f^+(x) &:= \mathrm{max}( 0, f(x)) \\
+f^-(x) &:= \mathrm{max}(0, -f(x)) 
+\end{align}
+Both $f^+$ and $f^-$ are clearly non-negative but also, observe that $f=f^+ - f^-$.
+Linearly, this allows us to define for any measurable $f$:
+\begin{equation}
+\int_H f \diff \mu = \int_H f^+ \diff \mu - \int_H f^- \diff \mu
+\end{equation}
 
-\begin{definition}
-	Let $(X,\mu)$ be a measure space and $f: X \to [0,\infty]$. 
-	\begin{equation}
-		\int_X \! f \; \diff\mu = \text{sup} \left\{ \int_X \varphi : \varphi \text{ simple, and } 0 \leq \varphi \leq f \right\}
-	\end{equation}
-\end{definition}
 
-We use the simple function $\psi_n$ defined as:
+The last issue that remains to be settled is whether such a limit even exists.
+For this we can use the sequence of simple functions $\psi_n$ defined by:
 \begin{equation}
 	\psi_n = \sum_{k=0}^{n2^n -1} 
 		\left[ \left(\frac{k}{2^n}\right)^{\left[ \frac{k}{2^n}, \frac{k+1}{2^n} \right)} \right] 
 		+ n^{[n,\infty]}
 \end{equation}
-
-Notationally, this definition is rather heavy but is easily understood geometrically as seen in Figure 4.1
-
-\todo{figure description}
+Notationally, this definition is rather heavy but is easily understood geometrically as seen below in
+Figure~\ref{fig:simplefunc}.
+In turn this allows us to define for any non-negative $f$ the sequence of functions  $\varphi_n = \psi_n \circ f$.
+We know that $\varphi_n$ is simple since $\psi_n$ is simple.
+And since $\psi_n(x) \leq x$ for all $x$ then we also have $0 \leq \varphi_n \leq f$.
+But, most importantly we have $0 \leq f(x) - \varphi_n(x) \leq 2^{-n}$ and 
+so $\varphi_n$, uniformly approaches $f$ as $n$ approaches infinity. 
 \begin{figure}[ht]
-\caption[Approximations using simple functions]{asdfasdf }
-\centering
-
-\begin{tikzpicture}[y=1cm, x=2.5cm]
-
-
-	\foreach \x in {0,0.0625,...,3.99}
-		\draw[fill, color=black!10] (\x,0) rectangle ++ (0.0625, \x);
-	\draw[fill, color=black!10] (4,0) rectangle (5,4);
-
-	\foreach \x in {0,0.125,...,2.9}
-		\draw[fill, color=black!20] (\x,0) rectangle ++ (0.125, \x);
-	\draw[fill, color=black!20] (3,0) rectangle (5,3);
-	
-	\foreach \x in {0,0.25,...,1.9}
-		\draw[fill, color=black!40] (\x,0) rectangle ++ (0.25, \x);
-	\draw[fill, color=black!40] (2,0) rectangle (5,2);
-	
-	\foreach \x in {0,0.5,...,0.9}
-		\draw[fill, color=black!60] (\x,0) rectangle ++ (0.5, \x);
-	\draw[fill, color=black!60] (1,0) rectangle (5,1);
-	
-	
-	
- 	%axis
-	\draw(0,0) -- coordinate (x axis mid) (5,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,5);
-    	%ticks
-    	\foreach \x in {0,1,...,5}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,1,...,5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	
-	\draw (0,0) -- (5,5);
-
-	
-	%legend
-	\begin{scope}[shift={(5.25,2.5)}] 
-	
-	\draw[yshift=4\baselineskip, fill, color=black!60] (0,0) rectangle (0.5,0.2) --++ (0,-0.1)
-		node[right, color=black]{$\psi_1$};
-	\draw[yshift=3\baselineskip, fill, color=black!40] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
-		node[right, color=black]{$\psi_2$};	
-	\draw[yshift=2\baselineskip, fill, color=black!20] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
-		node[right, color=black]{$\psi_3$};
-	\draw[yshift=\baselineskip, fill, color=black!10] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
-		node[right, color=black]{$\psi_4$};
-	\draw (0,0) -- (0.5,0) node[right] {$id$};
-	\end{scope}
-\end{tikzpicture}
+	\caption[Approximations using simple functions]{
+	The simple functions $\psi_n$ for $n$ from $1$ to $4$.
+	As $n$ goes to infinity, $\psi_n$ comes arbitrarily close to $x$ over the range 0 to $n$.
+	}
+	\label{fig:simplefunc}
+	\centering
+	\begin{tikzpicture}[y=1cm, x=2.5cm]
+		%psi 4
+		\foreach \x in {0,0.0625,...,3.99}
+			\draw[fill, color=black!10] (\x,0) rectangle ++ (0.0625, \x);
+		\draw[fill, color=black!10] (4,0) rectangle (5,4);
+		%psi 3
+		\foreach \x in {0,0.125,...,2.9}
+			\draw[fill, color=black!20] (\x,0) rectangle ++ (0.125, \x);
+		\draw[fill, color=black!20] (3,0) rectangle (5,3);
+		%psi 2
+		\foreach \x in {0,0.25,...,1.9}
+			\draw[fill, color=black!40] (\x,0) rectangle ++ (0.25, \x);
+		\draw[fill, color=black!40] (2,0) rectangle (5,2);
+		%psi 1
+		\foreach \x in {0,0.5,...,0.9}
+			\draw[fill, color=black!60] (\x,0) rectangle ++ (0.5, \x);
+		\draw[fill, color=black!60] (1,0) rectangle (5,1);
+	 	%axis
+		\draw(0,0) -- coordinate (x axis mid) (5,0);
+	    	\draw (0,0) -- coordinate (y axis mid) (0,5);
+	    	%ticks
+	    	\foreach \x in {0,1,...,5}
+	     		\draw (\x,1pt) -- (\x,-3pt)
+				node[anchor=north] {\x};
+	    	\foreach \y in {0,1,...,5}
+	     		\draw (1pt,\y) -- (-3pt,\y) 
+	     			node[anchor=east] {\y}; 
+	     	% y= x		
+		\draw (0,0) -- (5,5);
+		%legend
+		\begin{scope}[shift={(5.25,2.5)}] 
+			\draw[yshift=4\baselineskip, fill, color=black!60] (0,0) rectangle (0.5,0.2) --++ (0,-0.1)
+				node[right, color=black]{$\psi_1$};
+			\draw[yshift=3\baselineskip, fill, color=black!40] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
+				node[right, color=black]{$\psi_2$};	
+			\draw[yshift=2\baselineskip, fill, color=black!20] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
+				node[right, color=black]{$\psi_3$};
+			\draw[yshift=\baselineskip, fill, color=black!10] (0,0) rectangle (0.5,0.2) --++ (0,-0.1) 
+				node[right, color=black]{$\psi_4$};
+			\draw (0,0) -- (0.5,0) node[right] {$id$};
+		\end{scope}
+	\end{tikzpicture}
 \end{figure}
 
 
-Which for any non-negative $f$ allows us to define $\varphi_n = \psi_n \circ f$ a simple function.
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
-Obviously we have $\varphi_n$ simple since $\psi_n$ is simple. 
 
-Since $\psi_n(x) \leq x$ for all $x$ then we also have $0 \leq \varphi_n \leq f$.
 
-Most importantly we have $0 \leq f(x) - \varphi_n(x) \leq 2^{-n}$ and so $\varphi_n$, uniformly approaches $f$ as $n$ approaches infinity. 
 
-\begin{theorem}
-Let $f$ be a function mapping to $\mathbb{R}$. Then $f = f^+ - f^-$ where $f^+$ and $f^-$ are non-negative functions given by:
-\begin{align}
-f^+(x) &:= \mathrm{max}( 0, f(x)) \\
-f^-(x) &:= \mathrm{max}(0, -f(x)) 
-\end{align}
-\end{theorem}
 
-Now we have everything we need to define integrals for arbritrary functions mapping to $\mathbb{R}$:
-
-\begin{definition}
-asdfasd
-\begin{equation}
-\int_X f \diff \mu = \int_X f^+ \diff \mu - \int_X f^- \diff \mu
-\end{equation}
-\end{definition}
-
-%\begin{example}
-%\begin{equation}
-%\int_{[0,1]} \! \ind[\mathbb{Q}] \; d\mu = \mu(\mathbb{Q}) = 0
-%\end{equation}
-%\end{example}
-
-%\begin{example}
-%\begin{equation}
-%\int_{[0,1]} \! x^2 d \mu = \lim_{n \to \infty} \sum_{k=0}^{2^n -1} \frac{k}{2^n} \int_{[0,1]} \ind[[k/2^n, (k+1)/2^n)]
-%\end{equation}
-%\end{example}
-
-This was a standard treatment of Lebesgue integration.
-
-Mathematically it is very simple to extend this to integrals of hybrid sets over $L(X, \mu)$ by linearity.
-That is, given $\Gamma \in \hsetover[\mathcal{L}(X,\mu)]$:
-
-\begin{equation}
-\int_\Gamma f \diff \mu = \sum_{\sigma \in \Gamma} \Gamma(\sigma) \int_\sigma f \diff\mu
-\end{equation}
-
-\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ''HAVING YOUR CAKE AND EATING IT TOO'' EXAMPLE
@@ -1279,85 +1245,95 @@ And for a chain $C=a_1 c_1 + \ldots + a_n c_n$ made up of singular cubes:
 
 And so we have Stokes' theorem on general chains.
 
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CONTOUR EXAMPLE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Contour Integral}}
 
-Integrating with hybrid set domains does not enable any new techniques that were previously not possible.
-Using differential forms or digging even deeper with pseudo-forms and densities on manifolds, 
-one can generalize integration to a vast class of structures.
-These will all generally come back to some numeric integration ``back-end'' as we saw with differential forms.
-In the end, to compute an integral with differential forms we still need to convert the wedge product
-$dx_1 \wedge \ldots \wedge dx_k$ into $d(x_1, \ldots x_k)$.
-While there are many options; the Riemann and Lebesgue integrals being the most famous  a whole host of 
-less widely known formulations exist \cite{bochner1933integration, darboux1896leccons, henstock1991general}.
 
-
-Hybrid set integration does not enable anything new.
-It does enable us to bring the useful abstraction of orientation on a set into the ``back-end'' of integration.
-
-The following examples will primarily be an application of existing, well-known methods for computing integrals but 
-translated into the language of hybrid sets.
-\todo[inline]{Why is this a good thing?}
-
-Generalized partitions can extend past the original domain. 
+Generalized partitions can extend past the original domain but so far this has been done through relatively
+obvious extensions.
 Sometimes the additional regions that are added and negated can be quite unexpected.
-
-
-Contour integration is a method for solving integrals and can involve including curious looking regions to solve.
-
+\emph{Contour integration} is a method for solving integrals that can involve the usage of curious looking regions to solve.
+Consider the following function defined on the real numbers:
 \begin{equation}
 	f(x) = \frac{1}{x^4 + 1}
 \end{equation}
-
-and compute the integral over the real line.
-
+and suppose we wish to compute the integral over the entire real line:
 \begin{equation}
-	 \int_{-\infty}^\infty f(x) \; dx
+	 \int_{-\infty}^\infty f(x) \diff x
 \end{equation}
-
-Rather than think of this as an integral over the entire real line $f:\mathbb{R} \to \mathbb{R}$, 
+This is a difficult integral to evaluate directly so instead of treating $f$ as a real function, $f:\mathbb{R} \to \mathbb{R}$, 
 we instead consider it as a complex function: $f:\mathbb{C} \to \mathbb{C}$.
 
+
+Let $C_1$ be the straight line curve from $-r$ to $r$: $C_1(t) =rt-(1-t)r$ and
+$C_2$ the circular arc with radius $r$ from $r$  to $-r$: $C_2(t) = re^{it}$.
+Finally let $C$ the combined curve: $C= C_1 \oplus C_2$
+Then our desired value is the integral over $C_1$ as $r$ goes to infinity:
 \begin{equation}
-	\lim_{a\to \infty} \int_{-a}^a \frac{1}{z^4+1} \; dz
+	\int_{C_1} f(x) \diff x = \oint_{C} f(z) \diff z - \int_{C_2} f(z) \diff z
 \end{equation}
 
-We will close off $[-a, a]$ with $Arc(t) = a ( \cos(t) + i \sin(t))$ which forms the semi-circle with radius $a$
 
-DIAGRAM
+\begin{figure}[ht]
+	\caption[Contour Integral]{The contours $C_1$ and $C_2$ and with the four singularities of $f$ marked.}
+	\label{fig:contourintegration}
+	\centering
+	\begin{tikzpicture}
+		\draw[>=stealth, thick, ->, domain=0:180] plot ({3*cos(\x)}, {3*sin(\x)});
+		\draw[thick, <-] (3,0) node[below] {$r$} -- (-3,0) node[below] {$-r$};
+		\node[draw,circle,label=$e^{i \pi/4}$] at (1,1) {};
+		\node[draw,circle,label=$e^{3 i \pi/4}$] at (-1,1) {};
+		\node[draw,circle,label=$e^{5 i \pi/4}$] at (-1,-1) {};
+		\node[draw,circle,below,label=$e^{7 i \pi/4}$] at (1,-1) {};
+		\draw (0,3) node[above] {$C_2$};
+		\draw (0,0) node[below] {$C_1$};
+	\end{tikzpicture}
+\end{figure}
 
-$f(z)$ has four singularities at $(-1)^{1/4} =  \pm \sqrt{2} \pm \sqrt{2}i$
-$e^{i \pi/4} $
-
-
-We will also let $C$ be the path made by $C= [-a, a] \oplus Arc$ 
-
+To solve the integral on $C$ we can use the Cauchy residue theorem: a special case of the generalized Stokes' theorem.
+$C$ is a closed simple path and $f$ is holomorphic everywhere except for a finite set of points $\{a_k\}_{i=1}^n$
+and so we have:
 \begin{equation}
-	\int_{-a}^a f(x)\;dx = \oint_{C} f(z)\;dz - \int_{Arc} f(z) \; dz
+	\oint_C f(z) \diff z = 2 \pi i \sum_{k=1}^n \Res(f, a_k)
 \end{equation}
-
-$C$ is a closed simple path so we use the Cauchy integral formula to evaluate it.
-
-\begin{equation}
-	\oint_C f(z) \;dz = 2 \pi i \sum \text{Res}
-\end{equation}
-
-$\text{Res}(e^{i\pi/4}) = \frac{1}{4 i \sqrt{i}}$ and $\text{Res}(e^{3i\pi/4}) = \frac{1}{4 \sqrt{i}}$ 
-
-$\oint_C f(z) \;dz = \frac{\pi \sqrt{2}}{2}$
-
-The integral on $Arc$:
-
-$z = re^{i \theta}$ $dz=ire^{i\theta} d\theta$
-
-$\int_{Arc} f(z) \;dz = \int_0^\pi \frac{ire^{i\theta}}{r^4 e^{4i\theta} +1} \; d\theta$
-
-as $r \to \infty$ this goes to 0  and so the term for $Arc$ drops off
-
-\begin{equation}
+And so we must compute the residues of the two singularities above the real line: 
+$W_8^1 = e^{i\pi/4}$ and $W_8^3 = e^{3i\pi/4}$.
+These are both simple poles and can be computed as follows:
+\begin{equation*}
+	\Res(f, W_8^1) =\lim_{z \to W_8^1} \frac{z - W_8^1}{z^4 +1} 
+		= \lim_{z \to W_8^1} \frac{1}{4z^3}
+		= (1/4) W_8^{-3} = (1/4) W_8^5
+\end{equation*}
+\begin{equation*}
+	\Res(f, W_8^3) =\lim_{z \to W_8^3} \frac{z - W_8^3}{z^4 +1} 
+		= \lim_{z \to W_8^3} \frac{1}{4z^3}
+		= (1/4) W_8^{-9} = (1/4) W_8^7
+\end{equation*}
+Converting these out of polar coordinates, we have 
+	$W_8^7 = \left( \frac{\sqrt{2}}{2}-\frac{\sqrt{2}}{2}i \right)$ 
+	and $W_8^5 =\left( -\frac{\sqrt{2}}{2}-\frac{\sqrt{2}}{2}i \right)$:
+\begin{equation*}
+	\oint_C f(z) \diff z 
+	= 2 \pi i \left( 	\frac{1}{4} \left( \frac{\sqrt{2}}{2}-\frac{\sqrt{2}}{2}i \right) 
+				+	\frac{1}{4} \left( -\frac{\sqrt{2}}{2}-\frac{\sqrt{2}}{2}i \right)\right)
+	= \frac{\pi}{\sqrt{2}}
+\end{equation*}
+To compute the integral over $C_2$, we make the substitutions, $z = re^{i \theta}$ and $dz=ire^{i\theta} d\theta$:
+\begin{equation*}
+	\int_{C_2} f(z) \diff z = \int_0^\pi \frac{ire^{i\theta}}{r^4 e^{4i\theta} +1} \diff\theta
+\end{equation*}
+And then simply observe that as $r$ goes to infinity, this integral goes to zero and the term for $C_2$ drops off.
+Leaving us with just:
+\begin{equation*}
 	\int_{-\infty}^\infty f(x) = \frac{\pi }{\sqrt{2}}
-\end{equation}
+\end{equation*}
+
 
