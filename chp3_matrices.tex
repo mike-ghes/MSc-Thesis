@@ -884,36 +884,33 @@ And finally cleaning up this expression by removing the terms over empty regions
 			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j}
 \end{equation}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Larger multiplication
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Larger block matrices}
 
 The most difficult part of extending block matrix multiplication to larger block matrices turns out to be the number of 
 variables needed.
 Once again we will use $N_i$ to divide the rows of blocks in $A$ and $P_j$ to divide the block columns of $B$.
+\begin{align*}
+	A &= \bigoplus_{i \in [\![1,I]\!]} \bigoplus_{k \in [\![1,K]\!]} A_{i,k}^{N_i \times M_k}&
+	B &= \bigoplus_{k' \in [\![1,K']\!]} \bigoplus_{j \in [\![1,J]\!]} B_{k',j}^{M'_{k'} \times P_j}
+\end{align*}
+And as before the blocks of $C$ will be $N_i \times P_j$
 \begin{equation}
-	C = \bigoplus_{i \in I} \bigoplus_{j \in J} C_{i,j}^{N_i \times P_j}
+	C = \bigoplus_{i \in [\![1,I]\!]} \bigoplus_{j \in [\![1,J]\!]} C_{i,j}^{N_i \times P_j}
 \end{equation}
-
 Where each $C_{i,j}$ is defined as:
 \begin{equation}
-	C_{i,j} = 	\left(\sum_{k \in K / last} A_{i,k}^{N_i \times M_k} B_{last,j}^{M_k \times P_j} \right)+ 
-				\left(\sum_{k \in K' / last} A_{i,last}^{N_i \times M_k} B_{k,j}^{M_k \times P_j} \right)+ 
-				A_{i,last}^{N_i \times M_{U\ominus all}} B_{last,j}^{M_{U \ominus all} \times P_j}
+	C_{i,j} = 	\left(\sum_{k \in [\![1,K)\!)} A_{i,k}^{N_i \times M_k} B_{K',j}^{M_k \times P_j} \right)+ 
+				\left(\sum_{k' \in [\![1,K')\!)} A_{i,K}^{N_i \times M_{k'}} B_{k',j}^{M_{k'} \times P_j} \right)+ 
+				A_{i,K}^{N_i \times R} B_{K',j}^{R \times P_j}
 \end{equation}
-
-\todo[inline]{Unfortunately these formulation for multiplication is not the easiest to work with.
-The arithmetic used to convert any negatively oriented matrices to all positive ones is \emph{required} before the
-equation can be interpreted.
-Another approach would be to use:
-$
-	C_{i,j} = \sum_{[\![0,m)\!)} \R[\times] \left( 
-		A_1^{M_1 \oplus M_2} \oplus A_2^{M_3} \oplus B_1^{M_1} \oplus B_2^{M_2 \oplus M_3}
-	\right)
-$}
-
-
-
-
-
+Again we must find a common refinement of $\{M_k\}_{k=1}^K$ and $\{M'_{k'}\}_{k'=1}^{K'}$.
+We will use the same construction as earlier taking the first $K-1$ and $K'-1$ pieces respectively and then forming one 
+``remainder'' piece, which here is 
+$R =U \ominus \left( \bigoplus_{k \in [\![1,K)\!)} M_k \oplus \bigoplus_{k' \in [\![1,K')\!)} M'_{k'}\right)$
 
 
 

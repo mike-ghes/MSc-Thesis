@@ -1094,15 +1094,8 @@ Leaving us with the boundary of a boundary being empty.
 By linearity this extends to all chains as well as the sum of empty sets is of course still empty.
 
 
-One may notice a duality here between $\partial$ and $\diff$.
 
-$\diff$ mapped a $k$-form to a $k+1$-form.
 
-$\partial$ maps a $k+1$-chain to a $k$-chain.
-
-Not only that but $\partial \partial = 0$ and $\diff \diff = 0$
-
-This would be a very astute observation and is central to the generalized Stokes' theorem.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -1111,28 +1104,40 @@ This would be a very astute observation and is central to the generalized Stokes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Stokes' Theorem}
 
-Now we come to the statement of the generalized Stokes' Theorem itself.
-Stokes' theorem is a very important 
+
+This result mirrors the earlier $\diff \diff = 0$ and this duality goes deeper.
+The boundary $\partial$ maps a $k+1$-chain to a $k$-chain while 
+the exterior derivative $\diff$ mapped a $k$-form to a $k+1$-form.
+Sometimes this is written out as:
+\begin{equation*}
+	\ldots 	\xleftarrow{\partial} C_{k-1} 
+			\xleftarrow{\partial} C_k 
+			\xleftarrow{\partial} C_{k+1} 
+			\xleftarrow{\partial} \ldots
+\end{equation*}
+\begin{equation*}
+	\ldots 	\xrightarrow{\diff} \Lambda^{k-1} 
+			\xrightarrow{\diff} \Lambda^k 
+			\xrightarrow{\diff} \Lambda^{k+1} 
+			\xrightarrow{\diff} \ldots
+\end{equation*}
+Stokes' Theorem is an important result which links the two even closer and generalizes many classical theorems including
+the fundamental theorem of calculus, Green's theorem and the divergence theorem.
 
 
-Given a $k-1$-form $\omega$ and $k$ chain $M$, ...
-
+Given a $k-1$-form $\omega$ and $k$ chain $M$:
 \begin{equation}
+	\tag{Stokes' Theorem}
 	\int_{\partial M} \omega = \int_M d\omega
 \end{equation}
 
 
-In one dimension this is the fundamental theorem of calculus.
-
-In two, it is Green's Theorem and three the Kelvin-Stokes Theorem.
-
+\begin{proof}
 
 First we will consider Stokes theorem for the standard cube $I^k = [0,1]^k \subset \mathbb{R}^k$.
 In the previous section we saw how cumbersome representing the faces in $\partial I^k$, could be.
-
-
 We will denote the faces of $I^k$ by $I^k_{i=0}$ and $I^k_{i=1}$ for the $i$-th faces of $I^k$.
-This allows us to rewrite:
+This allows us to rewrite the boundary more succinctly as:
 
 
 \begin{equation}
@@ -1176,6 +1181,9 @@ Hence only one term in the sum, $i=j$ will actually result in a non-zero term:
 		&= (-1)^{i-1} \frac{\partial f_i}{\partial x_i}
  			 dx_1 \wedge \ldots \wedge dx_k
 \end{align*}
+
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 
 
@@ -1244,9 +1252,7 @@ And for a chain $C=a_1 c_1 + \ldots + a_n c_n$ made up of singular cubes:
 \end{align*}
 
 And so we have Stokes' theorem on general chains.
-
-\todo[inline]{vbox}
-\todo[inline]{vbox}
+\end{proof}
 \todo[inline]{vbox}
 \todo[inline]{vbox}
 \todo[inline]{vbox}
@@ -1335,5 +1341,4 @@ Leaving us with just:
 \begin{equation*}
 	\int_{-\infty}^\infty f(x) = \frac{\pi }{\sqrt{2}}
 \end{equation*}
-
 

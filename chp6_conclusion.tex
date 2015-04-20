@@ -2,30 +2,61 @@
 \doublespacing
 
 The primary objective of this thesis was to extend \cite{carette2010} by investigating further applications of hybrid sets and functions. 
-Although this paper was focused on results for integration and Petri net graphs, this is not to take away from the ``smaller'' results shown along the way.
-As a first example, we showed that, (notational choice: $\mathbb{Z}^\mathbb{P}$, $h( \mathbb{P} )$, $\mathcal{H}(\mathbb{P})$?), the hybrid sets over prime numbers is equivalent to $\mathbb{Q}_+$.
+In this we focused on three main examples: block matrix algebra, integration and convolution of piecewise functions. 
+Along the way, several smaller examples were considered as well.
+As primarily a demonstration of notation, rational numbers and polynomials were shown as examples of hybrid sets.
+Hybrid relations and functions were also demonstrated with maximum flow problems and arithmetic with piece-wise defined functions.
+
+
+Piece-wise function arithmetic was the first demonstration of the strength of generalized partitions.
+Whereas the naive approach to adding an $n$ piece to an $m$ piece function leads to $O(n\cdot m)$ piece function in the 
+general case.
+Using generalized partitions and careful selection of a generalized partition, we could reduce this to $O(n+m-1)$.
+This also required the use of pseudo-functions and leaving functions unevaluated to allow for cancellations to occur first.
+If this is not done, we run the risk of attempting to evaluate a function outside of its defined domain.
+
+
+The same technique can also be applied to adding symbolic block matrices and vectors as was previously shown in
+\cite{carette2010}.
+Using generalized partitions for multiplication of block matrices is more involved.
+By doing so we could formulate an expression using ``wrong ordering'' of breakpoints along the mutual axis of the
+multiplicands but still result in the correct product.
+Thus we can work with matrices which have symbolically sized blocks without resorting to a case-based approach. 
+
+
+Hybrid sets were then shown to be a good model for domains of integration.
+Numeric integration using hybrid sets as was then shown for both the Riemann and Lebesgue integral.
+This allows for more natural manipulation of domains turning $\int_a^b + \int_b^c = \int_a^c$ from a theorem to 
+a trivial result of bi-linearity.
+As we moved to integration on differential forms, hybrid sets also showed up naturally with the boundary operator.
+In conjunction with Stokes' theorem, there are even more opportunities to manipulate  the domains of an integral.
+
+
+Finally, we applied generalized partitions towards convolution of piecewise functions.
+The typical approach for convolving one-piece interval functions involves two cases depending on which interval is longer.
+Whether one uses two distinct expressions or commutes the convolution, 
+both methods are unsatisfactory when interval bounds
+are symbolic and relative length cannot be compared.
+With oriented intervals we can use the same equations in a length oblivious manner.
+This method handles infinite end points as well without resorting to 6 equations and a 16 case table.
+
+
+Generalized partitions present a more algebraic way to subdivide an object.
+The usefulness of this has long been half-realized for domains of integration 
+but there are many areas where they could aptly be applied.
+By moving from traditional sets to hybrid sets, we gain a proper notion of a negative set.
+Despite the sometimes overlapping notation, this notion should not be confused with set complement
+And so the normally imposed condition of disjointness for partitions can be dropped for generalized partitions.
+Assuming a good mapping for what is meant by a negative set (generally through the $\op$-reduction $\R[\op]$),
+generalized partitions present a useful language.
+Even if the examples presented in this thesis are not of direct interest to the reader, hopefully the techniques are
+and that they may be applied towards many more endeavors.
 
 
 
-Hybrid sets come into their own within the context of hybrid functions as we saw with arithmetic on piecewise functions and symbolic matrices.
-Combined with tricks from linear algebra, the usage of hybrid functions allowed for large decreases in both cases.
-Hybrid pseudo-functions leave a function associated with an element unevalutated and allow for algebra to be performed on the domains before requesting any functions be evaluated.
 
 
 
-Hybrid functions were shown to be a good model for domains of integration.
-An atlas can succintly be defined in terms of a set of hybrid relation over a universe of Euclidean rectangles mapping to a common manifold.
-Principle of Inclusion-Exclusion was used instead of the typical \emph{partitions of unity} to reduce the atlas to it's support.
-Unlike some of the previous examples, any leftover negative terms produced by PIE are completely well-founded and have natural geometric interpretations.
-Moreover, $\partial$, the boundary operator on a $k$-chain explicitly constructs them.
-The beauty (and usefulness) of $\partial$ was then shown with a proof of the generalized Stokes' theorem.
-Which in turn we used in conjunction with generalized partitions to transform an otherwise difficult to compute integral.
 
 
-
-Finally, we showed a novel formulation of Petri net graphs. 
-Instead of considering transitions as a special type of node, we represented transitions along with corresponding arc weights as a single hybrid set. 
-Conditions for liveness and coverability were also discussed.
-Relaxing the condition of non-negative markings gives way to \emph{lending Petri nets} \cite{bartolettilending} \cite{bartoletti2013} for which hybrid sets were even better suited. 
-Unfortunately, I just discovered the Bartoletti papers and have not had a chance to read more than the abstract.
 

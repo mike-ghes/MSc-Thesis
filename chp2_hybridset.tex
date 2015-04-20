@@ -348,11 +348,11 @@ to a single sink node in a flow network.
 Formally, we will let $G=(V,E)$ be a directed graph such that for every edge $(u,v) \in E$ there is a non-negative
 \textbf{capacity} denoted $c(u,v)$ (for $(u,v) \notin E$, assume that $c(u,v)=0$).
 A flow in $G$ is a a function $f:V \times V \to \mathbb{Z}$ subject to the following conditions:
-\begin{description}
+\begin{description*}
 	\item[Constrained by capacity:] $f(u,v) \leq c(u,v)$ 
 	\item[Skew Symmetric:] $f(u,v)=-f(u,v)$
 	\item[Conservative:] For all $u \neq s$ and $u \neq t$, $\sum_{w \in V} f(u,w) = 0$
-\end{description}
+\end{description*}
 
 The flow could alternatively be modelled using a hybrid relations.
 We will use the hybrid set $\mathcal{E}$ to denote a basis for constructing flows.
@@ -370,18 +370,8 @@ This constant $k$ turns out to be the overall flow through the graph.
 So maximum flow is then just finding the maximum $k$ for a valid flow.
 And so long as $\mathcal{E} \ominus f$ is everywhere positive, all three conditions are fulfilled. 
 
-Residual graphs $G_f = \mathcal{E} \ominus f$ 
 
 
-This can be used to formulate a ``reversed'' Ford-Fulkerson algorithm.
-Rather than start with an empty flow, start with $f = \mathcal{E}$, a full-capacity ``flow''.
-It is unlikely that $f$ will initially be a valid flow.
-By adding el
-
-\todo[inline]{finish...}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\newpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
