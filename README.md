@@ -10,20 +10,16 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
   - Related work?
   
 #### 2 Hybrid Set Theory
-  - p13: Max Flow
-
+  - p12 textbf
+  - p17 generalized partition of boolean sets is always strict.
+  
 #### 3 Symbolic Linear Algebra
-  - p44: block matrix multiplication
 	
 #### 4 Integration
-  - p46: Chapter overview
-  - p66: Stokes' intro
-  - Split into 2 chapters?
-  
+
 #### 5 Convolution
 
 #### 6 Conclusions
-  - p86: Conclusions.
 
 #### A Symbolic Convolution with Infinite End-Points
 		
