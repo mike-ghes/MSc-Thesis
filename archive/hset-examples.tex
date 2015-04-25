@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rational Numbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Rational Arithmetic}}
+
+
+Any positive rational number can be represented as a hybrid set over the set of primes and vice versa  
+(i.e. we have the group isomorphism ().
+
+
+\begin{example}
+	Concretely, we have:
+	\begin{equation*}
+		20/9 \cdot 15/8 
+			= \hset{5^1, 2^2, 3^{-2}} \oplus \hset{5^1, 3^1, 2^{-3}} 
+			= \hset{5^2, 2^{-1}, 3^{-1}} 
+			= 25/6
+	\end{equation*}
+\end{example}
+
+
+Typically one would need to specify equivalence classes on $\mathbb{Q}$ to consolidate the identity ,
+but with hybrid set representation, this identity comes for free.
+Any common factor between numerator and denominator will cancel result in cancelling multiplicities. 
+Equivalence of rational numbers is identical to equivalence on hybrid sets and a normalized hybrid set
+For example, $2/4 = \hset{2^1, 2^{-2}}$ which is the un-normalized form of $\hset{2^{-1}} = 1/2$.
+
+
+One should note that this does not however extend (nicely) for zero and negative $\mathbb{Q}$.
+Allowing for our hybrid sets to contain $-1$ would mean we can represent negative rational numbers at the expense of having unique a unique representation. 
+The representations of $1/2 = \hset{ 2^{-1}}$ and $-1/-2 = \hset{-1^2, 2^{-1}}$ no longer agree!
+Allowing our hybrid sets to contain $0$ leads to rational numbers which are not well defined.
+We would like our rational numbers to be members of $\mathbb{Z} \times \mathbb{Z} - \{ 0 \}$ but our construction does not let us discriminate.
+
+
+%Monic polynomial
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rational Polynomials
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Rational Polynomials}}
+
+
+Similarly, we can also use hybrid sets to represent monic rational polynomials by encoding the roots and asymptotes.
+For example:
+\begin{equation}
+	\frac{(x-2)}{(x-1)^2(x+1)} = \hset{ 2^1, 1^{-2}, -1^{-1} }
+\end{equation}
+
+
+Although neither model is a revolutionary method of looking at rational numbers and polynomials,
+hopefully they demonstrate that hybrid set are not an arcane construction. 
+Negative multiplicities of elements can arise very naturally in many contexts.

@@ -58,6 +58,7 @@ So instead we will use the \emph{join} of disjoint function \emph{restrictions}.
 	such that $f|_Z(x) = f(x)$ for all $x \in Z$.
 \end{definition}
 
+
 There are several ways which one could define a join operator; specifically how one deals with intersections.
 One could favor the first function as Maple does, but we will take the stance that the intersection is poorly defined.
 \begin{definition}
@@ -114,7 +115,8 @@ That is, for each $P_i$ in the partition $P$, there is a subset of $R$ which wil
 Similarly $R$ also a refinement of $Q$ and so we say it is a \emph{common refinement} of $P$ and $Q$.
 
 
-Finding common refinements gives a large increase in the number of terms required, in part, due to a restrictive view of partitions.
+Finding common refinements gives a large increase in the number of terms required, 
+in part, due to a restrictive view of partitions.
 Conceptually, what one wishes out of a partition is a family of subsets which will ``sum'' up to the original.
 With boolean sets, some additional constraints are imposed as we don't have a very good notion of subtraction.
 However, by using non-boolean sets we allow for negative sets to cancel any double-counting
@@ -136,22 +138,23 @@ We will also see how this allows for us to eliminate the multiplicative increase
 
 
 We shall consider \emph{hybrid sets}.
-One can define traditional sets by an indicator function which maps each member element to 1 and each non member to 0.
-A \emph{multiset} or \emph{bag} extends this by allowing multiple copies of the same element.
+One can view traditional boolean sets as an indicator function 
+which maps each member element to 1 and each non-member to 0.
+A \emph{multiset} (or \emph{bag}) extends this by allowing multiple copies of the same element.
 The indicator function of a multiset would therefore range over $\mathbb{N}_0$, the set of non-negative integers.
 Hybrid sets take this one step further allowing for an element to occur \emph{negatively many} times.
 
 
 \begin{definition}
 	Let $U$ be a universe, then any function $U \to \mathbb{Z}$ is called a \textbf{hybrid set}.
+	We denote the collection of all hybrid sets over a universe by $\hsetover[U]$.
 \end{definition}
 
 
 By universe, we just mean a (traditional) set that \emph{contains everything we may be interested in}.
-The size of a universe is context dependant but we will rarely be interested in everything in the universe or its exact size.
+This is admittedly ague but we will rarely be interested in everything in the universe or its exact size.
 It is simply a compact way for us to talk about ``everything else''.
-This definition of hybrid sets does little good on its own; much of the usefulness of sets is derived from their rich notation.
-So with that said,
+But we will need some notation to make functions resemble sets.
 
 
 \begin{definition}
@@ -161,8 +164,8 @@ So with that said,
 	Furthermore we will use $x \in H$ to denote $H(x)\neq 0$ (or equivalently, $x \in^n H$ for $n\neq 0$).
 	Conversely, $x \notin H$ denotes $x \in^0 H$ or $H(x)=0$.
 	The symbol $\emptyset$ will be used to denote the empty hybrid set for which all elements have multiplicity 0.
-	Finally the \textbf{support of a hybrid set} is the (non-hybrid) set $\text{supp }H$,
-	where $x \in \text{supp }H$ if and only if $x \in H$
+	Finally the \textbf{support of a hybrid set} is the (non-hybrid) set $\supp\;H$,
+	where $x \in \supp\;H$ if and only if $x \in H$
 \end{definition}
 
 
@@ -172,24 +175,20 @@ We will use the notation:
 \end{equation*}
 to describe the hybrid set $H$ where the element $x_i$ has multiplicity $m_i$. 
 We allow for repetitions in $\{ x_i \}$ but interpret the overall multiplicity of an element $x_i$ as 
-the sum of multiplicities among copies. This is, (using Iverson brackets):
-\begin{equation}
-	H(x) = \sum_{x_i \in^{m_i} H} [x = x_i] \; m_i
-\end{equation}
+the sum of multiplicities among copies. 
 For example, $H=\hset{a^1, a^1, b^{-2}, a^3, b^1} = \hset{a^5, b^{-1}}$. 
-A writing in which $x_i \neq x_j$ for all $i \neq j$ is refered to as a \emph{normalized form} of a hybrid set. 
-For normalized hybrid sets it follows that $H(x_i) = m_i$.
+The latter will generally be preferred as all $a$'s and $b$'s have been collected together as such
+a writing in which $x_i \neq x_j$ for all $i \neq j$ is referred to as a \textbf{normalized form} of a hybrid set. 
 
 
 Traditional sets use the operations $\cup$ union, $\cap$ intersection, and $\setminus$ complementation.
-In the same way a hybrid set is a function $H : U \to \mathbb{Z}$, 
-a set could be considered as function $S : U \to \{ 0,1 \}$.
-Then set operations correspond to point-wise \texttt{OR}, \texttt{AND}, and \texttt{NOT}.
-That is, for two sets $A$ and $B$, then $(A \cup B)(x) = A(x) \;\mathtt{OR}\; B(x)$.
-One could easily extend union and intersection to hybrid sets using point-wise min and max
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-[cite],
-but it would make more sense to have operations corresponding to primitive operations in $\mathbb{Z}$ instead.
+These correspond to the Boolean point-wise $\vee$ \texttt{OR}, $\wedge$ \texttt{AND}, and $\neg$ \texttt{NOT} 
+operations. That is, for two sets $A$ and $B$, then $(A \cup B)(x) = A(x) \vee B(x)$.
+One \emph{could} extend these for hybrid sets using point-wise min and max 
+\cite{blizard1988, blizard1990, girish2012multiset, singh2011complementation}
+but this is not very natural.
+Rather, our primitive hybrid set operations should derive from our primitive point-wise operators.
+When dealing with hybrid sets with multiplicities over the integers, we have the ring $(\mathbb{Z}, +, \times)$.
 Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, and $\times$ respectively.
 
 
@@ -197,15 +196,11 @@ Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, a
 	For any two hybrid sets $A$ and $B$ over a common universe $U$, 
 	we define the operations $\oplus, \ominus, \otimes : \mathbb{Z}^U \times \mathbb{Z}^U \to \mathbb{Z}^U$ 
 	such that for all $x \in U$:
-	\begin{equation}
-		(A \oplus B)(x) = A(x) + B(x)
-	\end{equation}
-	\begin{equation}
-		(A \ominus B)(x) = A(x) - B(x)
-	\end{equation}
-	\begin{equation}
-		(A \otimes B)(x) = A(x) \cdot B(x)
-	\end{equation}
+	\begin{align}
+		(A \oplus B)(x) 	&= A(x) + B(x) \\
+		(A \ominus B)(x) 	&= A(x) - B(x) \\
+		(A \otimes B)(x) 	&= A(x) \cdot B(x)
+	\end{align}
 	We also define, $\ominus A$ as $\emptyset \ominus A$ and for $c \in \mathbb{Z}$:
 	\begin{equation}
 		(cA)(x) = c \cdot A(x)
@@ -216,79 +211,55 @@ Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, a
 \begin{definition}
 	We say $\boldsymbol{A}$ \textbf{and} $\boldsymbol{B}$ \textbf{are disjoint} if and only if $A \otimes B = \emptyset$
 \end{definition}
-
-
 For boolean sets $A$ and $B$, disjointness would be defined by $A \cap B = \emptyset$.
 If we consider these boolean sets as simply hybrid sets with multiplicity 0 or 1 then the operations $\cap$ and $\otimes$
 identically correspond to elementwise $\texttt{AND}$.
+
+
 From these definitions, we can use hybrid sets to model various objects that would traditionally be described otherwise. 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Rational Numbers
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Rational Arithmetic}}
-
-
-Any positive rational number can be represented as a hybrid set over the set of primes and vice versa  
-(i.e. we have the group isomorphism ($\mathbb{Z}^\mathbb{P}, \oplus) \simeq (\mathbb{Q}_+,\cdot)$).
-For any rational number $a/b$, both $a$ and $b$ being integers will have a prime decomposition: 
-$a=p_1^{m_1}\cdot p_2^{m_2} \cdot \ldots$ and $b=q_1^{n_1} \cdot q_2^{n_2} \cdot ...$ . 
+For example, any positive rational number can be represented as a hybrid set over the primes.
+\begin{equation*}
+	(\mathbb{Z}^\mathbb{P}, \oplus) \simeq (\mathbb{Q}_+,\times)
+\end{equation*}
+For a positive rational number $a/b$, both $a$ and $b$ being integers will have a prime decomposition: 
+$a=(p_1^{m_1}\cdot p_2^{m_2} \cdot \ldots)$ and $b=(q_1^{n_1} \cdot q_2^{n_2} \cdot \ldots)$ . 
 Then there is an isomorphism:
-\begin{equation}
+\begin{equation*}
 	f(a/b) = \hset{p_1^{m_1}, p_2^{m_2}, \ldots} \ominus \hset{q_1^{n_1}, q_2^{n_2}, \ldots}
-\end{equation}
-
-\begin{example}
-	Concretely, we have:
-	\begin{equation*}
-		20/9 \cdot 15/8 
-			= \hset{5^1, 2^2, 3^{-2}} \oplus \hset{5^1, 3^1, 2^{-3}} 
-			= \hset{5^2, 2^{-1}, 3^{-1}} 
-			= 25/6
-	\end{equation*}
-\end{example}
-
-
-Typically one would need to specify equivalence classes on $\mathbb{Q}$ to consolidate the identity $ca/cb = a/b$,
-but with hybrid set representation, this identity comes for free.
-Any common factor between numerator and denominator will cancel result in cancelling multiplicities. 
-Equivalence of rational numbers is identical to equivalence on hybrid sets and a normalized hybrid set
-For example, $2/4 = \hset{2^1, 2^{-2}}$ which is the un-normalized form of $\hset{2^{-1}} = 1/2$.
+\end{equation*}
+Furthermore, we have the equivalence $ca/cb = a/b$ for free by writing the hybrid set in normalized form
+(e.g. $2/4 = \hset{2^1, 2^{-2}} = \hset{2^{-1}} = 1/2$).
+One could also think of the roots and asymptotes of a rational polynomial as a hybrid set over the underlying ring:
+\begin{equation*}
+	\frac{(x-2)}{(x-1)^2(x+1)} \;=\; \hset{ 2^1, 1^{-2}, -1^{-1} }
+\end{equation*}
+Depending on the context, an element being in a set negatively many times may have different interpretations.
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 
-One should note that this does not however extend (nicely) for zero and negative $\mathbb{Q}$.
-Allowing for our hybrid sets to contain $-1$ would mean we can represent negative rational numbers at the expense of having unique a unique representation. 
-The representations of $1/2 = \hset{ 2^{-1}}$ and $-1/-2 = \hset{-1^2, 2^{-1}}$ no longer agree!
-Allowing our hybrid sets to contain $0$ leads to rational numbers which are not well defined.
-We would like our rational numbers to be members of $\mathbb{Z} \times \mathbb{Z} - \{ 0 \}$ but our construction does not let us discriminate.
-
-
-%Monic polynomial
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Rational Polynomials
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Rational Polynomials}}
-
-Similarly, we can also use hybrid sets to represent monic rational polynomials by encoding the roots and asymptotes.
-For example:
-\begin{equation}
-	\frac{(x-2)}{(x-1)^2(x+1)} = \hset{ 2^1, 1^{-2}, -1^{-1} }
-\end{equation}
-
-Although neither model is a revolutionary method of looking at rational numbers and polynomials,
-hopefully they demonstrate that hybrid set are not an arcane construction. 
-Negative multiplicities of elements can arise very naturally in many contexts.
-
-
-In traditional set theory, a partition of $X$ is a collection of subsets of $X$ such that 
-the subsets are mutually disjoint and their union is equivalent to $X$.
-When dealing with hybrid sets we no longer have union but use point-wise sum instead.
+All Boolean sets can be trivially converted to hybrid sets.
+For a set $X$, this is done simply by taking $H(x)=1$ if $x \in X$ and $H(x)=0$ if $x \notin X$.
+We will often perform this conversion silently by applying hybrid set operators to Boolean sets.
+The reverse conversion: the reduction of a hybrid set to a boolean set is not always possible.
 
 
 \begin{definition}
-	A \textbf{generalized partition $\boldsymbol{P}$ of a hybrid set $\boldsymbol{H(x)}$} is a sequence of hybrid sets
+	Given a hybrid set $H$ over universe $U$, 
+	if for all $x \in U$ $H(x)=1$ or $H(x)=0$ then we say that \textbf{$\boldsymbol{H(x)}$ is reducible}.
+	If $H$ is reducible then we denote the \textbf{reduction of $\boldsymbol{H}$} by $\mathcal{R}(H)$ 
+	as the (non-hybrid) set over $U$ with the same membership.  
+\end{definition}
+
+
+In Boolean set theory, a partition of $X$ is a collection of subsets of $X$ such that $X$ is a disjoint union of the subsets.
+When dealing with hybrid sets we no longer have (or rather choose not to use) union but use point-wise sum instead.
+For disjoint, reducible hybrid sets, point-wise sum and union agree but we will be even more accommodating 
+and allow for \emph{any} family of sets which sum to a hybrid set to be a (generalized) partition.
+
+
+\begin{definition}
+	A \textbf{generalized partition $\boldsymbol{P}$ of a hybrid set $\boldsymbol{H(x)}$} is a family of hybrid sets
 	$P=\{P_i \}_{i=1}^n$ such that
 	\begin{equation}
 		P_1 \oplus P_2 \oplus \ldots \oplus P_n = H
@@ -298,8 +269,6 @@ When dealing with hybrid sets we no longer have union but use point-wise sum ins
 \end{definition}
 
 
-Traditional boolean sets can be trivially converted to hybrid sets.
-For a set $X$, this is done simply by taking $H(x)=1$ if $x \in X$ and $H(x)=0$ if $x \notin X$.
 In this way any traditional set partition is a strict, generalized set partition.
 By principle of inclusion-exclusion, 
 \begin{equation*}
@@ -308,14 +277,6 @@ By principle of inclusion-exclusion,
 Since $P_i$ and $P_j$ are disjoint then we have that $\bigcup_i P_i = \bigoplus_i P_i$ and thus a strict partition.
 What about the converse, how do generalized partitions relate to partitions?
 First we must consider that not all hybrid sets can be cast back down to traditional sets.
-
-
-\begin{definition}
-	Given a hybrid set $H$ over universe $U$, 
-	if for all $x \in U$ $H(x)=1$ or $H(x)=0$ then we say that \textbf{$\boldsymbol{H(x)}$ is reducible}.
-	If $H$ is reducible then we denote the \textbf{reduction of $\boldsymbol{H}$} by $\mathcal{R}(H)$ 
-	as the (non-hybrid) set over $U$ with the same membership.  
-\end{definition}
 
 
 If a hybrid set $H$ is reducible, we still cannot be guaranteed that a generalized partition $P$ of $H$ will be a strict.
@@ -339,6 +300,7 @@ A function is typically defined as a mapping from elements of one set to another
 We will consider functions which have hybrid sets as their domain (but still map to traditional sets) 
 which we will call \emph{hybrid functions}.
 But first we must establish \emph{hybrid relations}.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hybrid Relation
@@ -366,6 +328,7 @@ A flow in $G$ is a a function $f:V \times V \to \mathbb{Z}$ subject to the follo
 	\item[Conservative:] For all $u \neq s$ and $u \neq t$, $\sum_{w \in V} f(u,w) = 0$
 \end{description*}
 
+
 The flow could alternatively be modelled using a hybrid relations.
 We will use the hybrid set $\mathcal{E}$ to denote a basis for constructing flows.
 For each edge $(u,v)$ in $E$, we will have $(u,v) \ominus (v,u)$ in $\mathcal{E}$ with multiplicity $c(u,v)$:
@@ -375,6 +338,7 @@ For each edge $(u,v)$ in $E$, we will have $(u,v) \ominus (v,u)$ in $\mathcal{E}
 Additionally define $\partial : V \times V \to V$ by $\partial(u,v) = v$ and extend linearly over hybrid sets.
 So, for an element of $\mathcal{E}$, $\partial((u,v) \ominus (v,u)) = \hset{v^1, u^{-1}}$ which can be thought of as the
 movement of one unit of volume across one edge that would occur when said edge is included in a flow $f$.
+
 
 By constructing $f$ with elements taken from $\mathcal{E}$, we can be guaranteed skew-symmetry.
 Then conservation can be written as $\partial(f) = k \cdot \hset{s^{-1}, t^{+1}}$ for some constant $k$.
@@ -509,7 +473,7 @@ So long as long as they agree on all points in overlapping regions intersection 
 
 \begin{definition}
 	For hybrid functions $f^A$ and $g^B$, $f^A \oplus g^B$ is a hybrid function
-	if and only if for all $x \in \text{supp} (A \otimes B)$, we have $f(x) = g(x)$.
+	if and only if for all $x \in \supp (A \otimes B)$, we have $f(x) = g(x)$.
 	We say that \textbf{$\boldsymbol{f^A}$ and $\boldsymbol{g^B}$ are compatible}.
 \end{definition}
 
@@ -544,7 +508,7 @@ and we are left with \emph{is} a hybrid function.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % *-Reducible
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Hybrid Function Fold}
+\section{Hybrid Functional Fold}
 
 
 Compatibility and reducibility are one way of collapsing a hybrid function to a traditional function.
@@ -703,13 +667,13 @@ First we will formalize some ideas we have already seen.
 \begin{definition}
 	A \textbf{refinement} of a generalized partition $P = \{P_i\}_{i \in I}$ is another generalized partition
 	$Q = \{Q_j \}_{j \in J}$ such that, for every $P_i$ in $P$ there is a subset of $Q$: $\{ Q_{j} \}_{j \in J_i}$, 
-	$J_i \subseteq J$ such that for some integers $\{a_{i,j}\}_{j \in J_i}$
+	$J_i \subseteq J$ such that for some integers $\{a_{ij}\}_{j \in J_i}$
 	\begin{equation}
-		P_i = \bigoplus_{j \in J_i} a_i,j Q_{j}
+		P_i = \bigoplus_{j \in J_i} a_{ij} Q_{j}
 	\end{equation}
 	Given a \emph{set} of generalized partitions a \textbf{common refinement} is a generalized partition which is a 
 	refinement of every partition in the set. 
-	A refinement $Q$ of $P$ is \textbf{strict} if $\text{supp}(Q) = \text{supp}(P)$.
+	A refinement $Q$ of $P$ is \textbf{strict} if $\supp(Q) = \supp(P)$.
 \end{definition}
 
 

@@ -10,8 +10,8 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
   - Related work?
   
 #### 2 Hybrid Set Theory
-  - p12 textbf
   - p17 generalized partition of boolean sets is always strict.
+  - Are the first 4 examples really necessary? Should probably remove them.
   
 #### 3 Symbolic Linear Algebra
 	
