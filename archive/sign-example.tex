@@ -1,0 +1,25 @@
+\subsection{Example: \emph{Sign function}}
+
+One would typically write the sign function out as a piecewise function over 3 regions of the extended real line: 
+$(-\infty, 0)$, $\{ 0 \}$, and $(0, \infty)$.
+Or alternatively using a $+$-reduction using 2 pieces: $(-\infty, 0]$ and $[0, \infty)$.
+\begin{equation}
+	\text{sign} \;=\; -1^{(-\infty, 0)} \hjoin 0^{\{0\}} \hjoin 1^{(0, \infty)}
+	\;=\; \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)
+\end{equation}
+Evaluation of the $\text{sign}$ at the points 1 or 0 is performed as follows:
+\begin{equation*}
+ \text{sign}(1) = \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)(1) 
+ = \mathcal{R}_+ \left( -1^{0} \oplus 1^{1} \right)
+ = +^0 (-1) +^1 (1) = 1
+\end{equation*}
+\begin{equation*}
+ \text{sign}(0) = \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)(0) 
+ = \mathcal{R}_+ \left( -1^{1} \oplus 1^{1} \right)
+ = +^1 (-1) +^1 (1) = 0
+\end{equation*}
+
+Going from 3 regions to 2 may seem a small step.
+However, consider two piecewise functions with $n$ and $m$ regions respectively.
+Taking the sum of these two functions would lead to a new piecewise function with $n\cdot m$ regions.
+We will show that $\op$-reductions can allow us to reduce this to only a linear increase!

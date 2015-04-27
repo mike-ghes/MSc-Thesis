@@ -222,8 +222,8 @@ For example, any positive rational number can be represented as a hybrid set ove
 	(\mathbb{Z}^\mathbb{P}, \oplus) \simeq (\mathbb{Q}_+,\times)
 \end{equation*}
 For a positive rational number $a/b$, both $a$ and $b$ being integers will have a prime decomposition: 
-$a=(p_1^{m_1}\cdot p_2^{m_2} \cdot \ldots)$ and $b=(q_1^{n_1} \cdot q_2^{n_2} \cdot \ldots)$ . 
-Then there is an isomorphism:
+$a=(p_1^{m_1}\cdot p_2^{m_2} \cdot \ldots)$ and $b=(q_1^{n_1} \cdot q_2^{n_2} \cdot \ldots)$
+then there is the group isomorphism $f$ given by:
 \begin{equation*}
 	f(a/b) = \hset{p_1^{m_1}, p_2^{m_2}, \ldots} \ominus \hset{q_1^{n_1}, q_2^{n_2}, \ldots}
 \end{equation*}
@@ -233,9 +233,9 @@ One could also think of the roots and asymptotes of a rational polynomial as a h
 \begin{equation*}
 	\frac{(x-2)}{(x-1)^2(x+1)} \;=\; \hset{ 2^1, 1^{-2}, -1^{-1} }
 \end{equation*}
-Depending on the context, an element being in a set negatively many times may have different interpretations.
-\todo[inline]{vbox}
-\todo[inline]{vbox}
+Depending on the context, a negative multiplicity could take many different meanings.
+Rather than attach a single rigid concept, we will keep this flexibly abstract sometimes.
+In these examples we used the multiplicity as an exponent in other cases it is more aptly a coefficient  or as orientation.
 
 
 All Boolean sets can be trivially converted to hybrid sets.
@@ -269,82 +269,16 @@ and allow for \emph{any} family of sets which sum to a hybrid set to be a (gener
 \end{definition}
 
 
-In this way any traditional set partition is a strict, generalized set partition.
-By principle of inclusion-exclusion, 
-\begin{equation*}
-	P_i \cup P_j = P_i \oplus P_j \ominus (P_i \cap P_j)
-\end{equation*}
-Since $P_i$ and $P_j$ are disjoint then we have that $\bigcup_i P_i = \bigoplus_i P_i$ and thus a strict partition.
-What about the converse, how do generalized partitions relate to partitions?
-First we must consider that not all hybrid sets can be cast back down to traditional sets.
+If a set $H$ is reducible, then strict generalized partitions will correspond with the traditional notion of a partition.
+A traditional partition will be a disjoint cover of $H$ and for disjoint reducible sets, point-wise sum and union agree.
+Hence $\bigcup_i P_i = \bigoplus_i P_i$. 
+Conversely, if $H$ is reducible and the sum of disjoint hybrid sets, then $P_i$ must all be reducible as well.
 
 
-If a hybrid set $H$ is reducible, we still cannot be guaranteed that a generalized partition $P$ of $H$ will be a strict.
-Consider the reducible hybrid set $[0,1]$ (that is, $H(x)=1$ if $0 \leq x \leq 1$ and $H(x)=0$ otherwise).
-Then $P = \big\{ [0,2], \ominus (1,2] \big\}$ is a generalized partition of $H$. 
+This does not hold for a non-strict partition of a reducible hybrid set.
+Consider the interval $[0,1]$ as a hybrid set (that is, $H(x)=1$ if $0 \leq x \leq 1$ and $H(x)=0$ otherwise).
+Then $P = \big\{\; [0,2], \;\ominus (1,2] \; \big\}$ is a generalized partition of $H$. 
 A generalized partition of a reducible set is strict if and only if each generalized partition is reducible.
-Generalized partitions and reducibility will be very useful to us over the next section.
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% HYBRID FUNCTIONS
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Hybrid Relations}
-
-
-A function is typically defined as a mapping from elements of one set to another set.
-We will consider functions which have hybrid sets as their domain (but still map to traditional sets) 
-which we will call \emph{hybrid functions}.
-But first we must establish \emph{hybrid relations}.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Hybrid Relation
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{definition}
-	For two sets $S$ and $T$, a hybrid set over their Cartesian product $S \times T$ is called a 
-	\textbf{hybrid (binary) relation between $\boldsymbol{S}$ and $\boldsymbol{T}$}.
-	We denote the set of all such hybrid relations by $\mathbb{Z}^{S \times T}$. 
-\end{definition}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Flow
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Maximum Flow}}
-
-The maximum flow problem involves finding out the maximal volume that can be pushed from a single source node
-to a single sink node in a flow network.
-Formally, we will let $G=(V,E)$ be a directed graph such that for every edge $(u,v) \in E$ there is a non-negative
-\textbf{capacity} denoted $c(u,v)$ (for $(u,v) \notin E$, assume that $c(u,v)=0$).
-A flow in $G$ is a a function $f:V \times V \to \mathbb{Z}$ subject to the following conditions:
-\begin{description*}
-	\item[Constrained by capacity:] $f(u,v) \leq c(u,v)$ 
-	\item[Skew Symmetric:] $f(u,v)=-f(u,v)$
-	\item[Conservative:] For all $u \neq s$ and $u \neq t$, $\sum_{w \in V} f(u,w) = 0$
-\end{description*}
-
-
-The flow could alternatively be modelled using a hybrid relations.
-We will use the hybrid set $\mathcal{E}$ to denote a basis for constructing flows.
-For each edge $(u,v)$ in $E$, we will have $(u,v) \ominus (v,u)$ in $\mathcal{E}$ with multiplicity $c(u,v)$:
-\begin{equation}
-	\mathcal{E} = \hset{ \left((u,v) \ominus (v,u)\right)^{c(u,v)} \;|\; (u,v) \in E }
-\end{equation}
-Additionally define $\partial : V \times V \to V$ by $\partial(u,v) = v$ and extend linearly over hybrid sets.
-So, for an element of $\mathcal{E}$, $\partial((u,v) \ominus (v,u)) = \hset{v^1, u^{-1}}$ which can be thought of as the
-movement of one unit of volume across one edge that would occur when said edge is included in a flow $f$.
-
-
-By constructing $f$ with elements taken from $\mathcal{E}$, we can be guaranteed skew-symmetry.
-Then conservation can be written as $\partial(f) = k \cdot \hset{s^{-1}, t^{+1}}$ for some constant $k$.
-This constant $k$ turns out to be the overall flow through the graph.
-So maximum flow is then just finding the maximum $k$ for a valid flow.
-And so long as $\mathcal{E} \ominus f$ is everywhere positive, all three conditions are fulfilled. 
 
 
 
@@ -354,17 +288,28 @@ And so long as $\mathcal{E} \ominus f$ is everywhere positive, all three conditi
 % Hybrid Function
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hybrid Functions}\label{sec:HybridFunction}
+
+
+A function is typically defined as a mapping from elements of one set to another set.
+We will consider functions which have hybrid sets as their domain (but still map to traditional sets) 
+which we will call \emph{hybrid functions}.
+We will define hybrid functions in terms of their ``graph'' as a special class of \emph{hybrid relations}.
+
+
 \begin{definition}
+	For two sets $S$ and $T$, a hybrid set over their Cartesian product $S \times T$ is called a 
+	\textbf{hybrid (binary) relation between $\boldsymbol{S}$ and $\boldsymbol{T}$}.
+	We denote the set of all such hybrid relations by $\mathbb{Z}^{S \times T}$. 
 	A \textbf{hybrid function from $\boldsymbol{S}$ to $\boldsymbol{T}$} is 
 	a hybrid relation $H$ between $S$ and $T$ such that $(x,y) \in H$ and $(x,z) \in H$ implies $y=z$.
 	We denote the set of all such hybrid functions by $\mathbb{Z}^{S \to T}$.
 \end{definition}
 
 
-Although this tells us what \emph{is} and \emph{is not} a hybrid function, it is not the most useful definition to work with. 
-We would like to think of a hybrid function not as a mapping from a hybrid set to a boolean set but as
-a function between two sets with a multiplicity attached to each mapping.
-From this perspective, we would generally have a function and hybrid set already in mind.
+Again we will need some notation for this to be more usable.
+We would like to think of a hybrid function not as a mapping from a hybrid set to a boolean set but rather as
+a function between two sets with the multiplicity attached to the mapping.
+Generally with a function and hybrid set separately already in mind.
 Given a hybrid set $H$ over $U$ and a function $f:B \to S$ be a function where $B \subseteq U$ and $S$ a set.
 Then we denote by $f^H$ the hybrid function from $B$ to $S$ defined by:
 \begin{equation}
@@ -375,8 +320,7 @@ Then we denote by $f^H$ the hybrid function from $B$ to $S$ defined by:
 
 There is little literature or established use for hybrid functions;
 their primary use to us will be as something that we can turn back into traditional functions.
-One may notice that we have defined hybrid functions by their graph,
-taking the reduction (if it exists) of a hybrid function one naturally gets the graph of a function.
+So as with hybrid sets, we would like a notion of reducibility.
 
 
 \begin{definition}
@@ -390,16 +334,17 @@ taking the reduction (if it exists) of a hybrid function one naturally gets the 
 
 Since $\mathcal{R}(H)$ only exists if $H(x)$ is everywhere 0 or 1; 
 $\mathcal{R}(f^H)$ only makes sense when $f^H$ is reducible.
-Assuming that we end up with a reducible function, hybrid functions make an excellent primitives to construct piecewise functions.
-Earlier in (\ref{def:fjoin}) we defined the \emph{join of functions} to allow us to construct piecewise functions from \emph{restricted functions}.
-The join of two hybrid functions is quite trivially defined.
+Assuming that we end up with a reducible function, 
+hybrid functions will make an excellent primitives to construct piecewise functions.
+Earlier we used the \emph{join of functions} to construct piecewise functions from \emph{restricted functions}.
+The join operator for two hybrid functions is quite trivially defined.
 
  
 \begin{definition}
 	The \textbf{join}, $f^F \hjoin g^G$ of two hybrid functions $f^F$ and $g^G$ is 
 	the hybrid relation given by their point-wise sum.
 	\begin{equation} \label{def:hjoin}
-		f^F \hjoin g^G := f^F \oplus g^G
+		f^F \hjoin g^G = f^F \oplus g^G
 	\end{equation}
 \end{definition}
 
@@ -436,7 +381,8 @@ Additionally,
 		&= \bigoplus_{x \in U} A(x) \hset{ (x, f(x) )^1 } 
 			\; \oplus \; \bigoplus_{x \in U} B(x) \hset{ (x, f(x) )^1 } \notag \\
 		&= \bigoplus_{x \in U} (A(x) + B(x)) \hset{ (x, f(x) )^1 } \notag \\
-		&= \bigoplus_{x \in U} (A \oplus B)(x) \hset{ (x, f(x) )^1 }
+		&= \bigoplus_{x \in U} (A \oplus B)(x) \hset{ (x, f(x) )^1 } \notag \\ 
+		&= f^{A \oplus B}
 \end{align}
 
 
@@ -557,32 +503,6 @@ Moreover,
 	\mathcal{R}_\op( \mathcal{R}_\op(f^F) \oplus \mathcal{R}_\op(g^G)) =\mathcal{R}_\op( f^F \oplus g^G)
 \end{equation}
 
-
-\subsection{Example: \emph{Sign function}}
-
-One would typically write the sign function out as a piecewise function over 3 regions of the extended real line: 
-$(-\infty, 0)$, $\{ 0 \}$, and $(0, \infty)$.
-Or alternatively using a $+$-reduction using 2 pieces: $(-\infty, 0]$ and $[0, \infty)$.
-\begin{equation}
-	\text{sign} \;=\; -1^{(-\infty, 0)} \hjoin 0^{\{0\}} \hjoin 1^{(0, \infty)}
-	\;=\; \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)
-\end{equation}
-Evaluation of the $\text{sign}$ at the points 1 or 0 is performed as follows:
-\begin{equation*}
- \text{sign}(1) = \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)(1) 
- = \mathcal{R}_+ \left( -1^{0} \oplus 1^{1} \right)
- = +^0 (-1) +^1 (1) = 1
-\end{equation*}
-\begin{equation*}
- \text{sign}(0) = \mathcal{R}_+ \left( -1^{(-\infty, 0]} \oplus 1^{[0, \infty)} \right)(0) 
- = \mathcal{R}_+ \left( -1^{1} \oplus 1^{1} \right)
- = +^1 (-1) +^1 (1) = 0
-\end{equation*}
-
-Going from 3 regions to 2 may seem a small step.
-However, consider two piecewise functions with $n$ and $m$ regions respectively.
-Taking the sum of these two functions would lead to a new piecewise function with $n\cdot m$ regions.
-We will show that $\op$-reductions can allow us to reduce this to only a linear increase!
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

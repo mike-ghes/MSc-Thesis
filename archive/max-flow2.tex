@@ -1,0 +1,34 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Flow
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Maximum Flow}}
+
+The maximum flow problem involves finding out the maximal volume that can be pushed from a single source node
+to a single sink node in a flow network.
+Formally, we will let $G=(V,E)$ be a directed graph such that for every edge $(u,v) \in E$ there is a non-negative
+\textbf{capacity} denoted $c(u,v)$ (for $(u,v) \notin E$, assume that $c(u,v)=0$).
+A flow in $G$ is a a function $f:V \times V \to \mathbb{Z}$ subject to the following conditions:
+\begin{description*}
+	\item[Constrained by capacity:] $f(u,v) \leq c(u,v)$ 
+	\item[Skew Symmetric:] $f(u,v)=-f(u,v)$
+	\item[Conservative:] For all $u \neq s$ and $u \neq t$, $\sum_{w \in V} f(u,w) = 0$
+\end{description*}
+
+
+The flow could alternatively be modelled using a hybrid relations.
+We will use the hybrid set $\mathcal{E}$ to denote a basis for constructing flows.
+For each edge $(u,v)$ in $E$, we will have $(u,v) \ominus (v,u)$ in $\mathcal{E}$ with multiplicity $c(u,v)$:
+\begin{equation}
+	\mathcal{E} = \hset{ \left((u,v) \ominus (v,u)\right)^{c(u,v)} \;|\; (u,v) \in E }
+\end{equation}
+Additionally define $\partial : V \times V \to V$ by $\partial(u,v) = v$ and extend linearly over hybrid sets.
+So, for an element of $\mathcal{E}$, $\partial((u,v) \ominus (v,u)) = \hset{v^1, u^{-1}}$ which can be thought of as the
+movement of one unit of volume across one edge that would occur when said edge is included in a flow $f$.
+
+
+By constructing $f$ with elements taken from $\mathcal{E}$, we can be guaranteed skew-symmetry.
+Then conservation can be written as $\partial(f) = k \cdot \hset{s^{-1}, t^{+1}}$ for some constant $k$.
+This constant $k$ turns out to be the overall flow through the graph.
+So maximum flow is then just finding the maximum $k$ for a valid flow.
+And so long as $\mathcal{E} \ominus f$ is everywhere positive, all three conditions are fulfilled. 
