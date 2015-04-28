@@ -100,12 +100,6 @@ This is usually forgivable given the extra power the Lebesgue integral affords o
 Using hybrid sets as domains of integration allow us to use the best features of both.
 In this chapter we will investigate integration using hybrid set domains.
 
-\todo[inline]{more...}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-
-
 
 
 
@@ -114,14 +108,6 @@ In this chapter we will investigate integration using hybrid set domains.
 % HYBRID INTEGRATION
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-In section~\ref{sec:OrientedIntervals} we introducted oriented intervals and more generally, 
-$k$-dimensional oriented rectangles.
-We will now look to integrate over $k$-rectangles. 
-Two approaches will be discussed: first the Riemann integral and the Lebesgue integral.
-Following this, we will extend to singular cubes to handle more complex domains.
-
 
 
 
@@ -191,8 +177,10 @@ $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ as $\max( | \vol( I_{p_1,\ldots, p_n}) 
 	We say that a function is \textbf{Riemann integrable} if the upper and lower Riemann sums converge.
 \end{definition}
 
-\todo[inline]{vbox}
-\todo[inline]{vbox}
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LEBESGUE INTEGRAL
@@ -232,9 +220,6 @@ Given a measure space $(X, \Sigma, \mu)$ and $S \in \Sigma$, we define the integ
 	\int \! \ind[S] \diff \mu = \mu ( S )
 \end{equation}
 
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
 
 From this, we consider functions which are the sum of indicator functions.
 We say that $s$ is a \textbf{simple function} if there are finite sets of measurable sets and $\{ A_k \}_{k=0}^n$
@@ -348,9 +333,6 @@ so $\varphi_n$, uniformly approaches $f$ as $n$ approaches infinity.
 \end{figure}
 
 
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
 
 
 
@@ -658,10 +640,9 @@ Given such a parititon of unity for the manifold, we define the integral over al
 \int_M \alpha = \sum_i \int_{U_i} \psi_i \alpha
 \end{equation}
 
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -678,6 +659,7 @@ This turns out to be just one instance of the more general \emph{Stokes' Theorem
 which will work in higher dimensions as well.
 To do so we will first need to generalize the notion of a bounding region or boundary.
 
+\newpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1182,9 +1164,6 @@ Hence only one term in the sum, $i=j$ will actually result in a non-zero term:
  			 dx_1 \wedge \ldots \wedge dx_k
 \end{align*}
 
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-
 
 
 Since this is an integral over the canonical basis $\text{x} = (x_1, \ldots, x_k)$ we can remove the wedge products and
@@ -1253,9 +1232,7 @@ And for a chain $C=a_1 c_1 + \ldots + a_n c_n$ made up of singular cubes:
 
 And so we have Stokes' theorem on general chains.
 \end{proof}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CONTOUR EXAMPLE
@@ -1339,6 +1316,6 @@ To compute the integral over $C_2$, we make the substitutions, $z = re^{i \theta
 And then simply observe that as $r$ goes to infinity, this integral goes to zero and the term for $C_2$ drops off.
 Leaving us with just:
 \begin{equation*}
-	\int_{-\infty}^\infty f(x) = \frac{\pi }{\sqrt{2}}
+	\int_{-\infty}^\infty f(x) \diff x = \frac{\pi }{\sqrt{2}}
 \end{equation*}
 

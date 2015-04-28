@@ -40,13 +40,15 @@ but using conditions rather than the sets they define can be seen as just a shor
 One thing that should be noted is that sometimes there are extra conditions which are bundled in.
 As pieces of a partition, the sets generated must be disjoint so we must ensure these conditions are mutually exclusive.
 A common heuristic is to treat these conditions as a series of \emph{else-if} statements.
-For example \emph{Maple}'s \texttt{piecewise(cond\_1, f\_1, cond\_2, f\_2,\ldots, cond\_n, f\_n, f\_otherwise)} will
-evaluate each \texttt{cond\_1} in order and when one evaluates to true, the corresponding \texttt{f\_i} is evaluted.
+For example \emph{Maple}'s \texttt{piecewise} function:
+\begin{quote}
+	\texttt{piecewise(cond\_1, f\_1, cond\_2, f\_2, \ldots, cond\_n, f\_n, f\_otherwise)} 
+\end{quote}	
+will evaluate each \texttt{cond\_1} in order and when one evaluates to true, the corresponding \texttt{f\_i} is then evaluated.
 Finally if all of \texttt{cond\_i} evaluate to false then \texttt{f\_otherwise} is used.
 Hence the partitions corresponding to each \texttt{cond\_i} is \emph{not} just $\{ x \;|\; \texttt{cond\_i}(x) \}$
-but instead 
-$\{ x \;|\; \texttt{cond\_i}(x) \wedge \neg \texttt{cond\_i-1}(x) \wedge\ldots \wedge \neg \texttt{cond\_1}(x)\}$;
-not only must \texttt{cond\_i} be true but all preceding conditions must also be false.
+but instead the set where \texttt{cond\_i} is true and \emph{all preceding} conditions are also false.
+
 
 
 Although the notation used in (\ref{eq_fP}) is fine for piecewise functions with only a few terms such as $\abs$,
@@ -213,7 +215,7 @@ Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, a
 \end{definition}
 For boolean sets $A$ and $B$, disjointness would be defined by $A \cap B = \emptyset$.
 If we consider these boolean sets as simply hybrid sets with multiplicity 0 or 1 then the operations $\cap$ and $\otimes$
-identically correspond to elementwise $\texttt{AND}$.
+identically correspond to element-wise $\texttt{AND}$.
 
 
 From these definitions, we can use hybrid sets to model various objects that would traditionally be described otherwise. 
@@ -260,9 +262,9 @@ and allow for \emph{any} family of sets which sum to a hybrid set to be a (gener
 
 \begin{definition}
 	A \textbf{generalized partition $\boldsymbol{P}$ of a hybrid set $\boldsymbol{H(x)}$} is a family of hybrid sets
-	$P=\{P_i \}_{i=1}^n$ such that
+	${P=\{P_i \}_{i=1}^n}$ such that:
 	\begin{equation}
-		P_1 \oplus P_2 \oplus \ldots \oplus P_n = H
+		H = P_1 \oplus P_2 \oplus \ldots \oplus P_n
 	\end{equation}
 	We say that \textbf{$\boldsymbol{P}$ is a strict partition of $\boldsymbol{H}$} if 
 	$P_i$ and $P_j$ are disjoint for all $i \neq j$.
@@ -287,13 +289,14 @@ A generalized partition of a reducible set is strict if and only if each general
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hybrid Function
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Hybrid Functions}\label{sec:HybridFunction}
+\section{Hybrid Functions}
+\label{sec:HybridFunction}
 
 
 A function is typically defined as a mapping from elements of one set to another set.
 We will consider functions which have hybrid sets as their domain (but still map to traditional sets) 
 which we will call \emph{hybrid functions}.
-We will define hybrid functions in terms of their ``graph'' as a special class of \emph{hybrid relations}.
+We will define hybrid functions as the collection of all ordered pairs $(x,f(x))$ (the \emph{graph of the function} $f$).
 
 
 \begin{definition}
@@ -308,9 +311,10 @@ We will define hybrid functions in terms of their ``graph'' as a special class o
 
 Again we will need some notation for this to be more usable.
 We would like to think of a hybrid function not as a mapping from a hybrid set to a boolean set but rather as
-a function between two sets with the multiplicity attached to the mapping.
-Generally with a function and hybrid set separately already in mind.
-Given a hybrid set $H$ over $U$ and a function $f:B \to S$ be a function where $B \subseteq U$ and $S$ a set.
+a function between two Boolean sets and integer multiplicity attached to the mapping (the ``arrow'' itself).
+In this way we partially separate the traditional function and the multiplicity function (given as a hybrid set) and view a
+hybrid function as their combined object.
+Formally, given a hybrid set $H$ over $U$ and a function $f:B \to S$ be a function where $B \subseteq U$ and $S$ a set.
 Then we denote by $f^H$ the hybrid function from $B$ to $S$ defined by:
 \begin{equation}
 	\label{hfunc}
@@ -357,15 +361,15 @@ For any two hybrid \emph{functions} the result will be a hybrid \emph{relation}
 but not necessarily another hybrid function.
 As with traditional functional join, we must still be wary of overlapping regions
  but non-disjoint hybrid domains are not nearly as ``dangerous''.
-For intersecting regions we do not have to choose between commutivity and associativity, we can have both.
+For intersecting regions we do not have to choose between commutativity and associativity, we can have both.
 In general, all that we can say the result is a hybrid relation but there are many cases where we can guarantee hybrid function status is preserved.
 
 
 \begin{theorem}
-\label{thm:reducible1}
-Let $A$ and $B$ be hybrid sets over $U$ and let $f: U \to S$ be a function.
-Then $f^A \oplus f^B$ is a hybrid function.
-Moreover,
+	\label{thm:reducible1}
+	Let $A$ and $B$ be hybrid sets over $U$ and let $f: U \to S$ be a function.
+	Then $f^A \oplus f^B$ is a hybrid function.
+	Moreover,
 	\begin{equation}
 		f^A \oplus f^B = f^{A \oplus B}
 	\end{equation}
@@ -374,32 +378,25 @@ Moreover,
 
 It should not be a surprise that the same function over different restrictions combine to form a function.
 Let $(x,f(x)) \in f^A$ and $(y,f(y)) \in B$. Clearly, if $x=y$ then $f(x)=f(y)$. 
-Since $f$ is common between both hybrid functions, there cannot be disagreement among points.
-Additionally,
-\begin{align}
+Since $f$ is common between both hybrid functions, there cannot be disagreement among points:
+\begin{align*}
 	f^A \oplus f^B 
 		&= \bigoplus_{x \in U} A(x) \hset{ (x, f(x) )^1 } 
-			\; \oplus \; \bigoplus_{x \in U} B(x) \hset{ (x, f(x) )^1 } \notag \\
-		&= \bigoplus_{x \in U} (A(x) + B(x)) \hset{ (x, f(x) )^1 } \notag \\
-		&= \bigoplus_{x \in U} (A \oplus B)(x) \hset{ (x, f(x) )^1 } \notag \\ 
+			\; \oplus \; \bigoplus_{x \in U} B(x) \hset{ (x, f(x) )^1 } \\
+		&= \bigoplus_{x \in U} (A(x) + B(x)) \hset{ (x, f(x) )^1 } \\
+		&= \bigoplus_{x \in U} (A \oplus B)(x) \hset{ (x, f(x) )^1 } \\ 
 		&= f^{A \oplus B}
-\end{align}
+\end{align*}
 
-
-Inductively, this holds for any number of hybrid sets with a common function.
-For instance, given any generalized partition $P = P_1 \oplus P_2 \oplus \ldots \oplus P_n$, 
-we have the following equation reminiscent of (\ref{fjoin_partition}):
-\begin{equation}
- 	f^P = f^{P_1} \oplus f^{P_2} \oplus \ldots \oplus f^{P_n}
-\end{equation}
 
 
 Joining a function with itself is not the most interesting construction.
-Piecewise functions are useful for their ability to tie together two \emph{different} functions.
+Generally piecewise function is desired for it's ability to tie together two \emph{different} functions.
 If two functions have separate, non-overlapping regions, then our definition is again trivial.
 
 
 \begin{theorem}
+	\label{thm:reducible2}
 	Given two function $f : U \to S$ and $g : U \to S$. The following identity holds if and only if $A$ and $B$ are disjoint:
 	\begin{equation}
 		f^A \oplus g^B = (f \fjoin g)^{A \oplus B}
@@ -408,10 +405,17 @@ If two functions have separate, non-overlapping regions, then our definition is 
 
 
 Notice here the use of $\fjoin$ on the right hand side.
-Here $\fjoin$ is traditional (non-hybrid) function join.
-Since $A$ and $B$ are disjoint, the problems that arose earlier are not an issue.
-In fact, it doesn't even matter which convention we use.
-Disjointness is still too strong of a condition for two hybrid functions to be compatible.
+Here $\fjoin$ is the traditional (non-hybrid) function join as defined in (\ref{def:fjoin}).
+$(f \fjoin g)$ was undefined for $\left( \supp(A) \cap \supp(B) \right)$ 
+and so the equality will not hold if $A$ and $B$ are not disjoint.
+Chaining several sums together we can represent the piecewise function $f$ from (\ref{eq_fP}) by:
+\begin{equation*}
+ 	f^P = f^{P_1} \oplus f^{P_2} \oplus \ldots \oplus f^{P_n}
+\end{equation*}
+
+
+
+But disjointness is still too strong of a condition for two hybrid functions to be compatible.
 The join of two non-disjoint functions may still be a hybrid function 
 even if their respective functions do not agree at \emph{all} points.
 So long as long as they agree on all points in overlapping regions intersection the functions can be safely joined.
@@ -426,22 +430,23 @@ So long as long as they agree on all points in overlapping regions intersection 
 
 As with our definition of disjointness, we use the pointwise product $\otimes$ 
 of hybrid sets as an analog for intersection $\cap$ of sets.
-This definition also generalizes the two cases we have already seen in theorems 2.3.1 and 2.3.2.
+This definition also generalizes the two cases we have already seen in theorems 
+\ref{thm:reducible1} and \ref{thm:reducible2}
 The hybrid functions $f^A$ and $f^B$ are clearly compatible because $f$ agrees with itself everywhere.
 For $A$ and $B$ disjoint, $f^A$ and $g^B$ are also compatible since $A \otimes B$ is empty;
 there are no mutual points for $f$ and $g$ to disagree over.
 
+
 Compatibility becomes less clear when we begin to consider multiple hybrid functions.
 For one, compatibility is not associative.
 Consider the following sequence:
-
-
-\begin{equation}
-(f^H \oplus g^H) \oplus g^{\ominus H} = f^H \oplus (g^H \oplus g^{\ominus H}) = f^H \oplus g^\emptyset = f^H
-\end{equation}
-
-$g^H$ and $g^{\ominus H}$ are clearly compatible by 2.3.1.
-The resulting $g^{\emptyset}$ is compatible with \emph{any} hybrid function.
+\begin{equation*}
+	(f^H \oplus g^H) \oplus g^{\ominus H} 
+	= f^H \oplus (g^H \oplus g^{\ominus H}) 
+	= f^H \oplus g^\emptyset = f^H
+\end{equation*}
+$g^H$ and $g^{\ominus H}$ are clearly compatible as an instance of  theorem \ref{thm:combatible1}.
+The result is a function over the empty set $g^{\emptyset}$ which is compatible with \emph{any} hybrid function.
 Although $f^H$ and $g^H$ could be mutually incompatible; 
 we can only certain that $f^H \oplus g^H$ is a hybrid relation.
 Regardless of their compatibility, when this is joined with $g^{\ominus H}$, the $g$ terms cancel
