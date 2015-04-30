@@ -366,7 +366,7 @@ In general, all that we can say the result is a hybrid relation but there are ma
 
 
 \begin{theorem}
-	\label{thm:reducible1}
+	\label{thm:compatible1}
 	Let $A$ and $B$ be hybrid sets over $U$ and let $f: U \to S$ be a function.
 	Then $f^A \oplus f^B$ is a hybrid function.
 	Moreover,
@@ -396,7 +396,7 @@ If two functions have separate, non-overlapping regions, then our definition is 
 
 
 \begin{theorem}
-	\label{thm:reducible2}
+	\label{thm:compatible2}
 	Given two function $f : U \to S$ and $g : U \to S$. The following identity holds if and only if $A$ and $B$ are disjoint:
 	\begin{equation}
 		f^A \oplus g^B = (f \fjoin g)^{A \oplus B}
@@ -431,12 +431,10 @@ So long as long as they agree on all points in overlapping regions intersection 
 As with our definition of disjointness, we use the pointwise product $\otimes$ 
 of hybrid sets as an analog for intersection $\cap$ of sets.
 This definition also generalizes the two cases we have already seen in theorems 
-\ref{thm:reducible1} and \ref{thm:reducible2}
+\ref{thm:compatible1} and \ref{thm:compatible2}
 The hybrid functions $f^A$ and $f^B$ are clearly compatible because $f$ agrees with itself everywhere.
 For $A$ and $B$ disjoint, $f^A$ and $g^B$ are also compatible since $A \otimes B$ is empty;
 there are no mutual points for $f$ and $g$ to disagree over.
-
-
 Compatibility becomes less clear when we begin to consider multiple hybrid functions.
 For one, compatibility is not associative.
 Consider the following sequence:
@@ -445,13 +443,10 @@ Consider the following sequence:
 	= f^H \oplus (g^H \oplus g^{\ominus H}) 
 	= f^H \oplus g^\emptyset = f^H
 \end{equation*}
-$g^H$ and $g^{\ominus H}$ are clearly compatible as an instance of  theorem \ref{thm:combatible1}.
+We know nothing of the compatibility of $f^H$ and $g^H$ but let us assume that they are not compatible.
+However even though $(f^H \oplus g^H)$ is a hybrid relation it is compatible with $g^{\ominus H}$.
+On the other hand, $g^H$ and $g^{\ominus H}$ are clearly compatible as an instance of theorem \ref{thm:compatible1}.
 The result is a function over the empty set $g^{\emptyset}$ which is compatible with \emph{any} hybrid function.
-Although $f^H$ and $g^H$ could be mutually incompatible; 
-we can only certain that $f^H \oplus g^H$ is a hybrid relation.
-Regardless of their compatibility, when this is joined with $g^{\ominus H}$, the $g$ terms cancel
-and we are left with \emph{is} a hybrid function.
-
 
 
 
@@ -479,18 +474,18 @@ To aid in this we will first introduce some notation for iterated operators.
 
 Assuming $\op^m$ and $\op^n$ are both defined (e.g. if $m,n \leq 0$ then $\op$ must be invertible),
 we have $ ( x \op^m y ) \op^n y = x \op^{m+n} y$.
-
 For non-associative magmas, it may be of interest to instead define $\op^T$ for some tree $T$. 
 For example $\op^n$ above is analogous to Haskell's \texttt{foldl}.
 There are applications where \texttt{foldr}: $(x \op ( y \op ( y \op \ldots \op y)))$ or a balanced expression tree like \texttt{foldt} might be desired.
-Most applications however will be interested in group operators and so we will not explore this.
+The applications we will be interested in will be over associative group operators and so we will not actually 
+explore this any further.
 
 \begin{definition}
 	We say that a hybrid relation $f^A = f_1^{A_1} \oplus f_2^{A_2} \oplus \ldots$ over $T \times S$ 
 	is $\op$\textbf{-reducible} if $(S, \op)$ is an abelian group 
 	or if $(S, \op)$ is an abelian semi-group and $f^A$ is everywhere non-negative.
 	If $f^A$ is $\op$-reducible we define its $\op$\textbf{-reduction}, $\mathcal{R}_\op(f^A) :  T \to S$ 
-	as a (non-hybrid) function given by:
+	as a (non-hybrid) function:
 	\begin{equation}
 		\mathcal{R}_\op (f^A)(x) = \restrict{\left(\op^{A_1(x)} f_1(x) \op^{A_2(x)} f_2(x) \op \ldots \right)}{\supp A}
 	\end{equation}
@@ -503,7 +498,8 @@ If $f^A$ is reducible then it is trivially $\op$-reducible and we have:
 \end{equation}
 If a hybrid function is already ``flattened'', then reducing it will do nothing.
 So clearly $\mathcal{R}_\op$ is a projection since it is idempotent  (i.e. $\mathcal{R}_\op ( \mathcal{R}_\op( f^A)) = \mathcal{R}_\op(f^A)$).
-Moreover,
+Moreover, we can pull restrictions through point-wise sums:
+
 \begin{equation}
 	\mathcal{R}_\op( \mathcal{R}_\op(f^F) \oplus \mathcal{R}_\op(g^G)) =\mathcal{R}_\op( f^F \oplus g^G)
 \end{equation}
@@ -514,8 +510,10 @@ Moreover,
 % Piecewise 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Piecewise functions on generalized partitions}} 
+
 Let $A_1 = [0,a)$, $A_2 = [0,1] \setminus A_1$, $B_1 = [0,b)$ and $B_2 = [0,1] \setminus B_1$.
-As well as piecewise functions $f$ and $g$ given as:
+$\{ A_1, A_2\}$ and $\{B_1, B_2\}$ are two distinct of the set $[0,1]$.
+We will use these two define two piecewise functions $f$ and $g$ which map to some group $f,g:[0,1] \to G$.
 \begin{equation*}
 	f(x) = f_1^{A_1} \oplus f_2^{A_2}
 		= \begin{cases}
@@ -530,27 +528,28 @@ As well as piecewise functions $f$ and $g$ given as:
 		\end{cases}
 \end{equation*}
 
-If one were interested in computing the piecewise function $(f+g)$, the na\''{i}ve method would be to take the pairwise
-sum of each sub-function. 
-Then restrict each sum to the intersection of respective partitions as below:
-\begin{equation}
-	(f+g)(x) = (f_1 + g_1)^{A_1 \cap B_1} 
-		\oplus (f_1 + g_2)^{A_1 \cap B_2} 
-		\oplus (f_2 + g_1)^{A_2 \cap B_1}
-		\oplus (f_2 + g_2)^{A_2 \cap B_2}
-\end{equation}
+If one were interested in computing their sum, $(f+g)$, the naive method would be to compute every possible intersection.
+Over each intersection, one then takes the restriction of the corresponding sub-functions and joins all these terms together.
+As in,
+\begin{equation*}
+	(f+g)(x) = \restrict{(f_1 + g_1)}{A_1 \cap B_1} 
+		\fjoin \restrict{(f_1 + g_2)}{A_1 \cap B_2} 
+		\fjoin \restrict{(f_2 + g_1)}{A_2 \cap B_1}
+		\fjoin \restrict{(f_2 + g_2)}{A_2 \cap B_2}
+\end{equation*}
 
 We will take another approach.
 First, we can partition $[0,1]$ into the generalized partition $A_1$, $B_1 \ominus A_1$, $B_2$.
 The source of this particular partition will remain mysterious for now but observe that we can still construct the partitions:
 $B_1 = (B_1 \ominus A_1) \oplus A_1$ and $A_2 = (B_1 \ominus A_1) \oplus B_2$.
 And so we can represent $f$ and $g$ from above with a common partition by using:
-\begin{align}
+\begin{align*}
 	f &=  f_1^{A_1} \;\oplus\; f_2^{(B_1 \ominus A_1) \oplus B_2}
 		\;=\; f_1^{A_1} \;\oplus\; f_2^{B_1 \ominus A_1} \;\oplus\; f_2^{B_2} \\
 	g &= g_1^{A_1 \oplus (B_1 \;\ominus\; A_1)} \;\oplus\; g_2^{B_2}
 		\;=\; g_1^{A_1} \;\oplus\; g_1^{B_1 \;\ominus\; A_1} \;\oplus\; g_2^{B_2}
-\end{align}
+\end{align*}
+
 
 Since we have a common partition we can avoid computing pairwise intersections altogether and simply add each 
 sub-function to the corresponding sub-function which shares a partition.
@@ -558,11 +557,11 @@ Since $\{ A_1 , B_1, (B_1 \ominus A_1) \}$ is a generalized partition, we will n
 to get a traditional function.
 We use $\mathcal{R}_+$ for this so that negative regions properly cancel. 
 
-\begin{equation}
+\begin{equation*}
 	(f+g)(x) = \mathcal{R}_+ \left( (f_1 + g_1)^{A_1} 
 			\oplus (f_2 + g_1)^{B_1 \ominus A_1} 
 			\oplus (f_2 + g_2)^{B_2} \right)
-\end{equation}
+\end{equation*}
 
 
 This equation holds regardless of the relative ordering of $a$ and $b$.
@@ -573,9 +572,9 @@ Similarly, if $x \in B_1 \cap A_2$ or $x \in A_2 \cap B_2$ then
 only $(B_1 \ominus A_1)(x)$ or $B_2(x)$ will respectively be non-zero.
 However, if $x \in B_2 \cap A_1$ then we have $A_1(x) = 1$, $(B_1 \ominus A_1)(x) = -1$ and $B_2(x) = 1$.
 Simplifying this expression yields:
-\begin{equation}
+\begin{equation*}
 	(f+g) \;=\; +^1 (f_1 + g_1) +^{-1} (f_2 + g_1) +^1 (f_2 + g_2) \;=\; (f_1 + g_2)
-\end{equation}
+\end{equation*}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -602,36 +601,37 @@ First we will formalize some ideas we have already seen.
 \end{definition}
 
 
+
+
 In our previous example we used $\{ A_1, B_1 \ominus A_1, B_2 \}$ which was a common refinement of both
 $\{ A_1, A_2 \}$ and $\{ B_1, B_2 \}$.
 $A_1$ and $B_2$ have trivial representations while $A_2 = (B_1 \ominus A_1) \oplus B_2$ and 
 $B_1 = A_1 \oplus (B_1 \ominus A_1)$.
 Another common refinement would be the trivial $\{ A_1, B_1, A_2, B_2 \}$
-This is less preferable due to not only containing 4 regions instead of 3 but also the pointwise sum is $[0,1]^2$
+This is less preferable due to not only containing 4 regions instead of 3 but also the point-wise sum is $[0,1]^2$
 instead of the reducible $[0,1]$.
 
 We can now formally phrase our problem.
-Let $A=\{ A_i \}_{i \in [n]}$ and $B=\{ B_j \}_{j \in [m]}$ be two generalized partitions of a hybrid set $U$ 
-(where $[n] = \{ 1, \ldots, n \}$ for $n \in \mathbb{N}$).
+Let $A=\{ A_i \}_{i \in I}$ and $B=\{ B_j \}_{j \in J}$ be two generalized partitions of a hybrid set $U$.
 We wish to find a generalized partition $C$  of $U$ which is a \emph{common}, \emph{strict} refinement of $A$ and $B$
 and has minimal cardinality.
-These conditions can be summarized into the following linear system of $n+m+1$ simultaneous equations:
-\begin{equation}
+These conditions can be summarized into the following linear system of $|I| + |J| +1$ simultaneous equations:
+\begin{equation*}
 	U = \bigoplus_i C_i
-\end{equation}
-\begin{equation}
-	\forall i \in [n] : A_i = \bigoplus_j  a_{i,j} C_j
-\end{equation}
-\begin{equation}
-	\forall j \in [m] : B_j = \bigoplus_i b_{i,j} C_i
-\end{equation}
+\end{equation*}
+\begin{equation*}
+	\forall i \in I : A_i = \bigoplus_j  a_{i,j} C_j
+\end{equation*}
+\begin{equation*}
+	\forall j \in J : B_j = \bigoplus_i b_{i,j} C_i
+\end{equation*}
 for some integers $a_{i,j}$ and $b_{i,j}$.
-Since we know that $A$ and $B$ are each partitions of $U$, only $n+m-1$ can be independent.
-If there are additional dependencies betwen $A$ and $B$ then this can be even lower.
+Since we know that $A$ and $B$ are each partitions of $U$, only $|I|+|J|-1$ can be independent.
+If there are additional dependencies between $A$ and $B$ then this can be even lower.
 Expressed as a linear system we have:
 
 
-\begin{equation}
+\begin{equation*}
 	M \cdot 
 		\begin{pmatrix}
 			C_1 	\\
@@ -658,7 +658,12 @@ Expressed as a linear system we have:
 			\vdots 		& 			&			& \vdots 			\\[-0.5em]
 			b_{m-1,1} 	& b_{m-1,2}	& \cdots 	& b_{m-1,n+m-1}
 	\end{pmatrix}
-\end{equation}
+\end{equation*}
+
+
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 
 By definition, $M$ is an integer matrix.
@@ -669,7 +674,7 @@ Assuming this, then the determinant of $M$ must be $\pm 1$.
 Further restricting ourselves to upper triangular matrices we can choose $M$ to be all 1's along the diagonal
 as well as the top row. 
 Which has the following inverse:
-\begin{equation}
+\begin{equation*}
 	\begin{pmatrix}
 		1 		&\cdots 	&\cdots 	&\cdots 	& 1 		\\[-0.5em]
 		0		& 1		& 0 		&\cdots 	& 0 		\\[-0.5em]
@@ -685,21 +690,21 @@ Which has the following inverse:
 		\vdots 	&		&\ddots 	&\ddots 	& 0 		\\[-0.5em]
 		0 		&\cdots 	&\cdots 	& 0 		& 1
 	\end{pmatrix}
-\end{equation}
+\end{equation*}
 
 
 
 Thus we find that for the partitions $A = \{ A_i \}_{i \in [n]}$ and $B = \{ B_j \}_{j \in [m]}$ we can \emph{always}
 use the strict, common and minimal refinement:
-\begin{equation}
+\begin{equation*}
 	\Big\{ (U \ominus A_1 \ominus \ldots \ominus A_{n-1} \ominus B_1 \ominus \ldots \ominus B_{n-1}), \;\;
 	A_1, A_2, \ldots, A_{n-1}, \;\; B_1, B_2, \ldots, B_{m-1}
 	\Big\}
-\end{equation}
+\end{equation*}
 Finally, to generalize our example from earlier, let $f = f_1^{P_1} \oplus f_2^{P_2} \oplus f_n^{P_n}$
 and  $g = g_1^{Q_1} \oplus \ldots \oplus g_m^{Q_m}$ be two piecewise functions over a common domain $U$.
 We can compute $f \op g$ by:
-\begin{align}
+\begin{align*}
 f \op g = \; \mathcal{R}_\op  \; & \!\!\! \left( \,
 		(f_1 \op g_m)^{P_1} 
 		\oplus \ldots \oplus 
@@ -711,13 +716,16 @@ f \op g = \; \mathcal{R}_\op  \; & \!\!\! \left( \,
 	\oplus & \left. 
 		 (f_n \op g_n)^{U \ominus (P_1 \oplus \ldots \oplus Q_{n-1} \oplus Q_1 \oplus \ldots \oplus Q_{m-1})}
 	\; \right)
-\end{align}
-
-
+\end{align*}
 This is not a unique formulation.
 Any upper triangular matrix containing only 1, 0 and $-1$ and all 1's in the first row would also be acceptable.
 Each would lead to slightly different forms of (2.47). This particular choice is merely one of the simplest options. 
-Certain applications could lead to other choices of $M$ for reasons of memory efficiency, but it is not clear this is needed.
+
+\todo[inline]{vbox}
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -763,6 +771,10 @@ This mapping between $(x,f(x))$ and $(x,f)$ is very natural and we will perform 
 often using $f^A$ and $\tilde{f}^A$ interchangeably. 
 Properties of hybrid functions such as compatibility and reducibility will be lifted to hybrid pseudo-functions by this as well.
 
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Piecewise 2
@@ -819,6 +831,10 @@ which we are interested in multiplying by the unevaluated absolute value functio
 \begin{equation}
 	\tilde{g} = \tilde{\text{abs}} = (x \mapsto x)^{[0, \infty )} \oplus (x \mapsto -x)^{(-\infty, 0)}
 \end{equation}
+
+
+\todo[inline]{vbox}
+
 
 First we must find a minimal common refinement.
 Using the formula in (2.46), we decide to use the partition:
