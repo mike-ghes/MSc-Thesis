@@ -601,8 +601,6 @@ First we will formalize some ideas we have already seen.
 \end{definition}
 
 
-
-
 In our previous example we used $\{ A_1, B_1 \ominus A_1, B_2 \}$ which was a common refinement of both
 $\{ A_1, A_2 \}$ and $\{ B_1, B_2 \}$.
 $A_1$ and $B_2$ have trivial representations while $A_2 = (B_1 \ominus A_1) \oplus B_2$ and 
@@ -611,23 +609,28 @@ Another common refinement would be the trivial $\{ A_1, B_1, A_2, B_2 \}$
 This is less preferable due to not only containing 4 regions instead of 3 but also the point-wise sum is $[0,1]^2$
 instead of the reducible $[0,1]$.
 
-We can now formally phrase our problem.
-Let $A=\{ A_i \}_{i \in I}$ and $B=\{ B_j \}_{j \in J}$ be two generalized partitions of a hybrid set $U$.
+
+We can now formally phrase the problem.
+Let $A=\{ A_i \}_{i=1}^n$ and $B=\{ B_i \}_{i =1}^m$ be two generalized partitions of a hybrid set $U$.
 We wish to find a generalized partition $C$  of $U$ which is a \emph{common}, \emph{strict} refinement of $A$ and $B$
 and has minimal cardinality.
-These conditions can be summarized into the following linear system of $|I| + |J| +1$ simultaneous equations:
+These conditions can be summarized into the following linear system of $n+m+1$ simultaneous equations:
 \begin{equation*}
-	U = \bigoplus_i C_i
+	U = \bigoplus_j C_j
 \end{equation*}
 \begin{equation*}
-	\forall i \in I : A_i = \bigoplus_j  a_{i,j} C_j
+	\forall i \in 1 \ldots n : \;\;\;\;\; A_i = \bigoplus_{j}  a_{i,j} C_j
 \end{equation*}
 \begin{equation*}
-	\forall j \in J : B_j = \bigoplus_i b_{i,j} C_i
+	\forall i \in 1 \ldots m : \;\;\;\;\; B_i = \bigoplus_{j} b_{i,j} C_j
 \end{equation*}
 for some integers $a_{i,j}$ and $b_{i,j}$.
-Since we know that $A$ and $B$ are each partitions of $U$, only $|I|+|J|-1$ can be independent.
-If there are additional dependencies between $A$ and $B$ then this can be even lower.
+Since we know that $A$ and $B$ are each separately partitions of $U$, 
+we can leverage some of their dependencies to construct $\{C_j\}$.
+For example, $A_n$ be represented as $U \ominus ( A_1 \oplus \ldots \oplus A_{n-1} )$.
+Any $A_i$ or $B_i$ could similarly be represented by the point-wise difference with $U$.
+Although we could remove any two pieces from $A$ and $B$, we will choose to remove $A_n$ and $B_n$ to form a set of
+$n+m-1$ pieces to form a basis for $C$.
 Expressed as a linear system we have:
 
 
@@ -661,11 +664,6 @@ Expressed as a linear system we have:
 \end{equation*}
 
 
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-
-
 By definition, $M$ is an integer matrix.
 But we are actually more interested in its inverse $M^{-1}$ as this will give us values for $C_i$ 
 relative to $( U, A_1, \ldots, A_{m-1}, B_1, \ldots, B_{m-1} )$.
@@ -691,39 +689,40 @@ Which has the following inverse:
 		0 		&\cdots 	&\cdots 	& 0 		& 1
 	\end{pmatrix}
 \end{equation*}
-
-
-
-Thus we find that for the partitions $A = \{ A_i \}_{i \in [n]}$ and $B = \{ B_j \}_{j \in [m]}$ we can \emph{always}
-use the strict, common and minimal refinement:
+Using this, we find that one choice for $C$ the common refinement for $A$ and $B$, is:
 \begin{equation*}
-	\Big\{ (U \ominus A_1 \ominus \ldots \ominus A_{n-1} \ominus B_1 \ominus \ldots \ominus B_{n-1}), \;\;
+	C = \Big\{\; 
+	(U \ominus A_1 \ominus \ldots \ominus A_{n-1} \ominus B_1 \ominus \ldots \ominus B_{n-1}), \;\;
 	A_1, A_2, \ldots, A_{n-1}, \;\; B_1, B_2, \ldots, B_{m-1}
-	\Big\}
+	\;\Big\}
 \end{equation*}
-Finally, to generalize our example from earlier, let $f = f_1^{P_1} \oplus f_2^{P_2} \oplus f_n^{P_n}$
-and  $g = g_1^{Q_1} \oplus \ldots \oplus g_m^{Q_m}$ be two piecewise functions over a common domain $U$.
-We can compute $f \op g$ by:
+
+
+Finally, to generalize our example from earlier, let $f = f_1^{A_1} \oplus f_2^{A_2} \oplus f_n^{A_n}$
+and  $g = g_1^{B_1} \oplus \ldots \oplus g_m^{B_m}$ be two piecewise functions over a common domain $U$.
+We can express both of these functions in terms of the above common refinement by:
 \begin{align*}
-f \op g = \; \mathcal{R}_\op  \; & \!\!\! \left( \,
-		(f_1 \op g_m)^{P_1} 
-		\oplus \ldots \oplus 
-		 (f_{n-1} \op g_m)^{P_{n-1}} \right. \notag \\
-	\oplus & \;
-		 (f_n \op g_1)^{Q_1} 
-		\oplus \ldots \oplus 
-		 (f_n \op g_{m-1})^{Q_{m-1}} \notag \\
-	\oplus & \left. 
-		 (f_n \op g_n)^{U \ominus (P_1 \oplus \ldots \oplus Q_{n-1} \oplus Q_1 \oplus \ldots \oplus Q_{m-1})}
-	\; \right)
+	f &= f_1^{A_1} \oplus \ldots \oplus f_{n-1}^{A_{n-1}} \oplus f_n^{U \oplus B_1 \oplus \ldots \oplus B_{m-1}} \\
+	g &= g_1^{B_1} \oplus\ldots \oplus g_{m-1}^{B_{m-1}} \oplus g_m^{U \oplus A_1 \oplus\ldots \oplus A_{n-1}}
 \end{align*}
-This is not a unique formulation.
-Any upper triangular matrix containing only 1, 0 and $-1$ and all 1's in the first row would also be acceptable.
-Each would lead to slightly different forms of (2.47). This particular choice is merely one of the simplest options. 
+To compute $(f \op g)$ one just needs to collect like terms and encapsulate in a $\op$-reduction
+\begin{align}
+	\label{eqn:piecewiseOp}
+	f \op g = \; \mathcal{R}_\op  \; & \!\!\! \left( \,
+			(f_1 \op g_m)^{A_1} 
+			\oplus \ldots \oplus 
+			 (f_{n-1} \op g_m)^{A_{n-1}} \right. \notag \\
+		\oplus & \;
+			 (f_n \op g_1)^{B_1} 
+			\oplus \ldots \oplus 
+			 (f_n \op g_{m-1})^{B_{m-1}} \\
+		\oplus & \left. 
+			 (f_n \op g_m)^{U \ominus (A_1 \oplus \ldots \oplus A_{n-1} \oplus B_1 \oplus \ldots \oplus B_{m-1})}
+		\; \right) \notag
+\end{align}
 
-\todo[inline]{vbox}
-
-
+  
+  
 
 
 
@@ -736,7 +735,7 @@ Each would lead to slightly different forms of (2.47). This particular choice is
 
 One last detail remains to be settled, the sub-functions $f_i$ and $g_j$ may not be defined outside of 
 $P_i$ and $Q_j$ respectively.
-Consider the equation in (2.47), evaluated at $x \in P_1 \cap Q_1$.
+Consider the equation in (\ref{eqn:piecewiseOp}), evaluated at $x \in P_1 \cap Q_1$.
 Then we have the following terms with non-zero multiplicity.
 \begin{equation}
 	(f \op g)(x) = \mathcal{R}_\op 
