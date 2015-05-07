@@ -317,7 +317,7 @@ hybrid function as their combined object.
 Formally, given a hybrid set $H$ over $U$ and a function $f:B \to S$ be a function where $B \subseteq U$ and $S$ a set.
 Then we denote by $f^H$ the hybrid function from $B$ to $S$ defined by:
 \begin{equation}
-	\label{hfunc}
+	\label{eqn:hfunc}
 	f^H := \bigoplus_{x \in B} H(x) \hset{ (x, f(x) )^1 }
 \end{equation}
 
@@ -733,47 +733,49 @@ To compute $(f \op g)$ one just needs to collect like terms and encapsulate in a
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Pseudo-functions}
 
-One last detail remains to be settled, the sub-functions $f_i$ and $g_j$ may not be defined outside of 
-$P_i$ and $Q_j$ respectively.
-Consider the equation in (\ref{eqn:piecewiseOp}), evaluated at $x \in P_1 \cap Q_1$.
-Then we have the following terms with non-zero multiplicity.
-\begin{equation}
-	(f \op g)(x) = \mathcal{R}_\op 
-		\left(   (f_1(x) \op g_m(x))^1 \oplus 
-				(f_n(x) \op g_1(x))^1 \oplus 
-				(f_n(x) \op g_m(x))^{-1} 
+
+One last detail remains to be settled.
+So far we have assumed that the sub-functions of $f$ and $g$ are defined over \emph{all} of $U$.
+This may not be the case, we would like to only require $f_i$ to at least be defined over its corresponding part $A_i$
+and similarly $g_j$ over $B_j$.
+This poses a problem for the previous equation (\ref{eqn:piecewiseOp}) when evaluated at say $x \in A_1 \cap B_1$.
+Then we have the following terms with non-zero multiplicity:
+\begin{equation*}
+	(f \op g)(x) = 
+		\mathcal{R}_\op \left(   
+			(f_1(x) \op g_m(x))^1 \oplus 
+			(f_n(x) \op g_1(x))^1 \oplus 
+			(f_n(x) \op g_m(x))^{-1} 
 		\right)
-\end{equation}
+\end{equation*}
 
 
-We would like for the $g_m(x)$ in the first term to cancel with the $g_m(x)$ in the third.
-If $q_m$ (and $f_n$) are defined and finite at all points in $U$, then there is no problem.
-However if $g_m(x)=\infty$, then we need to make cumbersome arguments for: $ \infty + y - \infty = y$.
-To resolve this, we use a lambda-lifting trick to have a hybrid relation over the domain and \emph{the function itself}
-rather than the domain and the image implied by the function.
+We would like for the $g_m(x)$ in the first term to cancel with the $g_m(x)$ in the third term.
+Similarly $f_n(x)$ in the second term should cancel with the $f_n(x)$ in the third term leaving only $f_1(x) * g_1(x)$.
+This requires that $g_m(x)$ and $f_n(x)$ to actually be defined which is more than we'd care to assume.
+The approach we will take instead is to delay the evaluation of functions until cancellations occur.
+To do this we will use a lambda-lifting trick.
+Instead of having the elements of a hybrid function be ordered pairs containing the image but a copy of the function itself.
 
 
 \begin{definition}
-	Using the same notation as in our definition from (\ref{hfunc}), we define a pseudo-function $\tilde{f}^A$ as:
+	We define a pseudo-function $\pseudo{f\;}^A$ as:
 	\begin{equation}
- 		\tilde{f}^A = \bigoplus_{x \in B} A(x) \hset{(x,f)^1}
+		\label{eqn:pseudofunc}
+ 		\pseudo{f\;}^A = \bigoplus_{x \in B} A(x) \hset{(x,f)^1}
 	\end{equation}
 \end{definition}
 
 
-One should notice the similarity between (2.49) and (2.22).
+One should notice the similarity between (\ref{eqn:pseudofunc}) and (\ref{eqn:hfunc}).
 The difference is that we have replaced $(x, f(x))$ with the unevaluated $(x,f)$.
-This formally makes $\tilde{f}^A$ a hybrid relation over $U \times (U \to S)$ as opposed to 
+This formally makes $\pseudo{f\;}^A$ a hybrid relation over $U \times (U \to S)$ as opposed to 
 a hybrid function over $U \times S$.
-To evaluate $\tilde{f}^A$ we map back to $f^A$ and evaluate that.
+To evaluate $\pseudo{f\;}^A$ we map back to $f^A$ and evaluate that.
 This mapping between $(x,f(x))$ and $(x,f)$ is very natural and we will perform it unceremoniously,
-often using $f^A$ and $\tilde{f}^A$ interchangeably. 
+often using $f^A$ and $\pseudo{f\;}^A$ interchangeably. 
 Properties of hybrid functions such as compatibility and reducibility will be lifted to hybrid pseudo-functions by this as well.
 
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Piecewise 2
@@ -782,15 +784,17 @@ Properties of hybrid functions such as compatibility and reducibility will be li
 
 
 We will repeat the example from 2.4.2 but concretely using the following function:
-\begin{equation}
+\begin{equation*}
 	f(x) = \begin{cases}
 		(2-x^2) & -1 \leq x \leq 1\\
 		1/x^2 & \text{otherwise}
 	\end{cases}
-\end{equation}
-Graphically, this is a mundane-looking bell-shaped curve shown in black in Figure 2.2.
+\end{equation*}
+Graphically, this resembles a bell-shaped curve with no discontinuities or any apparent irregular behavior. 
+This can be seen in the black plot below in Figure~\ref{fig:pwRational}.
 Although $f$ is defined for all of $\mathbb{R}$, this is not the case for its sub-functions. 
-The plots in red and blue show the behaviour of $(2-x^2)$ and $1/x^2$ outside of their defined ranges in $f$.
+The plots in red and blue show the behavior of $(2-x^2)$ and $1/x^2$ respectively outside of their defined ranges in $f$.
+Of note, $1/x^2$ (shown in blue) is obviously undefined at 0.
 
 
 \begin{figure}[ht]
@@ -808,72 +812,99 @@ The plots in red and blue show the behaviour of $(2-x^2)$ and $1/x^2$ outside of
 	        xlabel={$x$},
 	        ylabel={$y$},
 	        ]
-	        \addplot[no marks,black,thick,-] expression[domain=-1:1,samples=100]{2 - x^2};
 	        \addplot[no marks,blue,->] expression[domain=-1:-0.33,samples=100]{1/x^2};
 	        \addplot[no marks,blue,<-] expression[domain=0.33:1,samples=100]{1/x^2};
-	        \addplot[no marks,black,thick,<-] expression[domain=-4:-1,samples=100]{1/x^2};
+	        
 	        \addplot[no marks,red,<-] expression[domain=-2:-1,samples=100]{2 - x^2};
-	        \addplot[no marks,black,thick,->] expression[domain=1:4,samples=100]{1/x^2};
 	        \addplot[no marks,red,->] expression[domain=1:2,samples=100]{2 - x^2};
+		
+		\addplot[no marks,black,thick,-] expression[domain=-1:1,samples=100]{2 - x^2};
+	      \addplot[no marks,black,thick,<-] expression[domain=-4:-1,samples=100]{1/x^2};
+	      \addplot[no marks,black,thick,->] expression[domain=1:4,samples=100]{1/x^2};
 	    \end{axis}
 	\end{tikzpicture}
 \end{figure}
 
 
-Represented as a hybrid pseudo-functions we have $\tilde{f}$ as:
-
-\begin{equation}
-	\tilde{f} = \tilde{f_1}^{A_1} \oplus \tilde{f_2}^{A_2} 
-	  = (x \mapsto 2-x^2)^{[-1, 1]} \oplus (x \mapsto 1/x^2)^{(-\infty, -1) \oplus (1, \infty)}
-\end{equation}
-which we are interested in multiplying by the unevaluated absolute value function:
-\begin{equation}
-	\tilde{g} = \tilde{\text{abs}} = (x \mapsto x)^{[0, \infty )} \oplus (x \mapsto -x)^{(-\infty, 0)}
-\end{equation}
+To represent $f$ as a hybrid function, we partition the real line into the sets $A_1 = [-1,1]$ and 
+$A_2 = \mathbb{R} \setminus [-1,1] = (-\infty, -1) \oplus (1, \infty)$.
+This gives the closely related hybrid function $f$ and pseudo-function $\pseudo{f\;}$:
 
 
-\todo[inline]{vbox}
+\begin{equation*}
+	\begin{array}{r c c c}
+	f 			=& \left(2-x^2\right)^{A_1}			&\oplus&	\left(1/x^2\right)^{A_2} \\
+	\pseudo{f\;} =& \left(x \mapsto 2-x^2\right)^{A_1}	&\oplus&	\left(x \mapsto 1/x^2\right)^{A_2}
+	\end{array}
+\end{equation*}
 
 
-First we must find a minimal common refinement.
-Using the formula in (2.46), we decide to use the partition:
-\begin{align}
-	P_1 &= [-1,1] \\
-	P_2 &= [0, \infty) \\
-	P_3 &= \mathbb{R} \ominus [-1,1] \ominus [0, \infty)
-\end{align}
-where $P_3$ could also be simplified into disjoint regions by $P_3 = (-\infty, -1) \ominus [0,1]$.
-Thus we have the expression
-\begin{align}
-	(\tilde{f} \times \tilde{g}) = \mathcal{R}_\times \bigg(
-				& \left( (x \mapsto 2-x^2) \times (x \mapsto -x) \right)^{P_1} \notag \\
-		\oplus \;& \left( (x \mapsto 1/x^2) \times (x \mapsto -x) \right)^{P_2} \notag \\
-		\oplus \;& \left( (x \mapsto 1/x^2) \times (x \mapsto -x) \right)^{P_3} 
+
+Additionally we will multiply $f$ by the Heaviside function $H$ (with $H(0)=1$): a piece-wise function over the intervals
+$B_1 = [0, \infty)$ and $B_2 = (-\infty, 0)$
+\begin{equation*}
+	\begin{array}{r c c c}
+		H			=& (1)^{B_1} 			&\oplus& 	(0)^{B_2} \\
+		\,\pseudo{\!H} 	=& (x \mapsto 1)^{B_1}	&\oplus& 	(x \mapsto 0)^{B_2}
+	\end{array}
+\end{equation*}
+In both the pseudo and non-pseudo function cases, we first need to find a minimal common refinement.
+As before, we can construct the common refinement ${P = \{ P_1, P_2, P_3 \}}$:
+\begin{align*}
+	P_1 &\;=\; A_1 \;=\; [-1,1] \\
+	P_2 &\;=\; B_1 \;=\;  [0, \infty) \\
+	P_3 &\;=\; U \ominus (A_1 \oplus B_1) \;=\;  \mathbb{R} \ominus [-1,1] \ominus [0, \infty)
+\end{align*}
+To illustrate the problem with using (non-pseudo) hybrid functions, we shall consider $f\cdot H$ evaluated at 0. 
+Since $f(0)=2$ and $H(0)=1$ we expect $(f\cdot H)(0)=2$.
+Following from (\ref{eqn:piecewiseOp}), we construct a hybrid function and \emph{attempt}:
+\begin{align*}
+	(f \cdot H)(0) 
+		&= \mathcal{R}_\times \left( 
+			\left( (2-x^2)(0) \right)^{P_1} \oplus 
+			\left( (1/x^2)(1) \right)^{P_2} \oplus 
+			\left( (1/x^2)(0) \right)^{P_3} \right)(0) \\
+		&= \mathcal{R}_\times \left( 
+			\left( (2-0^2)(0) \right)^{1} \oplus 
+			\left( (1/0^2)(1) \right)^{1} \oplus 
+			\left( (1/0^2)(0) \right)^{-1} \right)\\
+		& = \frac{(2-0^2)(0) \cdot (1)(1) \cdot (0^2)(1)}{(1)(1) \cdot (0^2)(1) \cdot (1)(0)}
+\end{align*}
+But it is not so easy to argue that this evaluates to 2.
+Alternatively, we could use the very similar pseudo-function:
+\begin{align*}
+	\pseudo{f\;} \cdot \,\pseudo{\!H} = \mathcal{R}_\times \bigg(
+				& \left( (x \mapsto 2-x^2) \cdot (x \mapsto 0) \right)^{P_1} \notag \\
+		\oplus \;& \left( (x \mapsto 1/x^2) \cdot (x \mapsto 1) \right)^{P_2} \notag \\
+		\oplus \;& \left( (x \mapsto 1/x^2) \cdot (x \mapsto 0) \right)^{P_3} 
 	\bigg)
-\end{align}
-If we use pseudo-functions then we assign multiplicities to the still unevaluated sub-functions.
-So, for example to evaluate $(f \times g)$ at 0, we would evaluate each of $P_1$, $P_2$ and $P_3$ at 0 and find:
-\begin{align}
-	(\tilde{f} \times \tilde{g})(0) = \mathcal{R}_\times \bigg(
-				& \left( (x \mapsto 2-x^2) \times (x \mapsto -x) \right)^1 \notag \\
-		\oplus \;& \left( (x \mapsto 1/x^2) \times (x \mapsto -x) \right)^1 \notag \\
-		\oplus \;& \left( (x \mapsto 1/x^2) \times (x \mapsto -x) \right)^{-1} 
+\end{align*}
+
+
+Leaving these functions unevaluated is the key to making non-total functions work.
+Once again, we evaluate each of $P_1$, $P_2$ and $P_3$ at 0 and find:
+\begin{align*}
+	(\pseudo{f\;} \cdot \,\pseudo{\!H})(0) = \mathcal{R}_\times \bigg(
+				& \left( (x \mapsto 2-x^2) \cdot (x \mapsto 0) \right)^1 \notag \\
+		\oplus \;& \left( (x \mapsto 1/x^2) \cdot (x \mapsto 1) \right)^1 \notag \\
+		\oplus \;& \left( (x \mapsto 1/x^2) \cdot (x \mapsto 0) \right)^{-1} 
 	\bigg)(0)
-\end{align}
+\end{align*}
 Once we have this, we can then evaluate the $\times$-reduction on the still unevaluated functions.
-Clearly $x \mapsto -x$ occurs with cancelling signs as does $x \mapsto 1/x^2$.
+Clearly $x \mapsto 0$ occurs with canceling signs as does $x \mapsto 1/x^2$.
 This leaves us with the product of two unevaluated functions:
-\begin{equation}
-	(\tilde{f} \times \tilde{g})(0) = \left((x \mapsto 2-x^2) \times (x \mapsto x)\right) (0)
-\end{equation}
+\begin{equation*}
+	(\pseudo{f\;}\cdot\,\pseudo{\!H})(0) = \left((x \mapsto 2-x^2) \cdot (x \mapsto 1)\right)
+\end{equation*}
+\emph{After} these cancellations occur, then we can evaluate $(f \cdot H)(x)$ by way of
+$((\pseudo{f\;}\cdot\,\pseudo{\!H})(x))(x)$:
+\begin{align*}
+	(f \cdot H)(0) 
+		&= \left(\left(\pseudo{f\;} \cdot \,\pseudo{\!H}\right)(0)\right)(0) \\
+		&= \left((x \mapsto 2-x^2) \cdot (x \mapsto 1)\right)(0)\\
+		&= (2-0^2)\cdot(1)\\
+		&= 2
+\end{align*}
 
+\todo[inline]{Closing Remarks}
 
-\emph{After} these cancellations occur, then it is finally safe to evaluate at a point and 
-we find $(\tilde{f} \times \tilde{g})(0)=0$ as expected.
-To contrast this, if one were to attempt to evaluate a the (non-pseudo) hybrid function version of 
-$\tilde{f} \times \tilde{g}$, instead of (2.57) one would have the expression:
-\begin{equation}
-	(f \times g)(0) = \mathcal{R}_\times \left( (2 \times 0)^1 \oplus (\text{``}\infty\text{''} \cdot 0)^1 \oplus (\text{``}\infty\text{''} \cdot 0)^{-1} \right)
-\end{equation}
-Simplifying the $\times$-reduction leads to both $\infty / \infty$ and $0/0$.
-Although they \emph{should} obviously cancel, the behaviour is not well defined.
