@@ -514,9 +514,10 @@ Should there be an odd number of indices $i$ such that $a_i > b_i$ then $[\![ \b
 Otherwise, it will be positively oriented. 
 
 
-For the remainder of this chapter, we will only be interested in the space $\mathbb{N}_0 \times \mathbb{N}_0$ where 
-there is only enough space for a single Cartesian product.
-This discussion of higher dimension rectangles will be returned to in Chapter 4 when investigating integration.
+For the remainder of this chapter, we will only be interested in matrices thought of as the space 
+$\mathbb{N}_0 \times \mathbb{N}_0$.
+Here there is only room for a single Cartesian product and so this notation will not be immediately useful. 
+We will return to this discussion of higher dimension rectangles in Chapter 4 when investigating integration.
 
 \todo[inline]{vbox}
 \todo[inline]{vbox}
@@ -582,20 +583,27 @@ If this ordering is wrong, then the hybrid function multiplicities will handle c
 
 
 Since there are 4 partitions in $A$ and 4 partitions in $B$, we only require 7 pieces to form a common refinement.
-To this refinement for, we follow the same method as in the previous chapter.
+To this refinement for, we follow the same method as used previously:
 \begin{equation}
 	\label{eqn:2x2CommonRefinement}
-	\mathcal{A}_{11}, \; \mathcal{A}_{12}, \;  \mathcal{A}_{21}, \;
-	\mathcal{B}_{11}, \; \mathcal{B}_{12}, \; \mathcal{B}_{21}, \; \mathcal{P}
+	\Big\{ \;
+		\mathcal{A}_{11}, \; \mathcal{A}_{12}, \;  \mathcal{A}_{21}, \;
+		\mathcal{B}_{11}, \; \mathcal{B}_{12}, \; \mathcal{B}_{21}, \; \mathcal{P} 
+	\; \Big\}
 \end{equation}
-where $\mathcal{P}$ is defined as,
-$\mathcal{P} = \mathcal{U} 
-		\ominus (\mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21} \oplus
-				\mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21})$.
+with $\mathcal{P}$ is defined as,
+\begin{equation}
+	\mathcal{P} = \mathcal{U} 
+		\ominus \left( \mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21} \oplus
+				\mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21} \right)
+\end{equation}
 Clearly we can still express $\mathcal{A}_{22}$ using only the terms in (\ref{eqn:2x2CommonRefinement}) by
 \begin{align*}
-	\mathcal{A}_{22} &= \mathcal{U} \ominus (\mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21})\\
-		& = \mathcal{U} \ominus (\mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21} \oplus \mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21}) \oplus \mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21}\\
+	\mathcal{A}_{22} 
+		&= \mathcal{U} \ominus (\mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21}) \\[-0.5em]
+		& = \mathcal{U} \ominus (\mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21} 
+			\oplus \mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21}) 
+			\oplus \mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21}\\[-0.5em]
 		&= \mathcal{P} \oplus \mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21}
 \end{align*}
 Similarly $\mathcal{B}_{22}$ can be represented as $\mathcal{B}_{22} = \mathcal{P} \oplus \mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21}$
@@ -621,14 +629,13 @@ As such we must also apply a $+$-reduction after summing each matching pair:
 \begin{align*}
 	(A+B) = \R[+] & \left(  (A_{11}+B_{22})^{\mathcal{A}_{11}} \oplus 
 		(A_{12} + B_{22})^{\mathcal{A}_{12}} \oplus 
-		(A_{21} + B_{22})^{\mathcal{A}_{21}} \right. \\ &\oplus 
+		(A_{21} + B_{22})^{\mathcal{A}_{21}} \right. \\[-0.5em] &\oplus 
 		(A_{22} + B_{11})^{\mathcal{B}_{11}} \oplus 
 		(A_{22} + B_{12})^{\mathcal{B}_{12}} \oplus 
-		(A_{22} + B_{21})^{\mathcal{B}_{21}} \\ &\oplus
+		(A_{22} + B_{21})^{\mathcal{B}_{21}} \\[-0.5em] &\oplus
 		\left.(A_{22} + B_{22})^{\mathcal{P}} \right)
 \end{align*}
 
-\todo[inline]{vbox}
 
 \subsection{Example: \emph{Evaluation at points}} 
 We will now demonstrate evaluating this expression.
@@ -888,7 +895,6 @@ And finally cleaning up this expression by removing the terms over empty regions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Larger multiplication
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Larger block matrices}
 
 The most difficult part of extending block matrix multiplication to larger block matrices turns out to be the number of 
 variables needed.
