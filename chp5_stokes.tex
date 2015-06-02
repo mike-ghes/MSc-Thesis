@@ -170,7 +170,7 @@ The six faces that make up its boundary are shaded and labeled with their corres
 %Now with 100% more right-handed
 }
 \centering
-\begin{tikzpicture}[y=1.4cm, x=2.8cm]	
+\begin{tikzpicture}[y=1.5cm, x=3cm]	
  	%axis
  	
  	%left
@@ -305,7 +305,7 @@ Elegantly, the boundary operator now maps $k$-chains to $(k-1)$-chains!
 \begin{equation}
 	\ldots \xleftarrow{\partial_{k-1}} C_{k-1} \xleftarrow{\partial_{k}} C_k \xleftarrow{\partial_{k+1}} C_{k+1} \xleftarrow{\partial_{k+2}} ...
 \end{equation}
-The most natural next question becomes \emph{``What does $\partial_{k-1}( \partial_k ( c ))$ look like?''}
+
 
 
 
@@ -313,9 +313,21 @@ The most natural next question becomes \emph{``What does $\partial_{k-1}( \parti
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BOUNDARY OF A BOUNDARY
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Example: \emph{Boundary of a boundary (of a 2-cube)}}
-Let $\boldsymbol{a} =(a_1,a_2)$ and $\boldsymbol{b}= (b_1,b_2)$.
-We wish to compute $\partial_1 ( \partial_2 ( \; [\![\boldsymbol{a}, \boldsymbol{b} ]\!] \; ) )$
+\subsection{Example: \emph{Boundary of a boundary}}
+
+So this means we should be able to compute the \emph{boundary of a boundary} 
+by composing the boundary function with itself:
+\begin{equation*}
+	\partial_k ( \partial_{k+1} (c)) = ?
+\end{equation*}
+The boundary of a point is empty so it is obvious that the boundary of the boundary of a 1-rectangle (oriented line) 
+is empty.
+So instead let us consider the boundary of a boundary of a 2-rectangle: 
+$\partial_1 ( \partial_2 ( \; [\![\boldsymbol{a}, \boldsymbol{b} ]\!] \; ) )$
+where $\boldsymbol{a} =(a_1,a_2)$ and $\boldsymbol{b}= (b_1,b_2)$.
+
+
+
 \begin{align}
 	\partial_1 ( \partial_2 ( [\![ a_1 , b_1 ]\!] \times [\![a_2, b_2 ]\!] ) )
 	=	& 	\; \ominus 	\partial_1( \hset{0} \times [\![0,1]\!]) 
@@ -329,9 +341,9 @@ We wish to compute $\partial_1 ( \partial_2 ( \; [\![\boldsymbol{a}, \boldsymbol
 	=	& \;\emptyset	
 \end{align}
 
-
-When moving from (4.21) to (4.22), in addition to applying $\partial_1$ we also simplify, $\hset{x} \times \hset{y} = \hset{ (x,y) }$.
-The identity ``$\partial \partial = 0$'' is not unique to $2$-cubes but holds for higher dimensions as well.
+Geometrically this can be seen below that the boundary of a rectangle are its edges.
+The boundary of these edges are the corners; but each corner occurs with both postive and negative sign cancelling.
+Often stated as ``$\partial \partial = 0$'', this identity is not unique to $2$-cubes but holds for higher dimensions as well.
 
 
 \begin{figure}[ht]

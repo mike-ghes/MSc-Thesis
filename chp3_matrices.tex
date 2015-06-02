@@ -431,7 +431,7 @@ If both were negative, then the signs will cancel and the Cartesian product will
 \begin{figure}[ht]
 \caption[Cartesian product of two 1-rectangles]{The Cartesian product of two positively oriented 1-rectangles $[\![a,b]\!]$ and $[\![c,d]\!]$ is a positively oriented 2-rectangle.}
 \centering
-\begin{tikzpicture}[y=1cm, x=2.5cm]	
+\begin{tikzpicture}[y=1.5cm, x=3cm]	
  	%axis
 	\draw(0,0) -- coordinate (x axis mid) (4,0);
     	\draw (0,0) -- coordinate (y axis mid) (0,4);
@@ -520,8 +520,7 @@ Here there is only room for a single Cartesian product and so this notation will
 We will return to this discussion of higher dimension rectangles in Chapter 4 when investigating integration.
 
 \todo[inline]{vbox}
-\todo[inline]{vbox}
-\todo[inline]{vbox}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -592,12 +591,12 @@ To this refinement for, we follow the same method as used previously:
 	\; \Big\}
 \end{equation}
 with $\mathcal{P}$ is defined as,
-\begin{equation}
+\begin{equation*}
 	\mathcal{P} = \mathcal{U} 
 		\ominus \left( \mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21} \oplus
 				\mathcal{B}_{11} \oplus \mathcal{B}_{12} \oplus \mathcal{B}_{21} \right)
-\end{equation}
-Clearly we can still express $\mathcal{A}_{22}$ using only the terms in (\ref{eqn:2x2CommonRefinement}) by
+\end{equation*}
+Clearly we can still express $\mathcal{A}_{22}$ using only the terms from the common refinement by:
 \begin{align*}
 	\mathcal{A}_{22} 
 		&= \mathcal{U} \ominus (\mathcal{A}_{11} \oplus \mathcal{A}_{12} \oplus \mathcal{A}_{21}) \\[-0.5em]
@@ -779,8 +778,8 @@ However each block is now the sum of three block products:
 On the other hand, if $r < s$ then $A_{12}$ and $A_{22}$ will be the blocks split vertically while $B_{11}$ and $B_{12}$
 will be split horizontally. 
 In turn, this leads to a different expression for the product of $A$ and $B$.
-In a now familiar, pattern we can use hybrid functions to give a single expression to deal with all permutations simultaneously.
-
+In a now familiar, pattern we can use hybrid functions to give a single expression 
+to deal with all permutations simultaneously.
 
 
 First we shall refer to the product $AB$ by the block matrix $C$:
@@ -790,15 +789,11 @@ First we shall refer to the product $AB$ by the block matrix $C$:
 $C$ is an $n \times p$ matrix as determined by the sizes of $A$ and $B$ and $C_{11}$ is a $q \times t$ sub-matrix.
 This leaves $C_{12}$, $C_{21}$ and $C_{22}$ to be $q \times (p-t)$, $(n-q) \times t$ and $(n-q) \times (p-t)$ respectively.
 We will partition all three matrices along the axes $0.. n$, $0..p$ and $0..m$ into the oriented intervals:
-\begin{equation*}\begin{array}{cc}
-	N_1 = [\![0, q)\!) & N_2 = [\![q, n)\!) 
-\end{array}\end{equation*}
-\begin{equation*}\begin{array}{cc}
-	P_1 = [\![0, t)\!) & P_2 = [\![t, p)\!)
-\end{array}\end{equation*}
-\begin{equation*}\begin{array}{ccc}
-	M_1 = [\![0, r)\!) & M_2 = [\![r, s)\!) & M_3 = [\![s, m)\!)
-\end{array}\end{equation*}
+\begin{align*}
+	N_1 	&= [\![0, q)\!) 	& N_2 	&= [\![q, n)\!) 	\\
+	P_1 	&= [\![0, t)\!) 	& P_2 	&= [\![t, p)\!) 	\\
+	M_1 	&= [\![0, r)\!) 	& M_2 	&= [\![r, s)\!) 	& M_3 	&= [\![s, m)\!)
+\end{align*}
 
 
 Assumption is too strong a word, but these partitions follow the \emph{guess} that $r<s$.
@@ -817,13 +812,13 @@ It should be noted here that $\oplus$ is still the point-wise sum of hybrid func
 It should not be confused with the direct sum nor the Kronecker sum of matrices which both use the same $\oplus$ operator.
 The $\times$ operator refers to the Cartesian product of intervals. 
 
+
 For $i,j \in \{ 1,2 \}$ the terms of $C$ are given by.
 \begin{equation}
 	C_{i,j} 	= A_{i,1}^{N_i \times M_1} B_{1,j}^{M_1 \times P_j} 
 			+ A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j}
 			+ A_{i,2}^{N_i \times M_3} B_{2,j}^{M_3 \times P_j}
 \end{equation}
-
 If $r=s$ then $M_2 = \emptyset$.
 We can think of multiplying a $n \times 0$ matrix by a $0 \times p$ matrix as giving a $n \times p$ matrix which is the sum
 over an empty set, 0 everywhere.
