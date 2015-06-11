@@ -75,13 +75,13 @@ but with the point-wise sum $\oplus$, we \emph{can} add hybrid sets.
 This allows us to say that the integral operator is \emph{bi-linear}.
 By this we mean, that integration is a function of two operands, the integrand and the domain.
 Integration is linear over integrands regardless,
-\begin{equation}
+\begin{equation*}
 	\int_{X} f(x) + g(x) \diff x = \int_X f(x) \diff x + \int_X g(x) \diff x
-\end{equation}
+\end{equation*}
 but with summation defined on the domain as well
-\begin{equation}
+\begin{equation*}
 	\int_{X\oplus Y} f(x) \diff x = \int_{X} f(x) \diff x + \int_Y f(x) \diff x
-\end{equation}
+\end{equation*}
 
 
 In one dimension, many of these changes may seem trivial advances but in higher dimensions, 
@@ -140,9 +140,9 @@ $k$-rectangles.
 To do this, for each dimension $[\![a_i, b_i]\!]$, we choose a generalized partition $P_i$ such that $P_i$ is composed of
 oriented intervals.
 To build our mesh, we construct smaller $k$-rectangles $I_{i_1, \ldots, i_n}$ using the Cartesian product of pieces:
-\begin{equation}
+\begin{equation*}
 	I_{p_1, \ldots, p_n} = p_1 \times \ldots \times p_n
-\end{equation}
+\end{equation*}
 where each $p_i$ is taken from $P_i$.
 We are now ready to construct Riemann sums.
 
@@ -215,24 +215,24 @@ $\ind[S] (x) = 1$ if $x \in S$ and $\ind[S] (x) = 0$ otherwise.
 Clearly if $S$ is a measurable set, then $\ind[S]$ is a measurable function.
 We will use this as a base case.
 Given a measure space $(X, \Sigma, \mu)$ and $S \in \Sigma$, we define the integral:
-\begin{equation}
+\begin{equation*}
 	\int \! \ind[S] \diff \mu = \mu ( S )
-\end{equation}
+\end{equation*}
 
 
 From this, we consider functions which are the sum of indicator functions.
 We say that $s$ is a \textbf{simple function} if there are finite sets of measurable sets and $\{ A_k \}_{k=0}^n$
 and matching real coefficients $\{ a_k \}_{k=0}^n$ such that:
-\begin{equation}
+\begin{equation*}
 	s = \sum_{k=0}^n a_k \ind[A_k]
-\end{equation}
+\end{equation*}
 The integral of a simple function is then easily defined linearly in terms of integrals of indicator functions:
-\begin{equation}
+\begin{equation*}
 	\int \! s \diff \mu 
 		= \int \left(\sum_{k=0}^n a_k \ind[A_k] \right) \diff \mu 
 		= \sum_{k=0}^n a_k  \int \! \ind[A_k] \diff \mu
 		= \sum_{k=0}^n a_k \cdot \mu(A_k)
-\end{equation}
+\end{equation*}
 
 But we don't always wish to integrate over the entire measure space but rather some measurable subset of $X$.
 This would be done with the notation $\int_B$ instead of $\int$ and replacing $\mu(A_k)$ with $\mu(A_k \cap B)$.
@@ -241,38 +241,38 @@ But as already mentioned, integrating over sets is a misnomer; we should be inte
 To do this, we extend $\mu$ linearly for hybrid sets on $\Sigma$.
 Strictly speaking, doing so means that $\mu$ is no longer a measure as it takes on negative values.
 For a hybrid set $H \in \hsetover[\Sigma]$,
-\begin{equation}
+\begin{equation*}
 	\int_H s \diff \mu = \int H \cdot s \diff \mu = \sum_k a_k \cdot \mu(A_k \otimes H)
-\end{equation}
+\end{equation*}
 
 
 We then use simple functions to approximate general measurable functions.
 For a non-negative function $f$, we say this is the largest simple function that is everywhere less than $f$:
-\begin{equation}
+\begin{equation*}
 	\int_H \! f \diff\mu = 
 		\text{sup} \left\{ 
 			\int_H s \diff \mu \;\middle|\; s \text{ simple, and } 0 \leq \varphi \leq f 
 		\right\}
-\end{equation}
+\end{equation*}
 But even if $f$ takes negative values, we can split it into positive and negative parts by:
-\begin{align}
+\begin{align*}
 f^+(x) &:= \mathrm{max}( 0, f(x)) \\
 f^-(x) &:= \mathrm{max}(0, -f(x)) 
-\end{align}
+\end{align*}
 Both $f^+$ and $f^-$ are clearly non-negative but also, observe that $f=f^+ - f^-$.
 Linearly, this allows us to define for any measurable $f$:
-\begin{equation}
+\begin{equation*}
 \int_H f \diff \mu = \int_H f^+ \diff \mu - \int_H f^- \diff \mu
-\end{equation}
+\end{equation*}
 
 
 The last issue that remains to be settled is whether such a limit even exists.
 For this we can use the sequence of simple functions $\psi_n$ defined by:
-\begin{equation}
+\begin{equation*}
 	\psi_n = \sum_{k=0}^{n2^n -1} 
 		\left[ \left(\frac{k}{2^n}\right)^{\left[ \frac{k}{2^n}, \frac{k+1}{2^n} \right)} \right] 
 		+ n^{[n,\infty]}
-\end{equation}
+\end{equation*}
 Notationally, this definition is rather heavy but is easily understood geometrically as seen below in
 Figure~\ref{fig:simplefunc}.
 In turn this allows us to define for any non-negative $f$ the sequence of functions  $\varphi_n = \psi_n \circ f$.
@@ -356,18 +356,18 @@ The two sums will never converge and so there is no well-defined Riemann integra
 
 
 On the other hand, it is Lebesgue integrable:
-\begin{equation}
+\begin{equation*}
 	\int_{[0,1]} 1_\mathbb{Q} \diff\mu = \mu(\mathbb{Q} \cap [0,1])
-\end{equation}
+\end{equation*}
 But since $\mathbb{Q}$ is countable, it has measure 0 and so $1_\mathbb{Q}$ \emph{is} Lebesgue integrable on $[0,1]$.
 Similarly, we could also find that:
-\begin{equation}
+\begin{equation*}
 	\int_0^1 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \mu
 		= \int_{[0,1]} 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \mu
 		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
 		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
 		= 1
-\end{equation}
+\end{equation*}
 
 One would expect the same process to hold for when integrating from 0 to 1 but restricted to sets, this is not possible.
 The statement $[1,0] = -[0,1]$ is nonsense.
@@ -375,12 +375,12 @@ But if we instead take integrating from $a$ to $b$ to mean the Lebesgue integral
 Additionally instead of the Lebesgue measure $\mu$ which is defined for 
 measure $\nu$:
 
-\begin{equation}
+\begin{equation*}
 	\int_1^0 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \nu
 		\;=\; \int_{[\![0,1]\!]} 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \nu
 		\;=\; \nu \big( (\mathbb{R}\setminus\mathbb{Q} ) \otimes [\![1,0]\!] \big)
 		\;=\; -1
-\end{equation}
+\end{equation*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DIFFERENTIAL FORMS
@@ -397,9 +397,9 @@ And there is very little else to say as they are just functions on $\mathbb{R}^n
 
 
 A \textbf{(differental) 1-form} $\omega$ on $\mathbb{R}^n$ is an expression of the form:
-\begin{equation}
+\begin{equation*}
 	\omega = f_1(\text{x}) \diff x_1 + f_2(\text{x}) \diff x_2 + \ldots + f_n(\text{x}) \diff x_n
-\end{equation}
+\end{equation*}
 Now this look very much like something we're used to integrating.
 Specifically it is something that be used as an integrand over a 1 dimensional domain.
 For example, Green's theorem is introduced using differential forms without even mentioning them as such.
@@ -417,24 +417,24 @@ but is quite intuitively handled.
 Integration is linear so just as we can separate $\int f(x) + g(x) \diff x$ into $\int f(x) \diff x + \int g(x) \diff x$, 
 we can similarly breakup an integral of a 1-form into the sum of integrals over \emph{basic} 1-forms 
 (1-forms involving a single term).
-\begin{equation}
+\begin{equation*}
 	\int f_1(\text{x}) \diff x_1 
 		+ f_2(\text{x}) \diff x_2 
 		+ \ldots 
 		+ f_n(\text{x}) \diff x_n
 	=	\sum_{i=1}^n \left( \int f_i \diff x_i \right)
-\end{equation}
+\end{equation*}
 
 
 Adding two 1-forms then is quite straight-forward; simply collect terms with matching $\diff x_i$.
 So if we can add differential forms but what about multiplication?
 For a 0-form $\beta$ and 1-form $\omega$ as defined above, the answer the answer is a simple yes:
-\begin{equation}
+\begin{equation*}
 	(\beta \cdot \omega)(\text{x}) 
 		= \beta(\text{x})f_1(\text{x}) \diff x_1 
 		+ \ldots  
 		+ \beta(\text{x})f_n(\text{x}) \diff x_n
-\end{equation}
+\end{equation*}
 The result is a 1-form where each basic 1-form term is the product of $f_i$ and $\beta$ in $\mathbb{R}$.
 To ``multiply'' two 1-forms together however we must turn instead to the wedge product $\wedge$.
 
@@ -443,10 +443,10 @@ That is, $\diff x \wedge \diff y = -\diff y \wedge \diff x$ and several results 
 When applied to two identical $\diff x$, we have $\diff x \wedge \diff x = - \diff x \wedge \diff x$ 
 and so $\diff x \wedge \diff x = 0$.
 Additionally, for any permutation $\sigma$ of $[p]$
-\begin{equation}
+\begin{equation*}
 	\diff x_1 \wedge ... \wedge \diff x_p 
 	= \text{sgn}(\sigma) \diff x_{\sigma(1)} \wedge ... \wedge \diff x_{\sigma(p)}
-\end{equation}
+\end{equation*}
 The wedge product of two 1-forms moves us out of the realm of 1-forms which have basis $\diff x_i$ and into the 
 realm of 2-forms with basis $\diff x_i \wedge \diff x_j$.
 
@@ -512,9 +512,9 @@ We have defined the sum of $\omega_1$ and $\omega_2$: two differential forms whi
 the sum of $\alpha$ and $\beta$: differential forms with different dimension.
 It is clear how one would add two differential forms of the same dimension as both were defined as sums to begin with.
 We also do not define the multiplication of $\cdot$ two differential forms but we multiplying a form by a function is simply:
-\begin{equation}
+\begin{equation*}
 	(f \cdot \alpha) (x) = \sum_i f(x)\cdot a_i(x) \diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p}
-\end{equation}
+\end{equation*}
 
 
 Integrating over a $k$-form is quite simple.
@@ -522,9 +522,9 @@ First we shall consider integrating a $k$-form over a $k$-rectangle in $\mathbb{
 Such a $k$-form is also known as a \emph{top-dimensional form}.
 As we saw previously, any form of higher degree must be zero.
 If $\omega$ is such a top form then we can always write
-\begin{equation}
+\begin{equation*}
 	\omega = f \; \diff x_1 \wedge \ldots \wedge \diff x_k
-\end{equation}
+\end{equation*}
 for some function $f$.
 Other presentations of $\omega$ exist, but we can always achieve such a presentation by commuting over $\wedge$ 
 to the canonical ordering $x_1, \ldots, x_n$.
@@ -550,12 +550,10 @@ For a function (0-form), it is the 1-form:
 This will result in equivalent 1-forms regardless of the choice of coordinates $\text{x} = (x_1, \ldots, x_n)$.
 For higher dimension forms it will similarly map a $k$-form to a $k+1$-form.
 This is done by recursively using the identities for $p$-form $\alpha$ and $q$-form $\beta$.
-\begin{equation}
-	\diff (\alpha \wedge \beta) = (\diff \alpha) \wedge \beta + (-1)^p \alpha \wedge ( \diff \beta)
-\end{equation}
-\begin{equation}
-	\diff (\diff ( \alpha )) = 0
-\end{equation}
+\begin{align}
+	\diff (\alpha \wedge \beta) &= (\diff \alpha) \wedge \beta + (-1)^p \alpha \wedge ( \diff \beta) \\
+	\diff (\;\diff ( \alpha )\; ) &= 0
+\end{align}
 and extending linearly for all $k$-forms.
 
 
@@ -606,12 +604,10 @@ The pre-composition or pullback would be $f^*g = g(f(x))$.
 One first evaluates the first function and feeds the result into the second.
 Gets its name from pulling $f$ back through $g$.
 Using the following identities:
-\begin{equation}
-	F^* (\alpha \wedge \beta ) = (F^* \alpha) \wedge (F^* \beta)
-\end{equation}
-\begin{equation}
-	F^* (\diff \beta ) = \diff F^* \beta
-\end{equation}
+\begin{align}
+	F^* (\alpha \wedge \beta ) &= (F^* \alpha) \wedge (F^* \beta) \\
+	F^* (\diff \beta ) &= \diff F^* \beta
+\end{align}
 one finds a very convenient way to express change of basis inside an integral.
 
 \begin{theorem}

@@ -39,6 +39,7 @@ We will now generalize the boundary to map an oriented $n$-rectangle to an $(n-1
 	Additionally, let $i_1, i_2, \ldots, i_k$ be the unique non-decreasing sequence of indices such that $a_{i_j} \neq b_{i_j}$.
 	The \textbf{boundary of $ \boldsymbol{[\![ a,b ]\!]} $ }, denoted the operator $\partial$ is given by
 	\begin{align}
+		\label{eqn:defboundary}
 		\partial \left( [\![ \boldsymbol{a}, \boldsymbol{b} ]\!] \right) 
 		= \bigoplus_{j=1}^k (-1)^j \;
 			\left(	
@@ -71,9 +72,9 @@ Formally, we are actually using the hybrid sets $\hset{(i_j)^1}$ but we omit mul
 
 
 Next we use the pointwise sum $\oplus$ we reconstruct $n$-dimensional vectors from our pieces.
-We then construct a $(k-1)$-rectangle using these vectors as in (4.8).
+We then construct a $(k-1)$-rectangle using these vectors as in (\ref{eqn:defboundary}).
 Hence we will have terms of the forms:
-\begin{align}
+\begin{equation*}
 	[\![a_1, b_1]\!]
 	\times \ldots \times
 	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]
@@ -83,7 +84,9 @@ Hence we will have terms of the forms:
 	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]
 	\times \ldots \times
 	[\![a_n, b_n]\!]
-	\\
+\end{equation*}
+and
+\begin{equation*}
 	[\![a_1, b_1]\!]
 	\times \ldots \times
 	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]
@@ -93,7 +96,7 @@ Hence we will have terms of the forms:
 	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]
 	\times \ldots \times
 	[\![a_n, b_n]\!]
-\end{align}
+\end{equation*}
 
 
 In each Cartesian product, the terms at $i_j$: $[\![a_{i_j}, a_{i_j}]\!]$ and $[\![b_{i_j}, b_{i_j}]\!]$ are both 0-cubes.
@@ -127,14 +130,13 @@ It follows that:
 	[\![\boldsymbol{a}^{\emptyset}, \boldsymbol{b}^{\emptyset} ]\!]
 	\times \hset{b_1} \times
 	[\![\boldsymbol{a}^{\emptyset}, \boldsymbol{b}^{\emptyset} ]\!] \\
-	=& \; \hset{b_1} \ominus \hset{a_1} \\
 	=& \; \hset{a^{-1}, b^{1}}
 \end{align*}
 
-One may notice a relationship between this result and the fundamental theorem of calculus:
-\begin{equation}
+One may notice the similarity between this result and the (second) fundamental theorem of calculus:
+\begin{equation*}
 	\int_a^b F'(x) \; \diff x = F(b) - F(a)
-\end{equation}
+\end{equation*}
 Which one could easily rewrite as $\int_{[\![a,b]\!]} F'(x) \; \diff x = \sum (\partial([\![a,b]\!]))$.
 Indeed, this is why we have defined the boundary function as such, but more general statements await.
 We defined the boundary for not just intervals on $\mathbb{R}$ but $k$-cubes in $\mathbb{R}^n$.
@@ -159,7 +161,8 @@ Omitting the intermediate step, we find the boundary of $[\![ \boldsymbol{a}, \b
 \end{align*}
 
 This may not be the most enlightening expression on its own.
-In Figure 4.3 below, the 3-rectangle given by $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ can be seen as a cube in three dimensions.
+In Figure \ref{fig:cubeboundary} below, the 3-rectangle given by $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ 
+can be seen as a cube in three dimensions.
 Physically, the 3-rectangle is a solid cube and includes all interior points.
 The boundary meanwhile are just the rectangular outer faces, which conveniently,
  there are also six to match the six terms of $\partial[\![\boldsymbol{a},\boldsymbol{b}]\!]$.
@@ -167,10 +170,11 @@ The boundary meanwhile are just the rectangular outer faces, which conveniently,
 \begin{figure}[ht]
 \caption[Unit cube with boundary]{The unit cube in $\mathbb{R}^3$ with positive orientation can be represented as the 3-rectangle: $[\![(0,0,0), (1,1,1) ]\!]$ is shown as a wire-frame. 
 The six faces that make up its boundary are shaded and labeled with their corresponding terms.
-%Now with 100% more right-handed
+
+\label{fig:cubeboundary}
 }
 \centering
-\begin{tikzpicture}[y=1.5cm, x=3cm]	
+\begin{tikzpicture}[y=1cm, x=2cm]	
  	%axis
  	
  	%left
@@ -204,7 +208,7 @@ The six faces that make up its boundary are shaded and labeled with their corres
 	%front
 	\draw[color=black, dashed, <-] (0.5-0.07,1-0.07) --++ (-0.7,-0.7) node[anchor=east, black] {$[\![0,1]\!] \times \hset{0} \times [\![0,1]\!]$};
 	%top
-	\draw[color=black, dashed, <-] (0.85,2.35+0.2) --++ (0,1) node[anchor=south, black] {$[\![0,1]\!] \times [\![0,1]\!] \times \hset{1}$};
+	\draw[color=black, dashed, <-] (0.85,2.35+0.2) --++ (0,1) node[anchor=south, black] {$\;\;\;\;\;[\![0,1]\!] \times [\![0,1]\!] \times \hset{1}$};
 \end{tikzpicture}
 \end{figure}
 
@@ -212,7 +216,7 @@ There are several ways to interpret and visualize the $\oplus$ and $\ominus$ sig
 Most naturally in $\mathbb{R}^3$ for 2-rectangles is to give each a front and back side with the sign determining which to use.
 Alternatively, a 2-rectangle has a boundary formed by 1-rectangles which when drawn as arrows, will all meet head-to-tail.
 This induces a clockwise or counter-clockwise cycle around the edge of the rectangle and so $\circlearrowright$ and $\circlearrowleft$ are also commonly used.
-This can be seen in Figure 4.4.
+This can be seen in Figure \ref{fig:orientation2rect}.
 One may even notice that the normals produced by both are the same and choose to use that.
 These are all conceptual tools, which are convenient to use particularly in $\mathbb{R}^2$ and $\mathbb{R}^3$.
 There may not be such a nice physical interpretation in other spaces.
@@ -223,7 +227,8 @@ There may not be such a nice physical interpretation in other spaces.
 	One way of visualizing the orientation of 2-rectangles using clockwise and counter-clockwise cycles 
 	of arrows for 1-rectangles. The boundary of $[\![a,b]\!] \times [\![c,d]\!]$ becomes the cycle: 
 	$(a,c) \to (b,c) \to (b,d) \to (a,d) \to (a,c)$.
-	Showing the relationship between $[\![a,b]\!] \times [\![c,d]\!]$ and $[\![b,a]\!] \times [\![d,c]\!]$ }
+	Showing the relationship between $[\![a,b]\!] \times [\![c,d]\!]$ and $[\![b,a]\!] \times [\![d,c]\!]$ 
+	\label{fig:orientation2rect}}
 	\centering
 	\begin{tikzpicture}
 		\def\rectCycle#1#2#3#4{
@@ -278,16 +283,17 @@ There may not be such a nice physical interpretation in other spaces.
 \section{Chains}
 
 In fact, we have already seen $k$-chains without mentioning them explicitly.
-The boundary of a $k$-cube was the sum $\oplus$, of $2k$ $(k-1)$ cubes.
-Chains do not have to be boundaries however, any linear combination of $k$-cubes will do.
+The boundary of a $(k+1)$-cube was the sum $\oplus$, of $2(k+1)$, $k$-rectangles.
+Chains are not restricted to being boundaries of some larger $(k+1)$ rectangle; 
+any linear combination of $k$-rectangles will do.
 
 
 \begin{definition}
 We denote the Abelian group of of all $k$-cubes in $X$ as $C_k(X)$ (omitting $X$ when obvious by context).
 An element $c \in C_k$(X) is called a \textbf{$\boldsymbol{k}$-chain on $X$} and is of the form:
-\begin{equation}
+\begin{equation*}
 	c = \bigoplus_{c_i \in X} \lambda_i c_i
-\end{equation}
+\end{equation*}
 with integer coefficients $\lambda_i$ and  $k$-cubes in $c_i$.
 If coefficients $\lambda_i$ are $\pm 1$ and $c$ is \emph{locally finite} (i.e. each $c_i$ intersects with only finitely many $c_j$ that have non-zero coefficients) then we say that $c$ is a \textbf{domain of integration}.
 \end{definition}
@@ -302,10 +308,14 @@ Doing the same for the boundary operator $\partial$ we have:
 	&\partial_k(c) = \bigoplus_{i=1}^k \lambda_i \partial_k(c_i)
 \end{align*}
 Elegantly, the boundary operator now maps $k$-chains to $(k-1)$-chains!
-\begin{equation}
+\begin{equation*}
 	\ldots \xleftarrow{\partial_{k-1}} C_{k-1} \xleftarrow{\partial_{k}} C_k \xleftarrow{\partial_{k+1}} C_{k+1} \xleftarrow{\partial_{k+2}} ...
-\end{equation}
+\end{equation*}
 
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
+\todo[inline]{vbox}
 
 
 
@@ -328,7 +338,7 @@ where $\boldsymbol{a} =(a_1,a_2)$ and $\boldsymbol{b}= (b_1,b_2)$.
 
 
 
-\begin{align}
+\begin{align*}
 	\partial_1 ( \partial_2 ( [\![ a_1 , b_1 ]\!] \times [\![a_2, b_2 ]\!] ) )
 	=	& 	\; \ominus 	\partial_1( \hset{0} \times [\![0,1]\!]) 
 			\; \oplus \; 	\partial_1(\hset{1} \times [\![0,1]\!]) \notag \\
@@ -339,7 +349,7 @@ where $\boldsymbol{a} =(a_1,a_2)$ and $\boldsymbol{b}= (b_1,b_2)$.
 		& 	\oplus ( 		\ominus \hset{(0,0)} \oplus \hset{(1,0)} ) 
 			\;\ominus\;(	\ominus \hset{(0,1)} \oplus \hset{(1,1)}) \\
 	=	& \;\emptyset	
-\end{align}
+\end{align*}
 
 Geometrically this can be seen below that the boundary of a rectangle are its edges.
 The boundary of these edges are the corners; but each corner occurs with both postive and negative sign cancelling.
@@ -378,7 +388,7 @@ Often stated as ``$\partial \partial = 0$'', this identity is not unique to $2$-
 
 Let $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ be a $k$-rectangle in $\mathbb{R}^n$.
 Then we have:
-\begin{align}
+\begin{align*}
 	\partial_k \partial_{k-1} \left( [\![ \boldsymbol{a}, \boldsymbol{b} ]\!] \right) 
 	= \bigoplus_{j=1}^k (-1)^j 
 		& \;  \left( \; \partial_{n-1} \left(	
@@ -418,21 +428,21 @@ Then we have:
 					\oplus \boldsymbol{b}^{[\![i_j]\!] \;\oplus\; [\![i_{j,\ell}]\!]}), \;\;
 				(\boldsymbol{b}^{[\![1,n]\!]})
 			]\!] 
-\end{align}
+\end{align*}
 Note that we have $i_j$ and $i'_\ell$; after applying the first boundary operator, one dimension of the $k$-cube is degenerate.
 Hence for each sequence: $\{i_j\}_{j=1}^k$ we construct $\{i_{j,\ell}\}_{\ell=1}^{k-1}$ given by:
-\begin{equation}
+\begin{equation*}
 	i_{j,1} , \ldots, i_{j,k-1} = i_1, \ldots, \widehat{i_j}, \ldots, i_k
-\end{equation}
+\end{equation*}
 The double sum iterates over all pairs but $\oplus$ commutes so the $(k-2)$-cube with degenerate dimensions $[\![i_j]\!] \oplus [\![i_{j,\ell}]\!]$ will be iterated over twice. 
 The sequences depend on one another so it is not as simple as simply swapping $\ell$ and $j$:
-\begin{equation}
+\begin{equation*}
    [\![i_j]\!] \oplus [\![i_{j,\ell}]\!] =
      \begin{cases}
        [\![i_\ell]\!] \oplus [\![i_{\ell,j-1}]\!] & j > \ell \\
        [\![i_{\ell+1}]\!] \oplus [\![i_{\ell+1,j}]\!] & j \leq \ell
      \end{cases}
-\end{equation}
+\end{equation*}
 
 
 So each term representing a $(k-2)$-cube will occur twice in the sum.
@@ -486,20 +496,18 @@ First we will consider Stokes theorem for the standard cube $I^k = [0,1]^k \subs
 In the previous section we saw how cumbersome representing the faces in $\partial I^k$, could be.
 We will denote the faces of $I^k$ by $I^k_{i=0}$ and $I^k_{i=1}$ for the $i$-th faces of $I^k$.
 This allows us to rewrite the boundary more succinctly as:
-
-
-\begin{equation}
+\begin{equation*}
 	\partial (I^k) = \bigoplus_{i=1}^k (-1)^i \left( I^k_{i=0} \ominus I^k_{i=1} \right) 
-\end{equation}
+\end{equation*}
 
 
 
 A $k-1$-form $\omega$ can be written as the sum
-\begin{equation}
+\begin{equation*}
 	\omega 
 		= \sum_{i=1}^k \omega_i 
 		= \sum_{i=1}^k f_i \; \diff x_1 \wedge \ldots \wedge \widehat{\diff x_i} \wedge  \ldots \wedge \diff x_k
-\end{equation}
+\end{equation*}
 but since everything: the integrals, $d$ and $\partial$ are all linear, we can work using just one of these terms.
 Assuming Stokes' theorem holds for $\omega_i$ then we immediately have it for $\omega$ as well:
 \begin{align*}
@@ -615,13 +623,13 @@ obvious extensions.
 Sometimes the additional regions that are added and negated can be quite unexpected.
 \emph{Contour integration} is a method for solving integrals that can involve the usage of curious looking regions to solve.
 Consider the following function defined on the real numbers:
-\begin{equation}
+\begin{equation*}
 	f(x) = \frac{1}{x^4 + 1}
-\end{equation}
+\end{equation*}
 and suppose we wish to compute the integral over the entire real line:
-\begin{equation}
+\begin{equation*}
 	 \int_{-\infty}^\infty f(x) \diff x
-\end{equation}
+\end{equation*}
 This is a difficult integral to evaluate directly so instead of treating $f$ as a real function, $f:\mathbb{R} \to \mathbb{R}$, 
 we instead consider it as a complex function: $f:\mathbb{C} \to \mathbb{C}$.
 
@@ -630,9 +638,9 @@ Let $C_1$ be the straight line curve from $-r$ to $r$: $C_1(t) =rt-(1-t)r$ and
 $C_2$ the circular arc with radius $r$ from $r$  to $-r$: $C_2(t) = re^{it}$.
 Finally let $C$ the combined curve: $C= C_1 \oplus C_2$
 Then our desired value is the integral over $C_1$ as $r$ goes to infinity:
-\begin{equation}
+\begin{equation*}
 	\int_{C_1} f(x) \diff x = \oint_{C} f(z) \diff z - \int_{C_2} f(z) \diff z
-\end{equation}
+\end{equation*}
 
 
 \begin{figure}[ht]
@@ -654,9 +662,9 @@ Then our desired value is the integral over $C_1$ as $r$ goes to infinity:
 To solve the integral on $C$ we can use the Cauchy residue theorem: a special case of the generalized Stokes' theorem.
 $C$ is a closed simple path and $f$ is holomorphic everywhere except for a finite set of points $\{a_k\}_{i=1}^n$
 and so we have:
-\begin{equation}
+\begin{equation*}
 	\oint_C f(z) \diff z = 2 \pi i \sum_{k=1}^n \Res(f, a_k)
-\end{equation}
+\end{equation*}
 And so we must compute the residues of the two singularities above the real line: 
 $W_8^1 = e^{i\pi/4}$ and $W_8^3 = e^{3i\pi/4}$.
 These are both simple poles and can be computed as follows:
