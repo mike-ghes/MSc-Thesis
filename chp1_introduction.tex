@@ -9,7 +9,7 @@
 
 
 %(Unordered pairs \cite{EWD:EWD1223} ?)	
-Some data structures in mathematics are more well-loved than others and none more than Cantor's set.
+Some data structures in mathematics are more widely adopted than others and none more than Cantor's notion of sets.
 The very foundations of mathematics lie in set theory: numbers are defined in terms of sets as are ordered tuples 
 which in turn lead to relations, functions, sequences and from there branches into countless other structures.
 But this trunk typically omits a satisfactory treatment of several \emph{generalized sets}.
@@ -17,11 +17,10 @@ For example, it is difficult to begin speaking about \emph{hybrid sets} without 
 \emph{``---that is, multi-sets with negative multiplicity''}.
 
 
-It is a statement of progress that multi-sets have even entered into (relatively) common mathematical parlance.
-On the other hand, sequences need no introduction and are generally relied on when a structure resembling a 
-multi-set is needed.
-One can easily represent a multi-set by a sequence: if an element occurs in a multi-set with multiplicity $n$, simply make
-sure it's in the sequence $n$ times as well.
+It is a statement of progress that multi-sets have even entered into common mathematical parlance.
+On the other hand, sequences need no introduction and one can easily represent a multi-set by a sequence: 
+if an element occurs in a multi-set with multiplicity $n$, ensure that it's in the corresponding sequence $n$ times as well.
+In this way, sequences are often used \emph{in place of} multi-sets with the added structure of an ordering.
 Indeed,  \emph{``why not?''}, even if the order of elements is not needed, \emph{``surely it can't hurt?''}
 
 
@@ -34,7 +33,7 @@ Consider the \emph{Fundamental Theorem of Arithmetic}:
 	\attrib{Hardy and Wright 1979, p.2-3}
 \end{quote}
 By recognizing the possibility of rearranging factors, the authors implicitly define type the ``product of primes'' as a sequence rather than, more aptly a multi-set.
-For iterated, commutative operators (e.g. $\sum, \prod \bigcap, \bigcup$), the order of terms is irrelevant so then, 
+For iterated, commutative operators (e.g. $\sum, \prod, \bigcap, \bigcup$), the order of terms is irrelevant so then, 
 \emph{``why order terms to begin with?''}
 Reisig \cite{reisig1985petri} uses multi-sets to define relation nets where 
 ``\ldots several individuals of some sort do not have to be distinguished", and moreover
@@ -91,13 +90,14 @@ This allows for the identity
 \end{equation}
 regardless of the ordering of $a$, $b$ and $c$.
 One can think of the region from $a$ to $c$ being partitioned into $a$ to $b$ and $b$ to $c$.
-But this is not a partition in the traditional sense.
+But this is not a partition in the usual sense.
 Rather than the union of disjoint subsets it is a sum of oriented subsets: a generalized partition.
 This is a rather nice behaviour that would be nice to emulate in other contexts as well.
 
 
 We will consider several different applications.
-When matrices are represented in terms of block submatrices, the sum or product can vary depending on block size.
+When matrices are represented in terms of block submatrices, 
+the sum or product can vary depending on operand block sizes.
 Representing the regions of a block matrix with hybrid sets will allow for all cases to be consolidated into one;
 no matter how those blocks may overlap.
 Lebesgue integration relies on measurable sets and also does not naturally support orientation.
@@ -140,9 +140,7 @@ have also had success with hybrid sets in chemical programming.
 Representing a solution is represented as a collection of atoms and molecules, 
 negative multiplicities are treated as ``antimatter'' . 
 For a deeper overview and systemization of generalized sets, see \cite{singh2007, singh2008systematization}.
-
-
-
+These these ideas allow symbolic computation on functions defined piecewise \cite{carette2010}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -159,6 +157,7 @@ In chapter 4, hybrid functions will be applied towards integration.
 We will start from foundations and use hybrid functions to allow for an oriented Lebesgue integral.
 We will then show how hybrid sets naturally come up in Stokes' theorem with the boundary operator.
 Finally in chapter 5, hybrid sets will be applied towards convolution of piecewise functions.
+
 
 
 

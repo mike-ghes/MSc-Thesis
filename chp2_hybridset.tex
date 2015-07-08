@@ -21,8 +21,9 @@ In general, we assume a piecewise function $f : P \to X$ will take the form:
 	       f_n(x) & x \in P_n
 	     \end{cases}
 \end{equation}
-where the set $\{ P _ i \}$ is a partition of $P$ the domain of $f$.
-Each subfunction $f_i$, we can only safely assume is defined over its respective partition $f_i : P_i \to X$.
+where the set $\{ P _ i \}$ is a partition of $P$, the domain of $f$.
+and each function $f_i: P_i \to X$ is defined over a corresponding part of $P$. 
+We assume that $f_i$ is fully defined on $P_i$ (\emph{total}) but may be partial on $P$ .
 Frequently these partitions are not expressed explicitly as sets but rather as conditions.
 For example, the absolute value function is far more commonly written out as
 \begin{equation*}
@@ -39,7 +40,7 @@ but using conditions rather than the sets they define can be seen as just a shor
 
 One thing that should be noted is that sometimes there are extra conditions which are bundled in.
 As pieces of a partition, the sets generated must be disjoint so we must ensure these conditions are mutually exclusive.
-A common heuristic is to treat these conditions as a series of \emph{else-if} statements.
+A common heuristic is to treat these conditions as a series of cascading \emph{else-if} statements.
 For example \emph{Maple}'s \texttt{piecewise} function:
 \begin{quote}
 	\texttt{piecewise(cond\_1, f\_1, cond\_2, f\_2, \ldots, cond\_n, f\_n, f\_otherwise)} 
@@ -77,13 +78,15 @@ One could favor the first function as Maple does, but we will take the stance th
 	   	\right.
 	\end{equation}
 \end{definition}
+Where the bottom element $\bot$ denotes that the function is undefined.
 As such if $f:X \to Y$ and $g:S \to T$ then the join will be defined not on the union of $X$ and $S$ but on their 
 \emph{symmetric difference}.
 Together these definitions allow us to re-write the piecewise function in (\ref{eq_fP}) as:
 \begin{equation*}
 	f = \restrict{f}{P_1} \fjoin \restrict{f}{P_2} \fjoin \ldots \fjoin \restrict{f}{P_n}
 \end{equation*}
-
+Normally, the join operator $\fjoin$ is not associative and so omitting parenthesis could lead to poorly defined expressions.
+However, when all support sets are pairwise disjoint, then $\fjoin$ is associative.
 
 Now consider arithmetic of two piecewise functions. Let $f$ and $g$ be two piecewise functions
 $f = \left(\restrict{f_1}{P_1} \fjoin \restrict{f_2}{P_2} \fjoin \restrict{f_3}{P_3} \right)$ 
@@ -101,8 +104,10 @@ In this case, the result is generally a piecewise function with 6 terms:
 \end{align*}
 In specific cases, some terms may be eliminated as the corresponding intersection is empty. 
 In general, assuming no degenerate intersections, 
-the sum of an ``$n$-piece'' function and ``$m$-piece'' function will give a piecewise function with $n\times m$ pieces.
-
+the sum of an ``$n$-piece'' function and ``$m$-piece'' function will give a piecewise function with $n \times m$ pieces.
+This becomes compounded when dealing with more piecewise functions. 
+The sum of $b$ functions each with $n$ pieces results in $b^n$ cases making computation unrealistic 
+in all but the smallest cases.
 
 Another perspective to take is to first find a \emph{common refinement} of ${P=\{P_i\}_{i\in I}}$ 
 and ${Q=\{Q_j\}_{j\in J}}$. In the above example we selected the refinement:
@@ -120,8 +125,8 @@ Similarly $R$ also a refinement of $Q$ and so we say it is a \emph{common refine
 Finding common refinements gives a large increase in the number of terms required, 
 in part, due to a restrictive view of partitions.
 Conceptually, what one wishes out of a partition is a family of subsets which will ``sum'' up to the original.
-With boolean sets, some additional constraints are imposed as we don't have a very good notion of subtraction.
-However, by using non-boolean sets we allow for negative sets to cancel any double-counting
+With Boolean sets, some additional constraints are imposed as we don't have a very good notion of subtraction.
+However, by using non-Boolean sets we allow for negative sets to cancel any double-counting
 as such disjointness no longer needs to be enforced.
 Over this chapter we will consider such generalized partitions and the structures to support them.
 We will also see how this allows for us to eliminate the multiplicative increase in terms when flattening the sum
@@ -139,12 +144,16 @@ We will also see how this allows for us to eliminate the multiplicative increase
 \section{Hybrid Sets}
 
 
-We shall consider \emph{hybrid sets}.
-One can view traditional boolean sets as an indicator function 
+\todo[inline]{``Should say following development of the paper and give reference.''}
+
+
+We shall consider \emph{hybrid sets} which are a generalization of multi-sets.
+One can view usual Boolean sets as an indicator function on the universe
 which maps each member element to 1 and each non-member to 0.
-A \emph{multiset} (or \emph{bag}) extends this by allowing multiple copies of the same element.
-The indicator function of a multiset would therefore range over $\mathbb{N}_0$, the set of non-negative integers.
-Hybrid sets take this one step further allowing for an element to occur \emph{negatively many} times.
+A \emph{multi-set} (or \emph{bag}) extends this by allowing multiple copies of the same element.
+The indicator function of a multi-set would therefore range over $\mathbb{N}_0$, the set of non-negative integers.
+Hybrid sets take this one step further allowing for an element to occur \emph{negatively many} times 
+as an indicator function over the integers.
 
 
 \begin{definition}
@@ -153,8 +162,8 @@ Hybrid sets take this one step further allowing for an element to occur \emph{ne
 \end{definition}
 
 
-By universe, we just mean a (traditional) set that \emph{contains everything we may be interested in}.
-This is admittedly ague but we will rarely be interested in everything in the universe or its exact size.
+By universe, we just mean a usual Boolean set that \emph{contains everything we may be interested in}.
+This is admittedly vague but we will rarely be interested in everything in the universe or its exact size.
 It is simply a compact way for us to talk about ``everything else''.
 But we will need some notation to make functions resemble sets.
 
@@ -183,10 +192,10 @@ The latter will generally be preferred as all $a$'s and $b$'s have been collecte
 a writing in which $x_i \neq x_j$ for all $i \neq j$ is referred to as a \textbf{normalized form} of a hybrid set. 
 
 
-Traditional sets use the operations $\cup$ union, $\cap$ intersection, and $\setminus$ complementation.
+Boolean sets use the operations $\cup$ union, $\cap$ intersection, and $\setminus$ complementation.
 These correspond to the Boolean point-wise $\vee$ \texttt{OR}, $\wedge$ \texttt{AND}, and $\neg$ \texttt{NOT} 
 operations. That is, for two sets $A$ and $B$, then $(A \cup B)(x) = A(x) \vee B(x)$.
-One \emph{could} extend these for hybrid sets using point-wise min and max 
+One \emph{could} extend these for hybrid sets using point-wise min and max on multiplicities as in
 \cite{blizard1988, blizard1990, girish2012multiset, singh2011complementation}
 but this is not very natural.
 Rather, our primitive hybrid set operations should derive from our primitive point-wise operators.
@@ -213,8 +222,8 @@ Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, a
 \begin{definition}
 	We say $\boldsymbol{A}$ \textbf{and} $\boldsymbol{B}$ \textbf{are disjoint} if and only if $A \otimes B = \emptyset$
 \end{definition}
-For boolean sets $A$ and $B$, disjointness would be defined by $A \cap B = \emptyset$.
-If we consider these boolean sets as simply hybrid sets with multiplicity 0 or 1 then the operations $\cap$ and $\otimes$
+For Boolean sets $A$ and $B$, disjointness would be defined by $A \cap B = \emptyset$.
+If we consider these Boolean sets as simply hybrid sets with multiplicity 0 or 1 then the operations $\cap$ and $\otimes$
 identically correspond to element-wise $\texttt{AND}$.
 
 
@@ -243,7 +252,7 @@ In these examples we used the multiplicity as an exponent in other cases it is m
 All Boolean sets can be trivially converted to hybrid sets.
 For a set $X$, this is done simply by taking $H(x)=1$ if $x \in X$ and $H(x)=0$ if $x \notin X$.
 We will often perform this conversion silently by applying hybrid set operators to Boolean sets.
-The reverse conversion: the reduction of a hybrid set to a boolean set is not always possible.
+The reverse conversion: the reduction of a hybrid set to a Boolean set is not always possible.
 
 
 \begin{definition}
@@ -267,11 +276,11 @@ and allow for \emph{any} family of sets which sum to a hybrid set to be a (gener
 		H = P_1 \oplus P_2 \oplus \ldots \oplus P_n
 	\end{equation}
 	We say that \textbf{$\boldsymbol{P}$ is a strict partition of $\boldsymbol{H}$} if 
-	$P_i$ and $P_j$ are disjoint for all $i \neq j$.
+	$P_i$ and $P_j$ are disjoint when $i \neq j$.
 \end{definition}
 
 
-If a set $H$ is reducible, then strict generalized partitions will correspond with the traditional notion of a partition.
+If a set $H$ is reducible, then strict generalized partitions will correspond with the usual notion of a partition.
 A traditional partition will be a disjoint cover of $H$ and for disjoint reducible sets, point-wise sum and union agree.
 Hence $\bigcup_i P_i = \bigoplus_i P_i$. 
 Conversely, if $H$ is reducible and the sum of disjoint hybrid sets, then $P_i$ must all be reducible as well.
@@ -294,7 +303,7 @@ A generalized partition of a reducible set is strict if and only if each general
 
 
 A function is typically defined as a mapping from elements of one set to another set.
-We will consider functions which have hybrid sets as their domain (but still map to traditional sets) 
+We will consider functions which have hybrid sets as their domain (but still map to Boolean sets) 
 which we will call \emph{hybrid functions}.
 We will define hybrid functions as the collection of all ordered pairs $(x,f(x))$ (the \emph{graph of the function} $f$).
 
@@ -310,7 +319,7 @@ We will define hybrid functions as the collection of all ordered pairs $(x,f(x))
 
 
 Again we will need some notation for this to be more usable.
-We would like to think of a hybrid function not as a mapping from a hybrid set to a boolean set but rather as
+We would like to think of a hybrid function not as a mapping from a hybrid set to a Boolean set but rather as
 a function between two Boolean sets and integer multiplicity attached to the mapping (the ``arrow'' itself).
 In this way we partially separate the traditional function and the multiplicity function (given as a hybrid set) and view a
 hybrid function as their combined object.
@@ -471,6 +480,8 @@ To aid in this we will first introduce some notation for iterated operators.
 	If $\op$ is invertible, then we use $\op^{-1}$ to denote its inverse and $\op^{-n}$ for iterated $\op^{-1}$.
 	Finally, we allow $\op^n$ to be a unary operator, which we define by $\op^n x = e_\op \op^n x$.
 \end{definition}
+
+\todo[inline]{``What does it mean for a binary operator to be invertible?''}
 
 Assuming $\op^m$ and $\op^n$ are both defined (e.g. if $m,n \leq 0$ then $\op$ must be invertible),
 we have $ ( x \op^m y ) \op^n y = x \op^{m+n} y$.
@@ -906,4 +917,4 @@ $((\pseudo{f\;}\cdot\,\pseudo{\!H})(x))(x)$:
 		&= 2
 \end{align*}
 
-
+\todo[inline]{``Give an outline of what is to come explaining what is in prior papers, and what is newly explained here.''}

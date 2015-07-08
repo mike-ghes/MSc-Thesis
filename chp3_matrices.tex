@@ -107,7 +107,12 @@ For example to invert what is known as a \emph{block diagonal matrix}, one can i
 
 
 \begin{figure}[ht]
-	\caption[Possible block overlaps of $2 \times 2$ block matrices.]{There are 9 possible permutations. 1x (a) 2x (b) 2x (c) 4x (d)}
+	\caption[Possible block overlaps of $2 \times 2$ block matrices.]
+	{The sum of two block matrices each with four blocks leads to 9 possible cases.
+	When blocks are exactly the same size, the sum will also be a $2 \times 2$ block matrix (a).
+	Otherwise, a $2 \times 3$ (b) \emph{(two possible cases)}, $3 \times 2$ (c) \emph{(two cases)} 
+	or $3 \times 3$ (d) \emph{(four cases)} block matrix could arise.
+	The starred blocks may sample from different blocks depending on the relative size of operand blocks.}
 	\label{MatAdditionPermutations}
 	\begin{subfigure}[b]{0.24\textwidth}
 		\caption{}
@@ -125,7 +130,7 @@ For example to invert what is known as a \emph{block diagonal matrix}, one can i
 			\left[ \begin{array}{c|c}
 				\; & \; \\
 				\hline
-				& \\
+				* & * \\
 				\hline
 				& \\
 			\end{array}\right]
@@ -135,9 +140,9 @@ For example to invert what is known as a \emph{block diagonal matrix}, one can i
 		\caption{}
 		\begin{equation*}
 			\left[ \begin{array}{c|c|c}
-				\; & \; & \;  \\
+				\; & * & \;  \\
 				\hline
-				& \\
+				\; & * &\; \\
 			\end{array}\right]
 		\end{equation*}
 	\end{subfigure}
@@ -145,18 +150,17 @@ For example to invert what is known as a \emph{block diagonal matrix}, one can i
 		\caption{}
 		\begin{equation*}
 			\left[ \begin{array}{c|c|c}
-				\; & \; & \; \\
+				\; & * & \; \\
 				\hline
-				& \\
+				* & * & * \\
 				\hline
-				& \\
+				\; & * & \; \\
 			\end{array}\right]
 		\end{equation*}
 	\end{subfigure}
 \end{figure}
 
-Although block matrices are commonly used with fixed values for bounds.
-Computer algebra has unsatisfactory structures to represent these when the bounds between blocks are symbolic.
+Existing techniques allow for fixed block size but are unsatisfactory when the bounds between blocks are symbolic.
 For example, the sum of $2 \times 2$ block matrices, naively leads to 9 possible cases of overlapping regions depending on
 the relationship between horizontal and vertical boundaries between blocks.
 In this chapter we will show a method using hybrid functions to avoid this case based approach for both addition
@@ -519,7 +523,6 @@ $\mathbb{N}_0 \times \mathbb{N}_0$.
 Here there is only room for a single Cartesian product and so this notation will not be immediately useful. 
 We will return to this discussion of higher dimension rectangles in Chapter 4 when investigating integration.
 
-\todo[inline]{vbox}
 
 
 
@@ -915,7 +918,7 @@ $R =U \ominus \left( \bigoplus_{k \in [\![1,K)\!)} M_k \oplus \bigoplus_{k' \in 
 
 
 
-
+\todo[inline]{``give concrete example showing what happens when guess is right and when guess is wrong.''}
 
 
 
