@@ -1,12 +1,10 @@
 \chapter{Hybrid Set Theory}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% PIECEWISE
+% INTRODUCTION
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 The motivation behind hybrid sets and functions can be traced to wanting a better approach to piecewise functions
 and closely related to that is a more generalized notion of a partition.
@@ -51,7 +49,6 @@ Hence the partitions corresponding to each \texttt{cond\_i} is \emph{not} just $
 but instead the set where \texttt{cond\_i} is true and \emph{all preceding} conditions are also false.
 
 
-
 Although the notation used in (\ref{eq_fP}) is fine for piecewise functions with only a few terms such as $\abs$,
 it quickly becomes unwieldy when one wants to add more pieces.
 So instead we will use the \emph{join} of disjoint function \emph{restrictions}.
@@ -88,6 +85,7 @@ Together these definitions allow us to re-write the piecewise function in (\ref{
 Normally, the join operator $\fjoin$ is not associative and so omitting parenthesis could lead to poorly defined expressions.
 However, when all support sets are pairwise disjoint, then $\fjoin$ is associative.
 
+
 Now consider arithmetic of two piecewise functions. Let $f$ and $g$ be two piecewise functions
 $f = \left(\restrict{f_1}{P_1} \fjoin \restrict{f_2}{P_2} \fjoin \restrict{f_3}{P_3} \right)$ 
 and $g= \left( \restrict{g_1}{Q_1} \fjoin \restrict{g_2}{Q_2} \right)$.
@@ -109,6 +107,7 @@ This becomes compounded when dealing with more piecewise functions.
 The sum of $b$ functions each with $n$ pieces results in $b^n$ cases making computation unrealistic 
 in all but the smallest cases.
 
+
 Another perspective to take is to first find a \emph{common refinement} of ${P=\{P_i\}_{i\in I}}$ 
 and ${Q=\{Q_j\}_{j\in J}}$. In the above example we selected the refinement:
 \begin{equation*}
@@ -128,23 +127,19 @@ Conceptually, what one wishes out of a partition is a family of subsets which wi
 With Boolean sets, some additional constraints are imposed as we don't have a very good notion of subtraction.
 However, by using non-Boolean sets we allow for negative sets to cancel any double-counting
 as such disjointness no longer needs to be enforced.
-Over this chapter we will consider such generalized partitions and the structures to support them.
-We will also see how this allows for us to eliminate the multiplicative increase in terms when flattening the sum
-(or product) of two piecewise functions.
+Following the development of \cite{carette2010}, over this chapter we will consider such generalized partitions 
+and the structures to support them.
+We will also see how this allows for us to eliminate the multiplicative increase in terms when flattening an expression
+containing the sum (or product) of piecewise functions.
 
 
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% HYBRID SET
-%
+% Hybrid Sets
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hybrid Sets}
-
-
-\todo[inline]{``Should say following development of the paper and give reference.''}
 
 
 We shall consider \emph{hybrid sets} which are a generalization of multi-sets.
@@ -296,7 +291,7 @@ A generalized partition of a reducible set is strict if and only if each general
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Hybrid Function
+% Hybrid Functions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hybrid Functions}
 \label{sec:HybridFunction}
@@ -437,7 +432,7 @@ So long as long as they agree on all points in overlapping regions intersection 
 \end{definition}
 
 
-As with our definition of disjointness, we use the pointwise product $\otimes$ 
+As with our definition of disjointness, we use the point-wise product $\otimes$ 
 of hybrid sets as an analog for intersection $\cap$ of sets.
 This definition also generalizes the two cases we have already seen in theorems 
 \ref{thm:compatible1} and \ref{thm:compatible2}
@@ -477,11 +472,10 @@ To aid in this we will first introduce some notation for iterated operators.
 		x \op^n y = (((x \overbrace{\op y) \op y) \op \ldots \op y)}^{n \text{ times}}
 	\end{equation}
 	If $\op$ has an identity $e_\op$, then we extend $x \op^0 y = x$.
-	If $\op$ is invertible, then we use $\op^{-1}$ to denote its inverse and $\op^{-n}$ for iterated $\op^{-1}$.
+	If $y$ has inverse $z$ under $\op$ then we use $x \op^{-1} y$ to denote $x \op^1 z$
+	and extend this for any natural $n$ by $x \op^{-n} y$ by  $x \op^{n} z$.
 	Finally, we allow $\op^n$ to be a unary operator, which we define by $\op^n x = e_\op \op^n x$.
 \end{definition}
-
-\todo[inline]{``What does it mean for a binary operator to be invertible?''}
 
 Assuming $\op^m$ and $\op^n$ are both defined (e.g. if $m,n \leq 0$ then $\op$ must be invertible),
 we have $ ( x \op^m y ) \op^n y = x \op^{m+n} y$.
