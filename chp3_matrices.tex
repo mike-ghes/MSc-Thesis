@@ -666,7 +666,7 @@ Very simply:
 \end{align*}
 
 
-\subsection{Larger block matrices}
+\subsection{Addition with Larger Block Matrices}
 This method extends easily from addition of two $2\times 2$ block matrices to arbitrary addition of block matrices.
 If we consider (\emph{conformable}) $k \times \ell$ and $n \times m$ block matrices $A$ and $B$ respectively of the form:
 
@@ -890,9 +890,155 @@ And finally cleaning up this expression by removing the terms over empty regions
 \end{equation}
 
 
+\todo[inline]{``Rewrite with new example notation''}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Multiplication Example
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Example: \emph{Matrix Multiplication Concretely}}
+
+We will suppose two block matrices
+
+\begin{equation*}
+	Q = \left[ \begin{array}{cc|c}
+		a_1 & a_2 & b_1 \\
+		a_3 & a_4 & b_2 \\
+		\hline
+		c_1 & c_2 & d_1 \\
+		c_3 & c_4 & d_2
+	\end{array} \right]
+	\;\;\;\;\; \text{and} \;\;\;\;\;
+	R = \left[ \begin{array}{c|cccc}
+		e_1 & f_1 & f_2 & f_3 & f_4 \\
+		\hline
+		g_1 & h_1 & h_2 & h_3 & h_4 \\
+		g_2 & h_5 & h_6 & h_7 & h_8
+	\end{array} \right]
+\end{equation*}
+
+We will call these submatrices $A,B,C,D,E,F,G$ and $H$.
+
+To partition these matrices we use $M,N,P$ as follows (indexing starting at zero):
+\begin{align*}
+	N_1 	&= [\![0, 1]\!] 	& N_2 	&= [\![2, 3]\!] 	\\
+	P_1 	&= [\![0]\!] = \hset{0^{+1}}		& P_2 	&= [\![1, 4]\!] 	\\
+	M_1 	&= [\![0, 1]\!] 	& M_2 	&= (\!(1)\!) = \hset{1^{-1}} 	& M_3 	&= [\![1, 2]\!]
+\end{align*}
+We should note here that our guess was wrong; $M_2$ is negatively oriented!
+This will not change our process.
+We can still write $Q$ as:
+\begin{equation*}
+	Q = A^{N_1 \times M_1} \oplus 
+		B^{N_1 \times (M_2 \oplus M_3)} \oplus
+		C^{N_2 \times M_1} \oplus
+		D^{N_2 \times (M_2 \oplus M_3)}
+\end{equation*}
+The only difference is that when we add $(M_2 \oplus M_3)$, 
+the set of indices we end up with is \emph{smaller} than the $M_3$ we started with.
+Similarly, $R$ is also still written out as:
+\begin{equation*}
+	R = E^{(M_1 \oplus M_2) \times P_1} \oplus
+		F^{(M_1 \oplus M_2) \times P_2} \oplus
+		G^{M_3 \times P_1} \oplus
+		H^{M_3 \times P_2}
+\end{equation*}
+Their product $S$ will be another $2\times 2$ block matrix:
+\begin{equation*}
+	S = Q \cdot R  =
+		\begin{bmatrix} S_1 & S_2 \\ S_3 & S_4 \end{bmatrix} =
+		 {S_1}^{N_1 \times P_1} \oplus
+		 {S_2}^{N_1 \times P_2} \oplus
+		 {S_3}^{N_2 \times P_1} \oplus
+		 {S_4}^{N_2 \times P_2}
+\end{equation*}
+Let us compute one of these blocks: $S_1$:
+\begin{align*}
+	{S_1}^{N_1 \times P_1}(i,j) = \sum_{m \in M ?} \R[\times]  &\left( 
+			\left. A^{N_1 \times M_1}\right|_{X=i} \oplus
+			\left. E^{M_1 \times P_1}\right|_{Y=j} \oplus \right.\\
+			&\;\left. B^{N_1 \times M_2}\right|_{X=i} \oplus
+			\left. E^{M_2 \times P_1}\right|_{Y=j} \oplus\\ 
+			&\;\left. \left. B^{N_1 \times M_3}\right|_{X=i} \oplus
+			\left. G^{M_3 \times P_1}\right|_{Y=j}
+	\right)
+\end{align*}
+
+
+We could, as before correct the negative orientation of $M_2$ algebraically, but this turns out to be unnecessary.
+Recall that we are taking the approach that matrices are simply functions defined on $\mathbb{N} \times \mathbb{N}$.
+When we select an axis of a matrix $M$ by way of $M|_{X=i}$ or $M|_{Y=j}$ we transform $M:X\times Y \to Z$
+to a curried $M|_{X=i}:Y \to ( X \to Z)$ or $M|_{Y=j}:X \to (Y \to Z)$.
+As this is a small example our curried functions only range over $\{ 0, 1, 2 \}$, so let's expand out each of our terms
+as formal \emph{hybrid sets} (recall a hybrid function is a special hybrid set of ordered pairs):
+\begin{align*}
+	\sum_{m \in M ?} \R[\times] \bigg( 
+		&\;\;\hset{
+			(0 \mapsto \left[\begin{smallmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{smallmatrix}\right])^{+1}, \;
+			(1 \mapsto \left[\begin{smallmatrix}\vphantom{b}a_2 \\ \vphantom{b}a_4 \end{smallmatrix}\right])^{+1}}  
+		&&\oplus \hset{ 
+			(0 \mapsto [ e_1 ])^{+1}, \;
+			(1 \mapsto [e_\bot] )^{+1}} \\ 
+		&\oplus \hset{ 
+			(1 \mapsto \left[\begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix}\right]^{-1} }
+		&&\oplus \hset{ 
+			(1 \mapsto [ e_\bot ] )^{-1} } \\
+		&\oplus \hset{
+			(1 \mapsto \left[ \begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix} \right] )^{+1}, \;
+			(2 \mapsto \left[ \begin{smallmatrix} b_1 \\ b_2 \end{smallmatrix}\right] )^{+1} }
+		&&\oplus \hset{
+			(2 \mapsto [ g_1 ] )^{+1},\; 
+			(2 \mapsto [ g_2 ] )^{+1}}	\bigg)
+\end{align*}
+We are using $e_\bot$ and $b_\bot$ here to represent that the functions $E$ and $B$ are undefined for these points.
+If we attempted to evaluate $Q$ at the points $(0,1)$ or $(1,1)$ we would find ourselves in the $A$ block not the $B$ block.
+So, despite the implied existence of points at $B^{n \times 1}$ for points $n \in N_1$, this is out of the bounds of $B$.
+
+
+Applying the $\times$-reduction, we group terms by their input value (e.g. $1 \mapsto x$ with $1 \mapsto y$) 
+and multiply the outputs together (e.g. $1 \mapsto xy$) using the multiplicity to repeat or invert the $\times$ operator.
+In this case, we are dealing only with multiplicities of $+1$ and $-1$ which correspond with multiplication and ``division''.
+This is not true division, as $0 \times^{-1} 0 = 1$ but for non-zero values, it agrees with the normal understanding of
+division.
+Doing this yields:
+\begin{align*}
+	\sum_{M_1 \oplus M_2 \oplus M_3}
+		& \left\{\!\left|\; \left(0 \mapsto 
+			\left[\begin{smallmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{smallmatrix}\right] \times^{+1} 
+			[e_1] \right), \right.\right.\\
+		&\;\;\;\left(1 \mapsto 
+			\left[\begin{smallmatrix}\vphantom{b}a_2 \\ \vphantom{b}a_4 \end{smallmatrix}\right] \times^{+1}
+			[e_\bot] \times^{-1}
+			\left[\begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix}\right] \times^{-1}
+			[ e_\bot ]\times^{+1}
+			\left[ \begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix} \right] \right)
+			[ g_1 ],\\
+		&\;\;\left.\left.\left(2 \mapsto 
+			\left[ \begin{smallmatrix} b_1 \\ b_2 \end{smallmatrix}\right]\times^{+1}
+			[ g_2 ] \right) \; \right|\!\right\}
+\end{align*}
+
+
+After some cancellations in the second term, we evaluate $\times^{+1}$ as matrix multiplication and sum using normal
+matrix addition:
+\begin{equation*}
+	{S_1}^{N_1 \times P_1} =
+			\begin{bmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{bmatrix}
+			[e_1]
+		+ 	\begin{bmatrix}\vphantom{b}a_2 \\ \vphantom{b}a_4 \end{bmatrix}
+			[g_1]
+		+	\begin{bmatrix} b_1 \\ b_2 \end{bmatrix}
+			[ g_2 ]
+		=  \begin{bmatrix}a_1e_1+a_2g_1+b_2g_2\\ a_3e_1+a_4b_1+b_2g_2\end{bmatrix}
+\end{equation*}
+Computations for the other blocks are performed similarly.
+
+\todo[inline]{fluff}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Larger multiplication
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Multiplication with Larger Block Matrices}
 
 The most difficult part of extending block matrix multiplication to larger block matrices turns out to be the number of 
 variables needed.
@@ -915,10 +1061,6 @@ Again we must find a common refinement of $\{M_k\}_{k=1}^K$ and $\{M'_{k'}\}_{k'
 We will use the same construction as earlier taking the first $K-1$ and $K'-1$ pieces respectively and then forming one 
 ``remainder'' piece, which here is 
 $R =U \ominus \left( \bigoplus_{k \in [\![1,K)\!)} M_k \oplus \bigoplus_{k' \in [\![1,K')\!)} M'_{k'}\right)$
-
-
-
-\todo[inline]{``give concrete example showing what happens when guess is right and when guess is wrong.''}
 
 
 
