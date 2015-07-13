@@ -1,0 +1,68 @@
+
+If $r=s$ then $M_2 = \emptyset$.
+We can think of multiplying a $n \times 0$ matrix by a $0 \times p$ matrix as giving a $n \times p$ matrix which is the sum
+over an empty set, 0 everywhere.
+If $r < s$ then this is like treating $A$ and $B$ instead as $2 \times 3$ and $3 \times 2$ block matrices.
+$M_1$, $M_2$ and $M_3$ are all positive intervals and form conformable blocks.
+
+If $r > s$ then $M_2$ is a negative interval.
+The product $A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j}$ may be symbolically conformable but it begs the 
+question of what exactly a $(2 \times -3)$ or $(-1 \times 4)$ matrix would even look like.
+To simplify $C_{i,j}$, we can use the generalized partition:
+\begin{equation*}
+ 	\Big\{ \left(M_1 \oplus M_2\right), \;\; \ominus M_2, \;\; \left(M_2 \oplus M_3\right) \Big\}
+\end{equation*}
+which contains only positive oriented intervals.
+Now we can split the first and third terms using $M_1 = (M_1 \oplus M_2) \ominus M_2$ 
+and $M_3 = \ominus M_2 \oplus (M_2 \oplus M_3)$:
+\begin{align*}
+	C_{i,j} 	= &\left( A_{i,1}^{N_i \times M_1 \oplus M_2} \oplus A_{i,1}^{N_i \times \ominus M_2} \right)
+				\left( B_{1,j}^{M_1 \oplus M_2 \times P_j} \oplus B_{1,j}^{\ominus M_2 \times P_j} \right)
+			+ A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j} \notag\\
+			&+ \left( A_{i,2}^{N_i \times \ominus M_2} \oplus A_{i,2}^{N_i \times M_3 \oplus M_2} \right)
+			 \left( B_{2,j}^{\ominus M_2 \times P_j} \oplus B_{2,j}^{M_3 \oplus M_2 \times P_j} \right)
+\end{align*}
+
+These resulting hybrid function sums are themselves inline block matrices!
+The products, $\left( A_{i,1}^{N_i \times M_1 \oplus M_2} \oplus A_{i,1}^{N_i \times \ominus M_2} \right)
+	  \left( B_{1,j}^{M_1 \oplus M_2 \times P_j} \oplus B_{1,j}^{\ominus M_2 \times P_j} \right)$
+and $\left( A_{i,1}^{N_i \times M_1 \oplus M_2} \oplus A_{i,1}^{N_i \times \ominus M_2} \right)
+	  \left( B_{1,j}^{M_1 \oplus M_2 \times P_j} \oplus B_{1,j}^{\ominus M_2 \times P_j} \right)$	 
+are each conformable $1 \times 2$ and $2 \times 1$ block matrices.
+Their product is a $1 \times 1$ block matrix given by a sum of two $N_i \times P_j$ matrices.
+\begin{align*}
+	C_{i,j} 	= & \left( A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j}
+			+ A_{i,1}^{N_i \times \ominus M_2} B_{1,j}^{\ominus M_2 \times P_j} \right)
+			+ A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j} \notag\\
+			&+ \left( A_{i,2}^{N_i \times \ominus M_2} B_{2,j}^{\ominus M_2 \times P_j}
+			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j} \right)
+\end{align*}
+
+Rearranging the braces, we can recombine the middle three terms to form the product of $1 \times 3$ and $3 \times 1$ block matrices:
+\begin{align*}
+	C_{i,j} 	=& \left( A_{i,1}^{N_i \times \ominus M_2} 
+				\oplus  A_{i,2}^{N_i \times M_2} 
+				\oplus A_{i,2}^{N_i \times \ominus M_2} \right)
+			\left( B_{1,j}^{\ominus M_2 \times P_j} 
+				\oplus B_{1,j}^{M_2 \times P_j} 
+				\oplus B_{2,j}^{\ominus M_2 \times P_j} \right)\notag\\
+			&+ A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j} 
+			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j} 
+\end{align*}
+But the term $A_{i,2}$ occurs twice; once over $N_i \times M_2$ and once over $N_i \times \ominus M_2$.
+As hybrid functions with the same corresponding function, we can combine them by $f^A \oplus f^B = f^{A\oplus B}$.
+But the regions only differ by a sign and sum to the empty set.
+Similarly, the $B_{1,j}$ terms also cancel:
+\begin{align*}
+	C_{i,j} 	=& \left( A_{i,1}^{N_i \times \ominus M_2} \oplus  A_{i,2}^{N_i \times \emptyset}  \right)
+			\left(  B_{2,j}^{\ominus M_2 \times P_j} \oplus B_{1,j}^{\emptyset \times P_j} \right)\notag\\
+			&+ A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j} 
+			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j} 
+\end{align*}
+And finally cleaning up this expression by removing the terms over empty regions gives us the desired:
+\begin{equation}
+	C_{i,j} =  A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j} 
+			+ A_{i,1}^{N_i \times \ominus M_2} B_{2,j}^{\ominus M_2 \times P_j}
+			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j}
+\end{equation}
+

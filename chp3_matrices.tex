@@ -817,80 +817,75 @@ The $\times$ operator refers to the Cartesian product of intervals.
 
 
 For $i,j \in \{ 1,2 \}$ the terms of $C$ are given by.
-\begin{equation}
-	C_{i,j} 	= A_{i,1}^{N_i \times M_1} B_{1,j}^{M_1 \times P_j} 
-			+ A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j}
-			+ A_{i,2}^{N_i \times M_3} B_{2,j}^{M_3 \times P_j}
-\end{equation}
-If $r=s$ then $M_2 = \emptyset$.
-We can think of multiplying a $n \times 0$ matrix by a $0 \times p$ matrix as giving a $n \times p$ matrix which is the sum
-over an empty set, 0 everywhere.
-If $r < s$ then this is like treating $A$ and $B$ instead as $2 \times 3$ and $3 \times 2$ block matrices.
-$M_1$, $M_2$ and $M_3$ are all positive intervals and form conformable blocks.
+\begin{align}
+	\label{eqn:2x2multiplication}
+	C_{i,j}^{N_i1 \times P_j} (x,y) = \sum_{M} \R[\times]  
+		&\left( \;\;
+			\left. 	A_{i,1}^{N_1 \times M_1}	\right|_{X=x} \;\oplus\;
+			\left.	B_{1,j}^{M_1 \times P_1}	\right|_{Y=y} 
+		\right.  \notag \\
+	 	&\oplus
+	 		\left.	A_{i,2}^{N_1 \times M_2}	\right|_{X=x} \;\oplus\;
+			\left. 	B_{1,j}^{M_2 \times P_1}	\right|_{Y=y} 
+		\notag \\
+		&\oplus\left.
+			\left.	A_{i,2}^{N_1 \times M_3}	\right|_{X=x} \;\oplus\;
+			\left. 	B_{2,j}^{M_3 \times P_1}	\right|_{Y=y}
+		\;\;\right)
+\end{align}
 
-If $r > s$ then $M_2$ is a negative interval.
-The product $A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j}$ may be symbolically conformable but it begs the 
-question of what exactly a $(2 \times -3)$ or $(-1 \times 4)$ matrix would even look like.
-To simplify $C_{i,j}$, we can use the generalized partition:
+
+There is some new notation here so let us unpack it.
+Recall that we are taking the approach that matrices are simply functions defined on $\mathbb{N} \times \mathbb{N}$.
+As a function we can take a restriction of a matrix to a set of indices.
+In the above, we use $X$ and $Y$ to denote the row and column indexing respectively.
+For example with the matrix $M$, given below $M|_{X=0}$ and $M_{Y=0}$ would be as follows:
+\begin{align*}
+	M &= \begin{bmatrix}
+		M[0,0] 	& \ldots 	& M[0,n] \\
+		\vdots 	& 		& \vdots \\
+		M[m,0]	& \ldots & M[m,n]
+	\end{bmatrix} &
+	M|_{X=0} &= \begin{bmatrix}
+		M[0,0] & \ldots & M[0,n]
+	\end{bmatrix} &
+	M|_{Y=0} &= \begin{bmatrix}
+		M[0,0] \\ \vdots \\ M[m,0]
+	\end{bmatrix}
+\end{align*}
+
+
+But this is more powerful than just simple evaluation.
+We are selecting not a fixed axis as $(x,y)$ is the input to our function.
+And so for a matrix $M|_{X=x}$ or $M|_{Y=y}$ we transform $M:X\times Y \to Z$
+to the curried $M|_{X=i}:Y \to ( X \to Z)$ or $M|_{Y=j}:X \to (Y \to Z)$.
+Within the context of \ref{eqn:2x2multiplication}, this transforms the blocks of $A$ into horizontal vector slices 
+and $B$ into vertical slices.
+
+
+Ignoring the differences in transposition, when thought of as functions these functions both map from $M$ 
+(the common axis of $A$ and $B$) to functions with a common range.
+And so we have the pointwise sum of terms of the forms $m \mapsto ( x \mapsto A[x][m] )$ and 
+$m \mapsto (y \mapsto B[m][y])$.
+The work of multiplying matching $A[x][m]$ with $B[m][y]$ is handled by the $\R[\times]$.
+This leaves us with the product of two functions with different domains, but common range:
 \begin{equation*}
- 	\Big\{ \left(M_1 \oplus M_2\right), \;\; \ominus M_2, \;\; \left(M_2 \oplus M_3\right) \Big\}
+	 ( x \mapsto A[x][m] )\times (y \mapsto B[m][y]) 
+	 = (x,y) \mapsto A[x][m] \times B[m][y]
 \end{equation*}
-which contains only positive oriented intervals.
-Now we can split the first and third terms using $M_1 = (M_1 \oplus M_2) \ominus M_2$ 
-and $M_3 = \ominus M_2 \oplus (M_2 \oplus M_3)$:
-\begin{align*}
-	C_{i,j} 	= &\left( A_{i,1}^{N_i \times M_1 \oplus M_2} \oplus A_{i,1}^{N_i \times \ominus M_2} \right)
-				\left( B_{1,j}^{M_1 \oplus M_2 \times P_j} \oplus B_{1,j}^{\ominus M_2 \times P_j} \right)
-			+ A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j} \notag\\
-			&+ \left( A_{i,2}^{N_i \times \ominus M_2} \oplus A_{i,2}^{N_i \times M_3 \oplus M_2} \right)
-			 \left( B_{2,j}^{\ominus M_2 \times P_j} \oplus B_{2,j}^{M_3 \oplus M_2 \times P_j} \right)
-\end{align*}
-
-These resulting hybrid function sums are themselves inline block matrices!
-The products, $\left( A_{i,1}^{N_i \times M_1 \oplus M_2} \oplus A_{i,1}^{N_i \times \ominus M_2} \right)
-	  \left( B_{1,j}^{M_1 \oplus M_2 \times P_j} \oplus B_{1,j}^{\ominus M_2 \times P_j} \right)$
-and $\left( A_{i,1}^{N_i \times M_1 \oplus M_2} \oplus A_{i,1}^{N_i \times \ominus M_2} \right)
-	  \left( B_{1,j}^{M_1 \oplus M_2 \times P_j} \oplus B_{1,j}^{\ominus M_2 \times P_j} \right)$	 
-are each conformable $1 \times 2$ and $2 \times 1$ block matrices.
-Their product is a $1 \times 1$ block matrix given by a sum of two $N_i \times P_j$ matrices.
-\begin{align*}
-	C_{i,j} 	= & \left( A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j}
-			+ A_{i,1}^{N_i \times \ominus M_2} B_{1,j}^{\ominus M_2 \times P_j} \right)
-			+ A_{i,2}^{N_i \times M_2} B_{1,j}^{M_2 \times P_j} \notag\\
-			&+ \left( A_{i,2}^{N_i \times \ominus M_2} B_{2,j}^{\ominus M_2 \times P_j}
-			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j} \right)
-\end{align*}
-
-Rearranging the braces, we can recombine the middle three terms to form the product of $1 \times 3$ and $3 \times 1$ block matrices:
-\begin{align*}
-	C_{i,j} 	=& \left( A_{i,1}^{N_i \times \ominus M_2} 
-				\oplus  A_{i,2}^{N_i \times M_2} 
-				\oplus A_{i,2}^{N_i \times \ominus M_2} \right)
-			\left( B_{1,j}^{\ominus M_2 \times P_j} 
-				\oplus B_{1,j}^{M_2 \times P_j} 
-				\oplus B_{2,j}^{\ominus M_2 \times P_j} \right)\notag\\
-			&+ A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j} 
-			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j} 
-\end{align*}
-But the term $A_{i,2}$ occurs twice; once over $N_i \times M_2$ and once over $N_i \times \ominus M_2$.
-As hybrid functions with the same corresponding function, we can combine them by $f^A \oplus f^B = f^{A\oplus B}$.
-But the regions only differ by a sign and sum to the empty set.
-Similarly, the $B_{1,j}$ terms also cancel:
-\begin{align*}
-	C_{i,j} 	=& \left( A_{i,1}^{N_i \times \ominus M_2} \oplus  A_{i,2}^{N_i \times \emptyset}  \right)
-			\left(  B_{2,j}^{\ominus M_2 \times P_j} \oplus B_{1,j}^{\emptyset \times P_j} \right)\notag\\
-			&+ A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j} 
-			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j} 
-\end{align*}
-And finally cleaning up this expression by removing the terms over empty regions gives us the desired:
-\begin{equation}
-	C_{i,j} =  A_{i,1}^{N_i \times M_1 \oplus M_2} B_{1,j}^{M_1 \oplus M_2 \times P_j} 
-			+ A_{i,1}^{N_i \times \ominus M_2} B_{2,j}^{\ominus M_2 \times P_j}
-			+ A_{i,2}^{N_i \times M_3 \oplus M_2} B_{2,j}^{M_3 \oplus M_2 \times P_j}
-\end{equation}
 
 
-\todo[inline]{``Rewrite with new example notation''}
+Finally, we have the sum over $M$.
+If $A$ and $B$ are matrices over a field $F$ then the \mbox{$\times$-reduction} 
+yields a function $M \to (N \times P \to F)$.
+Summing over the set $M$ leaves us with a function $(N \times P \to F)$ which agrees (at least by object type) 
+with our expectations for $C$.
+The familiar structure of summing over a product suggest correctness when $\big\{ M_1, M_2, M_3 \big\}$ 
+is a strict partition of $M$ (that is, when $r \leq s$).
+Despite the mental hurdles of say a $2 \times (-3)$ matrix, it continues to hold for general partitions as well.
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -898,8 +893,11 @@ And finally cleaning up this expression by removing the terms over empty regions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Matrix Multiplication Concretely}}
 
-We will suppose two block matrices
 
+We will consider the product of two block matrices $Q$ and $R$.
+For this example, to better differentiate between blocks, 
+we will change our notation slightly and give each block a distinct letter names: 
+$A,B,C,D$ for the blocks of $Q$ and $E,F,G,H$ for the blocks of $R$.
 \begin{equation*}
 	Q = \left[ \begin{array}{cc|c}
 		a_1 & a_2 & b_1 \\
@@ -917,9 +915,10 @@ We will suppose two block matrices
 	\end{array} \right]
 \end{equation*}
 
-We will call these submatrices $A,B,C,D,E,F,G$ and $H$.
 
-To partition these matrices we use $M,N,P$ as follows (indexing starting at zero):
+We will again use $M$, $N$ and $P$ for the sets of indices.
+As $4 \times 3$ and $3\times 5$ matrices, we have $M = [\![0,3]\!]$, $N=[\![0,2]\!]$ and $P=[\![0,4]\!]$.
+To align with the blocks of $Q$ and $R$, each of these sets is partitioned as follow:
 \begin{align*}
 	N_1 	&= [\![0, 1]\!] 	& N_2 	&= [\![2, 3]\!] 	\\
 	P_1 	&= [\![0]\!] = \hset{0^{+1}}		& P_2 	&= [\![1, 4]\!] 	\\
@@ -927,6 +926,10 @@ To partition these matrices we use $M,N,P$ as follows (indexing starting at zero
 \end{align*}
 We should note here that our guess was wrong; $M_2$ is negatively oriented!
 This will not change our process.
+
+\todo[inline]{here}
+
+
 We can still write $Q$ as:
 \begin{equation*}
 	Q = A^{N_1 \times M_1} \oplus 
@@ -966,9 +969,6 @@ Let us compute one of these blocks: $S_1$:
 
 
 We could, as before correct the negative orientation of $M_2$ algebraically, but this turns out to be unnecessary.
-Recall that we are taking the approach that matrices are simply functions defined on $\mathbb{N} \times \mathbb{N}$.
-When we select an axis of a matrix $M$ by way of $M|_{X=i}$ or $M|_{Y=j}$ we transform $M:X\times Y \to Z$
-to a curried $M|_{X=i}:Y \to ( X \to Z)$ or $M|_{Y=j}:X \to (Y \to Z)$.
 As this is a small example our curried functions only range over $\{ 0, 1, 2 \}$, so let's expand out each of our terms
 as formal \emph{hybrid sets} (recall a hybrid function is a special hybrid set of ordered pairs):
 \begin{align*}
@@ -1035,6 +1035,12 @@ Computations for the other blocks are performed similarly.
 
 \todo[inline]{fluff}
 
+
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Larger multiplication
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1063,4 +1069,6 @@ We will use the same construction as earlier taking the first $K-1$ and $K'-1$ p
 $R =U \ominus \left( \bigoplus_{k \in [\![1,K)\!)} M_k \oplus \bigoplus_{k' \in [\![1,K')\!)} M'_{k'}\right)$
 
 
+
+\todo[inline]{Redo part on alternate form?}
 
