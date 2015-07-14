@@ -808,6 +808,7 @@ Using these intervals, we can now rewrite our matrices inline as:
 			A_{21}^{N_2 \times M_1} \oplus A_{22}^{N_2 \times (M_2 \oplus M_3)} \\
 	B & =	B_{11}^{(M_1 \oplus M_2) \times P_1} \oplus B_{12}^{(M_1 \oplus M_2) \times P_2} \oplus 
 			B_{21}^{M_3 \times P_1} \oplus B_{12}^{M_3 \times P_2}\\
+	\label{eqn:2x2multiplicationblocks}
 	C & =	C_{11}^{N_1 \times P_1} \oplus C_{12}^{N_1 \times P_2} \oplus
 			C_{21}^{N_2 \times P_1} \oplus C_{22}^{N_2 \times P_2}
 \end{align}
@@ -925,28 +926,26 @@ To align with the blocks of $Q$ and $R$, each of these sets is partitioned as fo
 	M_1 	&= [\![0, 1]\!] 	& M_2 	&= (\!(1)\!) = \hset{1^{-1}} 	& M_3 	&= [\![1, 2]\!]
 \end{align*}
 We should note here that our guess was wrong; $M_2$ is negatively oriented!
-This will not change our process.
+Although we could have constructed two expressions to handle this case as well, this will not be necessary.
+We can continue as if nothing is wrong, and the hybrid function structure will take care of cancellations.
 
-\todo[inline]{here}
 
-
-We can still write $Q$ as:
-\begin{equation*}
-	Q = A^{N_1 \times M_1} \oplus 
+We can still write $Q$  and $R$ as:
+\begin{align*}
+	Q &= A^{N_1 \times M_1} \oplus 
 		B^{N_1 \times (M_2 \oplus M_3)} \oplus
 		C^{N_2 \times M_1} \oplus
-		D^{N_2 \times (M_2 \oplus M_3)}
-\end{equation*}
-The only difference is that when we add $(M_2 \oplus M_3)$, 
-the set of indices we end up with is \emph{smaller} than the $M_3$ we started with.
-Similarly, $R$ is also still written out as:
-\begin{equation*}
-	R = E^{(M_1 \oplus M_2) \times P_1} \oplus
+		D^{N_2 \times (M_2 \oplus M_3)}\\
+	R &= E^{(M_1 \oplus M_2) \times P_1} \oplus
 		F^{(M_1 \oplus M_2) \times P_2} \oplus
 		G^{M_3 \times P_1} \oplus
-		H^{M_3 \times P_2}
-\end{equation*}
-Their product $S$ will be another $2\times 2$ block matrix:
+		H^{M_3 \times P_2}	
+\end{align*}
+The only difference is that originally the sum $(M_2 \oplus M_3) = \{ 2 \}$ was intended to \emph{extend} $M_3$.
+When $M_2$ is negative, it is a set of indices which is \emph{smaller} than the $M_3 = \{ 1,2 \}$ we started with.
+Similarly, in the expression for $R$, $(M_1 \oplus M_2)$ is smaller than $M_1$.
+We will use $S$ to denote the product $QR$ which is still another $2\times 2$ block matrix by the same construction 
+as (\ref{eqn:2x2multiplicationblocks}):
 \begin{equation*}
 	S = Q \cdot R  =
 		\begin{bmatrix} S_1 & S_2 \\ S_3 & S_4 \end{bmatrix} =
@@ -955,7 +954,9 @@ Their product $S$ will be another $2\times 2$ block matrix:
 		 {S_3}^{N_2 \times P_1} \oplus
 		 {S_4}^{N_2 \times P_2}
 \end{equation*}
-Let us compute one of these blocks: $S_1$:
+
+
+Let us compute one of these blocks: $S_1$.
 \begin{align*}
 	{S_1}^{N_1 \times P_1}(i,j) = \sum_{m \in M ?} \R[\times]  &\left( 
 			\left. A^{N_1 \times M_1}\right|_{X=i} \oplus
@@ -966,40 +967,47 @@ Let us compute one of these blocks: $S_1$:
 			\left. G^{M_3 \times P_1}\right|_{Y=j}
 	\right)
 \end{align*}
-
-
-We could, as before correct the negative orientation of $M_2$ algebraically, but this turns out to be unnecessary.
-As this is a small example our curried functions only range over $\{ 0, 1, 2 \}$, so let's expand out each of our terms
-as formal \emph{hybrid sets} (recall a hybrid function is a special hybrid set of ordered pairs):
+As this is a small example our curried functions only range over $\{ 0, 1, 2 \}$.
+This is a small enough domain to express each of the functions as a set of point-wise mappings.
+So let's expand out each of our terms as formal \emph{hybrid sets} 
+(recall a hybrid function is a special hybrid set of ordered pairs):
 \begin{align*}
 	\sum_{m \in M ?} \R[\times] \bigg( 
 		&\;\;\hset{
-			(0 \mapsto \left[\begin{smallmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{smallmatrix}\right])^{+1}, \;
-			(1 \mapsto \left[\begin{smallmatrix}\vphantom{b}a_2 \\ \vphantom{b}a_4 \end{smallmatrix}\right])^{+1}}  
+			\left( 0 \mapsto 
+				\left[\begin{smallmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{smallmatrix}\right]
+			\right)^{+1}, \;
+			\left( 1 \mapsto 
+				\left[\begin{smallmatrix}\vphantom{b}a_2 \\ \vphantom{b}a_4 \end{smallmatrix}\right]
+			\right)^{+1}}  
 		&&\oplus \hset{ 
-			(0 \mapsto [ e_1 ])^{+1}, \;
-			(1 \mapsto [e_\bot] )^{+1}} \\ 
+			\left( 0 \mapsto [ e_1 ] \right)^{+1}, \;
+			\left( 1 \mapsto [e_\bot] \right)^{+1}} \\ 
 		&\oplus \hset{ 
-			(1 \mapsto \left[\begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix}\right]^{-1} }
+			\left( 1 \mapsto \left[\begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix}\right] \right)^{-1} }
 		&&\oplus \hset{ 
-			(1 \mapsto [ e_\bot ] )^{-1} } \\
+			\left( 1 \mapsto [ e_\bot ] \right)^{-1} } \\
 		&\oplus \hset{
-			(1 \mapsto \left[ \begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix} \right] )^{+1}, \;
-			(2 \mapsto \left[ \begin{smallmatrix} b_1 \\ b_2 \end{smallmatrix}\right] )^{+1} }
+			\left( 1 \mapsto \left[ \begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix} \right] \right)^{+1}, \;
+			\left( 2 \mapsto \left[ \begin{smallmatrix} b_1 \\ b_2 \end{smallmatrix}\right] \right)^{+1} }
 		&&\oplus \hset{
-			(2 \mapsto [ g_1 ] )^{+1},\; 
-			(2 \mapsto [ g_2 ] )^{+1}}	\bigg)
+			\left( 2 \mapsto [ g_1 ] \right)^{+1},\; 
+			\left( 2 \mapsto [ g_2 ] \right)^{+1}}	\bigg)
 \end{align*}
+
+
 We are using $e_\bot$ and $b_\bot$ here to represent that the functions $E$ and $B$ are undefined for these points.
-If we attempted to evaluate $Q$ at the points $(0,1)$ or $(1,1)$ we would find ourselves in the $A$ block not the $B$ block.
-So, despite the implied existence of points at $B^{n \times 1}$ for points $n \in N_1$, this is out of the bounds of $B$.
+In reality, we would simply not even attempt to evaluate $B|_{X=x}(1)$ or $E|_{Y=y}(1)$ as the functions are undefined.
+These points are actually contained in the $A$ and $G$ blocks, once again we must delay evaluation with pseudo-functions.
 
 
-Applying the $\times$-reduction, we group terms by their input value (e.g. $1 \mapsto x$ with $1 \mapsto y$) 
-and multiply the outputs together (e.g. $1 \mapsto xy$) using the multiplicity to repeat or invert the $\times$ operator.
+Applying the $\times$-reduction $\R[\times]$, we group terms by their input value (e.g. $1 \mapsto x$ with $1 \mapsto y$) 
+and flatten using the multiplicity to repeat or invert the $\times$ operator.
 In this case, we are dealing only with multiplicities of $+1$ and $-1$ which correspond with multiplication and ``division''.
-This is not true division, as $0 \times^{-1} 0 = 1$ but for non-zero values, it agrees with the normal understanding of
-division.
+This is not true division, as $0 \times^{-1} 0 = 1$ without fear of division by zero.
+Otherwise for non-zero operands, $\times^{-1}$ agrees with the normal understanding of division.
+This is made possible by working with multiplication as a \emph{group} rather than as a \emph{ring}
+and so we are not worried about making multiplication ``play nice'' with addition.
 Doing this yields:
 \begin{align*}
 	\sum_{M_1 \oplus M_2 \oplus M_3}
@@ -1019,8 +1027,7 @@ Doing this yields:
 \end{align*}
 
 
-After some cancellations in the second term, we evaluate $\times^{+1}$ as matrix multiplication and sum using normal
-matrix addition:
+After some cancellations in the second term, we evaluate $\times^{+1}$ as matrix multiplication and sum over all of $M$:
 \begin{equation*}
 	{S_1}^{N_1 \times P_1} =
 			\begin{bmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{bmatrix}
@@ -1031,9 +1038,11 @@ matrix addition:
 			[ g_2 ]
 		=  \begin{bmatrix}a_1e_1+a_2g_1+b_2g_2\\ a_3e_1+a_4b_1+b_2g_2\end{bmatrix}
 \end{equation*}
-Computations for the other blocks are performed similarly.
-
-\todo[inline]{fluff}
+As expected we have a $|N_1| \times |P_1| = (2 \times 1)$ matrix which will form the upper left block of $S$.
+Ignoring the block structure of $Q$ and $R$ and performing normal matrix multiplication, we also find that these values 
+agree with $S[0,0]$ and $S[1,0]$.
+Computations for the blocks $S_2$, $S_3$ and $S_4$ are performed identically yielding blocks of varying sizes.
+Together, theses blocks form a strict partitioning of $S$ as a $2\times 2$ block matrix.
 
 
 
@@ -1070,5 +1079,5 @@ $R =U \ominus \left( \bigoplus_{k \in [\![1,K)\!)} M_k \oplus \bigoplus_{k' \in 
 
 
 
-\todo[inline]{Redo part on alternate form?}
+
 
