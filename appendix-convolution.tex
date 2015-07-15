@@ -712,8 +712,7 @@ Convolve := proc(f,af,bf,g,ag,bg)
 end proc;
 \end{lstlisting}
 
-
-\begin{lstlisting}[frame=single, mathescape]
+\begin{mdframed}\begin{lstlisting}[mathescape]
 > Convolve(sin, 0, Pi, t->exp(-t), 0, 1);
 
 		$\displaystyle \begin{cases}
@@ -724,9 +723,11 @@ end proc;
 	0 & \pi+1 \leq t\!\sim
 	\end{cases}$
 \end{lstlisting}
+\end{mdframed}
 
 \textbf{Case 1:}
-\begin{lstlisting}[frame=single, mathescape]
+
+\begin{mdframed}\begin{lstlisting}[ mathescape]
 > assume(t::real); additionally(af<bf); additionally(ag<bg);
 > Convolve(f,af,bf,g,ag,infinity);
 
@@ -736,6 +737,6 @@ end proc;
 	\int_{af\sim}^{bf\sim} f(x)g(t\sim-x) \; dx & bf\sim+ag\sim \leq t\sim
 	\end{cases}$
 \end{lstlisting}
-
+\end{mdframed}
 
 

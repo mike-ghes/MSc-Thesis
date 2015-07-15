@@ -8,12 +8,11 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\todo[inline]{Integral is over hybrid set *of a special form*, not just over any old hybrid set.}
 
-
-In many ways, integration provides the inspiration for hybrid set domains.
+In many ways, integration provides the inspiration for oriented intervals.
 As such, many of the techniques we have been using will be very familiar when placed back within their original context.
 That being said, notationally, sets and orientation are treated as often treated as distinct objects rather than a single entity.
+Over this chapter we will argue for a ``refactoring'' to bring orientation and support back together.
 
 
 As a hopefully illustrative example of this, consider a typical definition of the \textbf{definite integral} from an introductory
@@ -67,7 +66,7 @@ but there is no analogous translation to $\int_a^b = - \int_b^a$ and so if we ma
 		= 0
 \end{equation*}
 This is clearly not a desired outcome; instead what is actually intended is an oriented interval.
-The integral should instead be over the hybrid set $[\![a,b)\!)$.
+What we \emph{intend} is an integral over the the hybrid set $[\![a,b)\!)=\ominus[\![b,a)\!)$ not the set $[a,b)$.
 
 
 
@@ -148,16 +147,21 @@ We are now ready to construct Riemann sums.
 
 \begin{definition}
 	Given $P=\{ P_j \}_{j=1}^n$ where $P_j$ is an interval generalized partition of $[\![a_j, b_j]\!]$,
-	and $f:[\![\boldsymbol{a}, \boldsymbol{b}]\!] \to \mathcal{R}$ then we define a Riemann sum $f_P$ to be:
+	and $f:[\![\boldsymbol{a}, \boldsymbol{b}]\!] \to \mathcal{R}$ then we define \emph{a} Riemann sum 
+	$\Rie(f,P,*)$ to be:
 	\begin{equation}
-		f_P = \sum_{p_1 \in P_1} \ldots \sum_{p_n \in P_n} f(x^*_{p_1, \ldots, p_n}) \vol(I_{p_1, \ldots, p_n})
+		\Rie(f,P,*) = \sum_{p_1 \in P_1} \ldots \sum_{p_n \in P_n} f(x^*_{p_1, \ldots, p_n}) \vol(I_{p_1, \ldots, p_n})
 	\end{equation}
-	where $x^*_{p_1, \ldots, p_n}$ is any point chosen from $I_{p_1, \ldots, p_n}$.
+	where $x^*_{p_1, \ldots, p_n}$ is a point from $I_{p_1, \ldots, p_n}$ as chosen by some selector $*$.
 \end{definition}
 
 Note that we specify \emph{a} Riemann sum, not \emph{the} Riemann sum.
 There are several ways to choose $x^*_{i_1,\ldots,i_n} \in I_{i_1, \ldots, i_n}$ and different samplings can lead to different Riemann sums for the same partition and same function.
-In $\mathbb{R}^1$, several common ways to sample include the left and right Riemann sums (which sample at the left and right boundaries), the trapezoidal Riemann sum (which averages the left and right) the upper Riemann sum (which samples at $\max(f(x_{i_1, \ldots, i_n}))$) and the lower Riemann sum (which samples at $\min(f(x_{i_1,\ldots,i_n}))$).
+In $\mathbb{R}^1$, several common ways to sample include 
+the left and right Riemann sums (i.e. $\Rie(f,P,\min(x))$ and $\Rie(f,P,\max(x))$), 
+the trapezoidal Riemann sum (i.e. $\Rie(f,P, \min(x)+\max(x)/2)$) 
+the upper Riemann sum (i.e. $\Rie(f,P, \max(f(x)))$) and 
+the lower Riemann sum (i.e. $\Rie(f,P, \max(f(x)))$).
 
 
 \begin{figure}[ht]
@@ -171,20 +175,22 @@ In $\mathbb{R}^1$, several common ways to sample include the left and right Riem
 The Riemann integral of a function $f:\mathbb{R}^n \to \mathbb{R}$ over a $k$-rectangle 
 $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ as $\max( | \vol( I_{p_1,\ldots, p_n}) | : p_i \in P_i )$ goes to zero.
 	\begin{equation}
-		\int_{[\![a,b]\!]} f(x) \diff x = f_P
+		\Rie(f,P,\min(f(x))) 
+		\leq \int_{[\![a,b]\!]} f(x) \diff x 
+		\leq \Rie(f,P,\max(f(x))) 
 	\end{equation} 
-	We say that a function is \textbf{Riemann integrable} if the upper and lower Riemann sums converge.
+	If these bounds (upper and lower Riemann sums) converge, we say that a function is \textbf{Riemann integrable} and
+	define the Riemann integral as the limit.
 \end{definition}
 
 
-\todo[inline]{Don't understand $f_P$}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LEBESGUE INTEGRAL
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{The Lebesgue Integral on hybrid domains}
+\section{The Lebesgue Integral on Hybrid Domains}
 
 Another common approach to integration is the Lebesgue integral which approaches integration from a measure theoretic
 perspective.
