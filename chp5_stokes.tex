@@ -32,7 +32,7 @@ We will now generalize the boundary to map an oriented $n$-rectangle to an $(n-1
 \begin{definition}
 	Let  $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ be a a $k$-rectangle in $\mathbb{R}^n$.
 	Additionally, let $i_1, i_2, \ldots, i_k$ be the unique non-decreasing sequence of indices such that $a_{i_j} \neq b_{i_j}$.
-	The \textbf{boundary of $ \boldsymbol{[\![ a,b ]\!]} $ }, denoted the operator $\partial$ is given by
+	The \textbf{boundary of $ \boldsymbol{[\![ a,b ]\!]} $ }, denoted by the operator $\partial$ is given by:
 	\begin{align}
 		\label{eqn:defboundary}
 		\partial \left( [\![ \boldsymbol{a}, \boldsymbol{b} ]\!] \right) 
@@ -94,10 +94,10 @@ and
 \end{equation*}
 
 
-In each Cartesian product, the terms at $i_j$: $[\![a_{i_j}, a_{i_j}]\!]$ and $[\![b_{i_j}, b_{i_j}]\!]$ are both 0-cubes.
+In each Cartesian product, the terms at $i_j$: $[\![a_{i_j}, a_{i_j}]\!]$ and $[\![b_{i_j}, b_{i_j}]\!]$ are both 0-rectangles.
 Since we defined the sequence $i_j$ by $a_{i_j} \neq b_{i_j}$, 
-these 0-rectangles are replacing 1-cubes in $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$.
-Hence we are indeed left with a $(k-1)$-cube.
+these 0-rectangles are replacing 1-rectangles in $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$.
+Hence we are indeed left with a $(k-1)$-rectangle.
 
 
 
@@ -134,7 +134,7 @@ One may notice the similarity between this result and the (second) fundamental t
 \end{equation*}
 Which one could easily rewrite as $\int_{[\![a,b]\!]} F'(x) \; \diff x = \sum (\partial([\![a,b]\!]))$.
 Indeed, this is why we have defined the boundary function as such, but more general statements await.
-We defined the boundary for not just intervals on $\mathbb{R}$ but $k$-cubes in $\mathbb{R}^n$.
+We defined the boundary for not just intervals on $\mathbb{R}$ but $k$-rectangle in $\mathbb{R}^n$.
 
 
 
@@ -289,24 +289,24 @@ There may not be such a nice physical interpretation in other spaces.
 \section{Chains}
 
 In fact, we have already seen $k$-chains without mentioning them explicitly.
-The boundary of a $(k+1)$-cube was the sum $\oplus$, of $2(k+1)$, $k$-rectangles.
+The boundary of a $(k+1)$-rectangle was the sum $\oplus$, of $2(k+1)$, $k$-rectangles.
 Chains are not restricted to being boundaries of some larger $(k+1)$ rectangle; 
 any linear combination of $k$-rectangles will do.
 
 
 \begin{definition}
-We denote the Abelian group of of all $k$-cubes in $X$ as $C_k(X)$ (omitting $X$ when obvious by context).
+We denote the Abelian group of of all $k$-rectangles in $X$ as $C_k(X)$ (omitting $X$ when obvious by context).
 An element $c \in C_k$(X) is called a \textbf{$\boldsymbol{k}$-chain on $X$} and is of the form:
 \begin{equation*}
 	c = \bigoplus_{c_i \in X} \lambda_i c_i
 \end{equation*}
-with integer coefficients $\lambda_i$ and  $k$-cubes in $c_i$.
+with integer coefficients $\lambda_i$ and  $k$-rectangles in $c_i$.
 If coefficients $\lambda_i$ are $\pm 1$ and $c$ is \emph{locally finite} (i.e. each $c_i$ intersects with only finitely many $c_j$ that have non-zero coefficients) then we say that $c$ is a \textbf{domain of integration}.
 \end{definition}
 
 
 		
-Since $k$-chains are just linear combinations of $k$-cubes, we naturally extend many of our definitions linearly as well.
+Since $k$-chains are just linear combinations of $k$-rectangles, we naturally extend many of our definitions linearly as well.
 The integral $\int_c f$ of a $k$-chain $c=\bigoplus_i \lambda_i c_i$ is defined as $\lambda_i \int_{c_i} f  + \lambda_2 \int_{c_2} f + \ldots$.
 Doing the same for the boundary operator $\partial$ we have:
 \begin{align*}
@@ -352,7 +352,7 @@ for $a_1 \neq b_1$ and $a_2 \neq b_2$:
 
 Geometrically this can be seen below that the boundary of a rectangle are its edges.
 The boundary of these edges are the corners; but each corner occurs with both postive and negative sign cancelling.
-Often stated as ``$\partial \partial = 0$'', this identity is not unique to $2$-cubes but holds for higher dimensions as well.
+Often stated as ``$\partial \partial = 0$'', this identity is not unique to $2$-rectangles but holds for higher dimensions as well.
 
 
 \begin{figure}[ht] 
@@ -379,8 +379,8 @@ Often stated as ``$\partial \partial = 0$'', this identity is not unique to $2$-
 		\fill (8+2,2) node[anchor=south] {$-$} node[anchor=west] {$+$} circle (2pt);
 		\fill (8,2) node[anchor=east] {$-$} node[anchor=south] {$+$} circle (2pt);
 	\end{tikzpicture}
-	\caption[Boundary of a boundary (of a 2-cube)] {
-		The boundary of 2-cube gives a cycle of oriented edges. 
+	\caption[Boundary of a boundary (of a (2-)rectagle)] {
+		The boundary of rectangle gives a cycle of oriented edges. 
 		Taking the boundary of again, at each corner, the negative boundary of one edge 
 		will be canceled by the positive boundary of the preceding edge.
 	\label{fig:rectboundaryboundary}}
@@ -430,12 +430,14 @@ Then we have:
 				(\boldsymbol{b}^{[\![1,n]\!]})
 			]\!] 
 \end{align*}
-Note that we have $i_j$ and $i'_\ell$; after applying the first boundary operator, one dimension of the $k$-cube is degenerate.
+Note that we have $i_j$ and $i'_\ell$; after applying the first boundary operator, 
+one dimension of the $k$-rectangle is degenerate.
 Hence for each sequence: $\{i_j\}_{j=1}^k$ we construct $\{i_{j,\ell}\}_{\ell=1}^{k-1}$ given by:
 \begin{equation*}
 	i_{j,1} , \ldots, i_{j,k-1} = i_1, \ldots, \widehat{i_j}, \ldots, i_k
 \end{equation*}
-The double sum iterates over all pairs but $\oplus$ commutes so the $(k-2)$-cube with degenerate dimensions $[\![i_j]\!] \oplus [\![i_{j,\ell}]\!]$ will be iterated over twice. 
+The double sum iterates over all pairs but $\oplus$ commutes so the $(k-2)$-rectangle with degenerate dimensions 
+$[\![i_j]\!] \oplus [\![i_{j,\ell}]\!]$ will be iterated over twice. 
 The sequences depend on one another so it is not as simple as simply swapping $\ell$ and $j$:
 \begin{equation*}
    [\![i_j]\!] \oplus [\![i_{j,\ell}]\!] =
@@ -446,7 +448,7 @@ The sequences depend on one another so it is not as simple as simply swapping $\
 \end{equation*}
 
 
-So each term representing a $(k-2)$-cube will occur twice in the sum.
+So each term representing a $(k-2)$-rectangle will occur twice in the sum.
 Once with the iteration $(j,\ell)$ and once with $(\ell, j-1)$ or $(\ell+1, j)$.
 In either case, $(-1)^{j+\ell}$ is inverted meaning the two cubes will cancel.
 Leaving us with the boundary of a boundary being empty.

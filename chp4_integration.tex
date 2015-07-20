@@ -34,6 +34,8 @@ Generally after a short exposition about Riemann sums, it would then be revealed
 However this means that previously defining the definite integral using (unoriented) intervals was a bit of a misnomer.
 As we saw in the previous chapter, when $a \geq b$, the interval $[a,b) = \{ x \;|\; a \leq x < b \}$ is the empty set.
 So the interval itself cannot really be thought of as a part of the definite integral.
+
+
 If it were the interval itself that we were concerned with then for $a \leq b$, the interval $[b,a)$ is empty,
 as are the intervals $[a,a)$, $[\pi, e)$, and $[\infty, -\infty)$.
 As these are all different representations of the same interval, and if we were truly concerned with 
@@ -89,11 +91,14 @@ In one dimension, many of these changes may seem trivial advances but in higher 
 the oriented and measure-theoretic approaches diverge \cite{tao2007differential}.
 A Riemann integration foundation is not overly concerned with negatively oriented intervals and the definitions continue
 to function unperturbed by the fact that the ``right-hand'' bound is actually less than the ``left-hand'' bound.
+
+
 As such extending to higher dimension Riemann integrals, orientation is easily bundled in as well.
 But measure-based approaches to integration need to fake orientation in one dimension.
 First one must convert $\int_a^b$ into either $-\int_{[a,b)}$ or $\int_{[a,b)}$ and then integrate one or the other.
 Once one commits to an orientation, there is no coming back.
 In higher dimensions, this becomes more of a problem.
+
 
 This is usually forgivable given the extra power the Lebesgue integral affords over the Riemann.
 Using hybrid sets as domains of integration allow us to use the best features of both.
@@ -159,16 +164,17 @@ Note that we specify \emph{a} Riemann sum, not \emph{the} Riemann sum.
 There are several ways to choose $x^*_{i_1,\ldots,i_n} \in I_{i_1, \ldots, i_n}$ and different samplings can lead to different Riemann sums for the same partition and same function.
 In $\mathbb{R}^1$, several common ways to sample include 
 the left and right Riemann sums (i.e. $\Rie(f,P,\min(x))$ and $\Rie(f,P,\max(x))$), 
-the trapezoidal Riemann sum (i.e. $\Rie(f,P, \min(x)+\max(x)/2)$) 
-the upper Riemann sum (i.e. $\Rie(f,P, \max(f(x)))$) and 
-the lower Riemann sum (i.e. $\Rie(f,P, \max(f(x)))$).
+the trapezoidal Riemann sum (i.e. $\Rie(f,P, \min(x)+\max(x)/2)$), 
+and the upper and lower Riemann sums (i.e. $\Rie(f,P,\min(f(x)))$ and $\Rie(f,P,\max(f(x)))$).
 
 
 \begin{figure}[ht] 
 	\centering 
-	\includegraphics[scale=0.6]{diagrams/riemann}
+	\includegraphics[scale=0.7]{diagrams/riemann}
 	\caption[Riemann Integral] {
-		Upper and lower Riemann sums shown for the same sequence shown with light and dark rectangles respectively. 
+		A Riemann sum corresponds with the area of a sequence of rectangles.
+		Here, the upper and lower Riemann sums for the same partition are shown 
+		with light and dark rectangles respectively. 
 		A function over an oriented interval is Riemann integrable if the two sums converge.
 	\label{fig:riemann}}
 \end{figure}
@@ -178,9 +184,9 @@ the lower Riemann sum (i.e. $\Rie(f,P, \max(f(x)))$).
 The Riemann integral of a function $f:\mathbb{R}^n \to \mathbb{R}$ over a $k$-rectangle 
 $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$ as $\max( | \vol( I_{p_1,\ldots, p_n}) | : p_i \in P_i )$ goes to zero.
 	\begin{equation}
-		\Rie(f,P,\min(f(x))) 
-		\leq \int_{[\![a,b]\!]} f(x) \diff x 
-		\leq \Rie(f,P,\max(f(x))) 
+		\Rie \Big( f,P,\min \big( f(x) \big) \Big) 
+		\;\leq\; \int_{[\![a,b]\!]} f(x) \diff x 
+		\;\leq\; \Rie \Big( f,P,\max \big( f(x) \big) \Big) 
 	\end{equation} 
 	If these bounds (upper and lower Riemann sums) converge, we say that a function is \textbf{Riemann integrable} and
 	define the Riemann integral as the limit.
@@ -224,9 +230,9 @@ $\ind[S] (x) = 1$ if $x \in S$ and $\ind[S] (x) = 0$ otherwise.
 Clearly if $S$ is a measurable set, then $\ind[S]$ is a measurable function.
 We will use this as a base case.
 Given a measure space $(X, \Sigma, \mu)$ and $S \in \Sigma$, we define the integral:
-\begin{equation*}
+\begin{equation}
 	\int \! \ind[S] \diff \mu = \mu ( S )
-\end{equation*}
+\end{equation}
 
 
 From this, we consider functions which are the sum of indicator functions.
@@ -236,33 +242,49 @@ and matching real coefficients $\{ a_k \}_{k=0}^n$ such that:
 	s = \sum_{k=0}^n a_k \ind[A_k]
 \end{equation*}
 The integral of a simple function is then easily defined linearly in terms of integrals of indicator functions:
-\begin{equation*}
+\begin{equation}
 	\int \! s \diff \mu 
 		= \int \left(\sum_{k=0}^n a_k \ind[A_k] \right) \diff \mu 
 		= \sum_{k=0}^n a_k  \int \! \ind[A_k] \diff \mu
 		= \sum_{k=0}^n a_k \cdot \mu(A_k)
-\end{equation*}
+\end{equation}
+
 
 But we don't always wish to integrate over the entire measure space but rather some measurable subset of $X$.
 This would be done with the notation $\int_B$ instead of $\int$ and replacing $\mu(A_k)$ with $\mu(A_k \cap B)$.
 If $A_k$ and $B$ are both measurable sets in $\Sigma$ then their intersection is also a measurable set in $\Sigma$.
 But as already mentioned, integrating over sets is a misnomer; we should be integrating over oriented sets.
-To do this, we extend $\mu$ linearly for hybrid sets on $\Sigma$.
-Strictly speaking, doing so means that $\mu$ is no longer a measure as it takes on negative values.
-For a hybrid set $H \in \hsetover[\Sigma]$,
-\begin{equation*}
+To do this, we will need to extend $\mu$.
+
+
+The typical approach would be to construct a \textbf{signed measure} over $\Sigma$.
+As a signed measure we lift the non-negative condition and allow for negative values or \emph{charge}.
+In one dimension, this is analogous to considering $q-p$ (signed measure) as opposed to Euclidean distance: $||q-p||$ 
+(unsigned measure).
+But this does not allow us to integrate sets, rather it allows us to integrate sets \emph{with orientation}.
+Consider $\int_{[0,1]} \diff\mu$, with no extra information regarding the set $[0,1]$.
+This integral is either $1$ or $-1$ we must supply additional information in order to distinguish between 
+$\int_0^1 \diff\mu$ and $\int_1^0\diff\mu$.
+
+
+Instead, both orientation and set are contained within our measurable hybrid sets so we will use this instead.
+Rather than a signed measure over the $\sigma$-algebra $\Sigma$ itself, 
+we will instead use a signed measure over $\hsetover[\Sigma]$, the space of hybrid sets over $\Sigma$.
+Assuming an existing measure $\mu$ on $\Sigma$, this construction comes for free by extending linearly.
+Thus, to integrate over a hybrid set $H \in \hsetover[\Sigma]$:
+\begin{equation}
 	\int_H s \diff \mu = \int H \cdot s \diff \mu = \sum_k a_k \cdot \mu(A_k \otimes H)
-\end{equation*}
+\end{equation}
 
 
 We then use simple functions to approximate general measurable functions.
 For a non-negative function $f$, we say this is the largest simple function that is everywhere less than $f$:
-\begin{equation*}
+\begin{equation}
 	\int_H \! f \diff\mu = 
 		\text{sup} \left\{ 
 			\int_H s \diff \mu \;\middle|\; s \text{ simple, and } 0 \leq \varphi \leq f 
 		\right\}
-\end{equation*}
+\end{equation}
 But even if $f$ takes negative values, we can split it into positive and negative parts by:
 \begin{align*}
 f^+(x) &:= \mathrm{max}( 0, f(x)) \\
@@ -270,25 +292,30 @@ f^-(x) &:= \mathrm{max}(0, -f(x))
 \end{align*}
 Both $f^+$ and $f^-$ are clearly non-negative but also, observe that $f=f^+ - f^-$.
 Linearly, this allows us to define for any measurable $f$:
-\begin{equation*}
+\begin{equation}
 \int_H f \diff \mu = \int_H f^+ \diff \mu - \int_H f^- \diff \mu
-\end{equation*}
+\end{equation}
 
 
-The last issue that remains to be settled is whether such a limit even exists.
+The last issue that remains to be settled is whether such a limit of simple functions even exists.
 For this we can use the sequence of simple functions $\psi_n$ defined by:
-\begin{equation*}
+\begin{equation}
 	\psi_n = \sum_{k=0}^{n2^n -1} 
 		\left[ \left(\frac{k}{2^n}\right)^{\left[ \frac{k}{2^n}, \frac{k+1}{2^n} \right)} \right] 
 		+ n^{[n,\infty]}
-\end{equation*}
+\end{equation}
 Notationally, this definition is rather heavy but is easily understood geometrically as seen below in
 Figure~\ref{fig:simplefunc}.
-In turn this allows us to define for any non-negative $f$ the sequence of functions  $\varphi_n = \psi_n \circ f$.
+In turn this allows us to define for any non-negative $f$ the sequence of functions:  
+\begin{equation}
+	\varphi_n = \psi_n \circ f
+\end{equation}
 We know that $\varphi_n$ is simple since $\psi_n$ is simple.
 And since $\psi_n(x) \leq x$ for all $x$ then we also have $0 \leq \varphi_n \leq f$.
 But, most importantly we have $0 \leq f(x) - \varphi_n(x) \leq 2^{-n}$ and 
 so $\varphi_n$, uniformly approaches $f$ as $n$ approaches infinity. 
+
+
 \begin{figure}[ht] 
 	\centering
 	\begin{tikzpicture}[y=1cm, x=2.5cm]
@@ -342,7 +369,7 @@ so $\varphi_n$, uniformly approaches $f$ as $n$ approaches infinity.
 
 
 
-
+\pagebreak
 
 
 
@@ -356,6 +383,8 @@ and the power of Lebesgue integration.
 Consider the indicator function for the set of rational numbers, $1_\mathbb{Q}$ which evaluates to 
 1 for rational numbers and 0 for irrational numbers.
 Over the interval $[0,1]$ on the real line, this is not Riemann-integrable.
+
+
 Suppose we have some generalized partition of $[0,1]$ made up of intervals.
 Then for any of these sub-intervals, there will be at least one rational and one irrational number.
 Hence the upper Riemann sum will be 1 and the lower Riemann sum will be 0.
@@ -365,16 +394,16 @@ The two sums will never converge and so there is no well-defined Riemann integra
 
 On the other hand, it is Lebesgue integrable:
 \begin{equation*}
-	\int_{[0,1]} 1_\mathbb{Q} \diff\mu = \mu(\mathbb{Q} \cap [0,1])
+	\int_{[0,1]} 1_\mathbb{Q} \diff\mu \;=\; \mu \Big( \mathbb{Q} \cap [0,1] \Big)
 \end{equation*}
 But since $\mathbb{Q}$ is countable, it has measure 0 and so $1_\mathbb{Q}$ \emph{is} Lebesgue integrable on $[0,1]$.
 Similarly, we could also find that:
 \begin{equation*}
 	\int_0^1 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \mu
-		= \int_{[0,1]} 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \mu
-		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
-		= \mu \big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \big)
-		= 1
+		\;=\; \int_{[0,1]} 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \mu
+		\;=\; \mu \Big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \Big)
+		\;=\; \mu \Big( (\mathbb{R}\setminus\mathbb{Q}) \cap [0,1] \Big)
+		\;=\; 1
 \end{equation*}
 
 One would expect the same process to hold for when integrating from 0 to 1 but restricted to sets, this is not possible.
@@ -413,7 +442,7 @@ A \textbf{(differental) 1-form} $\omega$ on $\mathbb{R}^n$ is an expression of t
 \end{equation*}
 Now this looks very much like something we're used to integrating.
 Specifically it is something that be used as an integrand over a 1 dimensional domain.
-For example, in a multivariate calculus course, Green's theorem is often introduced using differential forms 
+For example, Green's theorem is often introduced using differential forms 
 without even mentioning them as such:
 \begin{equation}
 	\tag{Green's Theorem}
@@ -428,9 +457,9 @@ Here $C$ is a closed curve that encloses $D$ a region in the $(x,y)$ plane; henc
 a 1-form over a 1-dimensional curve.
 Having multiple $\diff x_i$ appearing in a single integrand may initially seem unusual when first presented, 
 but is quite intuitively handled.
-Integration is linear so just as we can separate $\int \Big( f(x) + g(x) \Big)\diff x$ into $\int f(x) \diff x + \int g(x) \diff x$, 
+Integration is linear so just as we can separate $\int \Big( f(x) + g(x) \Big)\diff x$ into ${\int f(x) \diff x + \int g(x) \diff x}$, 
 we can similarly breakup an integral of a 1-form into the sum of integrals over \emph{basic} 1-forms 
-(1-forms involving a single term).
+(i.e. 1-forms involving only a single term):
 \begin{equation*}
 	\int \Big( 
 			f_1(\text{x}) \diff x_1 
@@ -468,7 +497,7 @@ Additionally, for any permutation $\sigma$ of $[p]$:
 The wedge product of two 1-forms moves us out of the realm of 1-forms which have basis $\diff x_i$ and into the 
 realm of 2-forms with basis $\diff x_i \wedge \diff x_j$.
 
-\pagebreak
+
 \begin{definition}
 	Given a $k$-rectangle $\Omega \in \mathbb{R}^n$ with coordinates $\text{x} = (x_1, x_2, \ldots, x_n)$
 	A \textbf{differential $p$-form} $\beta$ over $\Omega$ has the form:
@@ -481,8 +510,8 @@ realm of 2-forms with basis $\diff x_i \wedge \diff x_j$.
 	\end{equation}
 	Typically, we will take $j$ to be the vector $(j_1, \ldots, j_p)$ 
 	and express $\beta$ instead as a single sum multi-indexed
-	by $j$, $\sum_j b_j(x) \; \diff x_{j_1} \wedge \ldots \wedge \diff x_{j_p}$.
-	We denote the space of all $p$-forms on $\Omega$ by $\Lambda^p(\Omega)$.
+	by $j$.
+	We denote the \textbf{space of all $\boldsymbol{p}$-forms on $\boldsymbol{\Omega}$} as $\Lambda^p(\Omega)$.
 \end{definition}
 
 \begin{definition}
@@ -520,7 +549,6 @@ This result generalizes the earlier skew-symmetry of transposing $\diff x \wedge
 When $\alpha$ and $\beta$ are both 1-forms then clearly $-1^{pq} = -1^{1\cdot1}= -1$.
 
 
-\pagebreak
 The wedge product is only one part of our algebra of differential forms.
 We have several other nice identities for its behaviour with addition and multiplication.
 For the following, we consider $f$ to be a function on $\mathbb{R}^n$.
@@ -544,7 +572,7 @@ We also do not define the multiplication of $\cdot$ two differential forms but w
 
 
 Integrating over a $k$-form is quite simple.
-First we shall consider integrating a $k$-form over a $k$-rectangle in $\mathbb{R}^k$.
+First, consider integrating a $k$-form over a $k$-rectangle in $\mathbb{R}^k$.
 Such a $k$-form is also known as a \emph{top-dimensional form}.
 As we saw previously, any form of higher degree must be zero.
 If $\omega$ is such a top form then we can always write
@@ -554,7 +582,7 @@ If $\omega$ is such a top form then we can always write
 for some function $f$.
 Other presentations of $\omega$ exist, but we can always achieve such a presentation by commuting over $\wedge$ 
 to the canonical ordering $x_1, \ldots, x_n$.
-Once we have the $k$-form in this presentation, we just remove the wedges and evaluate the integral using the
+Once a $k$-form in this presentation, remove the wedges and evaluate the integral using the
 integrand $f \diff x_1 \diff x_2 \ldots \diff x_k$.
 
 

@@ -5,10 +5,10 @@ The primary objective of this thesis was to extend \cite{carette2010} by investi
 In this we focused on three main examples: block matrix algebra, integration and convolution of piecewise functions. 
 Along the way, several smaller examples were considered as well.
 As primarily a demonstration of notation, rational numbers and polynomials were shown as examples of hybrid sets.
-Hybrid relations and functions were also demonstrated with maximum flow problems and arithmetic with piece-wise defined functions.
+Hybrid relations and functions were also demonstrated with maximum flow problems and arithmetic with piecewise defined functions.
 
 
-Piece-wise function arithmetic was the first demonstration of the strength of generalized partitions.
+Piecewise function arithmetic was the first demonstration of the strength of generalized partitions.
 Whereas the naive approach to adding an $n$ piece to an $m$ piece function leads to $O(n\cdot m)$ piece function in the 
 general case.
 Using generalized partitions and careful selection of a generalized partition, we could reduce this to $O(n+m-1)$.
@@ -16,10 +16,12 @@ This also required the use of pseudo-functions and leaving functions unevaluated
 If this is not done, we run the risk of attempting to evaluate a function outside of its defined domain.
 
 
-The same technique can also be applied to adding symbolic block matrices and vectors as was previously shown in
-\cite{carette2010}.
-Using generalized partitions for multiplication of block matrices is more involved.
-By doing so we could formulate an expression using ``wrong ordering'' of breakpoints along the mutual axis of the
+Addition of symbolic block matrices and vectors can be performed in the same fashion as piecewise function arithmetic
+as was previously shown in \cite{carette2010}.
+Filling the role of the $\xi(i,j,k)$ function from \cite{sexton2008abstract}, oriented intervals were introduced.
+Thus far, this notation has proved very intuitive and flexible.
+In particular, this sufficiently lightened the notation to allow for the development of block matrix multiplication.
+Doing so we could formulate an expression using ``wrong ordering'' of breakpoints along the mutual axis of the
 multiplicands but still result in the correct product.
 Thus we can work with matrices which have symbolically sized blocks without resorting to a case-based approach. 
 

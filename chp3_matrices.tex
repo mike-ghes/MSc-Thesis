@@ -215,7 +215,10 @@ One could alternatively write $[a,b)\oplus [b,c) = [\; \min(a,b),\max(b,c) \;)$ 
 under the rug.
 When working with intervals, a case-based approach to consider relative ordering of endpoints easily becomes 
 quite cumbersome.
-
+Previously, the $\xi$ function was introduced in \cite{sexton2008abstract} to solve this problem.
+Although it solves the problem of cases, it quickly leads to unnecessarily heavy notation.
+Instead we introduce oriented intervals which are considerably more readable.
+It should be noted that the definitions are equivalent; $\xi(i,y,z)$ and $[\![y,z)\!)$ can be used interchangeably.
 
 \begin{definition}
 	We define \textbf{oriented intervals} with $a,b\in X$, where $X$ is a totally ordered set, 
