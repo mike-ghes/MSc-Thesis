@@ -802,11 +802,8 @@ The plots in red and blue show the behavior of $(2-x^2)$ and $1/x^2$ respectivel
 Of note, $1/x^2$ (shown in blue) is obviously undefined at 0.
 
 
-\begin{figure}[ht]
-	\caption[Piece-wise Rational Function]{A piecewise rational function is shown in black. 
-	The plots in red and blue are continuations of $(2-x^2)$ and $1/x^2$ respectively.
-	\label{fig:pwRational}}
-	\centering
+\begin{figure}[ht]  
+	\centering 
 	\begin{tikzpicture}[>=stealth]
 	    \begin{axis}[
 	        xmin=-5,xmax=5,
@@ -828,6 +825,10 @@ Of note, $1/x^2$ (shown in blue) is obviously undefined at 0.
 	      \addplot[no marks,black,thick,->] expression[domain=1:4,samples=100]{1/x^2};
 	    \end{axis}
 	\end{tikzpicture}
+	\caption[Piecewise Rational Function] {
+		A piecewise rational function is shown in black. 
+		The plots in red and blue are continuations of $(2-x^2)$ and $1/x^2$ respectively.
+	\label{fig:pwRational}}
 \end{figure}
 
 
@@ -845,7 +846,7 @@ This gives the closely related hybrid function $f$ and pseudo-function $\pseudo{
 
 
 
-Additionally we will multiply $f$ by the Heaviside function $H$ (with $H(0)=1$): a piece-wise function over the intervals
+Additionally we will multiply $f$ by the Heaviside function $H$ (with $H(0)=1$): a piecewise function over the intervals
 $B_1 = [0, \infty)$ and $B_2 = (-\infty, 0)$
 \begin{equation*}
 	\begin{array}{r c c c}

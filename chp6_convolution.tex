@@ -5,10 +5,7 @@ It takes one of the two input functions, and modifies one by mirroring and trans
 The resulting function is then the overlap between one of these functions as a function of the translation.
 Visually, this can be seen below in Figure~\ref{fig:ConvolutionExample}.
 
-\begin{figure}[ht]
-	\caption[Convolution of box signal with itself]{The convolution of the box signal 
-	$f(t)=g(t)=\left( 0^\oiOpOp{-\infty,-0.5} \oplus 1^\oiClCl{-0.5,0.5} \oplus 0^\oiOpOp{0.5,\infty} \right)$ with itself.
-	\label{fig:ConvolutionExample}}
+\begin{figure}[ht] 
 	\centering
 	\begin{tikzpicture}[scale=3.8]
 		\draw[fill, color=black!10] (-1.75,1.5) rectangle (-1.4,2);	
@@ -48,13 +45,18 @@ Visually, this can be seen below in Figure~\ref{fig:ConvolutionExample}.
 		\draw[dashed] (1.95,1.3) -- (1.95, 1) -- (0.9,0.5) -- (0.9,-.1) node [below] {$t=0.9$};
 		
 	\end{tikzpicture}
+	\caption[Convolution of box signal with itself] {
+		The convolution of the box signal 
+		$f(t)=g(t)=\left( 0^\oiOpOp{-\infty,-0.5} \oplus 1^\oiClCl{-0.5,0.5} \oplus 0^\oiOpOp{0.5,\infty} \right)$ 
+		with itself.
+	\label{fig:ConvolutionExample}}
 \end{figure}
 
 Formally this, equates to the following definition for convolution over continuous domains:
 \begin{definition}
 	The \textbf{convolution} $*$, of two functions $F$ and $G$ is defined as:
 	\begin{equation}
-		(F*G)(t) = \int_{-\infty}^\infty F(\tau) \;G(t - \tau) \; d\tau
+		(F*G)(t) = \int_{-\infty}^\infty F(\tau) \;G(t - \tau) \diff \tau
 	\end{equation}
 \end{definition}
 and in the case of discrete linear convolution, summation would replace integration.
@@ -62,12 +64,8 @@ In this equation, $t$ represents the translation of $G$ as well as the input for
 while $\tau$ is internal to the integral and varies over the real line.
 
 
-\begin{figure}[ht]
-	\caption[Gaussian Blurring]{512x512px ``Lena''(a) with a 1px (b) and 5px (c) Gaussian blur applied. 
-	Gaussian blurring is accomplished by convolving an image with a Gaussian kernel and is commonly used
-	in image processing to reduce noise prior to edge detection.
-	\label{fig:LenaBlur}}
-	\centering
+\begin{figure}[ht] 
+	\centering 
 	\begin{subfigure}[b]{0.3\textwidth}
                 \includegraphics[scale=0.25]{diagrams/Lenna}
                 \caption{Original Image}
@@ -80,6 +78,11 @@ while $\tau$ is internal to the integral and varies over the real line.
                 \includegraphics[scale=0.25]{diagrams/Lenna-blur5}
                 \caption{5px Gaussian blur}
        \end{subfigure}
+       \caption[Gaussian Blurring] {
+       	512x512px ``Lena''(a) with a 1px (b) and 5px (c) Gaussian blur applied. 
+		Gaussian blurring is accomplished by convolving an image with a Gaussian kernel 
+		and is commonly used in image processing to reduce noise prior to edge detection.
+	\label{fig:LenaBlur}}
 \end{figure}
 
 
@@ -143,9 +146,9 @@ To see this, simply apply the substitute $\tau' = t-\tau$ in equation (7.1):
 \begin{align}
 	\label{eqn:ConvCommutative}
 	(F*G)(t) 
-		&= \int_{-\infty}^\infty F(\tau) G(t-\tau) \;d \tau 
-		\notag\\&= \int_{\infty}^{-\infty} F(t-\tau')G(\tau')\; (-1) d\tau' 
-		\notag\\&= \int_{-\infty}^\infty G(\tau') F(t-\tau') \; d\tau'
+		&= \int_{-\infty}^\infty F(\tau) G(t-\tau) \diff \tau 
+		\notag\\&= \int_{\infty}^{-\infty} F(t-\tau')G(\tau')\; (-1) \diff\tau' 
+		\notag\\&= \int_{-\infty}^\infty G(\tau') F(t-\tau') \diff \tau'
 		\notag\\&= (G*F)(t)
 \end{align}
 
@@ -157,22 +160,19 @@ For a tight boundary, we have the following:
 \begin{align}
 	\label{eqn:ConvNaiveOnePiece}
 	(F*G)(t) 
-	&= \int_{-\infty}^\infty F(\tau)\; G(t-\tau) \; d\tau \notag \\
-	&= \int_{a_f}^{b_f} f(\tau) \; G(t-\tau) \; d\tau \notag \\
+	&= \int_{-\infty}^\infty F(\tau)\; G(t-\tau) \diff \tau \notag \\
+	&= \int_{a_f}^{b_f} f(\tau) \; G(t-\tau) \diff \tau \notag \\
 	&= 	\begin{cases}
-			\int_{a_f}^{t-a_g} f(\tau) \; g(t-\tau) \; d\tau 	& (a_f+a_g) \leq t < (b_f+a_g) \\
-			\int_{a_f}^{b_f} f(\tau) \; g(t-\tau) \; d\tau		& (b_f+a_g) \leq t < (a_f+b_g) \\
-			\int_{t-b_g}^{b_f} f(\tau) \; g(t-\tau) \; d\tau	& (a_f+b_g) \leq t < (b_f+b_g) \\
+			\int_{a_f}^{t-a_g} f(\tau) \; g(t-\tau) \diff \tau 	& (a_f+a_g) \leq t < (b_f+a_g) \\
+			\int_{a_f}^{b_f} f(\tau) \; g(t-\tau) \diff\tau		& (b_f+a_g) \leq t < (a_f+b_g) \\
+			\int_{t-b_g}^{b_f} f(\tau) \; g(t-\tau) \diff\tau	& (a_f+b_g) \leq t < (b_f+b_g) \\
 			0										& \text{otherwise}
 		\end{cases}
 \end{align}
 
 
-\begin{figure}[ht]
-	\caption[Convolution of ``one-piece'' functions]{Convolution of length 1 and 2 rectangular pulses. 
-	Given the functions $F=1^{[-1,1)}$ and $G=1^{[-2,2)}$, there are three non-zero regions in $(F*G)$.
-	\label{fig:OnePiece}}
-	\centering
+\begin{figure}[ht] 
+	\centering 
 	\begin{tikzpicture}
 		\begin{axis}[
 			x=1.5cm,
@@ -201,6 +201,10 @@ For a tight boundary, we have the following:
 		%\draw[thick,<->] (0,-.5) -- (0,1.5);
 		
 	\end{tikzpicture}
+	\caption[Convolution of ``one-piece'' functions] {
+		Convolution of length 1 and 2 rectangular pulses. 
+		Given the functions $F=1^{[-1,1)}$ and $G=1^{[-2,2)}$, there are three non-zero regions in $(F*G)$.
+	\label{fig:OnePiece}}
 \end{figure}
 
 
@@ -212,7 +216,7 @@ Another formulation presented by C\^{i}rnu \cite{cirnu2012calculation} and Cavic
 	\label{eqn:ConvCirnu}
 	(F*G)(t)=
 	\begin{cases}
-		\int_{\max(a_f, \; t-b_g)}^{\min(b_f, t-a_g)} f(\tau)\cdot g(t-\tau)\; d\tau & (a_f+a_g) \leq t < (b_f+b_g) \\
+		\int_{\max(a_f, \; t-b_g)}^{\min(b_f, t-a_g)} f(\tau)\cdot g(t-\tau)\diff\tau & (a_f+a_g) \leq t < (b_f+b_g) \\
 		0 & \text{otherwise}
 	\end{cases}
 \end{equation}
@@ -229,8 +233,8 @@ The convolution of $F*G$ is the sum of pairwise convolution:
 \begin{align}
 	\label{eqn:ConvPiecewise}
 	\left(\left(\sum_i f_i^{P_i}\right) * \left(\sum_j g_j^{Q_j}\right)\right) (t)
-	&= \int_{-\infty}^\infty \left(\sum_i f_i^{P_i}\right)(\tau)\cdot \left(\sum_j g_j^{Q_j}\right)(t-\tau) \;d\tau
-	\notag\\&= \sum_i \sum_j \int_{-\infty}^\infty f_i^{P_i}(\tau) \cdot g_j^{Q_j}(t-\tau) \;d\tau 
+	&= \int_{-\infty}^\infty \left(\sum_i f_i^{P_i}\right)(\tau)\cdot \left(\sum_j g_j^{Q_j}\right)(t-\tau) \diff\tau
+	\notag\\&= \sum_i \sum_j \int_{-\infty}^\infty f_i^{P_i}(\tau) \cdot g_j^{Q_j}(t-\tau) \diff\tau 
 	\notag\\&= \sum_i \sum_j \left(f_i^{P_i} * g_j^{P_j}\right)
 \end{align}
 
@@ -270,13 +274,21 @@ Then the \textbf{hybrid convolution of $\boldsymbol{f^{[a_f,b_f)}}$ and $\boldsy
 	\begin{align}
 		\label{eqn:defHConvolution}
 		(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = 
-			\R[+] &\left( \; \left( 
-				\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
-					\right. \notag \\ &\oplus \left( 
-				\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
-					\notag \\ &\oplus \left. \left( 
-				\int_{[\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+b_g,\; b_f+b_g)\!)} 
-					\; \right)(t)
+			\R[+] &\left( \; 
+				\left( 
+					\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \diff\tau 
+				\right)^{[\![a_f+a_g,\; b_f+a_g)\!)} 
+			\right. \notag \\ 
+			&\oplus 
+				\left( 
+					\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \diff\tau 
+				\right)^{[\![b_f+a_g,\; a_f+b_g)\!)} 
+			\notag \\ 
+			&\oplus \left. 
+				\left( 
+					\int_{[\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \diff\tau 
+				\right)^{[\![a_f+b_g,\; b_f+b_g)\!)} 
+			\; \right)(t)
 	\end{align}
 
 The first thing one should note is the similarity between this expression and (\ref{eqn:ConvNaiveOnePiece}).
@@ -310,20 +322,26 @@ Simplifying the $+$-reduction we then get:
 \begin{align}
 	(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = 
 		& \; \left( 
-			\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau \right) 
+			\int_{[\![a_f,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \diff\tau \right) 
 				\notag \\ &- \left( 
-			\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)
+			\int_{[\![a_f,\;b_f)\!)} f(\tau) \; g(t-\tau) \diff\tau \right)
 				\notag \\ &+ \left( 
-			\int_{[\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \right) 
+			\int_{[\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \diff\tau \right) 
 \end{align}
 All three of these integrals have the same integrand so we can use bi-linearity to move the sum to be over the domains
 of integration.
 These domains then cancel nicely to leave us with:
 \begin{align}
 	\label{eqn:HybridConvMidFinal}
-	(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) = &
-		\int_{[\![a_f,\;t-a_g)\!) \;\ominus\; [\![a_f,\;b_f)\!) \;\oplus\; [\![t-b_g,\;b_f)\!)} f(\tau) \; g(t-\tau) \; d\tau \notag\\
-		= & \int_{[\![t-b_g,\;t-a_g)\!)} f(\tau) \; g(t-\tau) \; d\tau
+	(f^{[a_f,b_f)} \;*\; g^{[a_g,b_g)}) (t) 
+		= & \int_{
+				[\![a_f,\;t-a_g)\!) \;\ominus\; [\![a_f,\;b_f)\!) \;\oplus\; [\![t-b_g,\;b_f)\!) 
+				} 
+				(\tau) \; g(t-\tau) \diff\tau \notag\\
+		= & \int_{
+				[\![t-b_g,\;t-a_g)\!)
+				} 
+				f(\tau) \; g(t-\tau) \diff\tau
 \end{align}
 Let us now look at a concrete example with some actual numbers.
 
@@ -345,11 +363,11 @@ dealing with is $x \mapsto 1$ rather than the number 1 itself.
 	\label{HCExample}
 	(1_f^{[-2,2)} \;*\; 1_g^{[-1,1)}) (t) = 
 		\R[+] &\left( \; \left( 
-			\int_{[\![-2,\;t-1)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-3,\; 1)\!)} 
+			\int_{[\![-2,\;t-1)\!)} f(\tau) \; g(t-\tau) \diff\tau \right)^{[\![-3,\; 1)\!)} 
 				\right. \notag \\ &\oplus \left( 
-			\int_{[\![-2,\;1)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![1,\; -1)\!)} 
+			\int_{[\![-2,\;1)\!)} f(\tau) \; g(t-\tau) \diff\tau \right)^{[\![1,\; -1)\!)} 
 				\notag \\ &\oplus \left. \left( 
-			\int_{[\![t-1,\;2)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-1,\; 3)\!)} 
+			\int_{[\![t-1,\;2)\!)} f(\tau) \; g(t-\tau) \diff\tau \right)^{[\![-1,\; 3)\!)} 
 				\; \right)(t)
 \end{align}
 
@@ -361,7 +379,7 @@ Let us consider three points $t_1 \in [-3, -1)$, $t_2 \in [-1, 1)$ and $t_3 \in 
 We omit the derivations but encourage the reader to convince themselves that each is correct.
 \begin{equation*}
 	(1_f^{[-2,2)} \;*\; 1_g^{[-1,1)}) (t_1) 
-		\;=\; \int_{[\![-2,\;t_1-(-1))\!)} 1_f(\tau) \; 1_g(t_1-\tau) \; d\tau
+		\;=\; \int_{[\![-2,\;t_1-(-1))\!)} 1_f(\tau) \; 1_g(t_1-\tau) \diff\tau
 		\;=\; t_1 + 3
 \end{equation*}
 First we should note that at no point in the integral do we attempt to evaluate $1_f$ or $1_g$ outside of their original 
@@ -373,7 +391,7 @@ From here, the integral is trivially evaluated and is as expected.
 For $t_3$, only the third term has non-zero multiplicity and by an identical argument as for $t_1$ we have:
 \begin{equation*}
 	(1_f^{[-2,2)} \;*\; 1_g^{[-1,1)}) (t_3) 
-		\;=\; \int_{[\![t-1,2)\!)} 1_f(\tau) \; 1_g(t_3-\tau) \; d\tau
+		\;=\; \int_{[\![t-1,2)\!)} 1_f(\tau) \; 1_g(t_3-\tau) \diff\tau
 		\;=\; 3 - t_3
 \end{equation*}
 Finally, $t_2$ deviates from this pattern slightly as $t_2$ is in \emph{all three} oriented intervals.
@@ -381,7 +399,7 @@ By the same derivation as we used in the previous section we can use equation~(\
 \begin{equation*}
 	\label{eqn:HCExampleT2}
 	(1_f^{[a_f,b_f)} \;*\; 1_g^{[a_g,b_g)}) (t_2) 
-		\;=\; \int_{[\![t_2-1,\;t_2-(-1))\!)} f(\tau) \; g(t-\tau) \; d\tau
+		\;=\; \int_{[\![t_2-1,\;t_2-(-1))\!)} f(\tau) \; g(t-\tau) \diff\tau
 		\;=\; 2
 \end{equation*}
 For any other point $t$ which is not in $[-3, 3)$, then all three oriented intervals will have multiplicity zero.
@@ -442,11 +460,11 @@ from section~\ref{sec:HybridFunction}.
 After substituting the previously assumed $b_f = \infty$ and $a_g=-\infty$, we can see that both the integrands are
 identical and the domains nearly so as well:
 \begin{equation*}
-	\left( \int_{[\![a_f,\;t+\infty)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-\infty,\; \bot )\!)} 
+	\left( \int_{[\![a_f,\;t+\infty)\!)} f(\tau) \; g(t-\tau) \diff\tau \right)^{[\![-\infty,\; \bot )\!)} 
 		\;\;\;\;\;
 		\text{and}
 		\;\;\;\;\;
-	\left( \int_{[\![a_f,\;\infty)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![\bot,\; a_f+b_g)\!)} 
+	\left( \int_{[\![a_f,\;\infty)\!)} f(\tau) \; g(t-\tau) \diff\tau \right)^{[\![\bot,\; a_f+b_g)\!)} 
 \end{equation*}
 For $t \neq -\infty$, the domains of integration match as well.
 By theorem~\ref{thm:reducible1}, these two terms are compatible.
@@ -454,9 +472,9 @@ Putting this all together:
 \begin{align}
 	(f^{[a_f,\infty)} \;*\; g^{[-\infty,b_g)}) (t) = 
 		\R[+] &\left( \; \left( 
-			\int_{[\![a_f,\;\infty)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![-\infty,\; a_f+b_g)\!)} 
+			\int_{[\![a_f,\;\infty)\!)} f(\tau) \; g(t-\tau) \diff\tau \right)^{[\![-\infty,\; a_f+b_g)\!)} 
 				\right. \notag \\ &\oplus \left. \left( 
-			\int_{[\![t-b_g,\;\infty)\!)} f(\tau) \; g(t-\tau) \; d\tau \right)^{[\![a_f+b_g,\; \infty)\!)} 
+			\int_{[\![t-b_g,\;\infty)\!)} f(\tau) \; g(t-\tau) \diff\tau \right)^{[\![a_f+b_g,\; \infty)\!)} 
 				\; \right)(t)
 \end{align}
 
@@ -511,10 +529,13 @@ Again, this is a simple swap as well:
 \end{align}
 
 One must be even more careful with bounds in the discrete case compared to the continuous.
-Excepting the Dirac function and similar functions, generally including or excluding the end-points will not affect the
+Excepting the Dirac function and similar constructions, including or excluding the end-points will not usually affect the
  evaluation of an integral:
 \begin{equation*}
-	\int_{(a,b)} f(x)\; dx = \int_{(a,b]}f(x)\; dx = \int_{[a,b)} f(x)\; dx = \int_{[a,b]} f(x)\;dx
+	\int_{(\!(a,b)\!)} f(x) \diff x 
+	= \int_{(\!(a,b]\!]} f(x) \diff x 
+	= \int_{[\![a,b)\!)} f(x) \diff x 
+	= \int_{[\![a,b]\!]} f(x) \diff x
 \end{equation*}
 The difference between each interval is measure 0 and so excepting pathological functions, the integrals should be equal.
 The same does not hold for summation; the openness or ``closed-ness'' of an interval matters even in the typical use case.
@@ -578,7 +599,6 @@ For the most part, the cases enumerated in Appendix~\ref{chp:16cases} follow a f
 To merge indeterminate end-points, we use the local variables \texttt{afbg} and \texttt{bfag} to represent the sums
 $a_f+b_g$ and $b_f+a_g$ respectively.
 If the sums are well defined, then we can apply the substitution, otherwise \texttt{afbg} and \texttt{bfag} are left symbolic.
-
 
 \begin{lstlisting}[frame=single]
  if(af+bg != undefined) then afbg := af+bg; fi;
@@ -660,7 +680,7 @@ The final step is to replace \texttt{fg(x)} with \texttt{f(x)*g(t-x)}
 
 \begin{lstlisting}[frame=single]
  ...
-out:=subs(fg(x)=f(x)*g(t-x), out)
+ out:=subs(fg(x)=f(x)*g(t-x), out)
 \end{lstlisting}
 
 

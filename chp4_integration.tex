@@ -164,10 +164,13 @@ the upper Riemann sum (i.e. $\Rie(f,P, \max(f(x)))$) and
 the lower Riemann sum (i.e. $\Rie(f,P, \max(f(x)))$).
 
 
-\begin{figure}[ht]
-\caption[Riemann Integral]{Upper and lower Riemann sums shown for the same sequence shown with light and dark rectangles respectively. A function over an oriented interval is Riemann integrable if the two sums converge.}
-\centering
-\includegraphics[scale=0.6]{diagrams/riemann}
+\begin{figure}[ht] 
+	\centering 
+	\includegraphics[scale=0.6]{diagrams/riemann}
+	\caption[Riemann Integral] {
+		Upper and lower Riemann sums shown for the same sequence shown with light and dark rectangles respectively. 
+		A function over an oriented interval is Riemann integrable if the two sums converge.
+	\label{fig:riemann}}
 \end{figure}
 
 
@@ -286,12 +289,7 @@ We know that $\varphi_n$ is simple since $\psi_n$ is simple.
 And since $\psi_n(x) \leq x$ for all $x$ then we also have $0 \leq \varphi_n \leq f$.
 But, most importantly we have $0 \leq f(x) - \varphi_n(x) \leq 2^{-n}$ and 
 so $\varphi_n$, uniformly approaches $f$ as $n$ approaches infinity. 
-\begin{figure}[ht]
-	\caption[Approximations using simple functions]{
-	The simple functions $\psi_n$ for $n$ from $1$ to $4$.
-	As $n$ goes to infinity, $\psi_n$ comes arbitrarily close to $x$ over the range 0 to $n$.
-	}
-	\label{fig:simplefunc}
+\begin{figure}[ht] 
 	\centering
 	\begin{tikzpicture}[y=1cm, x=2.5cm]
 		%psi 4
@@ -335,6 +333,10 @@ so $\varphi_n$, uniformly approaches $f$ as $n$ approaches infinity.
 			\draw (0,0) -- (0.5,0) node[right] {$id$};
 		\end{scope}
 	\end{tikzpicture}
+	\caption[Approximations using simple functions] {
+		The simple functions $\psi_n$ for $n$ from $1$ to $4$.
+		As $n$ goes to infinity, $\psi_n$ comes arbitrarily close to $x$ over the range 0 to $n$.
+	\label{fig:simplefunc}}
 \end{figure}
 
 
@@ -388,11 +390,15 @@ measure $\nu$:
 		\;=\; -1
 \end{equation*}
 
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DIFFERENTIAL FORMS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \section{Differential Forms}
+
 
 Rather than thinking of integrals as functions over $n$-rectangles, an often more useful language is to use 
 \emph{differential forms}.
@@ -401,34 +407,39 @@ $\beta : \mathbb{R}^n \to \mathbb{R}$.
 And there is very little else to say as they are just functions on $\mathbb{R}^n$.
 
 
-
 A \textbf{(differental) 1-form} $\omega$ on $\mathbb{R}^n$ is an expression of the form:
 \begin{equation*}
 	\omega = f_1(\text{x}) \diff x_1 + f_2(\text{x}) \diff x_2 + \ldots + f_n(\text{x}) \diff x_n
 \end{equation*}
-Now this look very much like something we're used to integrating.
+Now this looks very much like something we're used to integrating.
 Specifically it is something that be used as an integrand over a 1 dimensional domain.
-For example, Green's theorem is introduced using differential forms without even mentioning them as such.
+For example, in a multivariate calculus course, Green's theorem is often introduced using differential forms 
+without even mentioning them as such:
 \begin{equation}
 	\tag{Green's Theorem}
 	\textcolor{black!40}{
-		\int_D \left( \frac{\partial f_2}{\partial x} - \frac{\partial f_1}{\partial y}  \right) \diff x \diff y 
+		\iint_D \left( \frac{\partial f_2}{\partial x} - \frac{\partial f_1}{\partial y}  \right) \diff x \diff y 
 		=\int_{C}
-	} f_1(x,y) \diff x + f_2(x,y) \diff y
+	} \Big( f_1(x,y) \diff x \;+\; f_2(x,y) \diff y \Big)
 \end{equation}
+
+
 Here $C$ is a closed curve that encloses $D$ a region in the $(x,y)$ plane; hence the right-hand side is an integral of
 a 1-form over a 1-dimensional curve.
 Having multiple $\diff x_i$ appearing in a single integrand may initially seem unusual when first presented, 
 but is quite intuitively handled.
-Integration is linear so just as we can separate $\int f(x) + g(x) \diff x$ into $\int f(x) \diff x + \int g(x) \diff x$, 
+Integration is linear so just as we can separate $\int \Big( f(x) + g(x) \Big)\diff x$ into $\int f(x) \diff x + \int g(x) \diff x$, 
 we can similarly breakup an integral of a 1-form into the sum of integrals over \emph{basic} 1-forms 
 (1-forms involving a single term).
 \begin{equation*}
-	\int f_1(\text{x}) \diff x_1 
-		+ f_2(\text{x}) \diff x_2 
-		+ \ldots 
-		+ f_n(\text{x}) \diff x_n
-	=	\sum_{i=1}^n \left( \int f_i \diff x_i \right)
+	\int \Big( 
+			f_1(\text{x}) \diff x_1 
+			+ f_2(\text{x}) \diff x_2 
+			+ \ldots 
+			+ f_n(\text{x}) \diff x_n
+		\Big)
+	\;=\;	
+		\sum_{i=1}^n \left( \int f_i \diff x_i \right)
 \end{equation*}
 
 
@@ -437,18 +448,19 @@ So if we can add differential forms but what about multiplication?
 For a 0-form $\beta$ and 1-form $\omega$ as defined above, the answer the answer is a simple yes:
 \begin{equation*}
 	(\beta \cdot \omega)(\text{x}) 
-		= \beta(\text{x})f_1(\text{x}) \diff x_1 
+		= \Big( \beta(\text{x})f_1(\text{x}) \Big) \diff x_1
 		+ \ldots  
-		+ \beta(\text{x})f_n(\text{x}) \diff x_n
+		+ \Big( \beta(\text{x})f_n(\text{x}) \Big) \diff x_n
 \end{equation*}
 The result is a 1-form where each basic 1-form term is the product of $f_i$ and $\beta$ in $\mathbb{R}$.
 To ``multiply'' two 1-forms together however we must turn instead to the wedge product $\wedge$.
+
 
 First of all, the wedge product is primarily defined by being \emph{anti-commutative} or \emph{skew-symmetric}.
 That is, $\diff x \wedge \diff y = -\diff y \wedge \diff x$ and several results will immediately follow.
 When applied to two identical $\diff x$, we have $\diff x \wedge \diff x = - \diff x \wedge \diff x$ 
 and so $\diff x \wedge \diff x = 0$.
-Additionally, for any permutation $\sigma$ of $[p]$
+Additionally, for any permutation $\sigma$ of $[p]$:
 \begin{equation*}
 	\diff x_1 \wedge ... \wedge \diff x_p 
 	= \text{sgn}(\sigma) \diff x_{\sigma(1)} \wedge ... \wedge \diff x_{\sigma(p)}
@@ -456,13 +468,16 @@ Additionally, for any permutation $\sigma$ of $[p]$
 The wedge product of two 1-forms moves us out of the realm of 1-forms which have basis $\diff x_i$ and into the 
 realm of 2-forms with basis $\diff x_i \wedge \diff x_j$.
 
-
+\pagebreak
 \begin{definition}
 	Given a $k$-rectangle $\Omega \in \mathbb{R}^n$ with coordinates $\text{x} = (x_1, x_2, \ldots, x_n)$
 	A \textbf{differential $p$-form} $\beta$ over $\Omega$ has the form:
 	\begin{equation}
-		\beta = \sum_{j_1 \in [n]} \ldots \sum_{j_p \in [n]} b_{(j_1, \ldots, j_p)}(\text{x})
+		\beta = \sum_{j_1 \in [n]} \ldots \sum_{j_p \in [n]} 
+			\Big( 
+				b_{(j_1, \ldots, j_p)}(\text{x})
 				\diff x_{j_1} \wedge \ldots \wedge \diff x_{j_p}
+			\Big)
 	\end{equation}
 	Typically, we will take $j$ to be the vector $(j_1, \ldots, j_p)$ 
 	and express $\beta$ instead as a single sum multi-indexed
@@ -470,18 +485,19 @@ realm of 2-forms with basis $\diff x_i \wedge \diff x_j$.
 	We denote the space of all $p$-forms on $\Omega$ by $\Lambda^p(\Omega)$.
 \end{definition}
 
-
 \begin{definition}
 	Let $\alpha = \sum_i a_i(x) \diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p} \in \Lambda^p(\Omega)$ 
 	and $\beta = \sum_j b_j(x) \diff x_{j_1} \wedge \ldots \wedge \diff x_{j_q} \in \Lambda^q(\Omega)$. 
 	We extend the wedge product to 
 	$\wedge : \Lambda^p(\Omega) \times \Lambda^q(\Omega) \to \Lambda^{p+q}(\Omega)$ by:
 	\begin{equation}
-		\alpha \wedge \beta  = \sum_{i,j} a_i(x) b_j(x)
+		\alpha \wedge \beta  = \sum_{i,j}  \Big( a_i(x) b_j(x) \;
 			\diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p} \wedge 
 			\diff x_{j_1} \wedge \ldots \wedge \diff x_{j_q}
+			\Big)
 	\end{equation}
 \end{definition}
+
 
 Although we take all possible $\binom{n}{q} \cdot \binom{n}{p}$ pairs of 
 $a_i (x) \diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p}$ and $b_i (x) \diff x_{i_1} \wedge \ldots \wedge \diff x_{i_p}$,
@@ -493,14 +509,18 @@ When all is said and done, at most we will have $\binom{n}{p+q}$ terms.
 Rather than the skew-symmetry we had when commuting $\diff x \wedge \diff y$, 
 in higher dimensions the sign depends on $p \cdot q$ of the $p$-form and $q$-form we are commuting.
 Specifically, 
-\begin{equation}
+\begin{equation} 
+	\label{eqn:wedgetranspose}
 	\alpha \wedge \beta = (-1)^{pq} \beta \wedge \alpha
 \end{equation}
 This can be easily seen by commuting each of $\diff x_{j_1}, \ldots \diff x_{j_q}$ terms each past 
 $\diff x_{i_1}\wedge \ldots \wedge \diff x_{i_p}$. 
 So we are commuting $q$ terms each past $p$ terms, reversing the sign each time for a net $(-1)^{pq}$.
+This result generalizes the earlier skew-symmetry of transposing $\diff x \wedge \diff y$.
+When $\alpha$ and $\beta$ are both 1-forms then clearly $-1^{pq} = -1^{1\cdot1}= -1$.
 
 
+\pagebreak
 The wedge product is only one part of our algebra of differential forms.
 We have several other nice identities for its behaviour with addition and multiplication.
 For the following, we consider $f$ to be a function on $\mathbb{R}^n$.
@@ -537,6 +557,7 @@ to the canonical ordering $x_1, \ldots, x_n$.
 Once we have the $k$-form in this presentation, we just remove the wedges and evaluate the integral using the
 integrand $f \diff x_1 \diff x_2 \ldots \diff x_k$.
 
+
 \begin{definition}
 	Let $\alpha$ be a $k$-form on $\Omega \subset \mathbb{R}^n$ of the form 
 	$\alpha = A(x) \diff x_1 \wedge ... \wedge \diff x_n$.
@@ -547,6 +568,7 @@ integrand $f \diff x_1 \diff x_2 \ldots \diff x_k$.
 	Where the left-hand side is the integral of a $k$-form and the right-hand side is a Lebesgue integral.
 	For any $\beta \in \Lambda^k (\Omega)$ we extend this definition linearly as the sum of integrals.
 \end{definition}
+
 
 Finally, we extend the differential operator $\diff$ to act on forms known as the \textbf{exterior derivative}.
 For a function (0-form), it is the 1-form:
@@ -563,10 +585,14 @@ This is done by recursively using the identities for $p$-form $\alpha$ and $q$-f
 and extending linearly for all $k$-forms.
 
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SINGULAR CUBE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Singular Cubes}
+
 
 Up until now we have been dealing with the very small set of axis aligned $k$-rectangles 
 which is a very limiting class to be restricted to.
@@ -586,13 +612,13 @@ and with them, push forward tangent spaces as well.
 	We will abuse this notation somewhat by also using $c \subseteq M$ to refer to the image of $[\![0,1]\!]^k$ under $c$.
 \end{definition}
 
+
 For example, the hemisphere $H = \{ (x,y) \; | \: x \geq 0, y\geq 0, x^2+y^2 \leq 1 \}$
 is a singular 2-cube under the transformation $c: (r, \varphi) \mapsto r \cos(\pi \varphi) x+ r \sin(\pi \varphi) y$.
 Depending on the context we might refer to either $H$ or $c$ as a singular cube.
 Also, the choice of using specifically the standard $k$-cube is arbitrary.
 A differentiable map $f$ from $[\![a,b]\!]$ can always be composed with $g:t \mapsto ta +(1-t)b$ 
 to construct the singular cube $c=f \circ g$.
-
 
 
 However if we have a valid integral $\int_{\Omega} \omega$ with $\Omega$ in some space $X$, 
@@ -602,6 +628,7 @@ The differential form $\omega$ was expressed in coordinates for $X$ but now that
 we must perform a change of coordinates.
 The true reason why we use differential forms is how cleanly they handle this change in coordinates 
 through the use of pull-backs.
+
 
 Informally, a pullback is a \emph{reversed} function composition.
 In typical function composition $(f \circ g)(x) = f(g(x))$, for input $x$ one first evaluates the second function $g$ at $x$
@@ -616,13 +643,13 @@ Using the following identities:
 \end{align}
 one finds a very convenient way to express change of basis inside an integral.
 
+
 \begin{theorem}
 Let $F : X  \to \Omega$ be an (orientation-preserving diffeomorphism) and $\alpha$ an integrable $n$-form on $\Omega$ then
 \begin{equation}
 \int_{F(X)} \alpha = \int_X F^* \alpha
 \end{equation}
 \end{theorem}
-
 
 
 To integrate over a manifold $M$, we first observe that each local chart $U_i$ in the manifold is essentially a singular cube.

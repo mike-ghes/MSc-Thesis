@@ -163,48 +163,64 @@ The boundary meanwhile are just the rectangular outer faces, which conveniently,
  there are also six to match the six terms of $\partial[\![\boldsymbol{a},\boldsymbol{b}]\!]$.
 
 \begin{figure}[ht]
-\caption[Unit cube with boundary]{The unit cube in $\mathbb{R}^3$ with positive orientation can be represented as the 3-rectangle: $[\![(0,0,0), (1,1,1) ]\!]$ is shown as a wire-frame. 
-The six faces that make up its boundary are shaded and labeled with their corresponding terms.
-
-\label{fig:cubeboundary}
-}
-\centering
-\begin{tikzpicture}[y=1cm, x=2cm]	
- 	%axis
- 	
- 	%left
-	\draw[color=black, dashed, <-] (0.35, 1.35) --++ (-0.7, 0) node[anchor=east, black] {$\ominus \hset{0} \times [\![0,1]\!] \times [\![0,1]\!]$};
-	%back
-	\draw[color=black, dashed, <-] (1.2,1.7) --++ (1,1) node[anchor=west, black] {$\ominus \; [\![0,1]\!] \times \hset{1} \times [\![0,1]\!]$};
-	%bottom
-	\draw[color=black, dashed, <-] (0.85,0.35) --++ (0,-1) node[anchor=north, black] {$\ominus \; [\![0,1]\!] \times [\![0,1]\!] \times \hset{0}$};
- 	
- 	\filldraw[fill=black!20] (0,-0.2) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
-	\filldraw[fill=black!20] (0.77,0.77) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
-	\filldraw[fill=black!20] (-0.1,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
- 	
-	\draw[->] (-1,0) -- coordinate (x axis mid) (3,0) node[anchor=north] {$x$};
-    	\draw[->] (0,-1) -- coordinate (y axis mid) (0,4) node[anchor=east] {$z$};
-	\draw[->] (-0.7,-0.7) node[anchor=north] {$y$} --++ (2.7,2.7) ;
+	\centering
+	\begin{tikzpicture}[y=1cm, x=2cm]	
+	 % back normals
+		\draw[color=black, dashed, <-] 
+			(0.35, 1.35) --++ 
+			(-0.7, 0) node[anchor=east, black] 
+			{$\ominus \hset{0} \times [\![0,1]\!] \times [\![0,1]\!]$};
+		\draw[color=black, dashed, <-] 
+			(1.2,1.7) --++ 
+			(1,1) node[anchor=west, black] 
+			{$\ominus \; [\![0,1]\!] \times \hset{1} \times [\![0,1]\!]$};
+		\draw[color=black, dashed, <-] 
+			(0.85,0.35) --++ 
+			(0,-1) node[anchor=north, black] 
+			{$\ominus \; [\![0,1]\!] \times [\![0,1]\!] \times \hset{0}$};
+	 
+	 % back faces
+	 	\filldraw[fill=black!20] (0,-0.2) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
+		\filldraw[fill=black!20] (0.77,0.77) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
+		\filldraw[fill=black!20] (-0.1,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
+	 	
+	 % x/y/z axis	
+		\draw[->] (-1,0) -- coordinate (x axis mid) (3,0) node[anchor=north] {$x$};
+	    	\draw[->] (-0.7,-0.7) node[anchor=north] {$y$} --++ (2.7,2.7) ;
+	    	\draw[->] (0,-1) -- coordinate (y axis mid) (0,4) node[anchor=east] {$z$};
+		
+	% wire frame
+		\draw[very thick] (0,0) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
+		\draw[very thick] (0.7,0.7) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
+		\draw[very thick] (0,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
+		\draw[very thick] (0,2) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
+		\draw[very thick] (0,0) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
+		\draw[very thick] (1,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
 	
-	\draw[very thick] (0,0) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
-	\draw[very thick] (0.7,0.7) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
-	\draw[very thick] (0,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
-	\draw[very thick] (0,2) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
-	\draw[very thick] (0,0) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
-	\draw[very thick] (1,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
+	% front faces	
+		\filldraw[fill=black!40] (0,2.2) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
+		\filldraw[fill=black!40] (-0.07,-0.07) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
+		\filldraw[fill=black!40] (1.1,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
 	
-	\filldraw[fill=black!40] (0,2.2) --++ (1,0) --++ (0.7,0.7) --++ (-1,0) --++ (-0.7,-0.7);
-	\filldraw[fill=black!40] (-0.07,-0.07) --++ (1,0) --++ (0,2) --++ (-1,0) --++ (0, -2);
-	\filldraw[fill=black!40] (1.1,0) --++ (0,2) --++ (0.7,0.7) --++ (0,-2) --++ (-0.7,-0.7);
-
-	%right
-	\draw[color=black, dashed, <-] (1.35+0.1, 1.35) --++ (0.7, 0) node[anchor=west, black] {$\hset{1} \times [\![0,1]\!] \times [\![0,1]\!]$};
-	%front
-	\draw[color=black, dashed, <-] (0.5-0.07,1-0.07) --++ (-0.7,-0.7) node[anchor=east, black] {$[\![0,1]\!] \times \hset{0} \times [\![0,1]\!]$};
-	%top
-	\draw[color=black, dashed, <-] (0.85,2.35+0.2) --++ (0,1) node[anchor=south, black] {$\;\;\;\;\;[\![0,1]\!] \times [\![0,1]\!] \times \hset{1}$};
-\end{tikzpicture}
+	% front normals
+		\draw[color=black, dashed, <-] 
+			(1.35+0.1, 1.35) --++ 
+			(0.7, 0) node[anchor=west, black] 
+			{$\hset{1} \times [\![0,1]\!] \times [\![0,1]\!]$};
+		\draw[color=black, dashed, <-] 
+			(0.5-0.07,1-0.07) --++ 
+			(-0.7,-0.7) node[anchor=east, black] 
+			{$[\![0,1]\!] \times \hset{0} \times [\![0,1]\!]$};
+		\draw[color=black, dashed, <-] 
+			(0.85,2.35+0.2) --++ 
+			(0,1) node[anchor=south, black] 
+			{$\;\;\;\;\;[\![0,1]\!] \times [\![0,1]\!] \times \hset{1}$};
+	\end{tikzpicture}
+	\caption[Unit cube with boundary] { 
+		The unit cube in $\mathbb{R}^3$ with positive orientation can be represented as the 3-rectangle: 
+		$[\![(0,0,0), (1,1,1) ]\!]$ is shown as a wire-frame. 
+		The six faces that make up its boundary are shaded and labeled with their corresponding terms.
+	\label{fig:cubeboundary} }
 \end{figure}
 
 There are several ways to interpret and visualize the $\oplus$ and $\ominus$ sign associated with each face.
@@ -217,14 +233,8 @@ These are all conceptual tools, which are convenient to use particularly in $\ma
 There may not be such a nice physical interpretation in other spaces.
 
 
-\begin{figure}[ht]
-	\caption[Orientations of 2-rectangles]{
-	One way of visualizing the orientation of 2-rectangles using clockwise and counter-clockwise cycles 
-	of arrows for 1-rectangles. The boundary of $[\![a,b]\!] \times [\![c,d]\!]$ becomes the cycle: 
-	$(a,c) \to (b,c) \to (b,d) \to (a,d) \to (a,c)$.
-	Showing the relationship between $[\![a,b]\!] \times [\![c,d]\!]$ and $[\![b,a]\!] \times [\![d,c]\!]$ 
-	\label{fig:orientation2rect}}
-	\centering
+\begin{figure}[ht] 
+	\centering 
 	\begin{tikzpicture}
 		\def\rectCycle#1#2#3#4{
 			\draw[thick, ->, color=black!80] (#1,#2) -- (#3,#2);
@@ -232,7 +242,6 @@ There may not be such a nice physical interpretation in other spaces.
 			\draw[thick, ->, color=black!40] (#3, #4) -- (#1,#4);
 			\draw[thick, ->, color=black!20] (#1,#4) -- (#1,#2);
 			\draw[thick, ->] (#1, 0) -- (#3, 0);
-			%\draw[fill] (#1,#2) circle (1 pt);
 		}
 		
 		\rectCycle {0+1}{1} {0+2}{2};
@@ -240,7 +249,6 @@ There may not be such a nice physical interpretation in other spaces.
 		\draw[very thick, ->] (0,1) -- (0,2);
 		\draw (0,1.5) node[anchor=east] {$+$};
 		\draw (1.5,0) node[anchor=north] {$+$};
-		%\draw (1.5, 1.5) node {$+$};
 		\draw(1.5,1.5) node {$\;\circlearrowleft^+$};
 		  
 		\rectCycle {4+2}{1} {4+1}{2};
@@ -248,7 +256,6 @@ There may not be such a nice physical interpretation in other spaces.
 		\draw[very thick, ->] (4+0,1) -- (4+0,2);
 		\draw (4+0,1.5) node[anchor=east] {$+$};
 		\draw (4+1.5,0) node[anchor=north] {$-$};
-		%\draw (4+1.5, 1.5) node {$-$};
 		\draw(4+1.5,1.5) node {$\;\circlearrowright^-$};
 		
 		\rectCycle {8+2}{2} {8+1}{1};
@@ -256,7 +263,6 @@ There may not be such a nice physical interpretation in other spaces.
 		\draw[very thick, ->] (8+0,2) -- (8+0,1);
 		\draw (8+0,1.5) node[anchor=east] {$-$};
 		\draw (8+1.5,0) node[anchor=north] {$-$};
-		%\draw (8+1.5, 1.5) node {$+$};
 		\draw(8+1.5,1.5) node {$\;\circlearrowleft^+$};
 		
 		\rectCycle {12+1}{2} {12+2}{1};
@@ -264,9 +270,14 @@ There may not be such a nice physical interpretation in other spaces.
 		\draw[very thick, ->] (12+0,2) -- (12+0,1);
 		\draw (12+0,1.5) node[anchor=east] {$-$};
 		\draw (12+1.5,0) node[anchor=north] {$+$};
-		%\draw (12+1.5, 1.5) node {$-$};
 		\draw(12+1.5,1.5) node {$\;\circlearrowright^-$};
 	\end{tikzpicture}
+	\caption[Orientations of 2-rectangles] {
+		One way of visualizing the orientation of 2-rectangles using clockwise and counter-clockwise cycles 
+		of arrows for 1-rectangles. The boundary of $[\![a,b]\!] \times [\![c,d]\!]$ becomes the cycle: 
+		$(a,c) \to (b,c) \to (b,d) \to (a,d) \to (a,c)$.
+		Showing the relationship between $[\![a,b]\!] \times [\![c,d]\!]$ and $[\![b,a]\!] \times [\![d,c]\!]$ 
+	\label{fig:orientation2rect} }
 \end{figure}
 
 
@@ -317,19 +328,15 @@ Elegantly, the boundary operator now maps $k$-chains to $(k-1)$-chains!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Boundary of a boundary}}
 
-So this means we should be able to compute the \emph{boundary of a boundary} 
-by composing the boundary function with itself:
+This implies should be able to compute the \emph{boundary of a boundary} of some chain $c \in C_{k+1}$
+by composing the boundary function with itself as in:
 \begin{equation*}
-	\partial_k ( \partial_{k+1} (c)) = ?
+	\partial_k ( \partial_{k+1} (c)) =\; ?
 \end{equation*}
-The boundary of a point is empty so it is obvious that the boundary of the boundary of a 1-rectangle (oriented line) 
-is empty.
-So instead let us consider the boundary of a boundary of a 2-rectangle: 
-$\partial_1 ( \partial_2 ( \; [\![\boldsymbol{a}, \boldsymbol{b} ]\!] \; ) )$
-where $\boldsymbol{a} =(a_1,a_2)$ and $\boldsymbol{b}= (b_1,b_2)$.
-
-
-
+For $c \in C_1$ (i.e $c$ is a 1-rectangle), then $\partial_1(c) \in C_0$ is a set of points.
+Since the boundary of any isolated point is empty, $\partial_0$ \emph{always} maps to $\emptyset$. 
+So instead let us consider the case when $c \in C_2$ is a 2-rectangle given by: $[\![ a_1 , b_1 ]\!] \times [\![a_2, b_2 ]\!]$
+for $a_1 \neq b_1$ and $a_2 \neq b_2$:
 \begin{align*}
 	\partial_1 ( \partial_2 ( [\![ a_1 , b_1 ]\!] \times [\![a_2, b_2 ]\!] ) )
 	=	& 	\; \ominus 	\partial_1( \hset{0} \times [\![0,1]\!]) 
@@ -348,11 +355,9 @@ The boundary of these edges are the corners; but each corner occurs with both po
 Often stated as ``$\partial \partial = 0$'', this identity is not unique to $2$-cubes but holds for higher dimensions as well.
 
 
-\begin{figure}[ht]
-\caption[Boundary of a boundary (of a 2-cube)]{The boundary of 2-cube gives a cycle of oriented edges. Taking the boundary of again, at each corner, the negative boundary of one edge will be canceled by the positive boundary of the preceding edge.}
-\centering
-	\begin{tikzpicture}[scale=0.8]
-	
+\begin{figure}[ht] 
+	\centering 
+	\begin{tikzpicture}[scale=1]
 		\draw (1,2.5) node {$C_2$};
 		\filldraw[fill=black!40] (0,0) rectangle (2,2);
 		\draw (1,1) node {$\;\circlearrowleft^+$};
@@ -373,8 +378,12 @@ Often stated as ``$\partial \partial = 0$'', this identity is not unique to $2$-
 		\fill (8+2,0) node[anchor=west] {$-$} node[anchor=north] {$+$}  circle (2pt);
 		\fill (8+2,2) node[anchor=south] {$-$} node[anchor=west] {$+$} circle (2pt);
 		\fill (8,2) node[anchor=east] {$-$} node[anchor=south] {$+$} circle (2pt);
-		
 	\end{tikzpicture}
+	\caption[Boundary of a boundary (of a 2-cube)] {
+		The boundary of 2-cube gives a cycle of oriented edges. 
+		Taking the boundary of again, at each corner, the negative boundary of one edge 
+		will be canceled by the positive boundary of the preceding edge.
+	\label{fig:rectboundaryboundary}}
 \end{figure}
 
 
@@ -631,10 +640,8 @@ Then our desired value is the integral over $C_1$ as $r$ goes to infinity:
 \end{equation*}
 
 
-\begin{figure}[ht]
-	\caption[Contour Integral]{The contours $C_1$ and $C_2$ and with the four singularities of $f$ marked.}
-	\label{fig:contourintegration}
-	\centering
+\begin{figure}[ht] 
+	\centering 
 	\begin{tikzpicture}
 		\draw[>=stealth, thick, ->, domain=0:180] plot ({3*cos(\x)}, {3*sin(\x)});
 		\draw[thick, <-] (3,0) node[below] {$r$} -- (-3,0) node[below] {$-r$};
@@ -645,6 +652,9 @@ Then our desired value is the integral over $C_1$ as $r$ goes to infinity:
 		\draw (0,3) node[above] {$C_2$};
 		\draw (0,0) node[below] {$C_1$};
 	\end{tikzpicture}
+	\caption[Contour Integral]{
+		The contours $C_1$ and $C_2$ and with the four singularities of $f$ marked.
+	\label{fig:contourintegration}}
 \end{figure}
 
 To solve the integral on $C$ we can use the Cauchy residue theorem: a special case of the generalized Stokes' theorem.

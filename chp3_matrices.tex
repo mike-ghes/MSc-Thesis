@@ -106,14 +106,7 @@ For example to invert what is known as a \emph{block diagonal matrix}, one can i
 \end{equation}
 
 
-\begin{figure}[ht]
-	\caption[Possible block overlaps of $2 \times 2$ block matrices.]
-	{The sum of two block matrices each with four blocks leads to 9 possible cases.
-	When blocks are exactly the same size, the sum will also be a $2 \times 2$ block matrix (a).
-	Otherwise, a $2 \times 3$ (b) \emph{(two possible cases)}, $3 \times 2$ (c) \emph{(two cases)} 
-	or $3 \times 3$ (d) \emph{(four cases)} block matrix could arise.
-	The starred blocks may sample from different blocks depending on the relative size of operand blocks.}
-	\label{MatAdditionPermutations}
+\begin{figure}[ht] 
 	\begin{subfigure}[b]{0.24\textwidth}
 		\caption{}
 		\begin{equation*}
@@ -158,6 +151,13 @@ For example to invert what is known as a \emph{block diagonal matrix}, one can i
 			\end{array}\right]
 		\end{equation*}
 	\end{subfigure}
+	\caption[Possible block overlaps of $2 \times 2$ block matrices.] {
+		The sum of two block matrices each with four blocks leads to 9 possible cases.
+		When blocks are exactly the same size, the sum will also be a $2 \times 2$ block matrix (a).
+		Otherwise, a $2 \times 3$ (b) \emph{(two possible cases)}, $3 \times 2$ (c) \emph{(two cases)} 
+		or $3 \times 3$ (d) \emph{(four cases)} block matrix could arise.
+		The starred blocks may sample from different blocks depending on the relative size of operand blocks.
+	\label{MatAdditionPermutations}}
 \end{figure}
 
 Existing techniques allow for fixed block size but are unsatisfactory when the bounds between blocks are symbolic.
@@ -432,10 +432,9 @@ If one of $[\![a,b]\!]$ or $[\![c,d]\!]$ were negatively oriented then we would 
 If both were negative, then the signs will cancel and the Cartesian product will be \emph{positively} oriented.
 
 
-\begin{figure}[ht]
-\caption[Cartesian product of two 1-rectangles]{The Cartesian product of two positively oriented 1-rectangles $[\![a,b]\!]$ and $[\![c,d]\!]$ is a positively oriented 2-rectangle.}
-\centering
-\begin{tikzpicture}[y=1.5cm, x=3cm]	
+\begin{figure}[ht] 
+	\centering 
+	\begin{tikzpicture}[y=1.5cm, x=3cm]	
  	%axis
 	\draw(0,0) -- coordinate (x axis mid) (4,0);
     	\draw (0,0) -- coordinate (y axis mid) (0,4);
@@ -453,7 +452,11 @@ If both were negative, then the signs will cancel and the Cartesian product will
     	
     	\draw[fill, color=black!20] (1,1) rectangle (3,3);
     	\draw (2, 2) node {$[\![a,b]\!] \times [\![c,d]\!]$ };
-\end{tikzpicture}
+	\end{tikzpicture}
+	\caption[Cartesian product of two 1-rectangles] { 
+		The Cartesian product of two positively oriented 1-rectangles $[\![a,b]\!]$ and $[\![c,d]\!]$ 
+		is a positively oriented 2-rectangle.
+	\label{fig:productofintervals}}
 \end{figure}
 
 
