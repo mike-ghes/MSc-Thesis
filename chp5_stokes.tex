@@ -36,32 +36,32 @@ We will now generalize the boundary to map an oriented $n$-rectangle to an $(n-1
 	\begin{align}
 		\label{eqn:defboundary}
 		\partial \left( [\![ \boldsymbol{a}, \boldsymbol{b} ]\!] \right) 
-		= \bigoplus_{j=1}^k (-1)^j \;
-			\left(	
-				[\![ 	(\boldsymbol{a}^{[\![1,n]\!]}), 
+		= \bigoplus_{j=1}^k (-1)^j &\;
+			\left(\;	
+				\Big[\!\Big[ 	\left(\boldsymbol{a}^{[\![1,n]\!]_\mathbb{N}}\right), 
 					\;\;\;
-					(\boldsymbol{b}^{[\![1,i_j)\!)} 
+					\left(\boldsymbol{b}^{[\![1,i_j)\!)_\mathbb{N}} 
 						\oplus \boldsymbol{a}^{\hset{i_j}}
-						\oplus \boldsymbol{b}^{(\!(i_j,n]\!]}) 
-				]\!] \right.\;
+						\oplus \boldsymbol{b}^{(\!(i_j,n]\!]_\mathbb{N}}\right) 
+				\Big]\!\Big]_{\mathbb{R}^n} \right.\;
 			\notag\\
-			\ominus \left.
-				[\![ 	(\boldsymbol{a}^{[\![1,i_j)\!)}
+			&\ominus \left.
+				\Big[\!\Big[ 	\left(\boldsymbol{a}^{[\![1,i_j)\!)_\mathbb{N}}
 						\oplus \boldsymbol{b}^{\hset{i_j}}
-						\oplus \boldsymbol{a}^{(\!(i_j, n]\!]}), 
+						\oplus \boldsymbol{a}^{(\!(i_j, n]\!]_\mathbb{N}}\right), 
 					\;\;\;		 
-					(\boldsymbol{b}^{[\![1,n]\!]}) 			
-				]\!]
-			\right)
+					\left(\boldsymbol{b}^{[\![1,n]\!]_\mathbb{N}}\right) 			
+				\Big]\!\Big]_{\mathbb{R}^n}
+			\;\right)
 	\end{align}
 \end{definition}
 
 
 The above equation will require a bit of unpacking to digest featuring oriented intervals in two different contexts.
 The first appears in the superscripts of $\boldsymbol{a}$ and $\boldsymbol{b}$. 
-The intervals $[\![1, i_j)\!)$ and $(\!(i_j, n]\!]$ are  and is an interval over vector indices just as in Chapter 3.
-Thus, the term $\boldsymbol{a}^{[\![1,i_j)\!)}$ refers to the vector $(a_1, a_2, \ldots, a_{i_j-1})$ 
-while the term $\boldsymbol{b}^{(\!(i_j,n]\!]}$ refers to $(b_{i_j+1}, b_{i_j+2}, \ldots, b_{n})$.
+The intervals $[\![1, i_j)\!)_\mathbb{N}$ and $(\!(i_j, n]\!]_\mathbb{N}$ are intervals over vector indices just as in Chapter 3.
+Thus, the term $\boldsymbol{a}^{[\![1,i_j)\!)_\mathbb{N}}$ refers to the vector $(a_1, a_2, \ldots, a_{i_j-1})$ 
+while the term $\boldsymbol{b}^{(\!(i_j,n]\!]_\mathbb{N}}$ refers to $(b_{i_j+1}, b_{i_j+2}, \ldots, b_{n})$.
 This provides a compact notation to partition the original range of indices into 3 pieces: $[\![ 1,i_j )\!)$, $\hset{i_j}$, and $(\!(i_j, n]\!]$.
 Formally, we are actually using the hybrid sets $\hset{(i_j)^1}$ but we omit multiplicity of one.
 
@@ -70,30 +70,30 @@ Next we use the pointwise sum $\oplus$ we reconstruct $n$-dimensional vectors fr
 We then construct a $(k-1)$-rectangle using these vectors as in (\ref{eqn:defboundary}).
 Hence we will have terms of the forms:
 \begin{equation*}
-	[\![a_1, b_1]\!]
+	[\![a_1, b_1]\!]_\mathbb{R}
 	\times \ldots \times
-	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]
+	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]_\mathbb{R}
 	\times
-	[\![a_{i_j}, a_{i_j}]\!]
+	[\![a_{i_j}, a_{i_j}]\!]_\mathbb{R}
 	\times
-	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]
+	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]_\mathbb{R}
 	\times \ldots \times
-	[\![a_n, b_n]\!]
+	[\![a_n, b_n]\!]_\mathbb{R}
 \end{equation*}
 and
 \begin{equation*}
-	[\![a_1, b_1]\!]
+	[\![a_1, b_1]\!]_\mathbb{R}
 	\times \ldots \times
-	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]
+	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]_\mathbb{R}
 	\times
-	[\![b_{i_j}, b_{i_j}]\!]
+	[\![b_{i_j}, b_{i_j}]\!]_\mathbb{R}
 	\times
-	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]
+	[\![a_{i_{j-1}}, b_{i_{j-1}}]\!]_\mathbb{R}
 	\times \ldots \times
-	[\![a_n, b_n]\!]
+	[\![a_n, b_n]\!]_\mathbb{R}
 \end{equation*}
 
-
+Unlike the previous intervals which were over integers, each of these range continuously over $\mathbb{R}$.
 In each Cartesian product, the terms at $i_j$: $[\![a_{i_j}, a_{i_j}]\!]$ and $[\![b_{i_j}, b_{i_j}]\!]$ are both 0-rectangles.
 Since we defined the sequence $i_j$ by $a_{i_j} \neq b_{i_j}$, 
 these 0-rectangles are replacing 1-rectangles in $[\![\boldsymbol{a}, \boldsymbol{b}]\!]$.
