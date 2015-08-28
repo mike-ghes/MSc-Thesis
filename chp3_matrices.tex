@@ -336,13 +336,13 @@ These can be written more concisely as hybrid functions over intervals.
 Using intervals, these vectors can be represented by hybrid functions over their indices.
 For example
 \begin{align}
-	U &= (i \mapsto u_i)^{[\![1, k]\!]} \oplus (i \mapsto u_{i-k})^{(\!(k,n]\!]} \\
-	V &= (i \mapsto v_i)^{[\![1, \ell]\!]} \oplus (i \mapsto v_{i-\ell})^{(\!(\ell,n]\!]}
+	U &= (i \mapsto u_i)^{[\![1, k]\!]} \oplus (i \mapsto u'_{i-k})^{(\!(k,n]\!]} \\
+	V &= (i \mapsto v_i)^{[\![1, \ell]\!]} \oplus (i \mapsto v'_{i-\ell})^{(\!(\ell,n]\!]}
 \end{align}
 Although for clarity and succinctness we will use $(u_i)$ instead of $(i \mapsto u_i)$.
 \begin{align}
-	U &= (u_i)^{[\![1, k]\!]} \oplus (u_{i-k})^{(\!(k,n]\!]} \\
-	V &= (v_i)^{[\![1, \ell]\!]} \oplus v_{i-\ell})^{(\!(\ell,n]\!]}
+	U &= (u_i)^{[\![1, k]\!]} \oplus (u'_{i-k})^{(\!(k,n]\!]} \\
+	V &= (v_i)^{[\![1, \ell]\!]} \oplus v'_{i-\ell})^{(\!(\ell,n]\!]}
 \end{align}
 
 
@@ -826,7 +826,7 @@ The $\times$ operator refers to the Cartesian product of intervals.
 For $i,j \in \{ 1,2 \}$ the terms of $C$ are given by.
 \begin{align}
 	\label{eqn:2x2multiplication}
-	C_{i,j}^{N_i1 \times P_j} (x,y) = \sum_{M} \R[\times]  
+	C_{i,j}^{N_i \times P_j} (x,y) = \sum_{M} \R[\times]  
 		&\left( \;\;
 			\left. 	A_{i,1}^{N_1 \times M_1}	\right|_{X=x} \;\oplus\;
 			\left.	B_{1,j}^{M_1 \times P_1}	\right|_{Y=y} 
@@ -964,7 +964,7 @@ as (\ref{eqn:2x2multiplicationblocks}):
 
 Let us compute one of these blocks: $S_1$.
 \begin{align*}
-	{S_1}^{N_1 \times P_1}(i,j) = \sum_{m \in M ?} \R[\times]  &\left( 
+	{S_1}^{N_1 \times P_1}(i,j) = \sum_{m \in M} \R[\times]  &\left( 
 			\left. A^{N_1 \times M_1}\right|_{X=i} \oplus
 			\left. E^{M_1 \times P_1}\right|_{Y=j} \oplus \right.\\
 			&\;\left. B^{N_1 \times M_2}\right|_{X=i} \oplus
