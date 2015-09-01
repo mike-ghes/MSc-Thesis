@@ -36,7 +36,7 @@ For example, the absolute value function is far more commonly written out as
 but using conditions rather than the sets they define can be seen as just a shorthand. 
 
 
-One thing that should be noted is that sometimes there are extra conditions which are bundled in.
+One thing that should be noted is that sometimes there are additional conjuncts bundled into a condition.
 As pieces of a partition, the sets generated must be disjoint so we must ensure these conditions are mutually exclusive.
 A common heuristic is to treat these conditions as a series of cascading \emph{else-if} statements.
 For example \emph{Maple}'s \texttt{piecewise} function:
@@ -82,7 +82,7 @@ Together these definitions allow us to re-write the piecewise function in (\ref{
 \begin{equation*}
 	f = \restrict{f}{P_1} \fjoin \restrict{f}{P_2} \fjoin \ldots \fjoin \restrict{f}{P_n}
 \end{equation*}
-Normally, the join operator $\fjoin$ is not associative and so omitting parenthesis could lead to poorly defined expressions.
+Normally, the join operator $\fjoin$ is not associative and so omitting parentheses could lead to poorly defined expressions.
 However, when all support sets are pairwise disjoint, then $\fjoin$ is associative.
 
 
@@ -125,12 +125,11 @@ Finding common refinements gives a large increase in the number of terms require
 in part, due to a restrictive view of partitions.
 Conceptually, what one wishes out of a partition is a family of subsets which will ``sum'' up to the original.
 With Boolean sets, some additional constraints are imposed as we don't have a very good notion of subtraction.
-However, by using non-Boolean sets we allow for negative sets to cancel any double-counting
-as such disjointness no longer needs to be enforced.
+However, with more general structures, we can construct true inverse sets to allow for algebraic cancellations.
 Following the development of \cite{carette2010}, over this chapter we will consider such generalized partitions 
 and the structures to support them.
 We will also see how this allows for us to eliminate the multiplicative increase in terms when flattening an expression
-containing the sum (or product) of piecewise functions.
+containing the sum or product of piecewise functions.
 
 
 
@@ -142,7 +141,7 @@ containing the sum (or product) of piecewise functions.
 \section{Hybrid Sets}
 
 
-We shall consider \emph{hybrid sets} which are a generalization of multi-sets.
+We consider \emph{hybrid sets} which are a generalization of multi-sets.
 One can view usual Boolean sets as an indicator function on the universe
 which maps each member element to 1 and each non-member to 0.
 A \emph{multi-set} (or \emph{bag}) extends this by allowing multiple copies of the same element.
@@ -152,8 +151,8 @@ as an indicator function over the integers.
 
 
 \begin{definition}
-	Let $U$ be a universe, then any function $U \to \mathbb{Z}$ is called a \textbf{hybrid set}.
-	We denote the collection of all hybrid sets over a universe by $\hsetover[U]$.
+	Let $U$ be a set, then any function $U \to \mathbb{Z}$ is called a \textbf{hybrid set}.
+	We denote the collection of all hybrid sets over an underlining set $U$ by $\hsetover[U]$.
 \end{definition}
 
 
@@ -183,8 +182,8 @@ to describe the hybrid set $H$ where the element $x_i$ has multiplicity $m_i$.
 We allow for repetitions in $\{ x_i \}$ but interpret the overall multiplicity of an element $x_i$ as 
 the sum of multiplicities among copies. 
 For example, $H=\hset{a^1, a^1, b^{-2}, a^3, b^1} = \hset{a^5, b^{-1}}$. 
-The latter will generally be preferred as all $a$'s and $b$'s have been collected together as such
-a writing in which $x_i \neq x_j$ for all $i \neq j$ is referred to as a \textbf{normalized form} of a hybrid set. 
+The latter will generally be preferred as all $a$'s and $b$'s have been collected together.
+Such a writing in which $x_i \neq x_j$ for all $i \neq j$ is referred to as a \textbf{normalized form} of a hybrid set. 
 
 
 Boolean sets use the operations $\cup$ union, $\cap$ intersection, and $\setminus$ complementation.
@@ -275,7 +274,7 @@ and allow for \emph{any} family of sets which sum to a hybrid set to be a (gener
 \end{definition}
 
 
-If a set $H$ is reducible, then strict generalized partitions will correspond with the usual notion of a partition.
+If a set $H$ is reducible, then strict generalized partitions will correspond to the usual notion of a partition.
 A traditional partition will be a disjoint cover of $H$ and for disjoint reducible sets, point-wise sum and union agree.
 Hence $\bigcup_i P_i = \bigoplus_i P_i$. 
 Conversely, if $H$ is reducible and the sum of disjoint hybrid sets, then $P_i$ must all be reducible as well.
@@ -298,9 +297,9 @@ A generalized partition of a reducible set is strict if and only if each general
 
 
 A function is typically defined as a mapping from elements of one set to another set.
-We will consider functions which have hybrid sets as their domain (but still map to Boolean sets) 
+We will consider functions which have hybrid sets as their domains (but still map to Boolean sets) 
 which we will call \emph{hybrid functions}.
-We will define hybrid functions as the collection of all ordered pairs $(x,f(x))$ (the \emph{graph of the function} $f$).
+We will define hybrid functions as the collection of all pairs $(x,f(x))$ (i.e. the \emph{graph of the function} $f$).
 
 
 \begin{definition}
@@ -479,7 +478,7 @@ To aid in this we will first introduce some notation for iterated operators.
 
 Assuming $\op^m$ and $\op^n$ are both defined (e.g. if $m,n \leq 0$ then $\op$ must be invertible),
 we have $ ( x \op^m y ) \op^n y = x \op^{m+n} y$.
-For non-associative magmas, it may be of interest to instead define $\op^T$ for some tree $T$. 
+For non-associative groupoids, it may be of interest to instead define $\op^T$ for some tree $T$. 
 For example $\op^n$ above is analogous to Haskell's \texttt{foldl}.
 There are applications where \texttt{foldr}: $(x \op ( y \op ( y \op \ldots \op y)))$ or a balanced expression tree like \texttt{foldt} might be desired.
 The applications we will be interested in will be over associative group operators and so we will not actually 
@@ -487,8 +486,8 @@ explore this any further.
 
 \begin{definition}
 	We say that a hybrid relation $f^A = f_1^{A_1} \oplus f_2^{A_2} \oplus \ldots$ over $T \times S$ 
-	is $\op$\textbf{-reducible} if $(S, \op)$ is an abelian group 
-	or if $(S, \op)$ is an abelian semi-group and $f^A$ is everywhere non-negative.
+	is $\op$\textbf{-reducible} if $(S, \op)$ is an abelian semi-group and $A$ is everywhere non-negative
+	or if $(S, \op)$ is an abelian group, we allow for for negative $A$.
 	If $f^A$ is $\op$-reducible we define its $\op$\textbf{-reduction}, $\mathcal{R}_\op(f^A) :  T \to S$ 
 	as a (non-hybrid) function:
 	\begin{equation}
@@ -515,10 +514,11 @@ Moreover, we can pull restrictions through point-wise sums:
 % Piecewise 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Example: \emph{Piecewise functions on generalized partitions}} 
+\label{example:piecewise1}
 
-Let $A_1 = [0,a)$, $A_2 = [0,1] \setminus A_1$, $B_1 = [0,b)$ and $B_2 = [0,1] \setminus B_1$.
-$\{ A_1, A_2\}$ and $\{B_1, B_2\}$ are two distinct of the set $[0,1]$.
-We will use these two define two piecewise functions $f$ and $g$ which map to some group $f,g:[0,1] \to G$.
+Let $A_1 = [0,a)$, $A_2 = [0,1] \setminus A_1$, $B_1 = [0,b)$ and $B_2 = [0,1] \setminus B_1$ with  $a,b \in [0,1]$.
+$\{ A_1, A_2\}$ and $\{B_1, B_2\}$ are two distinct partitions of the set $[0,1]$.
+We will use these to define two piecewise functions $f$ and $g$ which map to some group $f,g:[0,1] \to G$.
 \begin{equation*}
 	f(x) = f_1^{A_1} \oplus f_2^{A_2}
 		= \begin{cases}
@@ -619,7 +619,7 @@ We can now formally phrase the problem.
 Let $A=\{ A_i \}_{i=1}^n$ and $B=\{ B_i \}_{i =1}^m$ be two generalized partitions of a hybrid set $U$.
 We wish to find a generalized partition $C$  of $U$ which is a \emph{common}, \emph{strict} refinement of $A$ and $B$
 and has minimal cardinality.
-These conditions can be summarized into the following linear system of $n+m+1$ simultaneous equations:
+These conditions can be summarized into the following system of $n+m+1$ simultaneous equations:
 \begin{equation*}
 	U = \bigoplus_j C_j
 \end{equation*}
@@ -632,10 +632,10 @@ These conditions can be summarized into the following linear system of $n+m+1$ s
 for some integers $a_{i,j}$ and $b_{i,j}$.
 Since we know that $A$ and $B$ are each separately partitions of $U$, 
 we can leverage some of their dependencies to construct $\{C_j\}$.
-For example, $A_n$ be represented as $U \ominus ( A_1 \oplus \ldots \oplus A_{n-1} )$.
+For example, $A_n$ can be represented as $U \ominus ( A_1 \oplus \ldots \oplus A_{n-1} )$.
 Any $A_i$ or $B_i$ could similarly be represented by the point-wise difference with $U$.
 Although we could remove any two pieces from $A$ and $B$, we will choose to remove $A_n$ and $B_n$ to form a set of
-$n+m-1$ pieces to form a basis for $C$.
+$n+m-1$ pieces to form a linearly independent basis for $C$.
 Expressed as a linear system we have:
 
 
@@ -703,7 +703,7 @@ Using this, we find that one choice for $C$ the common refinement for $A$ and $B
 \end{equation*}
 
 
-Finally, to generalize our example from earlier, let $f = f_1^{A_1} \oplus f_2^{A_2} \oplus f_n^{A_n}$
+Finally, to generalize the example from \ref{example:piecewise1}, let $f = f_1^{A_1} \oplus f_2^{A_2} \oplus f_n^{A_n}$
 and  $g = g_1^{B_1} \oplus \ldots \oplus g_m^{B_m}$ be two piecewise functions over a common domain $U$.
 We can express both of these functions in terms of the above common refinement by:
 \begin{align*}
@@ -758,9 +758,10 @@ Then we have the following terms with non-zero multiplicity:
 We would like for the $g_m(x)$ in the first term to cancel with the $g_m(x)$ in the third term.
 Similarly $f_n(x)$ in the second term should cancel with the $f_n(x)$ in the third term leaving only $f_1(x) * g_1(x)$.
 This requires that $g_m(x)$ and $f_n(x)$ to actually be defined which is more than we'd care to assume.
-The approach we will take instead is to delay the evaluation of functions until cancellations occur.
-To do this we will use a lambda-lifting trick.
-Instead of having the elements of a hybrid function be ordered pairs containing the image but a copy of the function itself.
+The approach we take instead is to delay the evaluation of functions until cancellations occur.
+To do this we use a lambda-lifting trick.
+Instead of having the elements of a hybrid function be pairs containing the input and output of the underlying function 
+we consider them as pairs containing the input and a ``function pointer'' to the underlying function.
 
 
 \begin{definition}
@@ -788,7 +789,7 @@ Properties of hybrid functions such as compatibility and reducibility will be li
 \subsection{Example: \emph{Piecewise functions revisited}}
 
 
-We will repeat the example from 2.4.2 but concretely using the following function:
+We repeat the example from \ref{example:piecewise1} but concretely use the following function:
 \begin{equation*}
 	f(x) = \begin{cases}
 		(2-x^2) & -1 \leq x \leq 1\\
@@ -846,8 +847,8 @@ This gives the closely related hybrid function $f$ and pseudo-function $\pseudo{
 
 
 
-Additionally we will multiply $f$ by the Heaviside function $H$ (with $H(0)=1$): a piecewise function over the intervals
-$B_1 = [0, \infty)$ and $B_2 = (-\infty, 0)$
+Additionally we will multiply $f$ by the Heaviside function $H$: a piecewise function over the intervals
+$B_1 = [0, \infty)$ and $B_2 = (-\infty, 0)$ defined as follows:
 \begin{equation*}
 	\begin{array}{r c c c}
 		H			=& (1)^{B_1} 			&\oplus& 	(0)^{B_2} \\
