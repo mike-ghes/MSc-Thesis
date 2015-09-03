@@ -408,14 +408,13 @@ Similarly, we could also find that:
 
 One would expect the same process to hold for when integrating from 0 to 1 but restricted to sets, this is not possible.
 The statement $[1,0] = -[0,1]$ is nonsense.
-But if we instead take integrating from $a$ to $b$ to mean the Lebesgue integral over the oriented $[\![a,b]\!]$.
-Additionally instead of the Lebesgue measure $\mu$ which is defined for 
-measure $\nu$:
-
+But if we instead take integrating from $a$ to $b$ to mean the Lebesgue integral over the oriented $[\![a,b]\!]$,
+we can get a result of $-1$ as we would expect:
 \begin{equation*}
-	\int_1^0 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \nu
-		\;=\; \int_{[\![0,1]\!]} 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \nu
-		\;=\; \nu \big( (\mathbb{R}\setminus\mathbb{Q} ) \otimes [\![1,0]\!] \big)
+	\int_1^0 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \mu
+		\;=\; \int_{[\![1,0]\!]} 1_{\mathbb{R}\setminus \mathbb{Q}} \diff \mu
+		\;=\; \mu \big( (\mathbb{R}\setminus\mathbb{Q} ) \otimes [\![1,0]\!] \big)
+		\;=\; -\mu \big( (\mathbb{R}\setminus\mathbb{Q} ) \otimes [\![0,1]\!] \big)
 		\;=\; -1
 \end{equation*}
 

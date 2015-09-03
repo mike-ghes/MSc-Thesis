@@ -8,10 +8,6 @@ https://github.com/mike-ghes/MSc-Thesis/blob/master/westernthesis.pdf?raw=true
 Personal Changes:
 
  * Matrix multiplication with larger matrices still uses old notation.
-
- * Lebesgue integration: change \sigma_n to s_n
- 
- * Fix Lebesgue integration example ( "\nu" and "[ [0,1]]" )
  
  * Appendix A is missing some \oplus's
  
@@ -32,6 +28,6 @@ Post-defense changes:
  
  * c2p19 - "Why can you do this?"
  
- * c2p24 - "So you should have clxxxxed by cxituhais where things cxmpxxxte!"
+ * c2p24 - "So you should have clarified by cxituhaing where things cxmpxxxte!"
  
  * c3p29 - proof
