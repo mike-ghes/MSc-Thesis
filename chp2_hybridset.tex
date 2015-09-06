@@ -102,7 +102,7 @@ In this case, the result is generally a piecewise function with 6 terms:
 \end{align*}
 In specific cases, some terms may be eliminated as the corresponding intersection is empty. 
 In general, assuming no degenerate intersections, 
-the sum of an ``$n$-piece'' function and ``$m$-piece'' function will give a piecewise function with $n \times m$ pieces.
+the sum of an ``$n$-piece'' function and ``$m$-piece'' function will give a piecewise function with $n \cdot m$ pieces.
 This becomes compounded when dealing with more piecewise functions. 
 The sum of $b$ functions each with $n$ pieces results in $b^n$ cases making computation unrealistic 
 in all but the smallest cases.
@@ -193,8 +193,8 @@ One \emph{could} extend these for hybrid sets using point-wise min and max on mu
 \cite{blizard1988, blizard1990, girish2012multiset, singh2011complementation}
 but this is not very natural.
 Rather, our primitive hybrid set operations should derive from our primitive point-wise operators.
-When dealing with hybrid sets with multiplicities over the integers, we have the ring $(\mathbb{Z}, +, \times)$.
-Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, and $\times$ respectively.
+When dealing with hybrid sets with multiplicities over the integers, we have the ring $(\mathbb{Z}, +, \mult)$.
+Thus we will define $\oplus$, $\ominus$, and $\otimes$ by point-wise $+$, $-$, and $\mult$ respectively.
 
 
 \begin{definition}
@@ -224,7 +224,7 @@ identically correspond to element-wise $\texttt{AND}$.
 From these definitions, we can use hybrid sets to model various objects that would traditionally be described otherwise. 
 For example, any positive rational number can be represented as a hybrid set over the primes.
 \begin{equation*}
-	(\mathbb{Z}^\mathbb{P}, \oplus) \simeq (\mathbb{Q}_+,\times)
+	(\mathbb{Z}^\mathbb{P}, \oplus) \simeq (\mathbb{Q}_+,\mult)
 \end{equation*}
 For a positive rational number $a/b$, both $a$ and $b$ being integers will have a prime decomposition: 
 $a=(p_1^{m_1}\cdot p_2^{m_2} \cdot \ldots)$ and $b=(q_1^{n_1} \cdot q_2^{n_2} \cdot \ldots)$
@@ -368,7 +368,7 @@ For intersecting regions we do not have to choose between commutativity and asso
 In general, all that we can say the result is a hybrid relation but there are many cases where we can guarantee hybrid function status is preserved.
 
 
-\begin{theorem}
+\begin{lemma}
 	\label{thm:compatible1}
 	Let $A$ and $B$ be hybrid sets over $U$ and let $f: U \to S$ be a function.
 	Then $f^A \oplus f^B$ is a hybrid function.
@@ -376,7 +376,7 @@ In general, all that we can say the result is a hybrid relation but there are ma
 	\begin{equation}
 		f^A \oplus f^B = f^{A \oplus B}
 	\end{equation}
-\end{theorem}
+\end{lemma}
 
 
 It should not be a surprise that the same function over different restrictions combine to form a function.
@@ -398,13 +398,13 @@ Generally piecewise function is desired for it's ability to tie together two \em
 If two functions have separate, non-overlapping regions, then our definition is again trivial.
 
 
-\begin{theorem}
+\begin{lemma}
 	\label{thm:compatible2}
 	Given two function $f : U \to S$ and $g : U \to S$. The following identity holds if and only if $A$ and $B$ are disjoint:
 	\begin{equation}
 		f^A \oplus g^B = (f \fjoin g)^{A \oplus B}
 	\end{equation}
-\end{theorem}
+\end{lemma}
 
 
 Notice here the use of $\fjoin$ on the right hand side.
@@ -866,12 +866,12 @@ To illustrate the problem with using (non-pseudo) hybrid functions, we shall con
 Since $f(0)=2$ and $H(0)=1$ we expect $(f\cdot H)(0)=2$.
 Following from (\ref{eqn:piecewiseOp}), we construct a hybrid function and \emph{attempt}:
 \begin{align*}
-	(f \cdot H)(0) 
-		&= \mathcal{R}_\times \left( 
+	(f \mult H)(0) 
+		&= \mathcal{R}_\smallmult \left( 
 			\left( (2-x^2)(0) \right)^{P_1} \oplus 
 			\left( (1/x^2)(1) \right)^{P_2} \oplus 
 			\left( (1/x^2)(0) \right)^{P_3} \right)(0) \\
-		&= \mathcal{R}_\times \left( 
+		&= \mathcal{R}_\smallmult \left( 
 			\left( (2-0^2)(0) \right)^{1} \oplus 
 			\left( (1/0^2)(1) \right)^{1} \oplus 
 			\left( (1/0^2)(0) \right)^{-1} \right)\\
@@ -880,7 +880,7 @@ Following from (\ref{eqn:piecewiseOp}), we construct a hybrid function and \emph
 But it is not so easy to argue that this evaluates to 2.
 Alternatively, we could use the very similar pseudo-function:
 \begin{align*}
-	\pseudo{f\;} \cdot \,\pseudo{\!H} = \mathcal{R}_\times \bigg(
+	\pseudo{f\;} \cdot \,\pseudo{\!H} = \mathcal{R}_\smallmult \bigg(
 				& \left( (x \mapsto 2-x^2) \cdot (x \mapsto 0) \right)^{P_1} \notag \\
 		\oplus \;& \left( (x \mapsto 1/x^2) \cdot (x \mapsto 1) \right)^{P_2} \notag \\
 		\oplus \;& \left( (x \mapsto 1/x^2) \cdot (x \mapsto 0) \right)^{P_3} 
@@ -891,13 +891,14 @@ Alternatively, we could use the very similar pseudo-function:
 Leaving these functions unevaluated is the key to making non-total functions work.
 Once again, we evaluate each of $P_1$, $P_2$ and $P_3$ at 0 and find:
 \begin{align*}
-	(\pseudo{f\;} \cdot \,\pseudo{\!H})(0) = \mathcal{R}_\times \bigg(
+	(\pseudo{f\;} \cdot \,\pseudo{\!H})(0) = \mathcal{R}_\smallmult \bigg(
 				& \left( (x \mapsto 2-x^2) \cdot (x \mapsto 0) \right)^1 \notag \\
 		\oplus \;& \left( (x \mapsto 1/x^2) \cdot (x \mapsto 1) \right)^1 \notag \\
 		\oplus \;& \left( (x \mapsto 1/x^2) \cdot (x \mapsto 0) \right)^{-1} 
 	\bigg)(0)
 \end{align*}
-Once we have this, we can then evaluate the $\times$-reduction on the still unevaluated functions.
+Once we have this, we can then evaluate the multiplication-reduction $\mathcal{R}_\smallmult$,
+ on the still unevaluated functions.
 Clearly $x \mapsto 0$ occurs with canceling signs as does $x \mapsto 1/x^2$.
 This leaves us with the product of two unevaluated functions:
 \begin{equation*}

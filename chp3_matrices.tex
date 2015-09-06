@@ -827,7 +827,7 @@ The $\times$ operator refers to the Cartesian product of intervals.
 For $i,j \in \{ 1,2 \}$ the terms of $C$ are given by.
 \begin{align}
 	\label{eqn:2x2multiplication}
-	C_{i,j}^{N_i \times P_j} (x,y) = \sum_{M} \R[\times]  
+	C_{i,j}^{N_i \times P_j} (x,y) = \sum_{M} \R[\smallmult]  
 		&\left( \;\;
 			\left. 	A_{i,1}^{N_1 \times M_1}	\right|_{X=x} \;\oplus\;
 			\left.	B_{1,j}^{M_1 \times P_1}	\right|_{Y=y} 
@@ -875,11 +875,11 @@ Ignoring the differences in transposition, when thought of as functions these fu
 (the common axis of $A$ and $B$) to functions with a common range.
 And so we have the pointwise sum of terms of the forms $m \mapsto ( x \mapsto A[x][m] )$ and 
 $m \mapsto (y \mapsto B[m][y])$.
-The work of multiplying matching $A[x][m]$ with $B[m][y]$ is handled by the $\R[\times]$.
+The work of multiplying matching $A[x][m]$ with $B[m][y]$ is handled by the $\R[\smallmult]$.
 This leaves us with the product of two functions with different domains, but common range:
 \begin{equation*}
-	 ( x \mapsto A[x][m] )\times (y \mapsto B[m][y]) 
-	 = (x,y) \mapsto A[x][m] \times B[m][y]
+	 ( x \mapsto A[x][m] ) \mult (y \mapsto B[m][y]) 
+	 = (x,y) \mapsto A[x][m] \mult B[m][y]
 \end{equation*}
 
 
@@ -965,7 +965,7 @@ as (\ref{eqn:2x2multiplicationblocks}):
 
 Let us compute one of these blocks: $S_1$.
 \begin{align*}
-	{S_1}^{N_1 \times P_1}(i,j) = \sum_{m \in M} \R[\times]  &\left( 
+	{S_1}^{N_1 \times P_1}(i,j) = \sum_{m \in M} \R[\smallmult]  &\left( 
 			\left. A^{N_1 \times M_1}\right|_{X=i} \oplus
 			\left. E^{M_1 \times P_1}\right|_{Y=j} \oplus \right.\\
 			&\;\left. B^{N_1 \times M_2}\right|_{X=i} \oplus
@@ -979,7 +979,7 @@ This is a small enough domain to express each of the functions as a set of point
 So let's expand out each of our terms as formal \emph{hybrid sets} 
 (recall a hybrid function is a special hybrid set of ordered pairs):
 \begin{align*}
-	\sum_{m \in M ?} \R[\times] \bigg( 
+	\sum_{m \in M ?} \R[\smallmult] \bigg( 
 		&\;\;\hset{
 			\left( 0 \mapsto 
 				\left[\begin{smallmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{smallmatrix}\right]
@@ -1008,33 +1008,33 @@ In reality, we would simply not even attempt to evaluate $B|_{X=x}(1)$ or $E|_{Y
 These points are actually contained in the $A$ and $G$ blocks, once again we must delay evaluation with pseudo-functions.
 
 
-Applying the $\times$-reduction $\R[\times]$, we group terms by their input value (e.g. $1 \mapsto x$ with $1 \mapsto y$) 
-and flatten using the multiplicity to repeat or invert the $\times$ operator.
+Applying the $\times$-reduction $\R[\smallmult]$, we group terms by their input value (e.g. $1 \mapsto x$ with $1 \mapsto y$) 
+and flatten using the multiplicity to repeat or invert the $\mult$ operator.
 In this case, we are dealing only with multiplicities of $+1$ and $-1$ which correspond with multiplication and ``division''.
-This is not true division, as $0 \times^{-1} 0 = 1$ without fear of division by zero.
-Otherwise for non-zero operands, $\times^{-1}$ agrees with the normal understanding of division.
+This is not true division, as $0 \mult^{-1} 0 = 1$ without fear of division by zero.
+Otherwise for non-zero operands, $\mult^{-1}$ agrees with the normal understanding of division.
 This is made possible by working with multiplication as a \emph{group} rather than as a \emph{ring}
 and so we are not worried about making multiplication ``play nice'' with addition.
 Doing this yields:
 \begin{align*}
 	\sum_{M_1 \oplus M_2 \oplus M_3}
 		& \left\{\!\left|\; \left(0 \mapsto 
-			\left[\begin{smallmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{smallmatrix}\right] \times^{+1} 
+			\left[\begin{smallmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{smallmatrix}\right] \mult^{+1} 
 			[e_1] \right), \right.\right.\\
 		&\;\;\;\left(1 \mapsto 
-			\left[\begin{smallmatrix}\vphantom{b}a_2 \\ \vphantom{b}a_4 \end{smallmatrix}\right] \times^{+1}
-			[e_\bot] \times^{-1}
-			\left[\begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix}\right] \times^{-1}
-			[ e_\bot ]\times^{+1}
+			\left[\begin{smallmatrix}\vphantom{b}a_2 \\ \vphantom{b}a_4 \end{smallmatrix}\right] \mult^{+1}
+			[e_\bot] \mult^{-1}
+			\left[\begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix}\right] \mult^{-1}
+			[ e_\bot ]\mult^{+1}
 			\left[ \begin{smallmatrix} b_\bot \\ b_\bot \end{smallmatrix} \right] \right)
 			[ g_1 ],\\
 		&\;\;\left.\left.\left(2 \mapsto 
-			\left[ \begin{smallmatrix} b_1 \\ b_2 \end{smallmatrix}\right]\times^{+1}
+			\left[ \begin{smallmatrix} b_1 \\ b_2 \end{smallmatrix}\right]\mult^{+1}
 			[ g_2 ] \right) \; \right|\!\right\}
 \end{align*}
 
 
-After some cancellations in the second term, we evaluate $\times^{+1}$ as matrix multiplication and sum over all of $M$:
+After some cancellations in the second term, we evaluate $\mult^{+1}$ as matrix multiplication and sum over all of $M$:
 \begin{equation*}
 	{S_1}^{N_1 \times P_1} =
 			\begin{bmatrix}\vphantom{b}a_1 \\ \vphantom{b}a_3 \end{bmatrix}
