@@ -155,11 +155,9 @@ as an indicator function over the integers.
 	We denote the collection of all hybrid sets over an underlining set $U$ by $\hsetover[U]$.
 \end{definition}
 
-
-By universe, we just mean a usual Boolean set that \emph{contains everything we may be interested in}.
-This is admittedly vague but we will rarely be interested in everything in the universe or its exact size.
-It is simply a compact way for us to talk about ``everything else''.
-But we will need some notation to make functions resemble sets.
+This provides a functional back-end for constructing hybrid sets.
+However, given the name, we would like our hybrid sets to at least resemble sets.
+So we introduce the following definitions to better interface with the underlying integer functions.
 
 
 \begin{definition}
@@ -378,18 +376,17 @@ In general, all that we can say the result is a hybrid relation but there are ma
 	\end{equation}
 \end{lemma}
 
-
-It should not be a surprise that the same function over different restrictions combine to form a function.
-Let $(x,f(x)) \in f^A$ and $(y,f(y)) \in B$. Clearly, if $x=y$ then $f(x)=f(y)$. 
-Since $f$ is common between both hybrid functions, there cannot be disagreement among points:
-\begin{align*}
-	f^A \oplus f^B 
-		&= \bigoplus_{x \in U} A(x) \hset{ (x, f(x) )^1 } 
-			\; \oplus \; \bigoplus_{x \in U} B(x) \hset{ (x, f(x) )^1 } \\
-		&= \bigoplus_{x \in U} (A(x) + B(x)) \hset{ (x, f(x) )^1 } \\
-		&= \bigoplus_{x \in U} (A \oplus B)(x) \hset{ (x, f(x) )^1 } \\ 
-		&= f^{A \oplus B}
-\end{align*}
+\begin{proof}
+	Since $f^A$ and $f^B$ are hybrid functions with a common underlying function $f$, 
+	all elements with non-zero multiplicity in either set will be of the form $(x,f(x))$.
+	As there can be no disagreement between among points for a common function, 
+	the pointwise sum must be a hybrid function.
+	For $x \in U$, we have $x \in^n A$ and $x \in^m B$ for some (possibly zero) integers $m$ and $n$.
+	Hence, $(x,f(x)) \in^m f^A$ and $(x,f(x)) \in^n f^B$  and $(x,f(x)) \in^{(m+n)} (f^A \oplus f^B)$.
+	At the same time, we have $ x \in^{(m+n)} (A \oplus B)$ and $(x,f(x)) \in^{(m+n)} f^{A \oplus B}$.
+	Thus we have $f^A \oplus f^B = f^{A \oplus B}$. 
+	\hfill $\qed$
+\end{proof}
 
 
 
@@ -402,10 +399,9 @@ If two functions have separate, non-overlapping regions, then our definition is 
 	\label{thm:compatible2}
 	Given two function $f : U \to S$ and $g : U \to S$. The following identity holds if and only if $A$ and $B$ are disjoint:
 	\begin{equation}
-		f^A \oplus g^B = (f \fjoin g)^{A \oplus B}
+		f^A \oplus g^B = (\restrict{f}{\supp A} \fjoin \restrict{g}{\supp B})^{A \oplus B}
 	\end{equation}
 \end{lemma}
-
 
 Notice here the use of $\fjoin$ on the right hand side.
 Here $\fjoin$ is the traditional (non-hybrid) function join as defined in (\ref{def:fjoin}).
@@ -415,29 +411,47 @@ Chaining several sums together we can represent the piecewise function $f$ from 
 \begin{equation*}
  	f^P = f^{P_1} \oplus f^{P_2} \oplus \ldots \oplus f^{P_n}
 \end{equation*}
-
+\begin{proof}
+	Again, as hybrid functions, all elements with non-zero multiplicity of $f^A$ and $g^B$ will be of the forms
+	$(x,f(x))$ or $(x,g(x))$ respectively.
+	Suppose that we have $(x,f(x)) \in^n f^A$ and $(x,g(x)) \in^m g^B$ for disjoint $A$ and $B$.
+	If $n \neq 0$, then we have $m = 0$ as disjointness implies $A \otimes B = \emptyset$ and so
+	$A(x) \cdot B(x) = m \cdot n = 0$.
+	Similarly if $m \neq 0$ then $n=0$.
+	Thus if $(x,f(x)) \in f^A$ then $(x,g(x)) \notin g^B$ and vice versa and so $f^A \oplus g^B$ is a hybrid function.
+	
+	
+	We can then safely construct $(\restrict{f}{\supp A} \fjoin \restrict{g}{\supp B})$ without undefined points as 
+	$\supp A \cap \supp B = \emptyset$.
+	For $(x,f(x)) \in^m (f^A \oplus g^B)$ with non-zero $m$, 
+	we have $(\restrict{f}{\supp A} \fjoin \restrict{g}{\supp B})(x) = f(x)$ and $x \in^m A \oplus B$.
+	Similarly for $(x,g(x)) \in^n (f^A \oplus g^B)$ with non-zero $n$, 
+	we have $(\restrict{f}{\supp A} \fjoin \restrict{g}{\supp B})(x) = g(x)$ and $x \in^n A \oplus B$.
+	Thus, $f^A \oplus g^B = (\restrict{f}{\supp A} \fjoin \restrict{g}{\supp B})^{A \oplus B}$.
+	\hfill $\qed$
+\end{proof}
 
 
 But disjointness is still too strong of a condition for two hybrid functions to be compatible.
 The join of two non-disjoint functions may still be a hybrid function 
 even if their respective functions do not agree at \emph{all} points.
-So long as long as they agree on all points in overlapping regions intersection the functions can be safely joined.
 
 
-\begin{definition}
+\begin{theorem}
 	For hybrid functions $f^A$ and $g^B$, $f^A \oplus g^B$ is a hybrid function
 	if and only if for all $x \in \supp (A \otimes B)$, we have $f(x) = g(x)$.
 	We say that \textbf{$\boldsymbol{f^A}$ and $\boldsymbol{g^B}$ are compatible}.
-\end{definition}
+\end{theorem}
 
+\begin{proof}
+	This follows from the preceeding two lemmas.
+	For $x \in \supp (A \otimes B)$, if $f(x) = g(x)$ then we are simply combining 
+	two identical functions as in lemma \ref{thm:compatible1}.
+	On the other hand for $x \notin \supp (A \otimes B)$ then either one or both of $A(x)$ or $B(x)$ are zero.
+	In this case we use lemma \ref{thm:compatible2}.
+	\hfill $\qed$
+\end{proof}
 
-As with our definition of disjointness, we use the point-wise product $\otimes$ 
-of hybrid sets as an analog for intersection $\cap$ of sets.
-This definition also generalizes the two cases we have already seen in theorems 
-\ref{thm:compatible1} and \ref{thm:compatible2}
-The hybrid functions $f^A$ and $f^B$ are clearly compatible because $f$ agrees with itself everywhere.
-For $A$ and $B$ disjoint, $f^A$ and $g^B$ are also compatible since $A \otimes B$ is empty;
-there are no mutual points for $f$ and $g$ to disagree over.
 Compatibility becomes less clear when we begin to consider multiple hybrid functions.
 For one, compatibility is not associative.
 Consider the following sequence:

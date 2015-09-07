@@ -251,6 +251,17 @@ Several results follow immediately from this definition.
 \end{theorem}
 
 
+\begin{proof}
+	This identities can all be shown in nearly identical fashion
+	\begin{align*}
+		[\![a,b)\!) = [a,b) \ominus [b,a) = \ominus \big( [b,a) \ominus [a,b) \big) = \ominus [\![b,a)\!) \\ 
+		(\!(a,b]\!] = (a,b] \ominus (b,a] = \ominus \big( (b,a] \ominus (a,b] \big) = \ominus (\!(b,a]\!] \\ 
+		[\![a,b]\!] = [a,b] \ominus (b,a) = \ominus \big( (b,a) \ominus [a,b] \big) = \ominus (\!(b,a)\!)
+	\end{align*}
+	And since $[\![a,b]\!] = \ominus (\!(b,a)\!)$ we get $(\!(a,b)\!) = \ominus [\![b,a]\!]$ for free. 
+	\hfill $\qed$
+\end{proof}
+
 We should make a note here how oriented intervals behave when $a=b$.
 Like their unoriented analogues, the oriented intervals $[\![ a,a )\!)$ and $(\!( a,a ]\!]$ are still both empty sets.
 The interval $[\![a,a]\!]$ still contains points equivalent to $a$ (with multiplicity 1).
@@ -407,6 +418,9 @@ However, these un-evaluable terms also appear in the middle term however the int
 			\oplus (u_i + v'_{i-1})^{(\!(1,4]\!]} 
 			\oplus (u'_{i-4} + v'_{i-1})^{(\!(4,5]\!]}
 \end{align*}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -1062,27 +1076,56 @@ Together, theses blocks form a strict partitioning of $S$ as a $2\times 2$ block
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Multiplication with Larger Block Matrices}
 
-The most difficult part of extending block matrix multiplication to larger block matrices turns out to be the number of 
-variables needed.
-Once again we will use $N_i$ to divide the rows of blocks in $A$ and $P_j$ to divide the block columns of $B$.
+Extending to larger block matrices is a fairly trivial affair.
+Once again we will use $\{N_i\}$ to divide the rows of blocks in $A$ 
+and $\{P_j\}$ to divide the block columns of $B$.
+$M_k$ and $M'_k$ are two different partitions of the common axis for $A$ and $B$ respectively.
+
 \begin{align*}
-	A &= \bigoplus_{i \in [\![1,I]\!]} \bigoplus_{k \in [\![1,K]\!]} A_{i,k}^{N_i \times M_k}&
-	B &= \bigoplus_{k' \in [\![1,K']\!]} \bigoplus_{j \in [\![1,J]\!]} B_{k',j}^{M'_{k'} \times P_j}
+	A &= \left[ \begin{array}{c|c|c}
+			A_{1,1}^{N_1 \times M_1} 	& \ldots 		& A_{1,K}^{N_1 \times M_K} \\
+			\hline
+			\vdots 						& 			& \vdots \\
+			\hline
+			A_{I,1}^{N_I \times M_1} 	& \ldots 		& A_{I,K}^{N_I \times M_K}
+		\end{array}\right]
+		&
+	B &= \left[ \begin{array}{c|c|c}
+			B_{1,1}^{M_1 \times P_1} 	& \ldots 		& B_{1,J}^{M_1 \times P_J} \\
+			\hline
+			\vdots 						& 			& \vdots \\
+			\hline
+			B_{K',1}^{M_{K'} \times P_1} & \ldots 		& B_{K',J}^{M_{K'} \times P_J}
+		\end{array}\right]
+	\\ 
+	&= \bigoplus_{i \in [\![1,I]\!]} \bigoplus_{k \in [\![1,K]\!]} A_{i,k}^{N_i \times M_k}&
+	&= \bigoplus_{k' \in [\![1,K']\!]} \bigoplus_{j \in [\![1,J]\!]} B_{k',j}^{M'_{k'} \times P_j}
 \end{align*}
-And as before the blocks of $C$ will be $N_i \times P_j$
+
+As before the blocks of $C$ will be of sizes $N_i \times P_j$:
 \begin{equation}
-	C = \bigoplus_{i \in [\![1,I]\!]} \bigoplus_{j \in [\![1,J]\!]} C_{i,j}^{N_i \times P_j}
+	C 
+	\;=\; 
+		\bigoplus_{i \in [\![1,I]\!]} \bigoplus_{j \in [\![1,J]\!]} \left( C_{i,j}^{N_i \times P_j} \right)
+	\;=\; 	
+		\left[ \begin{array}{c|c|c}
+			C_{1,1}^{N_1 \times P_1} 	& \ldots 		& C_{1,J}^{N_1 \times P_J} \\
+			\hline
+			\vdots 						& 			& \vdots \\
+			\hline
+			C_{I,1}^{N_I \times P_1} 	& \ldots 		& C_{I,J}^{N_I \times P_J}
+		\end{array}\right]
 \end{equation}
-Where each $C_{i,j}$ is defined as:
+and where each $C_{i,j}$ is defined as:
 \begin{equation}
-	C_{i,j} = 	\left(\sum_{k \in [\![1,K)\!)} A_{i,k}^{N_i \times M_k} B_{K',j}^{M_k \times P_j} \right)+ 
-				\left(\sum_{k' \in [\![1,K')\!)} A_{i,K}^{N_i \times M_{k'}} B_{k',j}^{M_{k'} \times P_j} \right)+ 
-				A_{i,K}^{N_i \times R} B_{K',j}^{R \times P_j}
+	C_{i,j} = 
+	\sum_M 
+		\R[\smallmult] \left(
+			\bigoplus_{k \in [\![1,K]\!]} \restrict{ A_{i,k}^{N_i \times M_k} }{X=x} \oplus
+			\bigoplus_{k \in [\![1,K']\!]} \restrict{ B_{k',j}^{M'_k \times P_j} }{Y=y} 
+	 	\right) 
 \end{equation}
-Again we must find a common refinement of $\{M_k\}_{k=1}^K$ and $\{M'_{k'}\}_{k'=1}^{K'}$.
-We will use the same construction as earlier taking the first $K-1$ and $K'-1$ pieces respectively and then forming one 
-``remainder'' piece, which here is 
-$R =U \ominus \left( \bigoplus_{k \in [\![1,K)\!)} M_k \oplus \bigoplus_{k' \in [\![1,K')\!)} M'_{k'}\right)$
+
 
 
 

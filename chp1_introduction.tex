@@ -67,7 +67,7 @@ Consider the sets $[a,b) = \{ x \; |\; a \leq x < b \}$ and $[b,c) = \{ x \;|\: 
 Their union $[a,b) \cup [b,c)$ will depend heavily on the relative ordering of $a$, $b$ and $c$. 
 More often, as in integration what one really wants is ``$[a,b) + [b,c) = [a,c)$''.
 When Boolean algebra and numeric algebra interface, results can get unnecessarily messy.
-Hybrid sets will allow us to remove this tension, by committing fully to numeric algebra
+Hybrid sets will allow us to remove this tension, by committing fully to numeric algebra.
 In this spirit that we will graft hybrid sets into areas of mathematics where current approaches are unsatisfactory.
 
 
@@ -81,20 +81,41 @@ In this spirit that we will graft hybrid sets into areas of mathematics where cu
 
 
 This thesis will include and extend the work of \cite{carette2010} on hybrid sets and their applications.
-In particular we will take as inspiration the following identity for integrals:
+In particular we will take as inspiration from two famous identities.
+Consider the union of two sets $A$ and $B$.
+To compute the cardinality, one approach would be to partition the set into three pieces:
+$(A \setminus B)$, $(B \setminus A)$ and $(A \cap B)$.
+The union, as the disjoint union of these three sets is then the sum of their cardinalities:
+\begin{equation*}
+	|A \cup B| = |A \setminus B| + |B \setminus A| + |A \cap B|
+\end{equation*}
+The more common approach is to use \emph{the principle of inclusion-exclusion} 
+and instead break $A \cup B$ into the pieces $A$, $B$ and $(A \cap B)$:
+\begin{equation}
+	|A \cup B| = |A| + |B| - |A \cap B|
+\end{equation}
+Unlike the first approach, we no longer have a partition of $A \cup B$ in the traditional sense of the term 
+but in many ways, it still behaves like one.
+
+Our other inspiration comes from integration where it is commonly defined that
 \begin{equation}
 	\int_a^b f(x) \diff x = -\int_b^a f(x) \diff x
 \end{equation}
-This allows for the identity
-\begin{equation}
+This allows for, regardless of the ordering of $a$, $b$ and $c$:
+\begin{equation*}
 	\int_a^c f(x) \diff x = \int_a^b f(x) \diff x + \int_b^c f(x) \diff x
-\end{equation}
-regardless of the ordering of $a$, $b$ and $c$.
+\end{equation*}
 One can think of the region from $a$ to $c$ being partitioned into $a$ to $b$ and $b$ to $c$.
-But this is not a partition in the usual sense.
-Rather than the union of disjoint subsets, it is a sum of oriented subsets: a generalized partition.
-This is a rather nice behaviour that would be nice to emulate in other contexts as well.
+But again, this is not a partition in the usual sense.
+Rather than a union of disjoint subsets, 
+we again use a generalized notion of a partition with sum of \emph{oriented} subsets where we can exclude
+subsets by inverting the sign.
 
+
+Reversed intervals within integration are not generally regarded any differently.
+Inclusion and exclusion, are simply a matter of orientation.
+On the other hand, when excluding sets, inverted elements are not usually regarded as objects of their own;
+``$-(A \cap B)$'' is not a set.
 
 We will consider several different applications.
 When matrices are represented in terms of block submatrices, 
